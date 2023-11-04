@@ -1,0 +1,96 @@
+﻿<Window x:Class="NAS.WindowSortingAndGrouping"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.GroupAndSort}" Height="400" Width="350" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/SortAndGroup.png">
+  <Window.Resources>
+    <Style TargetType="{x:Type ListBoxItem}">
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <GroupBox>
+      <GroupBox.Header>
+        <TextBlock Text="{x:Static resx:NASResources.Sorting}" Margin="2"/>
+      </GroupBox.Header>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddSortingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddSortingDefinition}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" Width="16" />
+            </Button>
+            <Button Command="{Binding RemoveSortingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveSortingDefinition}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" Width="16" />
+            </Button>
+            <Button Command="{Binding MoveSortingDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveSortingDefinitionUp}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Up.png" Width="16" />
+            </Button>
+            <Button Command="{Binding MoveSortingDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveSortingDefinitionDown}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Down.png" Width="16" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <ListBox ItemsSource="{Binding Layout.SortingDefinitions}" SelectedItem="{Binding CurrentSortingDefinition}" Grid.Row="1" BorderBrush="{x:Null}" IsSynchronizedWithCurrentItem="True" >
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch">
+                <TextBlock.InputBindings>
+                  <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.EditSortingDefinitionCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </TextBlock.InputBindings>
+              </TextBlock>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </GroupBox>
+    <GroupBox Grid.Row="1">
+      <GroupBox.Header>
+        <TextBlock Text="{x:Static resx:NASResources.Grouping}" Margin="2"/>
+      </GroupBox.Header>
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddGroupingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddGroupingDefinition}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" Width="16" />
+            </Button>
+            <Button Command="{Binding RemoveGroupingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveGroupingDefinition}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" Width="16" />
+            </Button>
+            <Button Command="{Binding MoveGroupingDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveGroupingDefinitionUp}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Up.png" Width="16" />
+            </Button>
+            <Button Command="{Binding MoveGroupingDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveGroupingDefinitionDown}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Down.png" Width="16" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <ListBox ItemsSource="{Binding Layout.GroupingDefinitions}" SelectedItem="{Binding CurrentGroupingDefinition}" Grid.Row="1" BorderBrush="{x:Null}" IsSynchronizedWithCurrentItem="True" >
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch">
+                <TextBlock.InputBindings>
+                  <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.EditGroupingDefinitionCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </TextBlock.InputBindings>
+              </TextBlock>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </GroupBox>
+    <Button Content="{x:Static resx:NASResources.OK}" HorizontalAlignment="Right" Margin="2" MinWidth="75" Grid.Row="2" Click="buttonOK_Click" />
+  </Grid>
+</Window>

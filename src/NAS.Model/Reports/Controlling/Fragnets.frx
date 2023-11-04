@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" UseFileCache="true" SmoothGraphics="true" StartReportEvent="_StartReport" ReportInfo.Author="Patrick Schimmel" ReportInfo.Picture="iVBORw0KGgoAAAANSUhEUgAAAE8AAABwCAYAAABfGC3+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAFqSURBVHhe7d2xcYQwFEBBlaeCKEe90AqdyHA3Dhx55l5kz24AQkT/jXKNzcfEC8QLxAvEC36Jd+3zGHuMude59rzfcx77fPbP+3md+1zz/j/uvb/ue6Zrrzn2sdY+jme2uY97f73m/snJC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAvEC8QLxAt+jXeuYx9z7nU967XX/X0+19W/rqkfr/3/5DzGa64x3lfvPzNf9+p71vf3m5MXiBeI97G9vwCEL4g3PklnIQAAAABJRU5ErkJggg==" ReportInfo.Created="01/12/2009 21:51:35" ReportInfo.Modified="11/18/2013 21:20:01" ReportInfo.SavePreviewPicture="true" ReportInfo.CreatorVersion="2013.4.1.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="Schedule" ReferenceName="Schedule" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Schedule, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" Enabled="true">
+      <BusinessObjectDataSource Name="Activities1" Alias="Activities" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Activity, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Activities" Enabled="true">
+        <Column Name="ActivityType" DataType="System.Int32"/>
+        <Column Name="ActualDuration" DataType="System.Int32"/>
+        <Column Name="ActualFinishDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="ActualStartDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="Calendar" DataType="System.String"/>
+        <Column Name="Constraint" DataType="System.String"/>
+        <Column Name="ConstraintDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="CustomAttribute1" DataType="System.String"/>
+        <Column Name="CustomAttribute2" DataType="System.String"/>
+        <Column Name="CustomAttribute3" DataType="System.String"/>
+        <Column Name="EarlyFinishDate" DataType="System.DateTime"/>
+        <Column Name="EarlyStartDate" DataType="System.DateTime"/>
+        <Column Name="FinishDate" DataType="System.DateTime"/>
+        <Column Name="Fragnet" DataType="CMS2.ViewModels.SchedulesViewModel+Fragnet, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null">
+          <Column Name="Name" DataType="System.String"/>
+          <Column Name="Description" DataType="System.String"/>
+          <Column Name="Approved" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+          <Column Name="Identified" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+          <Column Name="IsDisputable" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="Number" DataType="System.String"/>
+          <Column Name="Submitted" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        </Column>
+        <Column Name="FreeFloat" DataType="System.Int32"/>
+        <Column Name="IsCritical" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsFinished" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsStarted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LateFinishDate" DataType="System.DateTime"/>
+        <Column Name="LateStartDate" DataType="System.DateTime"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Number" DataType="System.String"/>
+        <Column Name="OriginalDuration" DataType="System.Int32"/>
+        <Column Name="PercentComplete" DataType="System.Double"/>
+        <Column Name="RemainingDuration" DataType="System.Int32"/>
+        <Column Name="RetardedDuration" DataType="System.Int32"/>
+        <Column Name="StartDate" DataType="System.DateTime"/>
+        <Column Name="TotalActualCosts" DataType="System.Decimal"/>
+        <Column Name="TotalBudget" DataType="System.Decimal"/>
+        <Column Name="TotalFloat" DataType="System.Int32"/>
+        <Column Name="TotalPlannedCosts" DataType="System.Decimal"/>
+        <Column Name="WBSItem" DataType="System.String"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource1" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource2" Alias="Predecessors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Predecessors"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource3" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource4" Alias="Successors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Successors"/>
+      </BusinessObjectDataSource>
+      <Column Name="CustomAttribute1Header" DataType="System.String"/>
+      <Column Name="CustomAttribute2Header" DataType="System.String"/>
+      <Column Name="CustomAttribute3Header" DataType="System.String"/>
+      <Column Name="DataDate" DataType="System.DateTime"/>
+      <Column Name="Date" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+      <Column Name="Description" DataType="System.String"/>
+      <Column Name="EndDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+      <Column Name="FirstDay" DataType="System.DateTime"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="StartDate" DataType="System.DateTime"/>
+      <Column Name="TotalActualCosts" DataType="System.Decimal"/>
+      <Column Name="TotalBudget" DataType="System.Decimal"/>
+      <Column Name="TotalPlannedCosts" DataType="System.Decimal"/>
+      <BusinessObjectDataSource Name="BusinessObjectDataSource5" Alias="Baselines" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Schedule, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Baselines"/>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" LeftMargin="20">
+    <DataBand Name="Data1" Top="41.13" Width="680.4" Height="9.45" DataSource="Schedule" PrintIfDetailEmpty="true">
+      <DataHeaderBand Name="DataHeader2" Width="680.4" Height="37.8" CanGrow="true" CanShrink="true" RepeatOnEveryPage="true">
+        <TextObject Name="Text18" Top="18.9" Width="340.2" Height="18.9" CanGrow="true" CanShrink="true" Text="[Schedule.Description]"/>
+        <TextObject Name="Text17" Width="340.2" Height="18.9" CanGrow="true" Text="[Schedule.Name]" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text21" Left="340.2" Width="340.2" Height="37.8" Text="Fragnets" HorzAlign="Right" Font="Arial, 14pt, style=Bold"/>
+      </DataHeaderBand>
+      <GroupHeaderBand Name="GroupHeader1" Top="53.92" Width="680.4" Height="66.15" CanGrow="true" CanShrink="true" Condition="[Schedule.Activities.Fragnet.Name]">
+        <TextObject Name="Text7" Width="680.4" Height="18.9" Border.Lines="Left, Right, Top" Fill.Color="WhiteSmoke" CanGrow="true" Text="Fragnet: [Schedule.Activities.Fragnet]" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text16" Top="18.9" Width="680.4" Height="18.9" Border.Lines="Left, Right, Bottom" Fill.Color="WhiteSmoke" CanGrow="true" Text="[Schedule.Activities.Fragnet.Description]"/>
+        <TextObject Name="Text22" Left="94.5" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Right, Top, Bottom" Text="[Schedule.Activities.Fragnet.Identified]" Format="Date" Format.Format="d" VertAlign="Center"/>
+        <TextObject Name="Text23" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="Erkannt:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text24" Left="189" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="Eingereicht:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text25" Left="283.5" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Right, Top, Bottom" Text="[Schedule.Activities.Fragnet.Submitted]" Format="Date" Format.Format="d" VertAlign="Center"/>
+        <TextObject Name="Text26" Left="378" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="Genehmigt:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text27" Left="472.5" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Right, Top, Bottom" Text="[Schedule.Activities.Fragnet.Approved]" Format="Date" Format.Format="d" VertAlign="Center"/>
+        <CheckBoxObject Name="CheckBox1" Left="661.5" Top="37.8" Width="18.9" Height="18.9" Border.Lines="All" DataColumn="Schedule.Activities.Fragnet.IsDisputable"/>
+        <TextObject Name="Text28" Left="567" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Right, Top, Bottom" Text="Strittig:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <DataBand Name="Data2" Top="173.98" Width="680.4" Height="18.9" CanGrow="true" DataSource="Activities1" Filter="[Schedule.Activities.Fragnet.Name] != &quot;&quot;" PrintIfDetailEmpty="true">
+          <TextObject Name="Text1" Width="66.15" Height="18.9" Text="[Schedule.Activities.Number]"/>
+          <TextObject Name="Text3" Left="66.15" Width="189" Height="18.9" CanGrow="true" Text="[Schedule.Activities.Name]"/>
+          <TextObject Name="Text5" Left="340.2" Width="85.05" Height="18.9" CanGrow="true" Text="[Schedule.Activities.StartDate]" Format="Date" Format.Format="d"/>
+          <TextObject Name="Text29" Left="425.25" Width="85.05" Height="18.9" CanGrow="true" Text="[Schedule.Activities.FinishDate]" Format="Date" Format.Format="d"/>
+          <TextObject Name="Text30" Left="255.15" Width="85.05" Height="18.9" CanGrow="true" Text="[Schedule.Activities.OriginalDuration]"/>
+          <TextObject Name="Text2" Left="510.3" Width="94.5" Height="18.9" Text="[Schedule.Activities.PercentComplete]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text4" Left="604.8" Width="75.6" Height="18.9" Text="[Schedule.Activities.TotalFloat]" VertAlign="Center"/>
+          <DataHeaderBand Name="DataHeader1" Top="123.4" Width="680.4" Height="47.25" RepeatOnEveryPage="true">
+            <TextObject Name="Text6" Left="604.8" Top="9.45" Width="75.6" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Puffer" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text31" Top="9.45" Width="66.15" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="ID" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text32" Left="66.15" Top="9.45" Width="189" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Name" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text33" Left="255.15" Top="9.45" Width="85.05" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Dauer" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text34" Left="340.2" Top="9.45" Width="85.05" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Anfang" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text35" Left="425.25" Top="9.45" Width="85.05" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Ende" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text36" Left="510.3" Top="9.45" Width="94.5" Height="37.8" Border.Lines="All" Fill="Glass" Fill.Color="Pink" Fill.Blend="0.2" Fill.Hatch="true" Text="Prozent ab-geschlossen" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </DataHeaderBand>
+          <DataFooterBand Name="DataFooter1" Top="196.22" Width="680.4" Height="9.45"/>
+          <Sort>
+            <Sort Expression="[Schedule.Activities.Number]"/>
+          </Sort>
+        </DataBand>
+      </GroupHeaderBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="209" Width="680.4" Height="28.35">
+      <TextObject Name="Text19" Left="585.9" Top="9.45" Width="94.5" Height="18.9" Text="[PageNofM]" HorzAlign="Right" VertAlign="Bottom"/>
+      <TextObject Name="Text20" Top="9.45" Width="189" Height="18.9" Text="[Date]" Format="Date" Format.Format="d" VertAlign="Bottom"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

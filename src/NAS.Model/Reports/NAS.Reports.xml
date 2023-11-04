@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Reports>
+  <Report>
+    <ReportType>Activities</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Activities</Name>
+    <FileName>Activities\\Activities.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Activities</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Critical Path</Name>
+    <FileName>Activities\\Critical Path.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Activities</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>WBS</Name>
+    <FileName>Activities\\WBS.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Activities</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Logic</Name>
+    <FileName>Activities\\Logic.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Controlling</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Baseline</Name>
+    <FileName>Controlling\\Baseline.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Controlling</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Fragnets</Name>
+    <FileName>Controlling\\Fragnets.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Finances</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Finances</Name>
+    <FileName>Finances\\Finances.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Progress</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Progress</Name>
+    <FileName>Progress\\Progress.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+  <Report>
+    <ReportType>Progress</ReportType>
+    <ReportLevel>Integrated</ReportLevel>
+    <Name>Lookahead</Name>
+    <FileName>Progress\\Lookahead.frx</FileName>
+    <IsReadOnly>true</IsReadOnly>
+  </Report>
+</Reports>

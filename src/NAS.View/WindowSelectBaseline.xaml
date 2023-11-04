@@ -1,0 +1,22 @@
+﻿<Window x:Class="NAS.WindowSelectBaseline"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.Baseline}" Height="342" Width="402" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/Baseline.png">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <DataGrid ItemsSource="{Binding Schedules}" SelectedItem="{Binding SelectedBaseline}" AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Margin="2" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserDeleteRows="False" VerticalScrollBarVisibility="Auto" IsReadOnly="True" MouseDoubleClick="dataGrid_MouseDoubleClick" >
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static resx:NASResources.Name}" Binding="{Binding Name}" Width="Auto" />
+        <DataGridTextColumn Header="{x:Static resx:NASResources.Date}" Binding="{Binding Date, Converter={StaticResource DateConverter}}" Width="Auto" />
+      </DataGrid.Columns>
+    </DataGrid>
+    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right" Margin="2">
+      <Button Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" MinWidth="75" IsDefault="True" />
+      <Button Click="buttonCancel_Click" Content="{x:Static resx:NASResources.Cancel}" Margin="2,0,0,0" MinWidth="75" IsCancel="True" />
+    </StackPanel>
+  </Grid>
+</Window>

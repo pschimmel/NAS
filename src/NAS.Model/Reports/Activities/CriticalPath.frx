@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" UseFileCache="true" SmoothGraphics="true" StartReportEvent="_StartReport" ReportInfo.Author="Muster, Max" ReportInfo.Picture="iVBORw0KGgoAAAANSUhEUgAAAE8AAABwCAYAAABfGC3+AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsAAAA7AAWrWiQkAAAGrSURBVHhe7d3NacQwEEBhlaeCphwVkC7UijqZjGz5kBDIsi+XwPvArIy9/nkYXdVSbzMeYDzAeIDxAON9M6NljJFjzpz121uv/doisrXIec7bjAcYDzAe8EK8mWPU1nuOtXLOceaCds0BUXND5qrjNR41J9Q5X8f7vHb+u+eRe/6IOPPJvl6N7+v8pXPvepY9f626z32/eoYaR417Hau96/lafLzwDufSh18eYDzAeIDxAOMBxgOMBxgPMB5gPMB4gPEA4wHGA4wHGA8wHmA8wHiA8QDjAcYDjAcYDzAeYDzAeIDxAOMBxgOMBxgPMB5gPMB4gPEA4wHGA4wHGA8wHmA8wHiA8QDjAcYDjAcYDzAeYDzAeIDxAOMBxgOMBxgPMB5gPMB4gPEA4wHGA4wHGA8wHmA8wHiA8QDjAcYDjAcYDzAeYDzAeIDxAOMBxgOMBxgPMB5gPMB4gPEA4wHGA4wHGA8wHmA8wHiA8QDjAcYDjAcYDzAeYDzg13hzRMa1JPUejxzPUs3Rf1yq+b/bS/Ffy1SfZff3O6+zdPXT4HllvzzAeIDx3pb5CSHFUixXud/wAAAAAElFTkSuQmCC" ReportInfo.Created="01/12/2009 21:51:35" ReportInfo.Modified="11/18/2013 21:18:24" ReportInfo.SavePreviewPicture="true" ReportInfo.CreatorVersion="2013.4.1.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="Schedule" ReferenceName="Schedule" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Schedule, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" Enabled="true">
+      <BusinessObjectDataSource Name="Activities1" Alias="Activities" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Activity, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Activities" Enabled="true">
+        <Column Name="ActivityType" DataType="System.Int32"/>
+        <Column Name="ActualDuration" DataType="System.Int32"/>
+        <Column Name="ActualFinishDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="ActualStartDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="Calendar" DataType="System.String"/>
+        <Column Name="Constraint" DataType="System.String"/>
+        <Column Name="ConstraintDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        <Column Name="CustomAttribute1" DataType="System.String"/>
+        <Column Name="CustomAttribute2" DataType="System.String"/>
+        <Column Name="CustomAttribute3" DataType="System.String"/>
+        <Column Name="EarlyFinishDate" DataType="System.DateTime"/>
+        <Column Name="EarlyStartDate" DataType="System.DateTime"/>
+        <Column Name="FinishDate" DataType="System.DateTime"/>
+        <Column Name="Fragnet" DataType="CMS2.ViewModels.SchedulesViewModel+Fragnet, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null">
+          <Column Name="Name" DataType="System.String"/>
+          <Column Name="Description" DataType="System.String"/>
+          <Column Name="Approved" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+          <Column Name="Identified" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+          <Column Name="IsDisputable" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="Number" DataType="System.String"/>
+          <Column Name="Submitted" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+        </Column>
+        <Column Name="FreeFloat" DataType="System.Int32"/>
+        <Column Name="IsCritical" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsFinished" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsStarted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LateFinishDate" DataType="System.DateTime"/>
+        <Column Name="LateStartDate" DataType="System.DateTime"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Number" DataType="System.String"/>
+        <Column Name="OriginalDuration" DataType="System.Int32"/>
+        <Column Name="PercentComplete" DataType="System.Double"/>
+        <Column Name="RemainingDuration" DataType="System.Int32"/>
+        <Column Name="RetardedDuration" DataType="System.Int32"/>
+        <Column Name="StartDate" DataType="System.DateTime"/>
+        <Column Name="TotalActualCosts" DataType="System.Decimal"/>
+        <Column Name="TotalBudget" DataType="System.Decimal"/>
+        <Column Name="TotalFloat" DataType="System.Int32"/>
+        <Column Name="TotalPlannedCosts" DataType="System.Decimal"/>
+        <Column Name="WBSItem" DataType="System.String"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource1" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource2" Alias="Predecessors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Predecessors"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource3" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource4" Alias="Successors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Successors"/>
+      </BusinessObjectDataSource>
+      <Column Name="CustomAttribute1Header" DataType="System.String"/>
+      <Column Name="CustomAttribute2Header" DataType="System.String"/>
+      <Column Name="CustomAttribute3Header" DataType="System.String"/>
+      <Column Name="DataDate" DataType="System.DateTime"/>
+      <Column Name="Date" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+      <Column Name="Description" DataType="System.String"/>
+      <Column Name="EndDate" DataType="System.Nullable`1[[System.DateTime, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"/>
+      <Column Name="FirstDay" DataType="System.DateTime"/>
+      <Column Name="Name" DataType="System.String"/>
+      <Column Name="StartDate" DataType="System.DateTime"/>
+      <Column Name="TotalActualCosts" DataType="System.Decimal"/>
+      <Column Name="TotalBudget" DataType="System.Decimal"/>
+      <Column Name="TotalPlannedCosts" DataType="System.Decimal"/>
+      <BusinessObjectDataSource Name="BusinessObjectDataSource5" Alias="Baselines" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Schedule, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Baselines"/>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" LeftMargin="20">
+    <DataBand Name="Data1" Top="41.13" Width="680.4" Height="18.9" DataSource="Schedule" PrintIfDetailEmpty="true">
+      <TextObject Name="Text22" Left="94.5" Width="94.5" Height="18.9" Text="[Schedule.StartDate]" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text23" Width="94.5" Height="18.9" Text="Startdatum:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text24" Left="189" Width="85.05" Height="18.9" Text="Enddatum:" Format="Date" Format.Format="d" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </DataBand>
+  </ReportPage>
+</Report>

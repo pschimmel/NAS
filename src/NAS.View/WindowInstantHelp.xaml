@@ -1,0 +1,368 @@
+﻿<Window x:Class="NAS.WindowInstantHelp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.InstantHelp}"
+        Width="360"
+        Height="300"
+        Icon="pack://application:,,,/NAS.View;component/Images/Information.png"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStyle="ToolWindow">
+  <Window.Resources>
+    <FlowDocument x:Key="help" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Sofort-Hilfe</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit diesem Hilfefenster erhalten Sie kontextbasierende Hilfe zu allen Funktionen des Programms.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="start" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Hauptbildschirm</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Der Hauptbildschirm teilt sich in einen Tabellenbereich und einen Gantt-Bereich, der die Termine grafisch darstellt.
+      </Paragraph>
+      <Paragraph>
+        Über das Menü im oberen Bereich können Vorgänge und Meilensteine zum Terminplan hinzugefügt und die neuen Vorgänge in der Tabelle mit einer Dauer versehen werden.
+      </Paragraph>
+      <Paragraph>
+        Abhängigkeiten werden erstellt, indem mit der Maus eine Linie von einem Vorgang zu einem anderen gezogen wird.
+      </Paragraph>
+      <Paragraph>
+        Durch einen Doppelklick auf einen Vorgang können die Vorgangsdetails bearbeitet werden.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="wbs" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Projektstrukturplan</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Der Projektstrukturplan dient der Strukturierung der Vorgänge des Projekts.
+      </Paragraph>
+      <Paragraph>
+        Das Hauptelement ist das Projekt, von welchem aus beliebig viele Unterebenen hierarchisch angelegt werden können.
+      </Paragraph>
+      <Paragraph>
+        Der Projektstrukturplan kann als Gruppierung in der Ansicht verwendet werden.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="calendars" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Projektkalender</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Projektkalender definieren die Arbeitstage und die freien Tage der Vorgänge. Bei den Vorgangsdetails kann der Kalender des Vorgangs gewählt werden.
+      </Paragraph>
+      <Paragraph>
+        Die eingegebenen Arbeitstage und die Feiertage werden bei der Berechnung der Start- und Endtermine der Vorgänge berücksichtigt.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="resources" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Ressourcen</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Ressourcen können Arbeitsressourcen, Materialresourcen oder Kalenderresourcen sein. Diese können angelegt und danach den Vorgängen zugeordnet werden.
+      </Paragraph>
+      <Paragraph>
+        Ressourcen können Kosten für jede Einheit zugeordnet werden. Die Anzahl der Einheiten werden bei der Zuordnung zum Vorgang angegeben.
+      </Paragraph>
+      <Paragraph>
+        Arbeitsressourcen beschreiben die Arbeitskräfte, die dem Projekt zur Verfügung stehen. Sie beziehen sich auf Werktage.
+      </Paragraph>
+      <Paragraph>
+        Materialressourcen beschreiben die Materialien, die für das Projekt verwendet werden. Sie beziehen sich auf Werktage.
+      </Paragraph>
+      <Paragraph>
+        Kalenderressourcen verursachen Kosten, die an Kalendertagen auftreten.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="view" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Ansicht</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Im Ansicht-Menü kann der Zoom der Gantt-Ansicht eingestellt werden.
+      </Paragraph>
+      <Paragraph>
+        Außerdem können verschiedene Layouts definiert werden, die die Darstellung der Gantt-Ansicht definieren.
+      </Paragraph>
+      <Paragraph>
+        Die Einstellungen in diesem Menü außer dem Zoom-Faktor beziehen sich immer auf das aktuell ausgewählte Layout.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="sortandgroup" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Sortieren und Gruppieren</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Sortierungen sortieren die Vorgänge in der Gantt-Ansicht. Durch einen Klick auf eine Tabellenspalte wird diese als Sortierkriterium verwendet.
+      </Paragraph>
+      <Paragraph>
+        Gruppierungen gruppieren die Vorgänge in der Gantt-Ansicht nach bestimmten Eigenschaften. Es können mehrere Gruppierkriterien und pro Kriterium eine Farbe ausgewählt werden. In der Tabelle wird dann die Gruppenüberschrift in dieser Farbe dargestellt.
+      </Paragraph>
+      <Paragraph>
+        Gruppierungen und Sortierungen werden im aktuell ausgewählten Layout gespeichert.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="filters" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Filter</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit Filtern können die angezeigten Vorgänge nach bestimmten Eigenschaften gefiltert werden. Beim Anlegen neuer Filter muss die Eigenschaft ausgewählt werden, nach der die Vorgänge gefiltert werden, ein Vergleichsoperator und ein Wert angegeben werden, mit welchem die Vorgangseigenschaft verglichen wird.
+      </Paragraph>
+      <Paragraph>
+        Vorgänge, die durch einen gesetzten Filter nicht mehr sichtbar sind, werden trotzdem bei der Berechnung berücksichtigt.
+      </Paragraph>
+      <Paragraph>
+        Filter werden im aktuell ausgewählten Layout gespeichert.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="baseline" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Basispläne</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit Basisplänen können Soll-Ist-Vergleiche durchgeführt werden. Hierzu kann ein Planstand aus dem aktuellen Plan eingefrohren werden, oder aus einer Datei importiert werden.
+      </Paragraph>
+      <Paragraph>
+        Um den Basisplan in der Gantt-Ansicht zu sehen, muss dieser im aktuellen Layout auf sichtbar gesetzt sein und die Termine des aktuelle Plans müssen sich unterscheiden, um den Basisplan nicht zu verdecken.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="fragnets" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Fragnets</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit Fragnets können Was-Wäre-Wenn-Vergleiche durchgeführt werden. Fragnets entsprechen einem Nachtrag. Im Detailfenster können verschiedene Daten eingegeben werden, um den Nachtrag zu überwachen. Den Fragnets werden bestehende Vorgänge hinzugeordnet.
+      </Paragraph>
+      <Paragraph>
+        Fragnets können einzeln ein- und ausgeblendet werden. Der Terminplan wird im Anschluss neu berechnet um direkt die Auswirkungen sichtbar zu machen.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="compare" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Vergleiche</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Vergleiche zeigen die Unterschiede zwischen zwei Plänen in Textform an. Im Ergebnisfenster kann auch eine grafische Darstellung der Unterschiede aufgerufen werden.
+      </Paragraph>
+      <Paragraph>
+        Basisplan-Vergleiche vergleichen den aktuellen Plan mit dem Basisplan und zeigen so einen Soll-Ist-Vergleich.
+      </Paragraph>
+      <Paragraph>
+        Störungs-Vergleiche vergleichen den aktuellen Plan ohne und mit Störungen und zeigen so die Auswirkungen der Störungen aus.
+      </Paragraph>
+      <Paragraph>
+        Für Fragnet-Vergleiche müssen ein oder mehrere Fragnets ausgewählt werden, die in jeweils einem Plan aktiviert werden sollen. Die beiden Pläne werden neu durchgerechnet und verglichen.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="new" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Neues Projekt</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Diese Funktion legt ein neues Projekt an. Ein Projektname und ein Starttermin müssen angegeben werden.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="print" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Druckausgabe</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Die Druckausgabe druckt den Terminplan mit dem aktuellen Layout.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="reports" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Berichte</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit Berichten können die wichtigsten Daten des Terminplans in Textform ausgewertet werden.
+      </Paragraph>
+      <Paragraph>
+        Bitte wählen Sie einen Bericht aus der Liste. Je nach Kategorie werden unterschiedliche Daten an den Bericht übergeben.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="activity" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Vorgänge</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Vorgänge sind die kleinsten Arbeitsschritte im Terminplan. Es muss mindestens eine Plandauer angegeben werden. Die Vorgangstermine werden dann abhängig von den angegebenen Nachfolgern und Vorgängern berechnet.
+      </Paragraph>
+      <Paragraph>
+        Wenn ein Fortschrittsgrad eingegeben wird, so wird dieser entsprechend im Diagramm dargestellt.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="distortions" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Störungen</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Störungen definieren Abweichungen vom geplanten Fortschritt des Vorgangs. Hiermit können fremdverschuldete Verzögerungen an einem Vorgang dokumentiert werden.
+      </Paragraph>
+      <Paragraph>
+        Jede Störung kann einem Fragnet zugeordnet und zusammen mit diesem ein- und ausgeblendet werden.
+      </Paragraph>
+      <List>
+        <ListItem>
+          <Paragraph>Verzögerungen definieren Störungen, bei denen der Vorgang nicht wie geplant beginnen konnte.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Paragraph>Unterbrechungen definieren Störungen, bei denen der Vorgang unterbrochen werden musste.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Paragraph>Hemmungen definieren Störungen, bei denen der Vorgang nicht wie geplant fortschreiten kann und deshalb länger dauert.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Paragraph>Erweiterungen zusätzliche Leistungen, die die Dauer des Vorgangs verlängern.</Paragraph>
+        </ListItem>
+        <ListItem>
+          <Paragraph>Verringerungen weggefallene Leistungen, die die Dauer des Vorgangs verringern.</Paragraph>
+        </ListItem>
+      </List>
+    </FlowDocument>
+    <FlowDocument x:Key="relationship" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Abhängigkeiten</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Abhängigkeiten definieren Beziehungen zwischen Vorgängen.
+      </Paragraph>
+      <Paragraph>
+        Eine Ende-Start-Beziehung definiert, dass Vorgang 2 nach Vorgang 1 beginnt.
+      </Paragraph>
+      <Paragraph>
+        Eine Start-Start-Beziehung definiert, dass Vorgang 1 und Vorgang 2 gemeinsam beginnen.
+      </Paragraph>
+      <Paragraph>
+        Eine Ende-Ende-Beziehung definiert, dass Vorgang 1 und Vorgang 2 gemeinsam enden.
+      </Paragraph>
+      <Paragraph>
+        Der Abstandswert definiert einen Abstand zwischen den Vorgängen.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="properties" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Projekt-Eigenschaften</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Die Projekt-Eigenschaften definieren die Grunddaten des Projekts. Das aktuelle Datum wird für die Berechnung der Termine verwendet.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="layout" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Layout</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Ein Layout definiert die aktuelle Ansicht des Projekts. Es können mehrere Layouts pro Projekt angelegt werden.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="calculate" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Berechnen</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Mit dem Berechnen des Terminplans werden alle Termine der Vorgänge neu berechnet und die Ansicht aktualisiert.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="pert" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>PERT-Diagramm</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Das PERT-Diagramm zeigt die Vorgänge in der PERT-Ansicht.
+      </Paragraph>
+      <Paragraph>
+        Mit der Maus können Abhängigkeiten gezeichnet werden. Durch das Drücken der Steuerungstaste beim Ziehen von Vorgängen wird der Vorgang verschoben.
+      </Paragraph>
+    </FlowDocument>
+    <FlowDocument x:Key="customattributes" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+      <Paragraph>
+        <Underline>
+          <Bold>Benutzerdefinierte Attribute</Bold>
+        </Underline>
+      </Paragraph>
+      <Paragraph>
+        Hier können Sie eigene Attribute anlegen, nach denen sie die Vorgänge gruppieren und sortieren können.
+      </Paragraph>
+      <Paragraph>
+        Mit der Maus können Abhängigkeiten gezeichnet werden. Durch das Drücken der Steuerungstaste beim Ziehen von Vorgängen wird der Vorgang verschoben.
+      </Paragraph>
+    </FlowDocument>
+  </Window.Resources>
+  <Grid>
+    <FlowDocumentReader Name="reader"
+                        BorderBrush="Gray"
+                        BorderThickness="1"
+                        Document="{Binding Source={StaticResource help}}"
+                        IsFindEnabled="False"
+                        IsTwoPageViewEnabled="False"
+                        ViewingMode="Scroll" />
+    <Button Margin="5"
+            Padding="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Click="buttonPrint_Click"
+            ToolTip="{x:Static resx:NASResources.Print}">
+      <Button.Resources>
+        <Style TargetType="Button">
+          <Setter Property="Template">
+            <Setter.Value>
+              <ControlTemplate>
+                <Image Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Print.png" />
+              </ControlTemplate>
+            </Setter.Value>
+          </Setter>
+        </Style>
+      </Button.Resources>
+    </Button>
+  </Grid>
+</Window>

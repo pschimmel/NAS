@@ -1,0 +1,69 @@
+﻿<Window x:Class="NAS.WindowFragnet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.Fragnet}" Height="500" Width="500" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/EditFragnets.png">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="1*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="4*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <TextBlock Text="{x:Static resx:NASResources.Number}" Margin="5"/>
+    <TextBox Grid.Column="1" Text="{Binding CurrentFragnet.Number}" Margin="2" Grid.ColumnSpan="2" />
+    <CheckBox Content="{x:Static resx:NASResources.FragnetIsVisible}" HorizontalAlignment="Left" IsChecked="{Binding CurrentFragnet.IsVisible}" VerticalAlignment="Center" Grid.Column="3" Margin="5" />
+    <TextBlock Text="{x:Static resx:NASResources.Name}" Grid.Row="1" Margin="5" />
+    <TextBox Grid.Column="1" Grid.Row="1" Margin="2" Text="{Binding CurrentFragnet.Name}" Grid.ColumnSpan="3" />
+    <TextBlock Text="{x:Static resx:NASResources.Description}" Grid.Row="2" VerticalAlignment="Top" Margin="5" />
+    <TextBox Text="{Binding CurrentFragnet.Description}" Grid.Column="1" Grid.Row="2" Margin="2" TextWrapping="Wrap" Grid.ColumnSpan="3" AcceptsReturn="True" />
+    <TextBlock Text="{x:Static resx:NASResources.Discovered}" Grid.Row="3" Margin="5" />
+    <DatePicker Grid.Row="3" Margin="2" Width="150" SelectedDate="{Binding CurrentFragnet.Identified}" Grid.Column="1" HorizontalAlignment="Left" />
+    <TextBlock Text="{x:Static resx:NASResources.Announced}" Grid.Row="3" Grid.Column="2" Margin="5" />
+    <DatePicker Margin="2" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Width="150" SelectedDate="{Binding CurrentFragnet.Submitted}" />
+    <TextBlock Text="{x:Static resx:NASResources.Commissioned}" Grid.Row="4" Margin="5" />
+    <DatePicker Grid.Column="1" Margin="2" Grid.Row="4" HorizontalAlignment="Left" Width="150" SelectedDate="{Binding CurrentFragnet.Approved}" />
+    <CheckBox Content="{x:Static resx:NASResources.ModificationIsDisputable}" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Grid.Row="4" HorizontalAlignment="Left" Margin="5" IsChecked="{Binding CurrentFragnet.IsDisputable}" />
+    <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="{x:Static resx:NASResources.Activities}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddActivityToFragnetCommand}" ToolTip="{x:Static resx:NASResources.AddActivity}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/AddActivity.png" Width="16" />
+            </Button>
+            <Button Command="{Binding RemoveActivityFromFragnetCommand}" ToolTip="{x:Static resx:NASResources.RemoveActivity}">
+              <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/RemoveActivity.png" Width="16" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <DataGrid ItemsSource="{Binding CurrentFragnet.Activities}" SelectedItem="{Binding CurrentFragnetActivity, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" Grid.Row="1" Margin="2" IsSynchronizedWithCurrentItem="True" Name="dataGrid" SelectionMode="Single" IsReadOnly="True" >
+          <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Number}" Header="{x:Static resx:NASResources.Number}" Width="Auto" />
+            <DataGridTextColumn Binding="{Binding Name}" Header="{x:Static resx:NASResources.Name}" Width="Auto" />
+            <DataGridTextColumn Binding="{Binding OriginalDuration}" Header="{x:Static resx:NASResources.PlannedDuration}" ElementStyle="{StaticResource RightAlignment}" Width="Auto" />
+            <DataGridTextColumn Binding="{Binding StartDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.StartDate}" Width="Auto" />
+            <DataGridTextColumn Binding="{Binding FinishDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.FinishDate}" Width="Auto" />
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
+    </GroupBox>
+    <TextBlock TextWrapping="Wrap" Margin="5" Grid.Row="6" Grid.ColumnSpan="4" FontWeight="Bold" Foreground="Red" Text="{Binding ErrorMessage}" Visibility="{Binding HasErrors, Converter={StaticResource VisibilityConverter}}" />
+    <Button Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Height="23" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Bottom" Width="75" IsDefault="True" />
+    <Button Click="buttonCancel_Click" Content="{x:Static resx:NASResources.Cancel}" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3" Height="23" HorizontalAlignment="Right" Margin="5,5,85,5" VerticalAlignment="Bottom" Width="75" IsCancel="True" />
+  </Grid>
+</Window>

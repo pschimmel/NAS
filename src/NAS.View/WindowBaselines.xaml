@@ -1,0 +1,42 @@
+﻿<Window x:Class="NAS.WindowBaselines"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.EditBaselines}" Height="350" Width="400" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/EditBaselines.png">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ToolBarPanel>
+      <ToolBar ToolBarTray.IsLocked="True">
+        <Button Command="{Binding AddBaselineCommand}" ToolTip="{x:Static resx:NASResources.AddBaseline}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" Width="16" />
+        </Button>
+        <Button Command="{Binding RemoveBaselineCommand}" ToolTip="{x:Static resx:NASResources.RemoveBaseline}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" Width="16" />
+        </Button>
+        <Button Command="{Binding ImportBaselineCommand}" ToolTip="{x:Static resx:NASResources.ImportBaseline}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/ImportBaseline.png" Width="16" />
+        </Button>
+        <Button Command="{Binding ExportBaselineCommand}" ToolTip="{x:Static resx:NASResources.ExportBaseline}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/ExportBaseline.png" Width="16" />
+        </Button>
+      </ToolBar>
+    </ToolBarPanel>
+    <DataGrid AutoGenerateColumns="False" GridLinesVisibility="Horizontal" Margin="2" Grid.Row="1" ItemsSource="{Binding Schedule.Baselines}" SelectedItem="{Binding CurrentBaseline}" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" CanUserAddRows="False" CanUserDeleteRows="False" Background="WhiteSmoke" IsReadOnly="True">
+      <DataGrid.InputBindings>
+        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditBaselineCommand}" />
+      </DataGrid.InputBindings>
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="{x:Static resx:NASResources.Name}" Binding="{Binding Name}" Width="Auto" />
+        <DataGridTextColumn Header="{x:Static resx:NASResources.Date}" Binding="{Binding Date, Converter={StaticResource DateConverter}}" Width="Auto" />
+        <DataGridTextColumn Header="{x:Static resx:NASResources.DataDate}" Binding="{Binding DataDate, Converter={StaticResource DateConverter}}" Width="Auto" />
+      </DataGrid.Columns>
+    </DataGrid>
+    <Button Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" Grid.Row="3" Height="23" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Bottom" Width="75" />
+  </Grid>
+</Window>

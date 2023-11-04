@@ -1,0 +1,83 @@
+﻿<Window x:Class="NAS.WindowFilterDefinitions"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:NAS.View.Converters"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        Title="{x:Static resx:NASResources.Filter}"
+        Width="350"
+        Height="300"
+        Icon="pack://application:,,,/NAS.View;component/Images/Filter.png"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
+  <Window.Resources>
+    <converters:FilterCombinationTypeConverter x:Key="FilterCombinationTypeConverter" />
+    <Style TargetType="{x:Type ListBoxItem}">
+      <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    <ToolBarPanel Grid.ColumnSpan="3">
+      <ToolBar ToolBarTray.IsLocked="True">
+        <Button Command="{Binding AddFilterDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddFilter}">
+          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+        </Button>
+        <Button Command="{Binding RemoveFilterDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveFilter}">
+          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+        </Button>
+        <Button Command="{Binding RemoveAllFilterDefinitionsCommand}" ToolTip="{x:Static resx:NASResources.RemoveAllFilters}">
+          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Clear.png" />
+        </Button>
+      </ToolBar>
+    </ToolBarPanel>
+    <ListBox Grid.Row="1"
+             Grid.ColumnSpan="3"
+             Margin="2"
+             IsSynchronizedWithCurrentItem="True"
+             ItemsSource="{Binding Layout.FilterDefinitions}"
+             SelectedItem="{Binding CurrentFilterDefinition}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Name}">
+            <TextBlock.InputBindings>
+              <MouseBinding Command="{Binding DataContext.EditFilterDefinitionCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+            </TextBlock.InputBindings>
+          </TextBlock>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+    <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.Combination}" />
+    <ComboBox Grid.Row="2"
+              Grid.Column="1"
+              Width="100"
+              Height="25"
+              Margin="2"
+              ItemsSource="{Binding FilterCombinationTypes}"
+              SelectedItem="{Binding Layout.FilterCombination}">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource FilterCombinationTypeConverter}}" />
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+    </ComboBox>
+    <Button Grid.Row="3"
+            Grid.Column="2"
+            MinWidth="75"
+            Margin="2"
+            HorizontalAlignment="Right"
+            Click="buttonOK_Click"
+            Content="{x:Static resx:NASResources.OK}" />
+  </Grid>
+</Window>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="NAS.WindowCompareResults"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.Comparison}" Height="342" Width="613" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/Compare.png">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <FlowDocumentReader Name="reader" IsTwoPageViewEnabled="False" ViewingMode="Scroll" Document="{Binding ComparisonDocument}" />
+    <Button Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" Grid.Row="2" Grid.Column="1" Height="23" HorizontalAlignment="Right" Margin="5" Width="75" />
+    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left">
+      <Button Margin="5" Command="{Binding PrintCommand}">
+        <StackPanel Orientation="Horizontal" Margin="2">
+          <Image Source="pack://application:,,,/NAS.View;component/Images/Print.png" Height="16" Width="16" />
+          <TextBlock Padding="5,0,0,0" Text="{x:Static resx:NASResources.Print}" />
+        </StackPanel>
+      </Button>
+      <Button Command="{Binding ShowComparisonGraphicCommand}" Margin="0,5,5,5" Name="buttonShowFragnet" ToolTip="Grafik anzeigen">
+        <StackPanel Orientation="Horizontal" Margin="2">
+          <Image Source="pack://application:,,,/NAS.View;component/Images/Chart.png" Height="16" Width="16" />
+          <TextBlock Padding="5,0,0,0" Text="{x:Static resx:NASResources.ShowChart}" />
+        </StackPanel>
+      </Button>
+    </StackPanel>
+  </Grid>
+</Window>

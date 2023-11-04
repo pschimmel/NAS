@@ -1,0 +1,394 @@
+﻿<Window x:Class="NAS.WindowActivity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:NAS.View.Converters"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        Title="{x:Static resx:NASResources.EditActivity}"
+        Width="600"
+        Height="450"
+        Icon="pack://application:,,,/NAS.View;component/Images/Activity.png"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
+  <Window.Resources>
+    <converters:CurrencyConverter x:Key="CurrencyConverter" />
+    <converters:ConstraintTypeConverter x:Key="ConstraintTypeConverter" />
+    <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
+  </Window.Resources>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="5" />
+      <RowDefinition />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
+    <TextBlock Margin="5" Text="{x:Static resx:NASResources.ID}" />
+    <TextBox Grid.Column="1" Margin="2" Text="{Binding CurrentActivity.Number}" />
+    <TextBlock Grid.Column="2" Margin="5" Text="{x:Static resx:NASResources.Name}" />
+    <TextBox Grid.Column="3" Margin="2" Text="{Binding CurrentActivity.Name}" />
+    <Image Grid.Column="4"
+           Width="16"
+           Height="16"
+           Source="pack://application:,,,/NAS.View;component/Images/Lock.png"
+           Visibility="{Binding CurrentActivityIsFixed, Converter={StaticResource VisibilityConverter}}" />
+    <TabControl Grid.Row="2" Grid.ColumnSpan="5">
+      <TabItem Header="{x:Static resx:NASResources.BasicData}">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <GroupBox Header="{x:Static resx:NASResources.PlannedDates}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <TextBlock Grid.Row="0" Margin="5" VerticalAlignment="Center" Text="{x:Static resx:NASResources.PlannedDuration}" />
+              <TextBox Grid.Row="0"
+                       Grid.Column="1"
+                       Height="23"
+                       Margin="2"
+                       IsEnabled="{Binding CurrentActivityIsActivity}"
+                       Text="{Binding CurrentActivity.OriginalDuration}" />
+              <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.EarlyStartDate}" />
+              <TextBlock Grid.Column="2" Margin="5" Text="{x:Static resx:NASResources.Calendar}" />
+              <ComboBox Grid.Column="3"
+                        Height="23"
+                        Margin="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Top"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Schedule.Calendars}"
+                        SelectedItem="{Binding CurrentActivity.Calendar}" />
+              <DatePicker Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding CurrentActivity.EarlyStartDate}" />
+              <TextBlock Grid.Row="1"
+                         Grid.Column="2"
+                         Margin="5"
+                         Text="{x:Static resx:NASResources.EarlyFinishDate}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <DatePicker Grid.Row="1"
+                          Grid.Column="3"
+                          Margin="2"
+                          SelectedDate="{Binding CurrentActivity.EarlyFinishDate}"
+                          Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.LateStartDate}" />
+              <TextBlock Grid.Row="2"
+                         Grid.Column="1"
+                         Margin="5"
+                         FontWeight="Bold"
+                         Text="{Binding CurrentActivity.LateStartDate, Converter={StaticResource DateConverter}}" />
+              <TextBlock Grid.Row="2"
+                         Grid.Column="2"
+                         Margin="5"
+                         Text="{x:Static resx:NASResources.LateFinishDate}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="2"
+                         Grid.Column="3"
+                         Margin="5"
+                         FontWeight="Bold"
+                         Text="{Binding CurrentActivity.LateFinishDate, Converter={StaticResource DateConverter}}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.TotalFloat}" />
+              <TextBlock Grid.Row="3"
+                         Grid.Column="1"
+                         Margin="5"
+                         FontWeight="Bold"
+                         Text="{Binding CurrentActivity.TotalFloat}" />
+              <TextBlock Grid.Row="3" Grid.Column="2" Margin="5" Text="{x:Static resx:NASResources.FreeFloat}" />
+              <TextBlock Grid.Row="3"
+                         Grid.Column="3"
+                         Margin="5"
+                         FontWeight="Bold"
+                         Text="{Binding CurrentActivity.FreeFloat}" />
+            </Grid>
+          </GroupBox>
+          <GroupBox Grid.Row="1" Header="{x:Static resx:NASResources.ActualDates}">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+              </Grid.RowDefinitions>
+              <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.ActualStartDate}" />
+              <DatePicker Grid.Row="1" Grid.Column="1" Margin="2" SelectedDate="{Binding CurrentActivity.ActualStartDate}" />
+              <TextBlock Grid.Row="1"
+                         Grid.Column="2"
+                         Margin="5"
+                         Text="{x:Static resx:NASResources.ActualFinishDate}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <DatePicker Grid.Row="1"
+                          Grid.Column="3"
+                          Margin="2"
+                          SelectedDate="{Binding CurrentActivity.ActualFinishDate}"
+                          Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.PercentComplete}" />
+              <TextBox Grid.Row="2"
+                       Grid.Column="1"
+                       Height="23"
+                       Margin="2"
+                       HorizontalContentAlignment="Right"
+                       Text="{Binding CurrentActivity.PercentComplete}" />
+              <TextBlock Grid.Row="2"
+                         Grid.Column="2"
+                         Margin="5"
+                         Text="{x:Static resx:NASResources.RemainingDuration}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBox Grid.Row="2"
+                       Grid.Column="3"
+                       Margin="2"
+                       HorizontalContentAlignment="Right"
+                       Text="{Binding CurrentActivity.RemainingDuration}"
+                       Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.ActualDuration}" Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="3"
+                         Grid.Column="1"
+                         Margin="5"
+                         HorizontalAlignment="Right"
+                         Text="{Binding CurrentActivity.ActualDuration}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="3"
+                         Grid.Column="2"
+                         Margin="5"
+                         Text="{x:Static resx:NASResources.AtComplete}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+              <TextBlock Grid.Row="3"
+                         Grid.Column="3"
+                         Margin="5"
+                         HorizontalAlignment="Right"
+                         Text="{Binding CurrentActivity.AtCompletionDuration}"
+                         Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}" />
+            </Grid>
+          </GroupBox>
+        </Grid>
+      </TabItem>
+      <TabItem Header="{x:Static resx:NASResources.ExtendedData}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <TextBlock Margin="5" Text="{x:Static resx:NASResources.WBS}" />
+          <Button Grid.Column="1" Margin="2" Command="{Binding SelectWBSCommand}" Content="{Binding CurrentActivity.WBSItem.FullName, TargetNullValue=(keins)}" />
+          <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Fragnet}" />
+          <ComboBox Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="2"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Schedule.Fragnets}"
+                    KeyDown="comboBox_KeyDown"
+                    SelectedItem="{Binding CurrentActivity.Fragnet}" />
+          <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.Constraint}" Visibility="{Binding CurrentActivityIsNotFixed, Converter={StaticResource VisibilityConverter}}" />
+          <ComboBox Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="2"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding ConstraintTypes}"
+                    KeyDown="comboBox_KeyDown"
+                    SelectedItem="{Binding CurrentActivity.Constraint}"
+                    Visibility="{Binding CurrentActivityIsNotFixed, Converter={StaticResource VisibilityConverter}}">
+            <ComboBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock Height="Auto" Margin="0" VerticalAlignment="Center" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ConstraintTypeConverter}}" />
+              </DataTemplate>
+            </ComboBox.ItemTemplate>
+          </ComboBox>
+          <DatePicker Grid.Row="3"
+                      Grid.Column="1"
+                      Width="120"
+                      Margin="2"
+                      HorizontalAlignment="Left"
+                      SelectedDate="{Binding CurrentActivity.ConstraintDate}" />
+          <TextBlock Grid.Row="4" Margin="5" Text="{Binding Schedule.CustomAttribute1Header}" />
+          <ComboBox Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="2"
+                    DisplayMemberPath="Name"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Schedule.CustomAttributes1}"
+                    KeyDown="comboBox_KeyDown"
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute1}" />
+          <TextBlock Grid.Row="5" Margin="5" Text="{Binding Schedule.CustomAttribute2Header}" />
+          <ComboBox Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="2"
+                    DisplayMemberPath="Name"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Schedule.CustomAttributes2}"
+                    KeyDown="comboBox_KeyDown"
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute2}" />
+          <TextBlock Grid.Row="6" Margin="5" Text="{Binding Schedule.CustomAttribute3Header}" />
+          <ComboBox Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="2"
+                    DisplayMemberPath="Name"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Schedule.CustomAttributes3}"
+                    KeyDown="comboBox_KeyDown"
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute3}" />
+          <WrapPanel Grid.Row="7" Grid.Column="1">
+            <Button Margin="2" Command="{Binding EditLogicCommand}">
+              <StackPanel Orientation="Horizontal">
+                <tools:AutoGrayableImage Width="24" Height="24" Margin="2" Source="pack://application:,,,/NAS.View;component/Images/EditRelationships.png" />
+                <TextBlock Margin="2" VerticalAlignment="Center" Text="{x:Static resx:NASResources.EditLogic}" />
+              </StackPanel>
+            </Button>
+            <Button Margin="2" Command="{Binding EditDistortionsCommand}" Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}">
+              <StackPanel Orientation="Horizontal">
+                <tools:AutoGrayableImage Width="24" Height="24" Margin="2" Source="pack://application:,,,/NAS.View;component/Images/Distortion.png" />
+                <TextBlock Margin="2" VerticalAlignment="Center" Text="{x:Static resx:NASResources.EditDistortions}" />
+              </StackPanel>
+            </Button>
+          </WrapPanel>
+        </Grid>
+      </TabItem>
+      <TabItem Header="{x:Static resx:NASResources.ResourceAssignments}" Visibility="{Binding CurrentActivityIsActivity, Converter={StaticResource VisibilityConverter}}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="73*" />
+            <ColumnDefinition Width="141*" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="214*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <ToolBarPanel Grid.ColumnSpan="6">
+            <ToolBar ToolBarTray.IsLocked="True">
+              <Button Command="{Binding AddResourceAssociationCommand}" Focusable="False" ToolTip="{x:Static resx:NASResources.AddResource}">
+                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+              </Button>
+              <Button Command="{Binding RemoveResourceAssociationCommand}" Focusable="False" ToolTip="{x:Static resx:NASResources.RemoveResource}">
+                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+              </Button>
+            </ToolBar>
+          </ToolBarPanel>
+          <TextBlock Grid.Row="2"
+                     Grid.RowSpan="2"
+                     Grid.Column="0"
+                     Margin="5,18"
+                     VerticalAlignment="Center"
+                     Text="{x:Static resx:NASResources.Budget}" />
+          <TextBlock Grid.Row="2"
+                     Grid.RowSpan="2"
+                     Grid.Column="1"
+                     Grid.ColumnSpan="2"
+                     Margin="5,18"
+                     VerticalAlignment="Center"
+                     FontWeight="Bold"
+                     Text="{Binding CurrentActivity.TotalBudget, StringFormat={}{0:N} €}"
+                     TextAlignment="Right" />
+          <TextBlock Grid.Row="2" Grid.Column="4" Margin="5" Text="{x:Static resx:NASResources.PlannedCosts}" />
+          <TextBlock Grid.Row="2"
+                     Grid.Column="5"
+                     Margin="5"
+                     FontWeight="Bold"
+                     Text="{Binding CurrentActivity.TotalPlannedCosts, StringFormat={}{0:N} €}"
+                     TextAlignment="Right" />
+          <TextBlock Grid.Row="3" Grid.Column="4" Margin="5" Text="{x:Static resx:NASResources.ActualCosts}" />
+          <TextBlock Grid.Row="3"
+                     Grid.Column="5"
+                     Margin="5"
+                     FontWeight="Bold"
+                     Text="{Binding CurrentActivity.TotalActualCosts, StringFormat={}{0:N} €}"
+                     TextAlignment="Right" />
+          <DataGrid Grid.Row="1"
+                    Grid.ColumnSpan="6"
+                    Margin="2"
+                    AutoGenerateColumns="False"
+                    GridLinesVisibility="Horizontal"
+                    IsReadOnly="True"
+                    IsSynchronizedWithCurrentItem="True"
+                    ItemsSource="{Binding CurrentActivity.ResourceAssociations}"
+                    SelectedItem="{Binding CurrentResourceAssociation, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.InputBindings>
+              <MouseBinding Command="{Binding EditResourceAssociationCommand}" Gesture="LeftDoubleClick" />
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+              <DataGridTextColumn Width="Auto" Binding="{Binding Resource.Name, Mode=OneWay}" Header="{x:Static resx:NASResources.Resource}" IsReadOnly="True" />
+              <DataGridTextColumn Width="Auto" Binding="{Binding Resource.Unit, Mode=OneWay}" Header="{x:Static resx:NASResources.Unit}" IsReadOnly="True" />
+              <DataGridTextColumn Width="Auto" Binding="{Binding Budget, StringFormat={}{0:N} €}" ElementStyle="{StaticResource RightAlignment}" Header="{x:Static resx:NASResources.Budget}" />
+              <DataGridTextColumn Width="Auto" Binding="{Binding FixedCosts, StringFormat={}{0:N} €}" ElementStyle="{StaticResource RightAlignment}" Header="{x:Static resx:NASResources.FixedCosts}" />
+              <DataGridTextColumn Width="Auto"
+                                  Binding="{Binding Resource.CostsPerUnit, StringFormat={}{0:N} €, Mode=OneWay}"
+                                  ElementStyle="{StaticResource RightAlignment}"
+                                  Header="{x:Static resx:NASResources.CostsPerUnit}"
+                                  IsReadOnly="True" />
+              <DataGridTextColumn Width="Auto" Binding="{Binding UnitsPerDay}" ElementStyle="{StaticResource RightAlignment}" Header="{x:Static resx:NASResources.UnitsPerDay}" />
+              <DataGridTextColumn Width="Auto"
+                                  Binding="{Binding PlannedCosts, StringFormat={}{0:N} €, Mode=OneWay}"
+                                  ElementStyle="{StaticResource RightAlignment}"
+                                  Header="{x:Static resx:NASResources.PlannedCosts}"
+                                  IsReadOnly="True" />
+              <DataGridTextColumn Width="Auto"
+                                  Binding="{Binding ActualCosts, StringFormat={}{0:N} €, Mode=OneWay}"
+                                  ElementStyle="{StaticResource RightAlignment}"
+                                  Header="{x:Static resx:NASResources.ActualCosts}"
+                                  IsReadOnly="True" />
+            </DataGrid.Columns>
+          </DataGrid>
+        </Grid>
+      </TabItem>
+    </TabControl>
+    <TextBlock Grid.Row="3"
+               Grid.ColumnSpan="4"
+               Margin="5"
+               FontWeight="Bold"
+               Foreground="Red"
+               Text="{Binding ErrorMessage}"
+               TextWrapping="Wrap"
+               Visibility="{Binding HasErrors, Converter={StaticResource VisibilityConverter}}" />
+    <StackPanel Grid.Row="4"
+                Grid.ColumnSpan="5"
+                Margin="2"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+      <Button MinWidth="75" Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" IsDefault="True" />
+      <Button MinWidth="75"
+              Margin="2,0,0,0"
+              Click="buttonCancel_Click"
+              Content="{x:Static resx:NASResources.Cancel}"
+              IsCancel="True" />
+    </StackPanel>
+  </Grid>
+</Window>

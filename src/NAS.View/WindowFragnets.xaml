@@ -1,0 +1,42 @@
+﻿<Window x:Class="NAS.WindowFragnets"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        Title="{x:Static resx:NASResources.Fragnets}" Height="300" Width="500" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/EditFragnets.png">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <ToolBarPanel>
+      <ToolBar ToolBarTray.IsLocked="True">
+        <Button Command="{Binding AddFragnetCommand}" ToolTip="{x:Static resx:NASResources.AddFragnet}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" Width="16" />
+        </Button>
+        <Button Command="{Binding RemoveFragnetCommand}" ToolTip="{x:Static resx:NASResources.RemoveFragnet}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" Width="16" />
+        </Button>
+        <Button Command="{Binding ShowFragnetCommand}" ToolTip="{x:Static resx:NASResources.ShowFragnet}">
+          <tools:AutoGrayableImage Height="16" Source="pack://application:,,,/NAS.View;component/Images/Zoom.png" Width="16" />
+        </Button>
+      </ToolBar>
+    </ToolBarPanel>
+    <DataGrid AutoGenerateColumns="False" Grid.Row="1" Margin="2" SelectedItem="{Binding CurrentFragnet}" ItemsSource="{Binding Schedule.Fragnets}" IsSynchronizedWithCurrentItem="True" Name="dataGrid" SelectionMode="Single" IsReadOnly="True">
+      <DataGrid.InputBindings>
+        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding EditFragnetCommand}" />
+      </DataGrid.InputBindings>
+      <DataGrid.Columns>
+        <DataGridTextColumn Binding="{Binding Number}" Header="{x:Static resx:NASResources.Number}" Width="Auto" />
+        <DataGridTextColumn Binding="{Binding Name}" Header="{x:Static resx:NASResources.Name}" Width="Auto" />
+        <DataGridTextColumn Binding="{Binding Identified, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Discovered}" Width="Auto" />
+        <DataGridTextColumn Binding="{Binding Submitted, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Announced}" Width="Auto" />
+        <DataGridTextColumn Binding="{Binding Approved, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Commissioned}" Width="Auto" />
+        <DataGridCheckBoxColumn Binding="{Binding IsVisible}" Header="{x:Static resx:NASResources.Visible}" Width="Auto" />
+      </DataGrid.Columns>
+    </DataGrid>
+    <Button Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" Grid.Row="3" HorizontalAlignment="Right" MinWidth="75" Margin="2" />
+  </Grid>
+</Window>
