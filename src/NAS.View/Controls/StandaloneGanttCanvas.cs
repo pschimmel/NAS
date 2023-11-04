@@ -7,6 +7,7 @@ using System.Windows.Shapes;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.ViewModel;
+using NAS.ViewModel.Base;
 
 namespace NAS.View.Controls
 {
@@ -15,6 +16,8 @@ namespace NAS.View.Controls
     private Dictionary<ActivityProperty, double> columnWidths;
     private double row;
     private const double minColumnWidth = 10;
+
+    public object DataContext { get; set; }
 
     protected override void RefreshInternal()
     {

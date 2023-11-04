@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.View.Helpers;
@@ -79,12 +80,12 @@ namespace NAS.View.Controls
 
     #region ViewModel
 
-    private IScheduleViewModel VM => DataContext as IScheduleViewModel;
+    private ScheduleViewModel VM => DataContext as ScheduleViewModel;
 
     private void Canvas_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       suspendRefreshing = true;
-      if (e.OldValue is IScheduleViewModel oldVM)
+      if (e.OldValue is ScheduleViewModel oldVM)
       {
         oldVM.PropertyChanged -= ViewModel_PropertyChanged;
         oldVM.ActivityAdded -= ViewModel_ActivityAdded;
@@ -95,7 +96,7 @@ namespace NAS.View.Controls
         Layout = null;
       }
 
-      if (e.NewValue is IScheduleViewModel vm)
+      if (e.NewValue is ScheduleViewModel vm)
       {
         vm.PropertyChanged += ViewModel_PropertyChanged;
         vm.ActivityAdded += ViewModel_ActivityAdded;

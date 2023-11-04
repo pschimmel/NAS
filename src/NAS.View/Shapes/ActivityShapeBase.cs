@@ -1,15 +1,15 @@
 ﻿using System.Windows.Shapes;
-using NAS.Model.Entities;
+using NAS.ViewModel;
 
 namespace NAS.View.Shapes
 {
-  public abstract class ActivityShapeBase : Shape, IActivityDiagram<Activity>
+  public abstract class ActivityShapeBase : Shape, IActivityDiagram<ActivityViewModel>
   {
-    protected ActivityShapeBase(Activity activity)
+    protected ActivityShapeBase(ActivityViewModel activity)
     {
       Item = activity;
     }
 
-    public Activity Item { get; private set; }
+    public ActivityViewModel Item { get; private set; }
   }
 }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Shapes;
-using NAS.Model.Entities;
+using NAS.ViewModel;
 
 namespace NAS.View.Shapes
 {
@@ -11,7 +9,7 @@ namespace NAS.View.Shapes
     private Rect _rect = Rect.Empty;
     private readonly double radius = 2;
 
-    public ActivityShape(Activity activity) : base(activity)
+    public ActivityShape(ActivityViewModel activity) : base(activity)
     { }
 
     public override Geometry RenderedGeometry => new RectangleGeometry(_rect, radius, radius);

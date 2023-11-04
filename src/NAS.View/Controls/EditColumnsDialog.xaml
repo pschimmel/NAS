@@ -1,17 +1,17 @@
-﻿<UserControl x:Class="NAS.View.Controls.EditColumnsDialog"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:NAS.View.Converters"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dnd="urn:gong-wpf-dragdrop"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
-             d:DesignHeight="350"
-             d:DesignWidth="400"
-             mc:Ignorable="d">
-  <UserControl.Resources>
+﻿<Window x:Class="NAS.View.Controls.EditColumnsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:NAS.View.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dnd="urn:gong-wpf-dragdrop"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        d:DesignHeight="350"
+        d:DesignWidth="400"
+        mc:Ignorable="d">
+  <Window.Resources>
     <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
-  </UserControl.Resources>
+  </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -33,7 +33,10 @@
               <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <CheckBox VerticalAlignment="Center" IsChecked="{Binding Path=IsVisible}" />
-            <TextBlock Grid.Column="1" Margin="5,2" VerticalAlignment="Center" Text="{Binding Path=Property, Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+            <TextBlock Grid.Column="1"
+                       Margin="5,2"
+                       VerticalAlignment="Center"
+                       Text="{Binding Path=Property, Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
           </Grid>
         </DataTemplate>
       </ListBox.ItemTemplate>
@@ -41,12 +44,16 @@
     <ToolBarPanel>
       <ToolBar ToolBarTray.IsLocked="True">
         <Button Command="{Binding MoveColumnUpCommand}" ToolTip="Nach unten">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
         </Button>
         <Button Command="{Binding MoveColumnDownCommand}" ToolTip="Nach oben">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
   </Grid>
-</UserControl>
+</Window>

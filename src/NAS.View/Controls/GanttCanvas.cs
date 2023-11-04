@@ -9,10 +9,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ES.Tools.Core.MVVM;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
+using NAS.View.Helpers;
 using NAS.View.Shapes;
 using NAS.ViewModel;
+using NAS.ViewModel.Base;
+using Activity = NAS.Model.Entities.Activity;
 
 namespace NAS.View.Controls
 {
@@ -47,7 +52,7 @@ namespace NAS.View.Controls
     protected double tableWidth;
     protected Layout layout;
     private bool suspendRefreshing = false;
-    private Activity dragActivity;
+    private ActivityViewModel dragActivity;
     private ActivityMousePosition dragActivityPosition = ActivityMousePosition.Middle;
     private ActivityMousePosition dropActivityPosition = ActivityMousePosition.Middle;
     private Line tempLine = null;
@@ -133,12 +138,12 @@ namespace NAS.View.Controls
 
     #region ViewModel
 
-    protected IScheduleViewModel VM => DataContext as IScheduleViewModel;
+    protected ScheduleViewModel VM => DataContext as ScheduleViewModel;
 
     private void Canvas_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       suspendRefreshing = true;
-      if (e.OldValue is IScheduleViewModel oldVM)
+      if (e.OldValue is ScheduleViewModel oldVM)
       {
         oldVM.PropertyChanged -= ViewModel_PropertyChanged;
         oldVM.ActivityAdded -= ViewModel_ActivityAdded;
@@ -152,7 +157,7 @@ namespace NAS.View.Controls
         Layout = null;
       }
 
-      if (e.NewValue is IScheduleViewModel vm)
+      if (e.NewValue is ScheduleViewModel vm)
       {
         vm.PropertyChanged += ViewModel_PropertyChanged;
         vm.ActivityAdded += ViewModel_ActivityAdded;
@@ -240,11 +245,11 @@ namespace NAS.View.Controls
 
       if (e.PropertyName == "CurrentActivity")
       {
-        Select<ActivityShapeBase, Activity>(VM.CurrentActivity);
+        Select<ActivityShapeBase, ActivityViewModel>(VM.CurrentActivity);
       }
       else if (e.PropertyName == "CurrentRelationship")
       {
-        Select<RelationshipPath, Relationship>(VM.CurrentRelationship);
+        Select<RelationshipPath, RelationshipViewModel>(VM.CurrentRelationship);
       }
       else if (e.PropertyName == "Zoom")
       {
@@ -618,7 +623,7 @@ namespace NAS.View.Controls
 
     #region Relationships
 
-    protected void AddRelationship(Relationship relationship)
+    protected void AddRelationship(RelationshipViewModel relationship)
     {
       if (!layout.ShowRelationships)
       {
@@ -633,10 +638,10 @@ namespace NAS.View.Controls
       }
       Children.Insert(0, path);
       SetZIndex(path, 1);
-      RefreshRelationship(relationship);
+      RefreshRelationship(relationship.Relationship);
     }
 
-    private void RemoveRelationship(Relationship relationship)
+    private void RemoveRelationship(RelationshipViewModel relationship)
     {
       foreach (var e in Children.OfType<RelationshipPath>().Where(x => x.Item == relationship).ToList())
       {
@@ -644,7 +649,7 @@ namespace NAS.View.Controls
       }
     }
 
-    private void RefreshRelationship(Relationship relationship)
+    private void RefreshRelationship(RelationshipViewModel relationship)
     {
       if (!layout.ShowRelationships)
       {
@@ -654,9 +659,9 @@ namespace NAS.View.Controls
       var path = GetPathFromRelationship(relationship);
       if (path != null)
       {
-        path.Stroke = relationship.IsCritical
+        path.Stroke = relationship.Relationship.IsCritical
           ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(layout.ActivityCriticalColor))
-          : relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
+          : relationship.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
       }
       var shape1 = GetShapeFromActivity(relationship.GetActivity1());
       var shape2 = GetShapeFromActivity(relationship.GetActivity2());
@@ -1323,12 +1328,12 @@ namespace NAS.View.Controls
       return view.GetRowY(a, RowHeight, GroupHeaderHeight) + ColumnHeaderHeight;
     }
 
-    private Shape GetShapeFromActivity(Activity activity)
+    private Shape GetShapeFromActivity(ActivityViewModel activity)
     {
       return Children.OfType<ActivityShapeBase>().FirstOrDefault(x => x.Item == activity);
     }
 
-    private RelationshipPath GetPathFromRelationship(Relationship relationship)
+    private RelationshipPath GetPathFromRelationship(RelationshipViewModel relationship)
     {
       return Children.OfType<RelationshipPath>().FirstOrDefault(x => x.Item == relationship);
     }

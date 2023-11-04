@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Documents;
-using ES.Tools.Core.MVVM;
+using NAS.ViewModel;
+using NAS.ViewModel.Helpers;
 
 namespace NAS
 {
@@ -22,9 +22,9 @@ namespace NAS
       Top = SystemParameters.WorkArea.Height - Height;
     }
 
-    public void SelectTopic(string key)
+    public void SelectTopic(HelpTopic topic)
     {
-      if (TryFindResource(key) is FlowDocument x)
+      if (TryFindResource(topic) is FlowDocument x)
       {
         reader.Document = x;
       }

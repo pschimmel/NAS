@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using ES.Tools.Core.MVVM;
+﻿using ES.Tools.Core.MVVM;
 
 namespace NAS.View
 {
   /// <summary>
   /// Interaction logic for SchedulingSettingsDialog.xaml
   /// </summary>
-  public partial class SchedulingSettingsDialog : UserControl, IDialog
+  public partial class SchedulingSettingsDialog : IView
   {
     public SchedulingSettingsDialog()
     {

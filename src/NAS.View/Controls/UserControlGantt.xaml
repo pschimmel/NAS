@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:NAS.View.Gantt"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+             xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources" xmlns:controls="clr-namespace:NAS.View.Controls"
              d:DesignHeight="300"
              d:DesignWidth="500"
              Background="White"
@@ -63,7 +63,7 @@
                   HorizontalScrollBarVisibility="Visible"
                   ScrollChanged="ScrollViewer_ScrollChanged"
                   VerticalScrollBarVisibility="Hidden">
-      <local:GanttCanvas x:Name="canvas"
+      <controls:GanttCanvas x:Name="canvas"
                          MinWidth="50"
                          MinHeight="50"
                          HorizontalAlignment="Left"

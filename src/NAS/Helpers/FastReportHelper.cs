@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Windows;
 using ES.Tools.Core.Infrastructure;
 using NAS.Model.Entities;
 using NAS.Resources;
@@ -32,26 +31,26 @@ namespace NAS.Helpers
 
       SetUILanguage(language);
 
-      using var fastReport = new FastReport.Report();
-      fastReport.Load(fileName);
+      //using var fastReport = new FastReport.Report();
+      //fastReport.Load(fileName);
 
-      if (RegisterData(schedule, fastReport) && fastReport.Prepare())
+      //if (RegisterData(schedule, fastReport) && fastReport.Prepare())
       {
-        using (var reportSettings = new FastReport.EnvironmentSettings())
-        {
-          reportSettings.PreviewSettings.Buttons = FastReport.PreviewButtons.Print |
-            FastReport.PreviewButtons.Save |
-            FastReport.PreviewButtons.Find |
-            FastReport.PreviewButtons.Zoom |
-            FastReport.PreviewButtons.Outline |
-            FastReport.PreviewButtons.PageSetup |
-            FastReport.PreviewButtons.Watermark |
-            FastReport.PreviewButtons.Navigator;
-          reportSettings.UIStyle = FastReport.Utils.UIStyle.Office2007Silver;
-          using var iconStream = Application.GetResourceStream(new Uri("pack://application:,,,/NAS;component/Images/Stones.ico")).Stream;
-          reportSettings.PreviewSettings.Icon = new System.Drawing.Icon(iconStream);
-        }
-        fastReport.ShowPrepared(true);
+        //using (var reportSettings = new FastReport.EnvironmentSettings())
+        //{
+        //  reportSettings.PreviewSettings.Buttons = FastReport.PreviewButtons.Print |
+        //    FastReport.PreviewButtons.Save |
+        //    FastReport.PreviewButtons.Find |
+        //    FastReport.PreviewButtons.Zoom |
+        //    FastReport.PreviewButtons.Outline |
+        //    FastReport.PreviewButtons.PageSetup |
+        //    FastReport.PreviewButtons.Watermark |
+        //    FastReport.PreviewButtons.Navigator;
+        //  reportSettings.UIStyle = FastReport.Utils.UIStyle.Office2007Silver;
+        //  using var iconStream = Application.GetResourceStream(new Uri("pack://application:,,,/NAS;component/Images/Stones.ico")).Stream;
+        //  reportSettings.PreviewSettings.Icon = new System.Drawing.Icon(iconStream);
+        //}
+        //fastReport.ShowPrepared(true);
         return true;
       }
 
@@ -78,16 +77,16 @@ namespace NAS.Helpers
 
       SetUILanguage(language);
 
-      var fastReport = FastReport.Report.FromFile(fileName);
-      string oldData = fastReport.SaveToString();
+      //var fastReport = FastReport.Report.FromFile(fileName);
+      //string oldData = fastReport.SaveToString();
 
-      if (!RegisterData(schedule, fastReport))
-      {
-        UserNotificationService.Instance.Error(NASResources.MessageErrorPreparingReport);
-        return false;
-      }
+      //if (!RegisterData(schedule, fastReport))
+      //{
+      //  UserNotificationService.Instance.Error(NASResources.MessageErrorPreparingReport);
+      //  return false;
+      //}
 
-      fastReport.Design(true);
+      //fastReport.Design(true);
 
       if (!File.Exists(fileName))
       {
@@ -95,22 +94,22 @@ namespace NAS.Helpers
         return false;
       }
 
-      string newData = File.ReadAllText(fastReport.FileName);
+      //string newData = File.ReadAllText(fastReport.FileName);
 
-      if (!oldData.Trim().Equals(newData.Trim().StripBOM()))
-      {
-        UserNotificationService.Instance.Question(NASResources.MessageSaveChangedReport, () =>
-        {
-          try
-          {
-            fastReport.Save(fileName);
-          }
-          catch (Exception ex)
-          {
-            UserNotificationService.Instance.Error(ex.Message);
-          }
-        });
-      }
+      //if (!oldData.Trim().Equals(newData.Trim().StripBOM()))
+      //{
+      //  UserNotificationService.Instance.Question(NASResources.MessageSaveChangedReport, () =>
+      //  {
+      //    try
+      //    {
+      //      fastReport.Save(fileName);
+      //    }
+      //    catch (Exception ex)
+      //    {
+      //      UserNotificationService.Instance.Error(ex.Message);
+      //    }
+      //  });
+      //}
 
       return true;
     }
@@ -125,17 +124,17 @@ namespace NAS.Helpers
 
       if (File.Exists(localizationFileName))
       {
-        FastReport.Utils.Res.LoadLocale(localizationFileName);
+        //FastReport.Utils.Res.LoadLocale(localizationFileName);
       }
     }
 
-    private static bool RegisterData(Schedule schedule, FastReport.Report fastReport)
+    private static bool RegisterData(Schedule schedule /*,FastReport.Report fastReport*/)
     {
       var list = new List<Schedule>
       {
         schedule
       };
-      fastReport.RegisterData(list, "Schedule");
+      //fastReport.RegisterData(list, "Schedule");
       return true;
     }
   }

@@ -1,9 +1,11 @@
-﻿namespace NAS.View.Controls
+﻿using ES.Tools.Core.MVVM;
+
+namespace NAS.View.Controls
 {
   /// <summary>
   /// Interaction logic for EditColumnsDialog.xaml
   /// </summary>
-  public partial class EditColumnsDialog : IDialog
+  public partial class EditColumnsDialog : IView
   {
     public EditColumnsDialog()
     {

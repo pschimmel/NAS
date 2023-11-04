@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -131,12 +130,6 @@
   <ItemGroup>
     <ProjectReference Include="..\NAS.Resources\NAS.Resources.csproj" />
     <ProjectReference Include="..\NAS.ViewModel\NAS.ViewModel.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="FastReport">
-      <HintPath>..\Files\FastReport\FastReport.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

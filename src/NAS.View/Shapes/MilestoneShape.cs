@@ -1,8 +1,6 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
-using NAS.Model.Entities;
 using NAS.Model.Enums;
 
 namespace NAS.View.Shapes
@@ -11,7 +9,7 @@ namespace NAS.View.Shapes
   {
     private Rect rect = Rect.Empty;
 
-    public MilestoneShape(Activity milestone) : base(milestone)
+    public MilestoneShape(Model.Entities.Activity milestone) : base(milestone)
     {
       Debug.Assert(milestone.ActivityType == ActivityType.Milestone);
     }

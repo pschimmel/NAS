@@ -1,21 +1,21 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using NAS.Model.Entities;
+using NAS.ViewModel;
 
 namespace NAS.View.Shapes
 {
   /// <summary>
   /// The Path shape element for Relationships
   /// </summary>
-  public sealed class RelationshipPath : Shape, IActivityDiagram<Relationship>
+  public sealed class RelationshipPath : Shape, IActivityDiagram<RelationshipViewModel>
   {
     #region Constructors
 
     /// <summary>
     /// Instantiates a new instance of a Path.
     /// </summary>
-    public RelationshipPath(Relationship relationship)
+    public RelationshipPath(RelationshipViewModel relationship)
     {
       StrokeLineJoin = PenLineJoin.Round;
       StrokeEndLineCap = PenLineCap.Round;
@@ -28,7 +28,7 @@ namespace NAS.View.Shapes
 
     #region Properties
 
-    public Relationship Item { get; private set; }
+    public RelationshipViewModel Item { get; private set; }
 
     #endregion
 

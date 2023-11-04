@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using ES.Tools.Core.MVVM;
 
 namespace NAS.View.Controls
 {

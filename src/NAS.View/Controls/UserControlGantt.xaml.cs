@@ -5,9 +5,15 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using ES.Tools.Core.MVVM;
+using ES.Tools.UI;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
+using NAS.Resources;
+using NAS.View.Converters;
 using NAS.View.Helpers;
+using NAS.ViewModel;
 
 namespace NAS.View.Controls
 {
@@ -39,7 +45,7 @@ namespace NAS.View.Controls
     private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       suspendRefreshing = true;
-      if (e.OldValue is IScheduleViewModel oldVM)
+      if (e.OldValue is ScheduleViewModel oldVM)
       {
         oldVM.PropertyChanged -= ViewModel_PropertyChanged;
         oldVM.ActivityAdded -= ViewModel_ActivityAdded;
@@ -47,7 +53,7 @@ namespace NAS.View.Controls
         oldVM.RefreshLayout -= ViewModel_RefreshLayout;
         oldVM.ColumnsChanged -= ViewModel_ColumnsChanged;
       }
-      if (e.NewValue is IScheduleViewModel vm)
+      if (e.NewValue is ScheduleViewModel vm)
       {
         vm.PropertyChanged += ViewModel_PropertyChanged;
         vm.ActivityAdded += ViewModel_ActivityAdded;
@@ -142,7 +148,7 @@ namespace NAS.View.Controls
 
     #region ViewModels
 
-    private IScheduleViewModel VM => DataContext as IScheduleViewModel;
+    private ScheduleViewModel VM => DataContext as ScheduleViewModel;
 
     private void ViewModel_ColumnsChanged(object sender, EventArgs e)
     {
@@ -160,7 +166,7 @@ namespace NAS.View.Controls
     {
       foreach (var column in dataGrid.Columns)
       {
-        if ((ActivityProperty)(column as ITaggableDataGridColumn).Tag == ActivityProperty.Name)
+        if ((ActivityProperty)(column as ITaggable).Tag == ActivityProperty.Name)
         {
           dataGrid.CurrentColumn = column;
           break;
@@ -200,7 +206,7 @@ namespace NAS.View.Controls
         return;
       }
 
-      ApplicationHelper.InvokeOnUIThreadIfRequired(() => RefreshProject());
+      DispatcherWrapper.Default.BeginInvokeIfRequired(() => RefreshProject());
     }
 
     private void RefreshProject()
@@ -330,7 +336,7 @@ namespace NAS.View.Controls
               case ActivityProperty.OriginalDuration:
               case ActivityProperty.RemainingDuration:
               case ActivityProperty.TotalFloat:
-                factory.SetBinding(TextBlock.TextProperty, new Binding("Name") { StringFormat = Globalization.NASResources.XDays });
+                factory.SetBinding(TextBlock.TextProperty, new Binding("Name") { StringFormat = NASResources.XDays });
                 break;
               case ActivityProperty.PercentComplete:
                 factory.SetBinding(TextBlock.TextProperty, new Binding("Name") { StringFormat = "{0:F1} %" });
@@ -364,7 +370,7 @@ namespace NAS.View.Controls
         dataGrid.Columns.Add((DataGridColumn)column);
 
         // Set column width
-        var property = (ActivityProperty)(column as ITaggableDataGridColumn).Tag;
+        var property = (ActivityProperty)(column as ITaggable).Tag;
         if (property != ActivityProperty.None)
         {
           var i = Layout.ActivityColumns.ToList().Find(x => x.Property == property);
@@ -380,7 +386,7 @@ namespace NAS.View.Controls
     {
       if (e.Column != null && e.Column.Header != null)
       {
-        var property = (ActivityProperty)(e.Column as ITaggableDataGridColumn).Tag;
+        var property = (ActivityProperty)(e.Column as ITaggable).Tag;
         int idx = e.Column.DisplayIndex;
         var col = Layout.ActivityColumns.FirstOrDefault(x => x.Property == property);
 
@@ -403,7 +409,7 @@ namespace NAS.View.Controls
     {
       if (e.Column != null && e.Column.Header != null)
       {
-        var property = (ActivityProperty)(e.Column as ITaggableDataGridColumn).Tag;
+        var property = (ActivityProperty)(e.Column as ITaggable).Tag;
 
         if (Layout.SortingDefinitions.Count == 1 && Layout.SortingDefinitions.First().Property == property)
         {
@@ -583,9 +589,9 @@ namespace NAS.View.Controls
       return null;
     }
 
-    private List<ITaggableDataGridColumn> GetVisibleColumns()
+    private List<DataGridColumn> GetVisibleColumns()
     {
-      var result = new List<ITaggableDataGridColumn>();
+      var result = new List<DataGridColumn>();
       if (VM?.Schedule == null || Layout == null)
       {
         return result;
@@ -595,41 +601,29 @@ namespace NAS.View.Controls
 
       foreach (var p in Layout.ActivityColumns.OrderBy(x => x.Order))
       {
-        ITaggableDataGridColumn column;
+        DataGridColumn column;
 
         if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(Fragnet))
         {
-          column = new DataGridComboBoxColumnEx();
-          (column as DataGridComboBoxColumnEx).ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
-          (column as DataGridComboBoxColumnEx).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
+          column = new DataGridComboBoxColumn();
+          (column as DataGridComboBoxColumn).ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
+          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
         }
         else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(WBSItem))
         {
-          column = new DataGridComboBoxColumnEx();
-          (column as DataGridComboBoxColumnEx).ItemsSource = VM.WBSItems;
-          (column as DataGridComboBoxColumnEx).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
+          column = new DataGridComboBoxColumn();
+          (column as DataGridComboBoxColumn).ItemsSource = VM.WBSItems;
+          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
         }
-        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(CustomAttribute1))
+        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(CustomAttribute))
         {
-          column = new DataGridComboBoxColumnEx();
-          (column as DataGridComboBoxColumnEx).ItemsSource = VM.Schedule.CustomAttributes1;
-          (column as DataGridComboBoxColumnEx).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-        }
-        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(CustomAttribute2))
-        {
-          column = new DataGridComboBoxColumnEx();
-          (column as DataGridComboBoxColumnEx).ItemsSource = VM.Schedule.CustomAttributes2;
-          (column as DataGridComboBoxColumnEx).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-        }
-        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(CustomAttribute3))
-        {
-          column = new DataGridComboBoxColumnEx();
-          (column as DataGridComboBoxColumnEx).ItemsSource = VM.Schedule.CustomAttributes3;
-          (column as DataGridComboBoxColumnEx).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
+          column = new DataGridComboBoxColumn();
+          (column as DataGridComboBoxColumn).ItemsSource = VM.Schedule.CustomAttributes1;
+          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
         }
         else
         {
-          column = new DataGridTextColumnEx();
+          column = new DataGridTextColumn();
           var binding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
           if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(DateTime))
           {
@@ -662,7 +656,7 @@ namespace NAS.View.Controls
         column.Header = ActivityPropertyHelper.GetNameOfActivityProperty(p.Property);
         column.IsReadOnly = ActivityPropertyHelper.IsPropertyReadonly(p.Property);
         column.DisplayIndex = idx++;
-        column.Tag = p.Property;
+        (column as ITaggable).Tag = p.Property;
         result.Add(column);
       }
 

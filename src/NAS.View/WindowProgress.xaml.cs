@@ -1,5 +1,5 @@
 ﻿using System.Windows;
-using ES.WPF.General;
+using ES.Tools.UI;
 
 namespace NAS
 {
@@ -17,12 +17,12 @@ namespace NAS
 
     public void SetProgress(double value)
     {
-      DispatcherWrapper.Default.BeginInvoke(() => progressBar.Value = value);
+      DispatcherWrapper.Default.BeginInvokeIfRequired(() => progressBar.Value = value);
     }
 
     public void SetProgress(double value, string text)
     {
-      DispatcherWrapper.Default.BeginInvoke(() =>
+      DispatcherWrapper.Default.BeginInvokeIfRequired(() =>
       {
         progressBar.Value = value;
         textBlock.Text = text;

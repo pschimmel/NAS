@@ -1003,10 +1003,7 @@ namespace NAS.ViewModel
       p2.Fragnets.ToList().ForEach(x => x.IsVisible = true);
       foreach (var a in p1.Activities)
       {
-        if (a.Distortions != null)
-        {
-          a.Distortions.Clear();
-        }
+        a.Distortions?.Clear();
       }
 
       var d = Schedule.DataDate;
@@ -1209,10 +1206,7 @@ namespace NAS.ViewModel
           if (c.IsVisible)
           {
             var activityColumn = visibleColumns.FirstOrDefault(x => x.Property == c.Property);
-            if (activityColumn == null)
-            {
-              activityColumn = new ActivityColumn(c.Property);
-            }
+            activityColumn ??= new ActivityColumn(c.Property);
             activityColumn.Order = vm.EditColumns.IndexOf(c);
           }
         }

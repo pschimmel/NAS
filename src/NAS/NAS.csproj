@@ -25,12 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="FastReport">
-      <HintPath>..\ThirdParty\FastReport\FastReport.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <SplashScreen Include="Images\Splash.png" />
   </ItemGroup>
 
