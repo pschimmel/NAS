@@ -5,8 +5,8 @@
              xmlns:converters="clr-namespace:NAS.View.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:enums="clr-namespace:NAS.Model.Enums;assembly=NAS.Model"
+             xmlns:local="clr-namespace:NAS.View.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:my="clr-namespace:NAS.View.Gantt"
              xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
              d:DesignHeight="120"
              d:DesignWidth="800"
@@ -35,7 +35,9 @@
     </Style>
     <converters:TimeAggregateTypeConverter x:Key="TimeAggregateTypeConverter" />
     <converters:AggregationTypeToBoolConverter x:Key="AggregationTypeToBoolConverter" />
-    <ObjectDataProvider x:Key="TimeAggregateTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
+    <ObjectDataProvider x:Key="TimeAggregateTypes"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type System:Enum}">
       <ObjectDataProvider.MethodParameters>
         <x:Type TypeName="enums:TimeAggregateType" />
       </ObjectDataProvider.MethodParameters>
@@ -51,7 +53,9 @@
       <RowDefinition />
     </Grid.RowDefinitions>
 
-    <Rectangle Grid.ColumnSpan="2" Height="1" Fill="Black" />
+    <Rectangle Grid.ColumnSpan="2"
+               Height="1"
+               Fill="Black" />
 
     <Grid Grid.Row="1" Background="WhiteSmoke">
       <Grid.RowDefinitions>
@@ -86,7 +90,10 @@
             </Image.Style>
           </Image>
         </Button>
-        <TextBlock Grid.ColumnSpan="2" Padding="2" FontWeight="Bold" Text="{Binding Resource.Resource.Name}" />
+        <TextBlock Grid.ColumnSpan="2"
+                   Padding="2"
+                   FontWeight="Bold"
+                   Text="{Binding Resource.Resource.Name}" />
       </DockPanel>
       <Rectangle Grid.Row="1"
                  Width="16"
@@ -157,13 +164,13 @@
                   Background="WhiteSmoke"
                   HorizontalScrollBarVisibility="Hidden"
                   VerticalScrollBarVisibility="Hidden">
-      <my:ResourcePanelCanvas x:Name="canvas"
-                              Height="109"
-                              MinWidth="50"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              Background="White">
-        <my:ResourcePanelCanvas.ContextMenu>
+      <local:ResourcePanelCanvas x:Name="canvas"
+                                 Height="109"
+                                 MinWidth="50"
+                                 HorizontalAlignment="Left"
+                                 VerticalAlignment="Top"
+                                 Background="White">
+        <local:ResourcePanelCanvas.ContextMenu>
           <ContextMenu ItemsSource="{Binding Source={StaticResource TimeAggregateTypes}}">
             <ContextMenu.ItemContainerStyle>
               <Style TargetType="{x:Type MenuItem}">
@@ -184,8 +191,8 @@
               </Style>
             </ContextMenu.ItemContainerStyle>
           </ContextMenu>
-        </my:ResourcePanelCanvas.ContextMenu>
-      </my:ResourcePanelCanvas>
+        </local:ResourcePanelCanvas.ContextMenu>
+      </local:ResourcePanelCanvas>
     </ScrollViewer>
   </Grid>
 </UserControl>

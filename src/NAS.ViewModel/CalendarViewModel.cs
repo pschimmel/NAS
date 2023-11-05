@@ -104,7 +104,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatingViewModel implementation
+    #region IValidatable implementation
 
     private string errorMessage = null;
 
@@ -133,7 +133,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IApplyableViewModel implementation
+    #region IApplyable implementation
 
     public void Apply()
     {

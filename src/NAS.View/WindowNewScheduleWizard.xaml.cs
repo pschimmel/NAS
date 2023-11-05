@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ES.Tools.Core.MVVM;
+using NAS.ViewModel.Base;
 using Xceed.Wpf.Toolkit;
 
 namespace NAS
@@ -24,9 +25,9 @@ namespace NAS
     {
       if ((e.OriginalSource as Wizard).CurrentPage == LastPage)
       {
-        if (DataContext is IValidatingViewModel)
+        if (DataContext is IValidatable)
         {
-          (DataContext as IValidatingViewModel).Validate();
+          (DataContext as IValidatable).Validate();
         }
       }
     }

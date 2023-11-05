@@ -1,5 +1,4 @@
-﻿using System;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel.Base;
 
@@ -44,7 +43,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatingViewModel Implementation
+    #region IValidatable Implementation
 
     public string ErrorMessage { get; set; } = null;
 
@@ -78,7 +77,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IApplyableViewModel Implementation
+    #region IApplyable Implementation
 
     public void Apply()
     {

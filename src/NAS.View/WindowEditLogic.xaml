@@ -15,7 +15,9 @@
   <Window.Resources>
     <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
 
-    <ObjectDataProvider x:Key="relationshipTypeEnumData" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+    <ObjectDataProvider x:Key="relationshipTypeEnumData"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type system:Enum}">
       <ObjectDataProvider.MethodParameters>
         <x:Type TypeName="enums:RelationshipType" />
       </ObjectDataProvider.MethodParameters>
@@ -56,19 +58,27 @@
                   BorderBrush="Black" />
     <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
       <TextBlock Margin="5" Text="{x:Static resx:NASResources.CurrentActivity}" />
-      <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{Binding CurrentActivity.Name}" />
+      <TextBlock VerticalAlignment="Center"
+                 FontWeight="Bold"
+                 Text="{Binding CurrentActivity.Name}" />
       <TextBlock VerticalAlignment="Center" Text="{Binding CurrentActivity.Number, StringFormat={} ({0})}" />
     </StackPanel>
     <ToolBarPanel Grid.Row="1">
       <ToolBar Header="{x:Static resx:NASResources.Predecessor}" ToolBarTray.IsLocked="True">
         <Button Command="{Binding AddPredecessorCommand}" ToolTip="{x:Static resx:NASResources.AddActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/AddRelationship.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/AddRelationship.png" />
         </Button>
         <Button Command="{Binding RemovePredecessorCommand}" ToolTip="{x:Static resx:NASResources.RemoveActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png" />
         </Button>
         <Button Command="{Binding GotoPredecessorCommand}" ToolTip="{x:Static resx:NASResources.GoToActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Left.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Left.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
@@ -81,23 +91,43 @@
         <MouseBinding Command="{Binding EditPredecessorCommand}" Gesture="LeftDoubleClick" />
       </DataGrid.InputBindings>
       <DataGrid.Columns>
-        <DataGridTextColumn Width="Auto" Binding="{Binding ActivityName, Mode=OneWay}" Header="{x:Static resx:NASResources.Activity}" IsReadOnly="True" />
-        <DataGridTemplateColumn Width="Auto" CellEditingTemplate="{StaticResource ComboBoxEditTemplate}" CellTemplate="{StaticResource ComboBoxViewTemplate}" Header="{x:Static resx:NASResources.RelationshipType}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Lag}" Header="{x:Static resx:NASResources.Lag}" />
-        <DataGridCheckBoxColumn Binding="{Binding IsDriving, Mode=OneWay}" Header="{x:Static resx:NASResources.Driving}" IsReadOnly="True" />
-        <DataGridCheckBoxColumn Binding="{Binding IsCritical, Mode=OneWay}" Header="{x:Static resx:NASResources.Critical}" IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ActivityName, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.Activity}"
+                            IsReadOnly="True" />
+        <DataGridTemplateColumn Width="Auto"
+                                CellEditingTemplate="{StaticResource ComboBoxEditTemplate}"
+                                CellTemplate="{StaticResource ComboBoxViewTemplate}"
+                                Header="{x:Static resx:NASResources.RelationshipType}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Lag}"
+                            Header="{x:Static resx:NASResources.Lag}" />
+        <DataGridCheckBoxColumn Binding="{Binding IsDriving, Mode=OneWay}"
+                                Header="{x:Static resx:NASResources.Driving}"
+                                IsReadOnly="True" />
+        <DataGridCheckBoxColumn Binding="{Binding IsCritical, Mode=OneWay}"
+                                Header="{x:Static resx:NASResources.Critical}"
+                                IsReadOnly="True" />
       </DataGrid.Columns>
     </DataGrid>
-    <ToolBarPanel Grid.Row="1" Grid.Column="1" Margin="3,0,0,0">
+    <ToolBarPanel Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="3,0,0,0">
       <ToolBar Header="{x:Static resx:NASResources.Successor}" ToolBarTray.IsLocked="True">
         <Button Command="{Binding AddSuccessorCommand}" ToolTip="{x:Static resx:NASResources.AddActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/AddRelationship.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/AddRelationship.png" />
         </Button>
         <Button Command="{Binding RemoveSuccessorCommand}" ToolTip="{x:Static resx:NASResources.RemoveActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png" />
         </Button>
         <Button Command="{Binding GotoSuccessorCommand}" ToolTip="{x:Static resx:NASResources.GoToActivity}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Right.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Right.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
@@ -112,11 +142,23 @@
         <MouseBinding Command="{Binding EditSuccessorCommand}" Gesture="LeftDoubleClick" />
       </DataGrid.InputBindings>
       <DataGrid.Columns>
-        <DataGridTextColumn Width="Auto" Binding="{Binding ActivityName, Mode=OneWay}" Header="{x:Static resx:NASResources.Activity}" IsReadOnly="True" />
-        <DataGridTemplateColumn Width="Auto" CellEditingTemplate="{StaticResource ComboBoxEditTemplate}" CellTemplate="{StaticResource ComboBoxViewTemplate}" Header="{x:Static resx:NASResources.RelationshipType}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Lag}" Header="{x:Static resx:NASResources.Lag}" />
-        <DataGridCheckBoxColumn Binding="{Binding IsDriving, Mode=OneWay}" Header="{x:Static resx:NASResources.Driving}" IsReadOnly="True" />
-        <DataGridCheckBoxColumn Binding="{Binding IsCritical, Mode=OneWay}" Header="{x:Static resx:NASResources.Critical}" IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ActivityName, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.Activity}"
+                            IsReadOnly="True" />
+        <DataGridTemplateColumn Width="Auto"
+                                CellEditingTemplate="{StaticResource ComboBoxEditTemplate}"
+                                CellTemplate="{StaticResource ComboBoxViewTemplate}"
+                                Header="{x:Static resx:NASResources.RelationshipType}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Lag}"
+                            Header="{x:Static resx:NASResources.Lag}" />
+        <DataGridCheckBoxColumn Binding="{Binding IsDriving, Mode=OneWay}"
+                                Header="{x:Static resx:NASResources.Driving}"
+                                IsReadOnly="True" />
+        <DataGridCheckBoxColumn Binding="{Binding IsCritical, Mode=OneWay}"
+                                Header="{x:Static resx:NASResources.Critical}"
+                                IsReadOnly="True" />
       </DataGrid.Columns>
     </DataGrid>
     <Button Grid.Row="4"

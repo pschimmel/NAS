@@ -10,7 +10,10 @@
         Topmost="True"
         WindowStyle="ToolWindow">
   <Window.Resources>
-    <FlowDocument x:Key="help" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="help"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Sofort-Hilfe</Bold>
@@ -20,7 +23,10 @@
         Mit diesem Hilfefenster erhalten Sie kontextbasierende Hilfe zu allen Funktionen des Programms.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="start" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="start"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Hauptbildschirm</Bold>
@@ -39,7 +45,10 @@
         Durch einen Doppelklick auf einen Vorgang können die Vorgangsdetails bearbeitet werden.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="wbs" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="wbs"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Projektstrukturplan</Bold>
@@ -55,7 +64,10 @@
         Der Projektstrukturplan kann als Gruppierung in der Ansicht verwendet werden.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="calendars" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="calendars"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Projektkalender</Bold>
@@ -68,7 +80,10 @@
         Die eingegebenen Arbeitstage und die Feiertage werden bei der Berechnung der Start- und Endtermine der Vorgänge berücksichtigt.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="resources" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="resources"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Ressourcen</Bold>
@@ -90,7 +105,10 @@
         Kalenderressourcen verursachen Kosten, die an Kalendertagen auftreten.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="view" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="view"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Ansicht</Bold>
@@ -106,7 +124,10 @@
         Die Einstellungen in diesem Menü außer dem Zoom-Faktor beziehen sich immer auf das aktuell ausgewählte Layout.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="sortandgroup" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="sortandgroup"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Sortieren und Gruppieren</Bold>
@@ -122,7 +143,10 @@
         Gruppierungen und Sortierungen werden im aktuell ausgewählten Layout gespeichert.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="filters" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="filters"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Filter</Bold>
@@ -138,7 +162,10 @@
         Filter werden im aktuell ausgewählten Layout gespeichert.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="baseline" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="baseline"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Basispläne</Bold>
@@ -151,7 +178,10 @@
         Um den Basisplan in der Gantt-Ansicht zu sehen, muss dieser im aktuellen Layout auf sichtbar gesetzt sein und die Termine des aktuelle Plans müssen sich unterscheiden, um den Basisplan nicht zu verdecken.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="fragnets" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="fragnets"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Fragnets</Bold>
@@ -164,7 +194,10 @@
         Fragnets können einzeln ein- und ausgeblendet werden. Der Terminplan wird im Anschluss neu berechnet um direkt die Auswirkungen sichtbar zu machen.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="compare" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="compare"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Vergleiche</Bold>
@@ -183,7 +216,10 @@
         Für Fragnet-Vergleiche müssen ein oder mehrere Fragnets ausgewählt werden, die in jeweils einem Plan aktiviert werden sollen. Die beiden Pläne werden neu durchgerechnet und verglichen.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="new" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="new"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Neues Projekt</Bold>
@@ -193,7 +229,10 @@
         Diese Funktion legt ein neues Projekt an. Ein Projektname und ein Starttermin müssen angegeben werden.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="print" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="print"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Druckausgabe</Bold>
@@ -203,7 +242,10 @@
         Die Druckausgabe druckt den Terminplan mit dem aktuellen Layout.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="reports" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="reports"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Berichte</Bold>
@@ -216,7 +258,10 @@
         Bitte wählen Sie einen Bericht aus der Liste. Je nach Kategorie werden unterschiedliche Daten an den Bericht übergeben.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="activity" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="activity"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Vorgänge</Bold>
@@ -229,7 +274,10 @@
         Wenn ein Fortschrittsgrad eingegeben wird, so wird dieser entsprechend im Diagramm dargestellt.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="distortions" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="distortions"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Störungen</Bold>
@@ -259,7 +307,10 @@
         </ListItem>
       </List>
     </FlowDocument>
-    <FlowDocument x:Key="relationship" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="relationship"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Abhängigkeiten</Bold>
@@ -281,7 +332,10 @@
         Der Abstandswert definiert einen Abstand zwischen den Vorgängen.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="properties" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="properties"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Projekt-Eigenschaften</Bold>
@@ -291,7 +345,10 @@
         Die Projekt-Eigenschaften definieren die Grunddaten des Projekts. Das aktuelle Datum wird für die Berechnung der Termine verwendet.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="layout" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="layout"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Layout</Bold>
@@ -301,7 +358,10 @@
         Ein Layout definiert die aktuelle Ansicht des Projekts. Es können mehrere Layouts pro Projekt angelegt werden.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="calculate" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="calculate"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Berechnen</Bold>
@@ -311,7 +371,10 @@
         Mit dem Berechnen des Terminplans werden alle Termine der Vorgänge neu berechnet und die Ansicht aktualisiert.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="pert" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="pert"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>PERT-Diagramm</Bold>
@@ -324,7 +387,10 @@
         Mit der Maus können Abhängigkeiten gezeichnet werden. Durch das Drücken der Steuerungstaste beim Ziehen von Vorgängen wird der Vorgang verschoben.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="customattributes" FontFamily="Microsoft Sans Serif" FontSize="12" IsColumnWidthFlexible="False">
+    <FlowDocument x:Key="customattributes"
+                  FontFamily="Microsoft Sans Serif"
+                  FontSize="12"
+                  IsColumnWidthFlexible="False">
       <Paragraph>
         <Underline>
           <Bold>Benutzerdefinierte Attribute</Bold>
@@ -357,7 +423,9 @@
           <Setter Property="Template">
             <Setter.Value>
               <ControlTemplate>
-                <Image Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Print.png" />
+                <Image Width="16"
+                       Height="16"
+                       Source="pack://application:,,,/NAS.View;component/Images/Print.png" />
               </ControlTemplate>
             </Setter.Value>
           </Setter>

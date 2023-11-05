@@ -1,20 +1,31 @@
 ﻿<Window x:Class="NAS.ReportViewer.WindowPrintPreview"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:my="clr-namespace:NAS.ReportViewer"
-        Title="Druckvorschau" Height="300" Width="487" ShowInTaskbar="False" Icon="pack://application:,,,/NAS.View;component/Images/Print.png" WindowState="Maximized">
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Druckvorschau"
+        Width="487"
+        Height="300"
+        Icon="pack://application:,,,/NAS.View;component/Images/Print.png"
+        ShowInTaskbar="False"
+        WindowState="Maximized">
   <Grid Name="grid">
-    <my:UserControlPrintPreview x:Name="preview" LayoutSettingsCommand="{Binding LayoutSettingsCommand}" PageSettingsCommand="{Binding PageSettingsCommand}" PrintCommand="{Binding PrintCommand}" Document="{Binding Document}" />
+    <my:UserControlPrintPreview x:Name="preview"
+                                Document="{Binding Document}"
+                                LayoutSettingsCommand="{Binding LayoutSettingsCommand}"
+                                PageSettingsCommand="{Binding PageSettingsCommand}"
+                                PrintCommand="{Binding PrintCommand}" />
     <toolkit:BusyIndicator x:Name="bi" IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
       <toolkit:BusyIndicator.ProgressBarStyle>
         <Style TargetType="ProgressBar">
-          <Setter Property="Visibility" Value="Collapsed"/>
+          <Setter Property="Visibility" Value="Collapsed" />
         </Style>
       </toolkit:BusyIndicator.ProgressBarStyle>
       <toolkit:BusyIndicator.BusyContent>
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="{Binding ProgressText}" Margin="2" HorizontalAlignment="Center"/>
+          <TextBlock Margin="2"
+                     HorizontalAlignment="Center"
+                     Text="{Binding ProgressText}" />
         </StackPanel>
       </toolkit:BusyIndicator.BusyContent>
     </toolkit:BusyIndicator>

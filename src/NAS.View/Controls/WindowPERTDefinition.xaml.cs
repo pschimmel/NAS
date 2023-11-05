@@ -4,6 +4,7 @@ using ES.Tools.Core.MVVM;
 using NAS.Model.Enums;
 using NAS.Resources;
 using NAS.ViewModel;
+using NAS.ViewModel.Base;
 
 namespace NAS.View.Controls
 {
@@ -113,9 +114,9 @@ namespace NAS.View.Controls
 
     private void ButtonOK_Click(object sender, RoutedEventArgs e)
     {
-      if (DataContext is IValidatingViewModel && (DataContext as IValidatingViewModel).Validate() == false)
+      if (DataContext is IValidatable validatable && validatable.Validate() == false)
       {
-        System.Windows.MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + (DataContext as IValidatingViewModel).ErrorMessage, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
+        System.Windows.MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + (DataContext as IValidatable).ErrorMessage, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
       }
       else
       {

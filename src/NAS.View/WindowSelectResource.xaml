@@ -17,7 +17,10 @@
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <ListBox Margin="2" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding Resources}" SelectedItem="{Binding SelectedResource}">
+    <ListBox Margin="2"
+             IsSynchronizedWithCurrentItem="True"
+             ItemsSource="{Binding Resources}"
+             SelectedItem="{Binding SelectedResource}">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <Grid>
@@ -26,8 +29,13 @@
               <ColumnDefinition />
               <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Image Width="16" Height="16" Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
-            <TextBlock Grid.Column="1" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
+            <Image Width="16"
+                   Height="16"
+                   Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+            <TextBlock Grid.Column="1"
+                       MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"
+                       Text="{Binding Name}"
+                       TextTrimming="CharacterEllipsis" />
             <TextBlock Grid.Column="2" Text="(Global)">
               <TextBlock.Style>
                 <Style TargetType="{x:Type TextBlock}">

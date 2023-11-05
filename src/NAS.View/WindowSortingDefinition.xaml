@@ -30,7 +30,9 @@
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Property}" />
+    <TextBlock Grid.Row="1"
+               Margin="5"
+               Text="{x:Static resx:NASResources.Property}" />
     <ComboBox Grid.Row="1"
               Grid.Column="1"
               Height="23"
@@ -40,11 +42,15 @@
               SelectedItem="{Binding SelectedActivityProperty}">
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+          <TextBlock Height="Auto"
+                     Margin="0"
+                     Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
-    <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.Direction}" />
+    <TextBlock Grid.Row="2"
+               Margin="5"
+               Text="{x:Static resx:NASResources.Direction}" />
     <ComboBox Grid.Row="2"
               Grid.Column="1"
               Height="23"
@@ -54,7 +60,9 @@
               SelectedItem="{Binding SelectedSortDirection}">
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource SortDirectionConverter}}" />
+          <TextBlock Height="Auto"
+                     Margin="0"
+                     Text="{Binding Path=., Mode=OneWay, Converter={StaticResource SortDirectionConverter}}" />
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>
@@ -63,7 +71,10 @@
                 Margin="2"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-      <Button MinWidth="75" Click="buttonOK_Click" Content="{x:Static resx:NASResources.OK}" IsDefault="True" />
+      <Button MinWidth="75"
+              Click="buttonOK_Click"
+              Content="{x:Static resx:NASResources.OK}"
+              IsDefault="True" />
       <Button MinWidth="75"
               Margin="2,0,0,0"
               Click="buttonCancel_Click"

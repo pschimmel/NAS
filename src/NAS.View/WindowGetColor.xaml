@@ -3,7 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
-        Title="{x:Static resx:NASResources.Color}" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/NAS.View;component/Images/Edit.png" Width="275" Height="350" ResizeMode="NoResize" ShowInTaskbar="False">
+        Title="{x:Static resx:NASResources.Color}"
+        Width="275"
+        Height="350"
+        Icon="pack://application:,,,/NAS.View;component/Images/Edit.png"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -16,8 +22,32 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <extToolkit:ColorCanvas SelectedColor="{Binding Color}" Grid.Column="1" Margin="5" />
-    <Button Content="{x:Static resx:NASResources.OK}" Height="23" HorizontalAlignment="Right" Name="buttonOK" VerticalAlignment="Bottom" Width="75" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Margin="5" IsDefault="True" Click="buttonOK_Click" />
-    <Button Content="{x:Static resx:NASResources.Cancel}" Grid.Column="0" Grid.Row="3" Height="23" Grid.ColumnSpan="3" HorizontalAlignment="Right" Margin="5,5,85,5" Name="buttonCancel" VerticalAlignment="Bottom" Width="75" IsCancel="True" Click="buttonCancel_Click" />
+    <extToolkit:ColorCanvas Grid.Column="1"
+                            Margin="5"
+                            SelectedColor="{Binding Color}" />
+    <Button Name="buttonOK"
+            Grid.Row="3"
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            Width="75"
+            Height="23"
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="buttonOK_Click"
+            Content="{x:Static resx:NASResources.OK}"
+            IsDefault="True" />
+    <Button Name="buttonCancel"
+            Grid.Row="3"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Width="75"
+            Height="23"
+            Margin="5,5,85,5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="buttonCancel_Click"
+            Content="{x:Static resx:NASResources.Cancel}"
+            IsCancel="True" />
   </Grid>
 </Window>

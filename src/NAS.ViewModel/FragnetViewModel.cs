@@ -93,7 +93,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatingViewModel Implementation
+    #region IValidatable Implementation
 
     public string ErrorMessage { get; set; } = null;
 

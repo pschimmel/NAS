@@ -27,14 +27,19 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <TextBlock Margin="2" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Printer}" />
+    <TextBlock Margin="2"
+               VerticalAlignment="Center"
+               Text="{x:Static resx:NASResources.Printer}" />
     <ComboBox Grid.Column="1"
               Margin="2"
               DisplayMemberPath="FullName"
               IsSynchronizedWithCurrentItem="True"
               ItemsSource="{Binding Printers}"
               SelectedItem="{Binding SelectedPrinter}" />
-    <TextBlock Grid.Row="1" Margin="2" VerticalAlignment="Center" Text="{x:Static resx:NASResources.PageSize}" />
+    <TextBlock Grid.Row="1"
+               Margin="2"
+               VerticalAlignment="Center"
+               Text="{x:Static resx:NASResources.PageSize}" />
     <ComboBox Grid.Row="1"
               Grid.Column="1"
               Margin="2"
@@ -42,22 +47,32 @@
               IsSynchronizedWithCurrentItem="True"
               ItemsSource="{Binding PageSizes}"
               SelectedItem="{Binding SelectedPageSize}" />
-    <TextBlock Grid.Row="2" Margin="2" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Orientation}" />
+    <TextBlock Grid.Row="2"
+               Margin="2"
+               VerticalAlignment="Center"
+               Text="{x:Static resx:NASResources.Orientation}" />
     <Grid Grid.Row="2" Grid.Column="1">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition />
       </Grid.ColumnDefinitions>
-      <ToggleButton Margin="2" HorizontalAlignment="Left" IsChecked="{Binding Orientation, Converter={StaticResource PageOrientationConverter}}">
+      <ToggleButton Margin="2"
+                    HorizontalAlignment="Left"
+                    IsChecked="{Binding Orientation, Converter={StaticResource PageOrientationConverter}}">
         <Image Width="16" Source="pack://application:,,,/NAS.View;component/Images/PortraitLandscape.png" />
       </ToggleButton>
-      <StackPanel Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+      <StackPanel Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  Orientation="Horizontal">
         <TextBlock Grid.Row="4"
                    Grid.Column="1"
                    Margin="2"
                    VerticalAlignment="Center"
                    Text="{Binding PageHeight, StringFormat={}{0:F1} cm}" />
-        <TextBlock Grid.Row="5" Margin="2" VerticalAlignment="Center" Text=" x " />
+        <TextBlock Grid.Row="5"
+                   Margin="2"
+                   VerticalAlignment="Center"
+                   Text=" x " />
         <TextBlock Grid.Row="5"
                    Grid.Column="1"
                    Margin="2"
@@ -91,6 +106,8 @@
                               Maximum="500"
                               Minimum="10"
                               Value="{Binding Zoom}" />
-    <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Zoom}" />
+    <TextBlock Grid.Row="4"
+               VerticalAlignment="Center"
+               Text="{x:Static resx:NASResources.Zoom}" />
   </Grid>
 </Window>

@@ -30,13 +30,19 @@
           <ToolBarPanel>
             <ToolBar ToolBarTray.IsLocked="True">
               <Button Command="{Binding AddGlobalPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddPertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
               </Button>
               <Button Command="{Binding RemoveGlobalPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemovePertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
               </Button>
               <Button Command="{Binding CopyGlobalPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.CopyPertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Copy.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Copy.png" />
               </Button>
             </ToolBar>
           </ToolBarPanel>
@@ -66,13 +72,19 @@
           <ToolBarPanel>
             <ToolBar ToolBarTray.IsLocked="True">
               <Button Command="{Binding AddProjectPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddPertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
               </Button>
               <Button Command="{Binding RemoveProjectPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemovePertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
               </Button>
               <Button Command="{Binding CopyProjectPERTDefinitionCommand}" ToolTip="{x:Static resx:NASResources.CopyPertTemplate}">
-                <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Copy.png" />
+                <tools:AutoGrayableImage Width="16"
+                                         Height="16"
+                                         Source="pack://application:,,,/NAS.View;component/Images/Copy.png" />
               </Button>
             </ToolBar>
           </ToolBarPanel>

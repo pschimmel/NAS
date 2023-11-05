@@ -41,7 +41,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatingViewModel
+    #region IValidatable
 
     protected override IEnumerable<(Func<bool>, string)> ValidationList =>
       new List<(Func<bool>, string)>

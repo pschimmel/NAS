@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using NAS.Model.Enums;
+using NAS.ViewModel;
 
 namespace NAS.View.Shapes
 {
@@ -9,9 +10,9 @@ namespace NAS.View.Shapes
   {
     private Rect rect = Rect.Empty;
 
-    public MilestoneShape(Model.Entities.Activity milestone) : base(milestone)
+    public MilestoneShape(ActivityViewModel milestone) : base(milestone)
     {
-      Debug.Assert(milestone.ActivityType == ActivityType.Milestone);
+      Debug.Assert(milestone.Activity.ActivityType == ActivityType.Milestone);
     }
 
     private Geometry GetGeometry()

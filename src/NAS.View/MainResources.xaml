@@ -31,7 +31,9 @@
               <Style TargetType="ContentPresenter">
                 <Setter Property="Effect">
                   <Setter.Value>
-                    <DropShadowEffect BlurRadius="1" ShadowDepth="0" Color="Black" />
+                    <DropShadowEffect BlurRadius="1"
+                                      ShadowDepth="0"
+                                      Color="Black" />
                   </Setter.Value>
                 </Setter>
               </Style>
@@ -41,14 +43,18 @@
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="myPresenter" Property="Effect">
                 <Setter.Value>
-                  <DropShadowEffect BlurRadius="3" ShadowDepth="0" Color="Black" />
+                  <DropShadowEffect BlurRadius="3"
+                                    ShadowDepth="0"
+                                    Color="Black" />
                 </Setter.Value>
               </Setter>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="myPresenter" Property="Effect">
                 <Setter.Value>
-                  <DropShadowEffect BlurRadius="5" ShadowDepth="0" Color="Purple" />
+                  <DropShadowEffect BlurRadius="5"
+                                    ShadowDepth="0"
+                                    Color="Purple" />
                 </Setter.Value>
               </Setter>
             </Trigger>
@@ -58,10 +64,18 @@
     </Setter>
   </Style>
 
-  <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type Button}" />
-  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type ToggleButton}" />
-  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type CheckBox}" />
-  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type RadioButton}" />
+  <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
+         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+         TargetType="{x:Type Button}" />
+  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
+         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+         TargetType="{x:Type ToggleButton}" />
+  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
+         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+         TargetType="{x:Type CheckBox}" />
+  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
+         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+         TargetType="{x:Type RadioButton}" />
 
   <Style BasedOn="{x:Null}" TargetType="{x:Type ToolBarPanel}">
     <Setter Property="Background" Value="{x:Null}" />
@@ -78,7 +92,9 @@
                   BorderThickness="1"
                   CornerRadius="2">
             <DockPanel>
-              <ToolBarPanel x:Name="PART_ToolBarPanel" Margin="0,1,2,2" IsItemsHost="true" />
+              <ToolBarPanel x:Name="PART_ToolBarPanel"
+                            Margin="0,1,2,2"
+                            IsItemsHost="true" />
             </DockPanel>
           </Border>
         </ControlTemplate>
@@ -169,7 +185,9 @@
     </Setter>
   </Style>
 
-  <Style x:Key="CommentLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
+  <Style x:Key="CommentLabelStyle"
+         BasedOn="{StaticResource GeneralLabelStyle}"
+         TargetType="{x:Type Label}">
     <Setter Property="BorderBrush" Value="Gray" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Background">
@@ -182,13 +200,17 @@
     </Setter>
   </Style>
 
-  <Style x:Key="ErrorLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
+  <Style x:Key="ErrorLabelStyle"
+         BasedOn="{StaticResource GeneralLabelStyle}"
+         TargetType="{x:Type Label}">
     <Setter Property="Background" Value="LightSalmon" />
     <Setter Property="BorderBrush" Value="Red" />
     <Setter Property="BorderThickness" Value="1" />
   </Style>
 
-  <Style x:Key="WarningLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
+  <Style x:Key="WarningLabelStyle"
+         BasedOn="{StaticResource GeneralLabelStyle}"
+         TargetType="{x:Type Label}">
     <Setter Property="Background" Value="LightYellow" />
     <Setter Property="BorderBrush" Value="Orange" />
     <Setter Property="BorderThickness" Value="1" />

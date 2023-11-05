@@ -23,12 +23,30 @@
               ItemsSource="{Binding WBSSummaryItems}"
               SelectionMode="Single">
       <DataGrid.Columns>
-        <DataGridTextColumn Width="Auto" Binding="{Binding Item.FullName}" Header="{x:Static resx:NASResources.WBS}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Start, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.StartDate}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Finish, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.FinishDate}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Budget, Converter={StaticResource CurrencyConverter}}" Header="{x:Static resx:NASResources.Budget}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding PlannedCosts, Converter={StaticResource CurrencyConverter}}" Header="{x:Static resx:NASResources.PlannedCosts}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding ActualCosts, Converter={StaticResource CurrencyConverter}}" Header="{x:Static resx:NASResources.ActualCosts}" IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Item.FullName}"
+                            Header="{x:Static resx:NASResources.WBS}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Start, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.StartDate}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Finish, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.FinishDate}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Budget, Converter={StaticResource CurrencyConverter}}"
+                            Header="{x:Static resx:NASResources.Budget}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding PlannedCosts, Converter={StaticResource CurrencyConverter}}"
+                            Header="{x:Static resx:NASResources.PlannedCosts}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ActualCosts, Converter={StaticResource CurrencyConverter}}"
+                            Header="{x:Static resx:NASResources.ActualCosts}"
+                            IsReadOnly="True" />
       </DataGrid.Columns>
     </DataGrid>
     <Button Name="buttonOK"

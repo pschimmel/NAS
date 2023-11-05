@@ -121,7 +121,7 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IApplyableViewModel Implementation
+    #region IApplyable Implementation
 
     public void Apply()
     {

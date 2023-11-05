@@ -13,12 +13,16 @@
         Icon="pack://application:,,,/NAS;component/Stones.ico"
         WindowStartupLocation="CenterScreen">
   <Window.Resources>
-    <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+    <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
       <ObjectDataProvider.MethodParameters>
         <x:Type TypeName="enums:HorizontalAlignment" />
       </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
-    <ObjectDataProvider x:Key="VerticalAlignmentEnumValues" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+    <ObjectDataProvider x:Key="VerticalAlignmentEnumValues"
+                        MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
       <ObjectDataProvider.MethodParameters>
         <x:Type TypeName="enums:VerticalAlignment" />
       </ObjectDataProvider.MethodParameters>
@@ -53,27 +57,37 @@
         <RowDefinition />
       </Grid.RowDefinitions>
       <TextBlock Margin="1" Text="{x:Static resx:NASResources.Name}" />
-      <TextBox Grid.Row="1" Margin="1" Text="{Binding Definition.Name}" />
-      <TextBlock Grid.Row="2" Margin="1" Text="{x:Static resx:NASResources.Width}" />
+      <TextBox Grid.Row="1"
+               Margin="1"
+               Text="{Binding Definition.Name}" />
+      <TextBlock Grid.Row="2"
+                 Margin="1"
+                 Text="{x:Static resx:NASResources.Width}" />
       <toolkit:DoubleUpDown Grid.Row="3"
                             Margin="1"
                             Maximum="1000"
                             Minimum="10"
                             Value="{Binding Definition.Width}" />
-      <TextBlock Grid.Row="4" Margin="1" Text="{x:Static resx:NASResources.Height}" />
+      <TextBlock Grid.Row="4"
+                 Margin="1"
+                 Text="{x:Static resx:NASResources.Height}" />
       <toolkit:DoubleUpDown Grid.Row="5"
                             Margin="1"
                             Maximum="1000"
                             Minimum="10"
                             Value="{Binding Definition.Height}" />
-      <TextBlock Grid.Row="6" Margin="1" Text="{x:Static resx:NASResources.FontSize}" />
+      <TextBlock Grid.Row="6"
+                 Margin="1"
+                 Text="{x:Static resx:NASResources.FontSize}" />
       <toolkit:DoubleUpDown Grid.Row="7"
                             Margin="1"
                             Maximum="100"
                             Minimum="3"
                             Value="{Binding Definition.FontSize}" />
     </Grid>
-    <Grid Grid.Row="0" Grid.Column="1" Background="LightGray">
+    <Grid Grid.Row="0"
+          Grid.Column="1"
+          Background="LightGray">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -86,16 +100,24 @@
       <ToolBarPanel Grid.Row="1">
         <ToolBar ToolBarTray.IsLocked="True">
           <Button Command="{Binding AddRowDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddRow}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
           </Button>
           <Button Command="{Binding RemoveRowDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveRow}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
           </Button>
           <Button Command="{Binding MoveRowDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveRowUp}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
           </Button>
           <Button Command="{Binding MoveRowDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveRowDown}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
           </Button>
         </ToolBar>
       </ToolBarPanel>
@@ -116,20 +138,30 @@
           </DataTemplate>
         </ListBox.ItemTemplate>
       </ListBox>
-      <TextBlock Grid.Row="3" Margin="2" Text="{x:Static resx:NASResources.Columns}" />
+      <TextBlock Grid.Row="3"
+                 Margin="2"
+                 Text="{x:Static resx:NASResources.Columns}" />
       <ToolBarPanel Grid.Row="4">
         <ToolBar ToolBarTray.IsLocked="True">
           <Button Command="{Binding AddColumnDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddColumn}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
           </Button>
           <Button Command="{Binding RemoveColumnDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveColumn}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
           </Button>
           <Button Command="{Binding MoveColumnDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveColumnUp}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Up.png" />
           </Button>
           <Button Command="{Binding MoveColumnDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveColumnDown}">
-            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
+            <tools:AutoGrayableImage Width="16"
+                                     Height="16"
+                                     Source="pack://application:,,,/NAS.View;component/Images/Down.png" />
           </Button>
         </ToolBar>
       </ToolBarPanel>
@@ -151,7 +183,9 @@
         </ListBox.ItemTemplate>
       </ListBox>
     </Grid>
-    <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+    <Border Grid.Column="2"
+            BorderBrush="Black"
+            BorderThickness="1">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition />
@@ -172,7 +206,10 @@
           <Border.Effect>
             <DropShadowEffect />
           </Border.Effect>
-          <Grid Name="template" Width="{Binding Definition.Width, FallbackValue=150}" Height="{Binding Definition.Height, FallbackValue=100}" ShowGridLines="True">
+          <Grid Name="template"
+                Width="{Binding Definition.Width, FallbackValue=150}"
+                Height="{Binding Definition.Height, FallbackValue=100}"
+                ShowGridLines="True">
             <Grid.ColumnDefinitions>
               <ColumnDefinition />
               <ColumnDefinition />
@@ -190,10 +227,14 @@
     <ToolBarPanel Grid.Row="1" Grid.ColumnSpan="3">
       <ToolBar ToolBarTray.IsLocked="True">
         <Button Command="{Binding AddPertItemCommand}" ToolTip="{x:Static resx:NASResources.AddProperty}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
         </Button>
         <Button Command="{Binding RemovePertItemCommand}" ToolTip="{x:Static resx:NASResources.RemoveProperty}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
@@ -208,11 +249,22 @@
               SelectedItem="{Binding CurrentItem, Mode=OneWay}"
               SelectionMode="Single">
       <DataGrid.Columns>
-        <DataGridTextColumn Width="Auto" Binding="{Binding Property, Converter={StaticResource ActivityPropertyConverter}}" Header="{x:Static resx:NASResources.Property}" IsReadOnly="True" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Row, UpdateSourceTrigger=PropertyChanged}" Header="{x:Static resx:NASResources.Row}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding Column, UpdateSourceTrigger=PropertyChanged}" Header="{x:Static resx:NASResources.Column}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding RowSpan, UpdateSourceTrigger=PropertyChanged}" Header="{x:Static resx:NASResources.RowSpan}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding ColumnSpan, UpdateSourceTrigger=PropertyChanged}" Header="{x:Static resx:NASResources.ColumnSpan}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Property, Converter={StaticResource ActivityPropertyConverter}}"
+                            Header="{x:Static resx:NASResources.Property}"
+                            IsReadOnly="True" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Row, UpdateSourceTrigger=PropertyChanged}"
+                            Header="{x:Static resx:NASResources.Row}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Column, UpdateSourceTrigger=PropertyChanged}"
+                            Header="{x:Static resx:NASResources.Column}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding RowSpan, UpdateSourceTrigger=PropertyChanged}"
+                            Header="{x:Static resx:NASResources.RowSpan}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ColumnSpan, UpdateSourceTrigger=PropertyChanged}"
+                            Header="{x:Static resx:NASResources.ColumnSpan}" />
         <DataGridTemplateColumn Width="Auto" Header="{x:Static resx:NASResources.HorizontalAlignment}">
           <DataGridTemplateColumn.CellTemplate>
             <DataTemplate>
@@ -259,9 +311,18 @@
                Text="{Binding ErrorMessage}"
                TextWrapping="Wrap"
                Visibility="{Binding HasErrors, Converter={StaticResource VisibilityConverter}}" />
-    <StackPanel Grid.Row="4" Grid.ColumnSpan="3" HorizontalAlignment="Right" Orientation="Horizontal">
-      <Button MinWidth="75" Margin="2" Click="ButtonCancel_Click" Content="{x:Static resx:NASResources.Cancel}" />
-      <Button MinWidth="75" Margin="0,2,2,2" Click="ButtonOK_Click" Content="{x:Static resx:NASResources.OK}" />
+    <StackPanel Grid.Row="4"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+      <Button MinWidth="75"
+              Margin="2"
+              Click="ButtonCancel_Click"
+              Content="{x:Static resx:NASResources.Cancel}" />
+      <Button MinWidth="75"
+              Margin="0,2,2,2"
+              Click="ButtonOK_Click"
+              Content="{x:Static resx:NASResources.OK}" />
     </StackPanel>
   </Grid>
 </Window>

@@ -25,8 +25,12 @@
       <ColumnDefinition Width="Auto" />
       <ColumnDefinition />
     </Grid.ColumnDefinitions>
-    <StackPanel Grid.ColumnSpan="2" Background="Wheat" Orientation="Horizontal">
-      <Image Height="48" Margin="2" Source="pack://application:,,,/NAS.View;component/Images/Icon.png" />
+    <StackPanel Grid.ColumnSpan="2"
+                Background="Wheat"
+                Orientation="Horizontal">
+      <Image Height="48"
+             Margin="2"
+             Source="pack://application:,,,/NAS.View;component/Images/Icon.png" />
       <TextBlock Margin="2"
                  FontSize="16"
                  FontWeight="Bold"
@@ -62,16 +66,24 @@
                Text="{x:Static resx:NASResources.Description}" />
     <ScrollViewer Grid.Row="5" Grid.Column="1">
       <StackPanel>
-        <TextBlock Padding="5" Text="{x:Static resx:NASResources.DescriptionText1}" TextWrapping="Wrap" />
-        <TextBlock Padding="5" Text="{x:Static resx:NASResources.DescriptionText2}" TextWrapping="Wrap" />
-        <TextBlock Padding="5" Text="{x:Static resx:NASResources.DescriptionText3}" TextWrapping="Wrap" />
+        <TextBlock Padding="5"
+                   Text="{x:Static resx:NASResources.DescriptionText1}"
+                   TextWrapping="Wrap" />
+        <TextBlock Padding="5"
+                   Text="{x:Static resx:NASResources.DescriptionText2}"
+                   TextWrapping="Wrap" />
+        <TextBlock Padding="5"
+                   Text="{x:Static resx:NASResources.DescriptionText3}"
+                   TextWrapping="Wrap" />
       </StackPanel>
     </ScrollViewer>
     <TextBlock Grid.Row="6"
                Padding="5"
                FontWeight="Bold"
                Text="{x:Static resx:NASResources.Website}" />
-    <TextBlock Grid.Row="6" Grid.Column="1" Padding="5">
+    <TextBlock Grid.Row="6"
+               Grid.Column="1"
+               Padding="5">
       <Hyperlink NavigateUri="http://engineeringsolutions.de" RequestNavigate="Hyperlink_RequestNavigate">
         http://engineeringsolutions.de
       </Hyperlink>

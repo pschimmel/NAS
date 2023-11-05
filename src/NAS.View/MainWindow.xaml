@@ -5,14 +5,13 @@
                      xmlns:converters="clr-namespace:NAS.View.Converters"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:fluent="clr-namespace:Fluent;assembly=Fluent"
-                     xmlns:ganttViews="clr-namespace:NAS.View.Gantt"
-                     xmlns:infrastructure="clr-namespace:ES.Tools.Infrastructure;assembly=ES.Tools"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:pertViews="clr-namespace:NAS.View.PERT"
+                     xmlns:controls="clr-namespace:NAS.View.Controls"
                      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
                      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
                      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
-                     xmlns:views="clr-namespace:NAS.View" xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+                     xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+                     xmlns:views="clr-namespace:NAS.View"
                      Title="{Binding WindowTitle}"
                      d:DesignHeight="756"
                      d:DesignWidth="1024"
@@ -36,10 +35,16 @@
   <Window.InputBindings>
     <KeyBinding Key="F9" Command="{Binding CurrentSchedule.CalculateCommand}" />
     <KeyBinding Key="Insert" Command="{Binding CurrentSchedule.AddActivityCommand}" />
-    <KeyBinding Key="Insert" Command="{Binding CurrentSchedule.AddMilestoneCommand}" Modifiers="Alt" />
-    <KeyBinding Key="Insert" Command="{Binding CurrentSchedule.AddRelationshipCommand}" Modifiers="Control" />
+    <KeyBinding Key="Insert"
+                Command="{Binding CurrentSchedule.AddMilestoneCommand}"
+                Modifiers="Alt" />
+    <KeyBinding Key="Insert"
+                Command="{Binding CurrentSchedule.AddRelationshipCommand}"
+                Modifiers="Control" />
     <KeyBinding Key="Delete" Command="{Binding CurrentSchedule.RemoveActivityCommand}" />
-    <KeyBinding Key="Delete" Command="{Binding CurrentSchedule.RemoveRelationshipCommand}" Modifiers="Control" />
+    <KeyBinding Key="Delete"
+                Command="{Binding CurrentSchedule.RemoveRelationshipCommand}"
+                Modifiers="Control" />
     <KeyBinding Key="F1" Command="{Binding InstantHelpCommand}" />
   </Window.InputBindings>
   <toolkit:BusyIndicator x:Name="bi" IsBusy="{Binding IsBusy}">
@@ -60,7 +65,11 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
-          <tools:ProgressCircle Width="200" Height="200" IsIndeterminate="True" IsRotating="True" HorizontalAlignment="Center" />
+          <tools:ProgressCircle Width="200"
+                                Height="200"
+                                HorizontalAlignment="Center"
+                                IsIndeterminate="True"
+                                IsRotating="True" />
           <TextBlock Grid.Row="1"
                      Margin="0,5,0,0"
                      HorizontalAlignment="Center"
@@ -80,22 +89,32 @@
             <fluent:BackstageTabControl>
               <fluent:Button Command="{Binding ScheduleManagerViewModel.NewScheduleCommand}" Header="{x:Static resx:NASResources.CreateNewSchedule}">
                 <fluent:Button.Icon>
-                  <Image Width="18" Height="18" Source="pack://application:,,,/NAS.View;component/Images/NewProject.png" />
+                  <Image Width="18"
+                         Height="18"
+                         Source="pack://application:,,,/NAS.View;component/Images/NewProject.png" />
                 </fluent:Button.Icon>
               </fluent:Button>
               <fluent:BackstageTabItem Header="{x:Static resx:NASResources.ManageSchedules}" Icon="pack://application:,,,/NAS.View;component/Images/Open.png">
                 <views:ScheduleManagerControl Margin="10" DataContext="{Binding ScheduleManagerViewModel}" />
               </fluent:BackstageTabItem>
-              <fluent:Button Command="{Binding CloseScheduleCommand}" Header="{x:Static resx:NASResources.CloseSchedule}" Icon="pack://application:,,,/NAS.View;component/Images/Close.png" />
+              <fluent:Button Command="{Binding CloseScheduleCommand}"
+                             Header="{x:Static resx:NASResources.CloseSchedule}"
+                             Icon="pack://application:,,,/NAS.View;component/Images/Close.png" />
               <fluent:SeparatorTabItem />
-              <fluent:Button Command="{Binding DatabaseSettingsCommand}" Header="{x:Static resx:NASResources.DatabaseConfiguration}" Icon="pack://application:,,,/NAS.View;component/Images/EditDatabaseSettings.png" />
-              <fluent:Button Command="{Binding ProgramSettingsCommand}" Header="{x:Static resx:NASResources.Settings}" Icon="pack://application:,,,/NAS.View;component/Images/Gear.png" />
+              <fluent:Button Command="{Binding DatabaseSettingsCommand}"
+                             Header="{x:Static resx:NASResources.DatabaseConfiguration}"
+                             Icon="pack://application:,,,/NAS.View;component/Images/EditDatabaseSettings.png" />
+              <fluent:Button Command="{Binding ProgramSettingsCommand}"
+                             Header="{x:Static resx:NASResources.Settings}"
+                             Icon="pack://application:,,,/NAS.View;component/Images/Gear.png" />
               <fluent:Button Command="{Binding UserManagementCommand}"
                              Header="{x:Static resx:NASResources.UserManagement}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Users.png"
                              Visibility="{Binding IsUserManagementVisible, Converter={StaticResource VisibilityConverter}}" />
               <fluent:SeparatorTabItem />
-              <fluent:Button Command="{Binding CloseCommand}" Header="{x:Static resx:NASResources.Close}" Icon="pack://application:,,,/NAS.View;component/Images/Exit.png" />
+              <fluent:Button Command="{Binding CloseCommand}"
+                             Header="{x:Static resx:NASResources.Close}"
+                             Icon="pack://application:,,,/NAS.View;component/Images/Exit.png" />
             </fluent:BackstageTabControl>
           </fluent:Backstage>
         </fluent:Ribbon.Menu>
@@ -113,15 +132,21 @@
                                            Header="{x:Static resx:NASResources.Relationships}"
                                            Visibility="Visible" />
         </fluent:Ribbon.ContextualGroups>
-        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Start}" ReduceOrder="Activities, Activities, Activities, Relationships, Relationships, Relationships, Schedule, Schedule, Schedule" Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
-          <fluent:RibbonGroupBox Name="Calculate" Header="{x:Static resx:NASResources.Calculate}" Icon="pack://application:,,,/NAS.View;component/Images/Calculate.png">
+        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Start}"
+                              ReduceOrder="Activities, Activities, Activities, Relationships, Relationships, Relationships, Schedule, Schedule, Schedule"
+                              Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
+          <fluent:RibbonGroupBox Name="Calculate"
+                                 Header="{x:Static resx:NASResources.Calculate}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Calculate.png">
             <fluent:Button Command="{Binding CurrentSchedule.CalculateCommand}"
                            Header="{x:Static resx:NASResources.Calculate}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Calculate.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Calculate.png"
                            SizeDefinition="Large">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.CalculateToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.CalculateToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.CalculateToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.CalculateToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.SchedulingSettingsCommand}"
@@ -130,18 +155,24 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Settings.png"
                            SizeDefinition="Large">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.SchedulingSettingsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.SchedulingSettingsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Activities" Header="{x:Static resx:NASResources.Activities}" Icon="pack://application:,,,/NAS.View;component/Images/Activity.png">
+          <fluent:RibbonGroupBox Name="Activities"
+                                 Header="{x:Static resx:NASResources.Activities}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Activity.png">
             <fluent:Button Command="{Binding CurrentSchedule.AddActivityCommand}"
                            Header="{x:Static resx:NASResources.AddActivity}"
                            Icon="pack://application:,,,/NAS.View;component/Images/AddActivity.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddActivity.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.AddMilestoneCommand}"
@@ -150,7 +181,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddMilestone.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddMilestoneToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddMilestoneToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddMilestoneToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddMilestoneToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.RemoveActivityCommand}"
@@ -159,7 +192,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/RemoveActivity.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.RemoveActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.RemoveActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.AddActivityCommand}"
@@ -169,7 +204,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddFixedActivity.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddFixedActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddFixedActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddFixedActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddFixedActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.AddMilestoneCommand}"
@@ -179,18 +216,24 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddFixedMilestone.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddFixedMilestoneToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddFixedMilestoneToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddFixedMilestoneToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddFixedMilestoneToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Relationships" Header="{x:Static resx:NASResources.Relationships}" Icon="pack://application:,,,/NAS.View;component/Images/Relationship.png">
+          <fluent:RibbonGroupBox Name="Relationships"
+                                 Header="{x:Static resx:NASResources.Relationships}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Relationship.png">
             <fluent:Button Command="{Binding CurrentSchedule.AddRelationshipCommand}"
                            Header="{x:Static resx:NASResources.AddRelationship}"
                            Icon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.RemoveRelationshipCommand}"
@@ -199,7 +242,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.RemoveRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.RemoveRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditLogicCommand}"
@@ -208,18 +253,24 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/EditRelationships.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLogicToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditLogicToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLogicToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditLogicToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Schedule" Header="{x:Static resx:NASResources.Schedule}" Icon="pack://application:,,,/NAS.View;component/Images/Options.png">
+          <fluent:RibbonGroupBox Name="Schedule"
+                                 Header="{x:Static resx:NASResources.Schedule}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Options.png">
             <fluent:Button Command="{Binding CurrentSchedule.PropertiesCommand}"
                            Header="{x:Static resx:NASResources.ProjectProperties}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Options.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Options.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ProjectPropertiesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ProjectPropertiesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ProjectPropertiesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ProjectPropertiesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditCalendarsCommand}"
@@ -228,7 +279,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Calendar.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditCalendarsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditCalendarsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditCalendarsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditCalendarsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditWBSCommand}"
@@ -237,7 +290,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/WBS.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditWBSToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditWBSToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditWBSToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditWBSToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditResourcesCommand}"
@@ -246,7 +301,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Resources.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditResourcesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditResourcesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditResourcesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditResourcesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditCustomAttributesCommand}"
@@ -255,20 +312,28 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/EditAttributes.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditAttributesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditAttributesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditAttributesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditAttributesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
         </fluent:RibbonTabItem>
-        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.View}" ReduceOrder="Zoom, Data, (Layouts), View, Zoom, Data, View, Zoom, Data, View, (Layouts),(Layouts),(Layouts),(Layouts)" Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
-          <fluent:RibbonGroupBox Name="Zoom" Header="{x:Static resx:NASResources.Zoom}" Icon="pack://application:,,,/NAS.View;component/Images/Zoom.png">
+        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.View}"
+                              ReduceOrder="Zoom, Data, (Layouts), View, Zoom, Data, View, Zoom, Data, View, (Layouts),(Layouts),(Layouts),(Layouts)"
+                              Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
+          <fluent:RibbonGroupBox Name="Zoom"
+                                 Header="{x:Static resx:NASResources.Zoom}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Zoom.png">
             <fluent:DropDownButton x:Name="buttonZoom"
                                    Header="{x:Static resx:NASResources.Zoom}"
                                    Icon="pack://application:,,,/NAS.View;component/Images/Zoom.png"
                                    LargeIcon="pack://application:,,,/NAS.View;component/Images/Zoom.png"
                                    SizeDefinition="Large, Middle, Small">
               <fluent:DropDownButton.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ZoomToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ZoomToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ZoomToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ZoomToolTipDescription}" />
               </fluent:DropDownButton.ToolTip>
               <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
                                CommandParameter="0.1"
@@ -307,14 +372,18 @@
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='5'}" />
             </fluent:DropDownButton>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Data" Header="{x:Static resx:NASResources.Data}" Icon="pack://application:,,,/NAS.View;component/Images/Database.png">
+          <fluent:RibbonGroupBox Name="Data"
+                                 Header="{x:Static resx:NASResources.Data}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Database.png">
             <fluent:Button Command="{Binding CurrentSchedule.EditFiltersCommand}"
                            Header="{x:Static resx:NASResources.EditFilters}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Filter.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Filter.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditFiltersToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditFiltersToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditFiltersToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditFiltersToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditSortingAndGroupingCommand}"
@@ -324,11 +393,15 @@
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.GroupAndSortToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.GroupAndSortToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.GroupAndSortToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.GroupAndSortToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Layouts" Header="{x:Static resx:NASResources.Layouts}" Icon="pack://application:,,,/NAS.View;component/Images/Layout.png">
+          <fluent:RibbonGroupBox Name="Layouts"
+                                 Header="{x:Static resx:NASResources.Layouts}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Layout.png">
             <fluent:InRibbonGallery Icon="pack://application:,,,/NAS.View;component/Images/Layout.png"
                                     ItemTemplate="{StaticResource LayoutGalleryItem}"
                                     ItemsSource="{Binding CurrentSchedule.Layouts}"
@@ -345,7 +418,9 @@
                       <tools:AutoGrayableImage Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
                     </MenuItem.Icon>
                     <MenuItem.ToolTip>
-                      <fluent:ScreenTip Title="{x:Static resx:NASResources.AddLayoutToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddLayoutToolTipDescription}" />
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.AddLayoutToolTipTitle}"
+                                        Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                        Text="{x:Static resx:NASResources.AddLayoutToolTipDescription}" />
                     </MenuItem.ToolTip>
                   </MenuItem>
                   <MenuItem Command="{Binding CurrentSchedule.RemoveLayoutCommand}" Header="{x:Static resx:NASResources.RemoveLayout}">
@@ -353,7 +428,9 @@
                       <tools:AutoGrayableImage Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
                     </MenuItem.Icon>
                     <MenuItem.ToolTip>
-                      <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveLayoutToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.RemoveLayoutToolTipDescription}" />
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveLayoutToolTipTitle}"
+                                        Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                        Text="{x:Static resx:NASResources.RemoveLayoutToolTipDescription}" />
                     </MenuItem.ToolTip>
                   </MenuItem>
                   <MenuItem Command="{Binding CurrentSchedule.EditLayoutCommand}" Header="{x:Static resx:NASResources.EditLayout}">
@@ -361,7 +438,9 @@
                       <tools:AutoGrayableImage Source="pack://application:,,,/NAS.View;component/Images/Layout.png" />
                     </MenuItem.Icon>
                     <MenuItem.ToolTip>
-                      <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLayoutToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditLayoutToolTipDescription}" />
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLayoutToolTipTitle}"
+                                        Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                        Text="{x:Static resx:NASResources.EditLayoutToolTipDescription}" />
                     </MenuItem.ToolTip>
                   </MenuItem>
                   <MenuItem Command="{Binding CurrentSchedule.CopyLayoutCommand}" Header="{x:Static resx:NASResources.CopyLayout}">
@@ -369,14 +448,18 @@
                       <tools:AutoGrayableImage Source="pack://application:,,,/NAS.View;component/Images/Copy.png" />
                     </MenuItem.Icon>
                     <MenuItem.ToolTip>
-                      <fluent:ScreenTip Title="{x:Static resx:NASResources.CopyLayoutToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.CopyLayoutToolTipDescription}" />
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.CopyLayoutToolTipTitle}"
+                                        Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                        Text="{x:Static resx:NASResources.CopyLayoutToolTipDescription}" />
                     </MenuItem.ToolTip>
                   </MenuItem>
                 </fluent:RibbonMenu>
               </fluent:InRibbonGallery.Menu>
             </fluent:InRibbonGallery>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="View" Header="{x:Static resx:NASResources.Show}" Icon="pack://application:,,,/NAS.View;component/Images/Show.png">
+          <fluent:RibbonGroupBox Name="View"
+                                 Header="{x:Static resx:NASResources.Show}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Show.png">
             <fluent:Button Command="{Binding CurrentSchedule.ShowAsGanttCommand}"
                            Header="{x:Static resx:NASResources.ShowAsGantt}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Gantt.png"
@@ -384,7 +467,9 @@
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowPERTControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsGanttToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ShowAsGanttToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsGanttToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ShowAsGanttToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.ShowAsPertCommand}"
@@ -394,7 +479,9 @@
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsPertToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ShowAsPertToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsPertToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ShowAsPertToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:ToggleButton Command="{Binding CurrentSchedule.ShowRelationshipsCommand}"
@@ -404,7 +491,9 @@
                                  LargeIcon="pack://application:,,,/NAS.View;component/Images/ShowRelationships.png"
                                  SizeDefinition="Large, Middle, Small">
               <fluent:ToggleButton.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowRelationshipsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ShowRelationshipsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowRelationshipsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ShowRelationshipsToolTipDescription}" />
               </fluent:ToggleButton.ToolTip>
             </fluent:ToggleButton>
             <fluent:ToggleButton Command="{Binding CurrentSchedule.ShowFloatCommand}"
@@ -415,7 +504,9 @@
                                  SizeDefinition="Large, Middle, Small"
                                  Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:ToggleButton.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowFloatToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ShowFloatToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowFloatToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ShowFloatToolTipDescription}" />
               </fluent:ToggleButton.ToolTip>
             </fluent:ToggleButton>
             <fluent:Button Command="{Binding CurrentSchedule.ShowResourceCommand}"
@@ -425,7 +516,9 @@
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowResourceToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ShowResourceToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowResourceToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ShowResourceToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.AutoArrangePERTCommand}"
@@ -435,31 +528,43 @@
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowPERTControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ResetPertToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ResetPertToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ResetPertToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ResetPertToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
         </fluent:RibbonTabItem>
-        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Controlling}" ReduceOrder="Baselines, Baselines, Baselines, Fragnets, Fragnets, Fragnets, Distortions, Distortions, Distortions, Evaluations, Evaluations, Evaluations" Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
-          <fluent:RibbonGroupBox Name="Baselines" Header="{x:Static resx:NASResources.Baselines}" Icon="pack://application:,,,/NAS.View;component/Images/Baseline.png">
+        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Controlling}"
+                              ReduceOrder="Baselines, Baselines, Baselines, Fragnets, Fragnets, Fragnets, Distortions, Distortions, Distortions, Evaluations, Evaluations, Evaluations"
+                              Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
+          <fluent:RibbonGroupBox Name="Baselines"
+                                 Header="{x:Static resx:NASResources.Baselines}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Baseline.png">
             <fluent:Button Command="{Binding CurrentSchedule.EditBaselinesCommand}"
                            Header="{x:Static resx:NASResources.EditBaselines}"
                            Icon="pack://application:,,,/NAS.View;component/Images/EditBaselines.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/EditBaselines.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditBaselinesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditBaselinesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditBaselinesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditBaselinesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Fragnets" Header="{x:Static resx:NASResources.Fragnets}" Icon="pack://application:,,,/NAS.View;component/Images/Fragnet.png">
+          <fluent:RibbonGroupBox Name="Fragnets"
+                                 Header="{x:Static resx:NASResources.Fragnets}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Fragnet.png">
             <fluent:Button Command="{Binding CurrentSchedule.EditFragnetsCommand}"
                            Header="{x:Static resx:NASResources.EditFragnets}"
                            Icon="pack://application:,,,/NAS.View;component/Images/EditFragnets.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/EditFragnets.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditFragnetsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditFragnetsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditFragnetsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditFragnetsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:DropDownButton Header="{x:Static resx:NASResources.ActivateFragnet}"
@@ -468,7 +573,9 @@
                                    LargeIcon="pack://application:,,,/NAS.View;component/Images/Fragnet.png"
                                    SizeDefinition="Large, Middle, Small">
               <fluent:DropDownButton.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ActivateFragnetToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ActivateFragnetToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ActivateFragnetToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ActivateFragnetToolTipDescription}" />
               </fluent:DropDownButton.ToolTip>
               <fluent:DropDownButton.ItemContainerStyle>
                 <Style TargetType="{x:Type fluent:MenuItem}">
@@ -480,25 +587,33 @@
               </fluent:DropDownButton.ItemContainerStyle>
             </fluent:DropDownButton>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Distortions" Header="{x:Static resx:NASResources.Distortions}" Icon="pack://application:,,,/NAS.View;component/Images/Distortion.png">
+          <fluent:RibbonGroupBox Name="Distortions"
+                                 Header="{x:Static resx:NASResources.Distortions}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Distortion.png">
             <fluent:Button Command="{Binding CurrentSchedule.EditDistortionsCommand}"
                            Header="{x:Static resx:NASResources.EditDistortions}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Distortion.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Distortion.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditDistortionsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditDistortionsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditDistortionsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditDistortionsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Evaluations" Header="{x:Static resx:NASResources.Evaluations}" Icon="pack://application:,,,/NAS.View;component/Images/Compare.png">
+          <fluent:RibbonGroupBox Name="Evaluations"
+                                 Header="{x:Static resx:NASResources.Evaluations}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Compare.png">
             <fluent:Button Command="{Binding CurrentSchedule.CompareWithBaselineCommand}"
                            Header="{x:Static resx:NASResources.BaselineComparison}"
                            Icon="pack://application:,,,/NAS.View;component/Images/CompareWithBaseline.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/CompareWithBaseline.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.BaselineComparisonToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.BaselineComparisonToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.BaselineComparisonToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.BaselineComparisonToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.CompareWithDistortionsCommand}"
@@ -507,7 +622,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/CompareDistortions.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.DistortionComparisonToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.DistortionComparisonToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.DistortionComparisonToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.DistortionComparisonToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.CompareCommand}"
@@ -516,7 +633,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Compare.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.FragnetComparisonToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.FragnetComparisonToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.FragnetComparisonToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.FragnetComparisonToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -528,7 +647,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/PrintPreview.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/PrintPreview.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.PrintToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.PrintToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.PrintToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.PrintToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -543,10 +664,18 @@
                                     SelectedItem="{Binding SelectedReport}">
               <fluent:InRibbonGallery.Menu>
                 <fluent:RibbonMenu>
-                  <fluent:MenuItem Command="{Binding EditReportCommand}" Header="{x:Static resx:NASResources.EditReport}" Icon="pack://application:,,,/NAS.View;component/Images/Edit.png" />
-                  <fluent:MenuItem Command="{Binding RenameReportCommand}" Header="{x:Static resx:NASResources.RenameReport}" Icon="pack://application:,,,/NAS.View;component/Images/Rename.png" />
-                  <fluent:MenuItem Command="{Binding CopyReportCommand}" Header="{x:Static resx:NASResources.CopyReport}" Icon="pack://application:,,,/NAS.View;component/Images/Copy.png" />
-                  <fluent:MenuItem Command="{Binding DeleteReportCommand}" Header="{x:Static resx:NASResources.DeleteReport}" Icon="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+                  <fluent:MenuItem Command="{Binding EditReportCommand}"
+                                   Header="{x:Static resx:NASResources.EditReport}"
+                                   Icon="pack://application:,,,/NAS.View;component/Images/Edit.png" />
+                  <fluent:MenuItem Command="{Binding RenameReportCommand}"
+                                   Header="{x:Static resx:NASResources.RenameReport}"
+                                   Icon="pack://application:,,,/NAS.View;component/Images/Rename.png" />
+                  <fluent:MenuItem Command="{Binding CopyReportCommand}"
+                                   Header="{x:Static resx:NASResources.CopyReport}"
+                                   Icon="pack://application:,,,/NAS.View;component/Images/Copy.png" />
+                  <fluent:MenuItem Command="{Binding DeleteReportCommand}"
+                                   Header="{x:Static resx:NASResources.DeleteReport}"
+                                   Icon="pack://application:,,,/NAS.View;component/Images/Remove.png" />
                 </fluent:RibbonMenu>
               </fluent:InRibbonGallery.Menu>
             </fluent:InRibbonGallery>
@@ -556,13 +685,19 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Show.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ReportsToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ReportsToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ReportsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ReportsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
         </fluent:RibbonTabItem>
-        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Help}" IsSelected="True" ReduceOrder="Help, Help, Help, Information, Information, Information">
-          <fluent:RibbonGroupBox Name="Help" Header="{x:Static resx:NASResources.Help}" Icon="pack://application:,,,/NAS.View;component/Images/Help.png">
+        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Help}"
+                              IsSelected="True"
+                              ReduceOrder="Help, Help, Help, Information, Information, Information">
+          <fluent:RibbonGroupBox Name="Help"
+                                 Header="{x:Static resx:NASResources.Help}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Help.png">
             <fluent:ToggleButton Command="{Binding InstantHelpCommand}"
                                  Header="{x:Static resx:NASResources.InstantHelp}"
                                  Icon="pack://application:,,,/NAS.View;component/Images/InstantHelp.png"
@@ -570,7 +705,9 @@
                                  LargeIcon="pack://application:,,,/NAS.View;component/Images/InstantHelp.png"
                                  SizeDefinition="Large, Middle, Small">
               <fluent:ToggleButton.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.InstantHelpToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.InstantHelpToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.InstantHelpToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.InstantHelpToolTipDescription}" />
               </fluent:ToggleButton.ToolTip>
             </fluent:ToggleButton>
             <fluent:Button Command="{Binding WebsiteCommand}"
@@ -579,18 +716,24 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Website.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.WebsiteToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.WebsiteToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.WebsiteToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.WebsiteToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Information" Header="{x:Static resx:NASResources.Information}" Icon="pack://application:,,,/NAS.View;component/Images/Information.png">
+          <fluent:RibbonGroupBox Name="Information"
+                                 Header="{x:Static resx:NASResources.Information}"
+                                 Icon="pack://application:,,,/NAS.View;component/Images/Information.png">
             <fluent:Button Command="{Binding CheckForUpdatesCommand}"
                            Header="{x:Static resx:NASResources.CheckForUpdates}"
                            Icon="pack://application:,,,/NAS.View;component/Images/Download.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Download.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.CheckForUpdatesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.CheckForUpdatesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.CheckForUpdatesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.CheckForUpdatesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding AboutCommand}"
@@ -599,7 +742,9 @@
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Information.png"
                            SizeDefinition="Large, Middle, Small">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AboutToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AboutToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AboutToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AboutToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -614,7 +759,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/AddActivity.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddActivity.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.RemoveActivityCommand}"
@@ -622,7 +769,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/RemoveActivity.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/RemoveActivity.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.RemoveActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.RemoveActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditActivityCommand}"
@@ -630,7 +779,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/Edit.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Edit.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.AddMilestoneCommand}"
@@ -638,7 +789,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/AddMilestone.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddMilestone.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddMilestoneToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddMilestoneToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddMilestoneToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddMilestoneToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -648,7 +801,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditLogicCommand}"
@@ -656,7 +811,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/EditRelationships.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/EditRelationships.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLogicToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditLogicToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLogicToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditLogicToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -666,7 +823,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/Split.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Split.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.SplitActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.SplitActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.SplitActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.SplitActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.CombineActivitiesCommand}"
@@ -674,7 +833,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/Combine.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Combine.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.CombineActivitiesToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.CombineActivitiesToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.CombineActivitiesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.CombineActivitiesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.ChangeIntoMilestoneCommand}"
@@ -682,7 +843,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/ChangeIntoMilestone.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/ChangeIntoMilestone.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ChangeIntoMilestoneToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ChangeIntoMilestoneToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ChangeIntoMilestoneToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ChangeIntoMilestoneToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.ChangeIntoActivityCommand}"
@@ -690,7 +853,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/ChangeIntoActivity.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/ChangeIntoActivity.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ChangeIntoActivityToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.ChangeIntoActivityToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ChangeIntoActivityToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ChangeIntoActivityToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -711,7 +876,9 @@
                              Header="{x:Static resx:NASResources.IncreaseDuration}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Add.png">
                 <fluent:Button.ToolTip>
-                  <fluent:ScreenTip Title="{x:Static resx:NASResources.IncreaseDurationToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.IncreaseDurationToolTipDescription}" />
+                  <fluent:ScreenTip Title="{x:Static resx:NASResources.IncreaseDurationToolTipTitle}"
+                                    Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                    Text="{x:Static resx:NASResources.IncreaseDurationToolTipDescription}" />
                 </fluent:Button.ToolTip>
               </fluent:Button>
               <fluent:Button Grid.Row="1"
@@ -720,7 +887,9 @@
                              Header="{x:Static resx:NASResources.DecreaseDuration}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Remove.png">
                 <fluent:Button.ToolTip>
-                  <fluent:ScreenTip Title="{x:Static resx:NASResources.DecreaseDurationToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.DecreaseDurationToolTipDescription}" />
+                  <fluent:ScreenTip Title="{x:Static resx:NASResources.DecreaseDurationToolTipTitle}"
+                                    Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                    Text="{x:Static resx:NASResources.DecreaseDurationToolTipDescription}" />
                 </fluent:Button.ToolTip>
               </fluent:Button>
               <TextBlock Grid.Row="2"
@@ -745,10 +914,18 @@
                 <RowDefinition />
                 <RowDefinition />
               </Grid.RowDefinitions>
-              <TextBlock Grid.Row="0" Margin="0,0,5,0" Text="{x:Static resx:NASResources.EarlyStartDate}" />
-              <TextBlock Grid.Row="1" Margin="0,0,5,0" Text="{x:Static resx:NASResources.EarlyFinishDate}" />
-              <TextBlock Grid.Row="2" Margin="0,0,5,0" Text="{x:Static resx:NASResources.LateStartDate}" />
-              <TextBlock Grid.Row="3" Margin="0,0,5,0" Text="{x:Static resx:NASResources.LateFinishDate}" />
+              <TextBlock Grid.Row="0"
+                         Margin="0,0,5,0"
+                         Text="{x:Static resx:NASResources.EarlyStartDate}" />
+              <TextBlock Grid.Row="1"
+                         Margin="0,0,5,0"
+                         Text="{x:Static resx:NASResources.EarlyFinishDate}" />
+              <TextBlock Grid.Row="2"
+                         Margin="0,0,5,0"
+                         Text="{x:Static resx:NASResources.LateStartDate}" />
+              <TextBlock Grid.Row="3"
+                         Margin="0,0,5,0"
+                         Text="{x:Static resx:NASResources.LateFinishDate}" />
               <TextBlock Grid.Row="0"
                          Grid.Column="1"
                          FontWeight="Bold"
@@ -813,7 +990,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/AddRelationship.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.AddRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.AddRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.RemoveRelationshipCommand}"
@@ -821,7 +1000,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/RemoveRelationship.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.RemoveRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.RemoveRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.RemoveRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditRelationshipCommand}"
@@ -829,7 +1010,9 @@
                            Icon="pack://application:,,,/NAS.View;component/Images/Edit.png"
                            LargeIcon="pack://application:,,,/NAS.View;component/Images/Edit.png">
               <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditRelationshipToolTipTitle}" Image="pack://application:,,,/NAS.View;component/Images/Information.png" Text="{x:Static resx:NASResources.EditRelationshipToolTipDescription}" />
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditRelationshipToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.View;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditRelationshipToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -845,9 +1028,15 @@
                 <RowDefinition />
                 <RowDefinition />
               </Grid.RowDefinitions>
-              <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static resx:NASResources.Activity1}" />
-              <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static resx:NASResources.Activity2}" />
-              <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static resx:NASResources.Relationship}" />
+              <TextBlock Grid.Row="0"
+                         Grid.Column="0"
+                         Text="{x:Static resx:NASResources.Activity1}" />
+              <TextBlock Grid.Row="1"
+                         Grid.Column="0"
+                         Text="{x:Static resx:NASResources.Activity2}" />
+              <TextBlock Grid.Row="2"
+                         Grid.Column="0"
+                         Text="{x:Static resx:NASResources.Relationship}" />
               <TextBlock Grid.Row="0"
                          Grid.Column="1"
                          FontWeight="Bold"
@@ -856,11 +1045,15 @@
                          Grid.Column="1"
                          FontWeight="Bold"
                          Text="{Binding CurrentSchedule.CurrentRelationship.Activity2}" />
-              <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+              <StackPanel Grid.Row="2"
+                          Grid.Column="1"
+                          Orientation="Horizontal">
                 <TextBlock FontWeight="Bold" Text="{Binding CurrentSchedule.CurrentRelationship.RelationshipType, Converter={StaticResource RelationshipTypeConverter}}" />
                 <TextBlock Text="{Binding CurrentSchedule.CurrentRelationship.Lag, StringFormat=' (\{0\})'}" />
               </StackPanel>
-              <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
+              <StackPanel Grid.Row="3"
+                          Grid.ColumnSpan="2"
+                          Orientation="Horizontal">
                 <TextBlock Margin="2,0"
                            FontWeight="Bold"
                            Text="{x:Static resx:NASResources.Driving}"
@@ -888,12 +1081,12 @@
           <views:TabsTemplateSelector>
             <views:TabsTemplateSelector.GanttTemplate>
               <DataTemplate>
-                <ganttViews:UserControlGantt />
+                <controls:UserControlGantt />
               </DataTemplate>
             </views:TabsTemplateSelector.GanttTemplate>
             <views:TabsTemplateSelector.PertTemplate>
               <DataTemplate>
-                <pertViews:UserControlPERT />
+                <controls:UserControlPERT />
               </DataTemplate>
             </views:TabsTemplateSelector.PertTemplate>
           </views:TabsTemplateSelector>
@@ -906,22 +1099,32 @@
         </avalonDock:DockingManager.LayoutItemContainerStyle>
       </avalonDock:DockingManager>
       <fluent:StatusBar Grid.Row="2">
-        <fluent:StatusBarItem Title="{x:Static resx:NASResources.Schedule}" HorizontalAlignment="Left" ToolTip="{x:Static resx:NASResources.Schedule}">
+        <fluent:StatusBarItem Title="{x:Static resx:NASResources.Schedule}"
+                              HorizontalAlignment="Left"
+                              ToolTip="{x:Static resx:NASResources.Schedule}">
           <TextBlock Text="{Binding CurrentSchedule.Schedule.Name, IsAsync=True}" />
         </fluent:StatusBarItem>
         <Separator HorizontalAlignment="Left" />
-        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ProjectStartDate}" HorizontalAlignment="Left" ToolTip="{x:Static resx:NASResources.ProjectStartDate}">
+        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ProjectStartDate}"
+                              HorizontalAlignment="Left"
+                              ToolTip="{x:Static resx:NASResources.ProjectStartDate}">
           <TextBlock Text="{Binding CurrentSchedule.Schedule.StartDate, Converter={StaticResource DateConverter}, IsAsync=True}" />
         </fluent:StatusBarItem>
         <Separator HorizontalAlignment="Left" />
-        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ProjectFinishDate}" HorizontalAlignment="Left" ToolTip="{x:Static resx:NASResources.ProjectFinishDate}">
+        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ProjectFinishDate}"
+                              HorizontalAlignment="Left"
+                              ToolTip="{x:Static resx:NASResources.ProjectFinishDate}">
           <TextBlock Text="{Binding CurrentSchedule.Schedule.LastDay, Converter={StaticResource DateConverter}, IsAsync=True}" />
         </fluent:StatusBarItem>
-        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ActiveLayout}" HorizontalAlignment="Right" ToolTip="{x:Static resx:NASResources.ActiveLayout}">
+        <fluent:StatusBarItem Title="{x:Static resx:NASResources.ActiveLayout}"
+                              HorizontalAlignment="Right"
+                              ToolTip="{x:Static resx:NASResources.ActiveLayout}">
           <TextBlock Text="{Binding CurrentSchedule.CurrentLayout.Layout.Name, IsAsync=True}" />
         </fluent:StatusBarItem>
         <Separator HorizontalAlignment="Left" />
-        <fluent:StatusBarItem Title="{x:Static resx:NASResources.Version}" HorizontalAlignment="Right" ToolTip="{x:Static resx:NASResources.Version}">
+        <fluent:StatusBarItem Title="{x:Static resx:NASResources.Version}"
+                              HorizontalAlignment="Right"
+                              ToolTip="{x:Static resx:NASResources.Version}">
           <TextBlock Text="{Binding Version, IsAsync=True}" />
         </fluent:StatusBarItem>
       </fluent:StatusBar>

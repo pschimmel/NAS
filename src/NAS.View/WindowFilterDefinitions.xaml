@@ -32,13 +32,19 @@
     <ToolBarPanel Grid.ColumnSpan="3">
       <ToolBar ToolBarTray.IsLocked="True">
         <Button Command="{Binding AddFilterDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddFilter}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
         </Button>
         <Button Command="{Binding RemoveFilterDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveFilter}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
         </Button>
         <Button Command="{Binding RemoveAllFilterDefinitionsCommand}" ToolTip="{x:Static resx:NASResources.RemoveAllFilters}">
-          <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.View;component/Images/Clear.png" />
+          <tools:AutoGrayableImage Width="16"
+                                   Height="16"
+                                   Source="pack://application:,,,/NAS.View;component/Images/Clear.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
@@ -58,7 +64,9 @@
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
-    <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.Combination}" />
+    <TextBlock Grid.Row="2"
+               Margin="5"
+               Text="{x:Static resx:NASResources.Combination}" />
     <ComboBox Grid.Row="2"
               Grid.Column="1"
               Width="100"
@@ -68,7 +76,9 @@
               SelectedItem="{Binding Layout.FilterCombination}">
       <ComboBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource FilterCombinationTypeConverter}}" />
+          <TextBlock Height="Auto"
+                     Margin="0"
+                     Text="{Binding Path=., Mode=OneWay, Converter={StaticResource FilterCombinationTypeConverter}}" />
         </DataTemplate>
       </ComboBox.ItemTemplate>
     </ComboBox>

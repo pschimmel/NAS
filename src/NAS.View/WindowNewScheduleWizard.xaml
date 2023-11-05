@@ -18,7 +18,9 @@
                      HelpButtonVisibility="Collapsed"
                      NextButtonContent="{x:Static resx:NASResources.Forward}"
                      PageChanged="Wizard_PageChanged">
-    <extToolkit:WizardPage x:Name="IntroPage" Title="{x:Static resx:NASResources.WizardTitleIntroPage}" Description="{x:Static resx:NASResources.WizardDescriptionIntroPage}" />
+    <extToolkit:WizardPage x:Name="IntroPage"
+                           Title="{x:Static resx:NASResources.WizardTitleIntroPage}"
+                           Description="{x:Static resx:NASResources.WizardDescriptionIntroPage}" />
     <extToolkit:WizardPage x:Name="Page1"
                            Title="{x:Static resx:NASResources.WizardTitlePage1}"
                            Description="{x:Static resx:NASResources.WizardDescriptionPage1}"
@@ -35,8 +37,13 @@
           <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Margin="4" Text="{x:Static resx:NASResources.ProjectName}" />
-        <TextBox Grid.Column="1" Margin="2" Style="{StaticResource ValidatingTextBoxStyle}" Text="{Binding ProjectName, ValidatesOnNotifyDataErrors=True}" />
-        <TextBlock Grid.Row="1" Margin="4" Text="{x:Static resx:NASResources.Description}" />
+        <TextBox Grid.Column="1"
+                 Margin="2"
+                 Style="{StaticResource ValidatingTextBoxStyle}"
+                 Text="{Binding ProjectName, ValidatesOnNotifyDataErrors=True}" />
+        <TextBlock Grid.Row="1"
+                   Margin="4"
+                   Text="{x:Static resx:NASResources.Description}" />
         <TextBox Grid.Row="1"
                  Grid.Column="1"
                  Margin="2"
@@ -44,7 +51,10 @@
                  TextWrapping="Wrap" />
       </Grid>
     </extToolkit:WizardPage>
-    <extToolkit:WizardPage x:Name="Page2" Title="{x:Static resx:NASResources.WizardTitlePage2}" Description="{x:Static resx:NASResources.WizardDescriptionPage2}" PageType="Interior">
+    <extToolkit:WizardPage x:Name="Page2"
+                           Title="{x:Static resx:NASResources.WizardTitlePage2}"
+                           Description="{x:Static resx:NASResources.WizardDescriptionPage2}"
+                           PageType="Interior">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" />
@@ -58,7 +68,9 @@
           <RowDefinition Height="Auto" />
           <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="1" Margin="4" Text="{x:Static resx:NASResources.StartDate}" />
+        <TextBlock Grid.Row="1"
+                   Margin="4"
+                   Text="{x:Static resx:NASResources.StartDate}" />
         <DatePicker Grid.Row="1"
                     Grid.Column="1"
                     Width="140"
@@ -74,7 +86,9 @@
                VerticalAlignment="Stretch"
                Content="{x:Static resx:NASResources.EarliestDateOfSchedule}"
                Style="{StaticResource CommentLabelStyle}" />
-        <TextBlock Grid.Row="2" Margin="4" Text="{x:Static resx:NASResources.ProjectFinishDate}" />
+        <TextBlock Grid.Row="2"
+                   Margin="4"
+                   Text="{x:Static resx:NASResources.ProjectFinishDate}" />
         <DatePicker Grid.Row="2"
                     Grid.Column="1"
                     Width="140"
@@ -90,7 +104,9 @@
                VerticalAlignment="Stretch"
                Content="{x:Static resx:NASResources.LatestDateOfSchedule}"
                Style="{StaticResource CommentLabelStyle}" />
-        <TextBlock Grid.Row="3" Margin="4" Text="{x:Static resx:NASResources.DataDate}" />
+        <TextBlock Grid.Row="3"
+                   Margin="4"
+                   Text="{x:Static resx:NASResources.DataDate}" />
         <DatePicker Grid.Row="3"
                     Grid.Column="1"
                     Width="140"
@@ -106,7 +122,9 @@
                VerticalAlignment="Stretch"
                Content="{x:Static resx:NASResources.CurrentDate}"
                Style="{StaticResource CommentLabelStyle}" />
-        <TextBlock Grid.Row="4" Margin="4" Text="{x:Static resx:NASResources.StandardCalendar}" />
+        <TextBlock Grid.Row="4"
+                   Margin="4"
+                   Text="{x:Static resx:NASResources.StandardCalendar}" />
         <ComboBox Grid.Row="4"
                   Grid.Column="1"
                   Height="25"

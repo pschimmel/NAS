@@ -17,8 +17,6 @@ namespace NAS.View.Controls
     private double row;
     private const double minColumnWidth = 10;
 
-    public object DataContext { get; set; }
-
     protected override void RefreshInternal()
     {
       columnWidths = new Dictionary<ActivityProperty, double>();

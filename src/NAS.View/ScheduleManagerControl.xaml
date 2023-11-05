@@ -22,16 +22,24 @@
     <ToolBarPanel>
       <ToolBar ToolBarTray.IsLocked="True">
         <Button Command="{Binding NewScheduleCommand}" ToolTip="{x:Static resx:NASResources.CreateNewSchedule}">
-          <tools:AutoGrayableImage Width="32" Height="32" Source="pack://application:,,,/NAS.View;component/Images/NewProject.png" />
+          <tools:AutoGrayableImage Width="32"
+                                   Height="32"
+                                   Source="pack://application:,,,/NAS.View;component/Images/NewProject.png" />
         </Button>
         <Button Command="{Binding RemoveScheduleCommand}" ToolTip="{x:Static resx:NASResources.DeleteSchedule}">
-          <tools:AutoGrayableImage Width="32" Height="32" Source="pack://application:,,,/NAS.View;component/Images/DeleteProject.png" />
+          <tools:AutoGrayableImage Width="32"
+                                   Height="32"
+                                   Source="pack://application:,,,/NAS.View;component/Images/DeleteProject.png" />
         </Button>
         <Button Command="{Binding ImportScheduleCommand}" ToolTip="{x:Static resx:NASResources.ImportSchedule}">
-          <tools:AutoGrayableImage Width="32" Height="32" Source="pack://application:,,,/NAS.View;component/Images/ImportProject.png" />
+          <tools:AutoGrayableImage Width="32"
+                                   Height="32"
+                                   Source="pack://application:,,,/NAS.View;component/Images/ImportProject.png" />
         </Button>
         <Button Command="{Binding ExportScheduleCommand}" ToolTip="{x:Static resx:NASResources.ExportSchedule}">
-          <tools:AutoGrayableImage Width="32" Height="32" Source="pack://application:,,,/NAS.View;component/Images/ExportProject.png" />
+          <tools:AutoGrayableImage Width="32"
+                                   Height="32"
+                                   Source="pack://application:,,,/NAS.View;component/Images/ExportProject.png" />
         </Button>
       </ToolBar>
     </ToolBarPanel>
@@ -68,16 +76,36 @@
         </DataTemplate>
       </DataGrid.RowDetailsTemplate>
       <DataGrid.Columns>
-        <DataGridTextColumn Width="Auto" Binding="{Binding Name, Mode=OneWay}" Header="{x:Static resx:NASResources.Name}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding StartDate, Mode=OneWay, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.StartDate}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding EndDate, Mode=OneWay, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.FinishDate}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding DataDate, Mode=OneWay, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.DataDate}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding ModifiedBy, Mode=OneWay}" Header="{x:Static resx:NASResources.ModifiedBy}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding ModifiedDate, Mode=OneWay, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Modified}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding CreatedBy, Mode=OneWay}" Header="{x:Static resx:NASResources.CreatedBy}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding CreatedDate, Mode=OneWay, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Created}" />
-        <DataGridCheckBoxColumn Width="Auto" Binding="{Binding Locked, Mode=OneWay}" Header="{x:Static resx:NASResources.Locked}" />
-        <DataGridTextColumn Width="Auto" Binding="{Binding LockedBy, Mode=OneWay}" Header="{x:Static resx:NASResources.LockedBy}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding Name, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.Name}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding StartDate, Mode=OneWay, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.StartDate}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding EndDate, Mode=OneWay, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.FinishDate}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding DataDate, Mode=OneWay, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.DataDate}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ModifiedBy, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.ModifiedBy}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding ModifiedDate, Mode=OneWay, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.Modified}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding CreatedBy, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.CreatedBy}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding CreatedDate, Mode=OneWay, Converter={StaticResource DateConverter}}"
+                            Header="{x:Static resx:NASResources.Created}" />
+        <DataGridCheckBoxColumn Width="Auto"
+                                Binding="{Binding Locked, Mode=OneWay}"
+                                Header="{x:Static resx:NASResources.Locked}" />
+        <DataGridTextColumn Width="Auto"
+                            Binding="{Binding LockedBy, Mode=OneWay}"
+                            Header="{x:Static resx:NASResources.LockedBy}" />
       </DataGrid.Columns>
     </DataGrid>
     <Button Grid.Row="2"
@@ -101,7 +129,9 @@
                   ItemsSource="{Binding RecentSchedules}">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <TextBlock Margin="2" TextWrapping="Wrap" ToolTip="{Binding Name}">
+          <TextBlock Margin="2"
+                     TextWrapping="Wrap"
+                     ToolTip="{Binding Name}">
             <Hyperlink Command="{Binding DataContext.OpenScheduleCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ScheduleManagerControl}}}" CommandParameter="{Binding ID}">
               <Run Text="{Binding Name, ConverterParameter=30, Converter={StaticResource TextTrimConverter}}" />
             </Hyperlink>

@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ES.Tools.Adorners;
 using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
@@ -678,7 +679,7 @@ namespace NAS.View.Controls
           var template =  (DataTemplate)TryFindResource("PERTDragDrop");
           var tempDiagram = GetActivityDiagram(activity);
           var dummy = new PERTDiagramDummy { Width = tempDiagram.Width, Height = tempDiagram.Height };
-          dragAdorner = new DataTemplateAdorner(dummy, template, this);
+          dragAdorner = new DataTemplateAdorner(this, dummy, template);
           var position = e.GetPosition(this);
           dragAdorner.UpdatePosition(position.X - tempDiagram.Width / 2, position.Y - tempDiagram.Height / 2);
           return;

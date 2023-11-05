@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using ES.Tools.Core.MVVM;
+using NAS.ViewModel.Base;
 
 namespace NAS
 {
@@ -22,7 +23,7 @@ namespace NAS
 
     private void buttonOK_Click(object sender, RoutedEventArgs e)
     {
-      if ((ViewModel as IValidatingViewModel).Validate())
+      if ((ViewModel as IValidatable).Validate())
       {
         DialogResult = true;
       }
