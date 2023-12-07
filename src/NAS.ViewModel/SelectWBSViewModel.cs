@@ -124,7 +124,7 @@ namespace NAS.ViewModel
           model.Items.Clear();
           foreach (object oldItem in e.OldItems)
           {
-            list.RemoveAll(x => x.Item == (WBSItem)oldItem);
+            _ = list.RemoveAll(x => x.Item == (WBSItem)oldItem);
           }
           foreach (var listItem in list)
           {

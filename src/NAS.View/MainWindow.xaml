@@ -2,11 +2,11 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:avalonDock="https://github.com/Dirkster99/AvalonDock"
+                     xmlns:controls="clr-namespace:NAS.View.Controls"
                      xmlns:converters="clr-namespace:NAS.View.Converters"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:fluent="clr-namespace:Fluent;assembly=Fluent"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:controls="clr-namespace:NAS.View.Controls"
                      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
                      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
                      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
@@ -101,18 +101,12 @@
                              Header="{x:Static resx:NASResources.CloseSchedule}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Close.png" />
               <fluent:SeparatorTabItem />
-              <fluent:Button Command="{Binding DatabaseSettingsCommand}"
-                             Header="{x:Static resx:NASResources.DatabaseConfiguration}"
-                             Icon="pack://application:,,,/NAS.View;component/Images/EditDatabaseSettings.png" />
               <fluent:Button Command="{Binding ProgramSettingsCommand}"
                              Header="{x:Static resx:NASResources.Settings}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Gear.png" />
-              <fluent:Button Command="{Binding UserManagementCommand}"
-                             Header="{x:Static resx:NASResources.UserManagement}"
-                             Icon="pack://application:,,,/NAS.View;component/Images/Users.png"
-                             Visibility="{Binding IsUserManagementVisible, Converter={StaticResource VisibilityConverter}}" />
               <fluent:SeparatorTabItem />
-              <fluent:Button Command="{Binding CloseCommand}"
+              <fluent:Button VerticalAlignment="Bottom"
+                             Command="{Binding CloseCommand}"
                              Header="{x:Static resx:NASResources.Close}"
                              Icon="pack://application:,,,/NAS.View;component/Images/Exit.png" />
             </fluent:BackstageTabControl>

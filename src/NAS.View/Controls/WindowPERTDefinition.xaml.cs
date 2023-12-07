@@ -25,11 +25,11 @@ namespace NAS.View.Controls
       {
         DataContext = value;
         var viewModel = value as PERTDefinitionViewModel;
-        viewModel.Definition.PropertyChanged += (sender, e) => { refreshTemplate(); };
-        viewModel.Definition.RowDefinitions.CollectionChanged += (sender, e) => { refreshTemplate(); };
-        viewModel.Definition.ColumnDefinitions.CollectionChanged += (sender, e) => { refreshTemplate(); };
-        viewModel.Definition.Items.CollectionChanged += (sender, e) => { refreshTemplate(); };
-        refreshTemplate();
+        viewModel.Definition.PropertyChanged += (sender, e) => { RefreshTemplate(); };
+        viewModel.Definition.RowDefinitions.CollectionChanged += (sender, e) => { RefreshTemplate(); };
+        viewModel.Definition.ColumnDefinitions.CollectionChanged += (sender, e) => { RefreshTemplate(); };
+        viewModel.Definition.Items.CollectionChanged += (sender, e) => { RefreshTemplate(); };
+        RefreshTemplate();
       }
     }
 
@@ -38,7 +38,7 @@ namespace NAS.View.Controls
       Close();
     }
 
-    private void refreshTemplate()
+    private void RefreshTemplate()
     {
       template.ColumnDefinitions.Clear();
       template.RowDefinitions.Clear();
@@ -60,7 +60,7 @@ namespace NAS.View.Controls
       foreach (var item in (DataContext as PERTDefinitionViewModel).Definition.Items)
       {
         var tb = new TextBlock();
-        template.Children.Add(tb);
+        _ = template.Children.Add(tb);
         tb.SetValue(Grid.RowProperty, item.Row);
         tb.SetValue(Grid.ColumnProperty, item.Column);
         tb.SetValue(Grid.RowSpanProperty, item.RowSpan);
@@ -106,17 +106,17 @@ namespace NAS.View.Controls
       {
         isManualEditCommit = true;
         var grid = (DataGrid)sender;
-        grid.CommitEdit(DataGridEditingUnit.Row, true);
+        _ = grid.CommitEdit(DataGridEditingUnit.Row, true);
         isManualEditCommit = false;
       }
-      refreshTemplate();
+      RefreshTemplate();
     }
 
     private void ButtonOK_Click(object sender, RoutedEventArgs e)
     {
       if (DataContext is IValidatable validatable && validatable.Validate() == false)
       {
-        System.Windows.MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + (DataContext as IValidatable).ErrorMessage, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
+        _ = System.Windows.MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + (DataContext as IValidatable).ErrorMessage, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
       }
       else
       {

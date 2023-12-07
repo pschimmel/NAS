@@ -1,7 +1,7 @@
-﻿using System.Windows;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Media.Imaging;
 using ES.Tools.Core.MVVM;
-using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel;
 
@@ -23,19 +23,20 @@ namespace NAS
       set
       {
         DataContext = value;
-        if ((value as ResourceDetailsViewModel).CurrentResource is WorkResource)
+        if ((value as ResourceDetailsViewModel).IsWorkResource)
         {
           Title = NASResources.WorkResource;
           Icon = new BitmapImage(new Uri("pack://application:,,,/NAS.View;component/Images/Resources.png"));
         }
-        else if ((value as ResourceDetailsViewModel).CurrentResource is CalendarResource)
+        else if ((value as ResourceDetailsViewModel).IsCalendarResource)
         {
           Title = NASResources.CalendarResource;
           Icon = new BitmapImage(new Uri("pack://application:,,,/NAS.View;component/Images/Calendar.png"));
         }
         else
-        { // Material Resource
-          Title = Globalization.NASResources.MaterialResource;
+        {
+          Debug.Assert((value as ResourceDetailsViewModel).IsMaterialResource);
+          Title = NASResources.MaterialResource;
           Icon = new BitmapImage(new Uri("pack://application:,,,/NAS.View;component/Images/MaterialResource.png"));
         }
       }

@@ -155,10 +155,7 @@ namespace NAS.Model.Entities
           isStandard = value;
           OnPropertyChanged(nameof(IsStandard));
           OnPropertyChanged(nameof(FullName));
-          if (Schedule != null)
-          {
-            Schedule.UpdateStandardCalendar();
-          }
+          Schedule?.UpdateStandardCalendar();
         }
       }
     }

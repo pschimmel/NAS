@@ -128,8 +128,8 @@ namespace NAS.ViewModel
 
       UserNotificationService.Instance.Question(NASResources.MessageDeleteResource, () =>
       {
-        Resources.Remove(CurrentResource);
-        _schedule.Resources.Remove(CurrentResource);
+        _ = Resources.Remove(CurrentResource);
+        _ = _schedule.Resources.Remove(CurrentResource);
         CurrentResource = null;
       });
     }
@@ -211,8 +211,8 @@ namespace NAS.ViewModel
 
       UserNotificationService.Instance.Question(NASResources.MessageDeleteResource, () =>
       {
-        GlobalResources.Remove(CurrentGlobalResource);
-        GlobalDataController.Resources.Remove(CurrentGlobalResource);
+        _ = GlobalResources.Remove(CurrentGlobalResource);
+        _ = GlobalDataController.Resources.Remove(CurrentGlobalResource);
         CurrentGlobalResource = null;
       });
     }

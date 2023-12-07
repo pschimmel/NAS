@@ -31,7 +31,15 @@ namespace NAS.ViewModel
 
     #region Public Properties
 
+    public Resource Resource => _resource;
+
     public bool CanEditUnit => _resource is MaterialResource;
+
+    public bool IsMaterialResource => _resource is MaterialResource;
+
+    public bool IsCalendarResource => _resource is CalendarResource;
+
+    public bool IsWorkResource => _resource is WorkResource;
 
     public string Name { get; set; }
 

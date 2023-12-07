@@ -27,7 +27,7 @@ namespace NAS
       {
         if (DataContext is IValidatable)
         {
-          (DataContext as IValidatable).Validate();
+          _ = (DataContext as IValidatable).Validate();
         }
       }
     }

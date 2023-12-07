@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using Microsoft.Win32;
 using NAS.Model;
-using NAS.Model.Entities;
 using NAS.Model.ImportExport;
 using NAS.Resources;
 using NAS.ViewModel.Base;
@@ -17,18 +15,18 @@ namespace NAS.ViewModel
   {
     #region Fields
 
-    private readonly Schedule _schedule;
-    private Schedule _currentBaseline;
+    private readonly ScheduleViewModel _schedule;
+    private ScheduleViewModel _currentBaseline;
 
     #endregion
 
     #region Constructor
 
-    public BaselinesViewModel(Schedule schedule)
+    public BaselinesViewModel(ScheduleViewModel schedule)
       : base()
     {
       _schedule = schedule;
-      Baselines = new ObservableCollection<Schedule>(schedule.Baselines);
+      Baselines = new ObservableCollection<ScheduleViewModel>(schedule.Schedule.Baselines.ToList().Select(x => new ScheduleViewModel(x)));
       AddBaselineCommand = new ActionCommand(AddBaselineCommandExecute);
       ImportBaselineCommand = new ActionCommand(ImportBaselineCommandExecute);
       ExportBaselineCommand = new ActionCommand(ExportBaselineCommandExecute, () => ExportBaselineCommandCanExecute);
@@ -38,13 +36,13 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region Public Members
+    #region Public Propeties
 
     public override HelpTopic HelpTopicKey => HelpTopic.Baseline;
 
-    public ObservableCollection<Schedule> Baselines { get; }
+    public ObservableCollection<ScheduleViewModel> Baselines { get; }
 
-    public Schedule CurrentBaseline
+    public ScheduleViewModel CurrentBaseline
     {
       get => _currentBaseline;
       set
@@ -76,9 +74,10 @@ namespace NAS.ViewModel
           addToLayout = true;
         });
 
-        var baseline = _schedule.AddBaseline(addToLayout);
-        Baselines.Add(baseline);
-        CurrentBaseline = baseline;
+        var baseline = _schedule.Schedule.AddBaseline(addToLayout);
+        var vm = new ScheduleViewModel(baseline);
+        Baselines.Add(vm);
+        CurrentBaseline = vm;
       });
     }
 
@@ -124,9 +123,10 @@ namespace NAS.ViewModel
         addToLayout = true;
       });
 
-      _schedule.AddBaseline(baseline, addToLayout);
-      Baselines.Add(baseline);
-      CurrentBaseline = baseline;
+      _schedule.Schedule.AddBaseline(baseline, addToLayout);
+      var vm = new ScheduleViewModel(baseline);
+      Baselines.Add(vm);
+      CurrentBaseline = vm;
     }
 
     #endregion
@@ -144,11 +144,11 @@ namespace NAS.ViewModel
         DefaultExt = "." + filter.FileExtension,
         Filter = filter.FilterName + "|*." + filter.FileExtension,
         AddExtension = true,
-        FileName = CurrentBaseline.Name
+        FileName = CurrentBaseline.Schedule.Name
       };
       if (saveFileDialog.ShowDialog() == true)
       {
-        filter.Export(CurrentBaseline, saveFileDialog.FileName);
+        filter.Export(CurrentBaseline.Schedule, saveFileDialog.FileName);
       }
     }
 
@@ -165,7 +165,7 @@ namespace NAS.ViewModel
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Baseline);
       UserNotificationService.Instance.Question(NASResources.MessageDeleteBaseline, () =>
       {
-        _schedule.RemoveBaseline(CurrentBaseline);
+        _schedule.Schedule.RemoveBaseline(CurrentBaseline.Schedule);
       });
     }
 
@@ -180,10 +180,10 @@ namespace NAS.ViewModel
     private void EditBaselineCommandExecute()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Baseline);
-      var vm = new GetTextViewModel(NASResources.Baseline, NASResources.Name, CurrentBaseline.Name);
+      var vm = new GetTextViewModel(NASResources.Baseline, NASResources.Name, CurrentBaseline.Schedule.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        CurrentBaseline.Name = vm.Text;
+        CurrentBaseline.Schedule.Name = vm.Text;
       }
     }
 

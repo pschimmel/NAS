@@ -28,7 +28,7 @@ namespace NAS
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
     {
-      Process.Start(e.Uri.ToString());
+      _ = Process.Start(e.Uri.ToString());
     }
   }
 }

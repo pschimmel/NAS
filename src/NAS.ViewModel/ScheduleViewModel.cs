@@ -19,12 +19,12 @@ namespace NAS.ViewModel
 
     public event EventHandler<ProgressEventArgs> CalculationProgress;
     public event EventHandler ColumnsChanged;
-    public event EventHandler<ItemEventArgs<Activity>> ActivityAdded;
-    public event EventHandler<ItemEventArgs<Activity>> ActivityDeleted;
-    public event EventHandler<ItemEventArgs<Activity>> ActivityChanged;
-    public event EventHandler<ItemEventArgs<Relationship>> RelationshipAdded;
-    public event EventHandler<ItemEventArgs<Relationship>> RelationshipDeleted;
-    public event EventHandler<ItemEventArgs<Relationship>> RelationshipChanged;
+    public event EventHandler<ItemEventArgs<ActivityViewModel>> ActivityAdded;
+    public event EventHandler<ItemEventArgs<ActivityViewModel>> ActivityDeleted;
+    public event EventHandler<ItemEventArgs<ActivityViewModel>> ActivityChanged;
+    public event EventHandler<ItemEventArgs<RelationshipViewModel>> RelationshipAdded;
+    public event EventHandler<ItemEventArgs<RelationshipViewModel>> RelationshipDeleted;
+    public event EventHandler<ItemEventArgs<RelationshipViewModel>> RelationshipChanged;
     public event EventHandler<ItemEventArgs<Layout>> RefreshLayout;
     public event EventHandler LayoutTypeChanged;
 
@@ -54,12 +54,17 @@ namespace NAS.ViewModel
       Layouts = new ObservableCollection<IVisibleLayoutViewModel>();
       foreach (var layout in Schedule.Layouts)
       {
-        AddLayoutVM(layout, layout == Schedule.CurrentLayout);
+        _ = AddLayoutVM(layout, layout == Schedule.CurrentLayout);
       }
 
       foreach (var activity in schedule.Activities)
       {
         Activities.Add(new ActivityViewModel(activity));
+      }
+
+      foreach (var relationship in schedule.Relationships)
+      {
+        Relationships.Add(new RelationshipViewModel(relationship));
       }
 
       CalculateCommand = new ActionCommand(param => CalculateCommandExecute(param), param => CalculateCommandCanExecute);
@@ -121,7 +126,7 @@ namespace NAS.ViewModel
       var deletedActivity = Activities.FirstOrDefault(x => x.Activity == e.Item);
       if (deletedActivity != null)
       {
-        Activities.Remove(deletedActivity);
+        _ = Activities.Remove(deletedActivity);
       }
     }
 
@@ -141,7 +146,9 @@ namespace NAS.ViewModel
     /// </summary>
     public ObservableCollection<IVisibleLayoutViewModel> Layouts { get; }
 
-    public ObservableCollection<ActivityViewModel> Activities { get; }
+    public ObservableCollection<ActivityViewModel> Activities { get; } = new ObservableCollection<ActivityViewModel>();
+
+    public ObservableCollection<RelationshipViewModel> Relationships { get; } = new ObservableCollection<RelationshipViewModel>();
 
 #pragma warning disable CA1822 // Mark members as static
 
@@ -419,7 +426,7 @@ namespace NAS.ViewModel
       var activity = Schedule.AddActivity(param?.ToString() == "Fixed");
       var newActivityVM = new ActivityViewModel(activity);
       Activities.Add(newActivityVM);
-      OnActivityAdded(activity);
+      OnActivityAdded(newActivityVM);
       CurrentActivity = newActivityVM;
     }
 
@@ -438,7 +445,7 @@ namespace NAS.ViewModel
       var newActivityVM = new ActivityViewModel(milestone);
       Activities.Add(newActivityVM);
       CurrentActivity = newActivityVM;
-      OnActivityAdded(milestone);
+      OnActivityAdded(newActivityVM);
     }
 
     private bool AddMilestoneCommandCanExecute => !_isBusy && Schedule != null;
@@ -463,8 +470,8 @@ namespace NAS.ViewModel
       UserNotificationService.Instance.Question(s, () =>
       {
         Schedule.RemoveActivity(activityVM.Activity);
-        Activities.Remove(activityVM);
-        OnActivityDeleted(activityVM.Activity);
+        _ = Activities.Remove(activityVM);
+        OnActivityDeleted(activityVM);
         if (CurrentLayout.LayoutType == LayoutType.PERT)
         {
           var view = ES.Tools.Core.MVVM.ViewModelExtensions.GetView(Activities);
@@ -486,9 +493,9 @@ namespace NAS.ViewModel
       var vm = CurrentActivity;
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        SortFilterAndGroup(Activities);
+        _ = SortFilterAndGroup(Activities);
         OnPropertyChanged(nameof(Activities));
-        OnActivityChanged(CurrentActivity.Activity);
+        OnActivityChanged(CurrentActivity);
       }
     }
 
@@ -504,6 +511,7 @@ namespace NAS.ViewModel
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Relationship);
       Relationship relationship;
+
       if (param is AddRelationshipInfo relationshipInfo)
       {
         relationship = Schedule.AddRelationship(relationshipInfo.Activity1, relationshipInfo.Activity2, relationshipInfo.RelationshipType);
@@ -520,6 +528,7 @@ namespace NAS.ViewModel
         relationship = Schedule.AddRelationship(vm.Activity1, vm.Activity2, vm.SelectedRelationshipType);
         relationship.Lag = vm.Lag;
       }
+
       if (!Scheduler.CheckForLoops(Activities.Select(x => x.Activity).ToList(), Schedule.Relationships.ToList()))
       {
         UserNotificationService.Instance.Error(NASResources.MessageNetworkLoopError);
@@ -527,8 +536,8 @@ namespace NAS.ViewModel
       }
       else
       {
-        OnRelationshipAdded(relationship);
         CurrentRelationship = new RelationshipViewModel(relationship);
+        OnRelationshipAdded(CurrentRelationship);
       }
     }
 
@@ -547,7 +556,7 @@ namespace NAS.ViewModel
       {
         var relationship = CurrentRelationship.Relationship;
         Schedule.RemoveRelationship(relationship);
-        OnRelationshipDeleted(relationship);
+        OnRelationshipDeleted(CurrentRelationship);
         CurrentRelationship = null;
       });
     }
@@ -571,7 +580,7 @@ namespace NAS.ViewModel
         {
           vm.Apply();
           CurrentRelationship.Relationship = relationship;
-          OnRelationshipChanged(relationship);
+          OnRelationshipChanged(CurrentRelationship);
         }
       }
     }
@@ -587,7 +596,7 @@ namespace NAS.ViewModel
     private void EditLogicCommandExecute()
     {
       using var vm = new EditLogicViewModel(CurrentActivity.Activity);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditLogicCommandCanExecute => CurrentActivity != null;
@@ -601,7 +610,7 @@ namespace NAS.ViewModel
     private void PropertiesCommandExecute()
     {
       using var vm = new SchedulePropertiesViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool PropertiesCommandCanExecute => !_isBusy && Schedule != null;
@@ -615,7 +624,7 @@ namespace NAS.ViewModel
     private void EditWBSCommandExecute()
     {
       using var vm = new WBSViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditWBSCommandCanExecute => !_isBusy && Schedule != null;
@@ -629,7 +638,7 @@ namespace NAS.ViewModel
     private void EditCalendarsCommandExecute()
     {
       using var vm = new CalendarsViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditCalendarsCommandCanExecute => !_isBusy && Schedule != null;
@@ -643,7 +652,7 @@ namespace NAS.ViewModel
     private void EditResourcesCommandExecute()
     {
       using var vm = new ResourcesViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditResourcesCommandCanExecute => !_isBusy && Schedule != null;
@@ -657,7 +666,7 @@ namespace NAS.ViewModel
     private void EditCustomAttributesCommandExecute()
     {
       using var vm = new CustomAttributesViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditCustomAttributesCommandCanExecute => !_isBusy && Schedule != null;
@@ -774,7 +783,7 @@ namespace NAS.ViewModel
     {
       if (param is ResourceViewModel resourceVM)
       {
-        Resources.Remove(resourceVM);
+        _ = Resources.Remove(resourceVM);
         OnRefreshLayout(false);
       }
     }
@@ -797,7 +806,7 @@ namespace NAS.ViewModel
       using var vm = new EditLayoutViewModel(item);
       if (!ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        AddLayoutVM(item, true);
+        _ = AddLayoutVM(item, true);
       }
     }
 
@@ -815,7 +824,7 @@ namespace NAS.ViewModel
         var layoutToRemove = CurrentLayout;
         int idx = Layouts.IndexOf(CurrentLayout);
         CurrentLayout = idx + 1 < Layouts.Count ? Layouts[idx + 1] : Layouts[idx - 1];
-        Layouts.Remove(layoutToRemove);
+        _ = Layouts.Remove(layoutToRemove);
       });
     }
 
@@ -835,7 +844,7 @@ namespace NAS.ViewModel
       {
         var newLayout = new Layout(CurrentLayout.Layout);
         newLayout.Name = vm.Text;
-        AddLayoutVM(newLayout, true);
+        _ = AddLayoutVM(newLayout, true);
       }
     }
 
@@ -875,7 +884,7 @@ namespace NAS.ViewModel
     {
       using (var vm = new SortingAndGroupingViewModel(Schedule.CurrentLayout))
       {
-        ViewFactory.Instance.ShowDialog(vm);
+        _ = ViewFactory.Instance.ShowDialog(vm);
       }
 
       OnRefreshLayout(false);
@@ -893,7 +902,7 @@ namespace NAS.ViewModel
     {
       using (var vm = new FilterDefinitionsViewModel(Schedule.CurrentLayout))
       {
-        ViewFactory.Instance.ShowDialog(vm);
+        _ = ViewFactory.Instance.ShowDialog(vm);
       }
 
       OnRefreshLayout(false);
@@ -927,8 +936,8 @@ namespace NAS.ViewModel
 
     private void EditBaselinesCommandExecute()
     {
-      using var vm = new BaselinesViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      using var vm = new BaselinesViewModel(this);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditBaselinesCommandCanExecute => !_isBusy && Schedule != null;
@@ -942,7 +951,7 @@ namespace NAS.ViewModel
     private void EditFragnetsCommandExecute()
     {
       using var vm = new FragnetsViewModel(Schedule);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditFragnetsCommandCanExecute => !_isBusy && Schedule != null;
@@ -981,7 +990,7 @@ namespace NAS.ViewModel
         var p1 = baseline;
         var p2 = Schedule;
         var vm2 = new CompareResultsViewModel(new ComparisonData(p1, p2) { Headline = headline });
-        ViewFactory.Instance.ShowDialog(vm2);
+        _ = ViewFactory.Instance.ShowDialog(vm2);
       }
     }
 
@@ -1012,7 +1021,7 @@ namespace NAS.ViewModel
       var s2 = new Scheduler(p2, SchedulingSettingsHelper.LoadSchedulingSettings(p2.SchedulingSettings));
       s2.Calculate(d);
       using var vm = new CompareResultsViewModel(new ComparisonData(p1, p2) { Headline = headline });
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool CompareWithDistortionsCommandCanExecute => !_isBusy && Schedule != null;
@@ -1030,7 +1039,7 @@ namespace NAS.ViewModel
       {
         var data = vm.Compare();
         using var vm2 = new CompareResultsViewModel(data);
-        ViewFactory.Instance.ShowDialog(vm2);
+        _ = ViewFactory.Instance.ShowDialog(vm2);
       }
     }
 
@@ -1045,7 +1054,7 @@ namespace NAS.ViewModel
     private void EditDistortionsCommandExecute()
     {
       using var vm = new DistortionsViewModel(CurrentActivity.Activity);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditDistortionsCommandCanExecute => CurrentActivity != null && CurrentActivity.Activity.ActivityType == ActivityType.Activity;
@@ -1135,10 +1144,10 @@ namespace NAS.ViewModel
         var activity = CurrentActivity.Activity;
         var newMilestone = activity.ChangeToMilestone();
         var newMilestoneVM = new ActivityViewModel(newMilestone);
-        Activities.Remove(activityVM);
+        _ = Activities.Remove(activityVM);
         Activities.Add(newMilestoneVM);
-        OnActivityDeleted(activity);
-        OnActivityAdded(newMilestone);
+        OnActivityDeleted(activityVM);
+        OnActivityAdded(newMilestoneVM);
         CurrentActivity = newMilestoneVM;
       });
     }
@@ -1160,10 +1169,10 @@ namespace NAS.ViewModel
         var milestone = CurrentActivity.Activity as Milestone;
         var newActivity = milestone.ChangeToActivity();
         var newActivityVM = new ActivityViewModel(newActivity);
-        Activities.Remove(milestoneVM);
+        _ = Activities.Remove(milestoneVM);
         Activities.Add(newActivityVM);
-        OnActivityDeleted(milestone);
-        OnActivityAdded(newActivity);
+        OnActivityDeleted(milestoneVM);
+        OnActivityAdded(newActivityVM);
         CurrentActivity = newActivityVM;
       });
     }
@@ -1196,7 +1205,7 @@ namespace NAS.ViewModel
           {
             if (!c.IsVisible && c.Property == column.Property && CurrentLayout is Layout layout)
             {
-              layout.ActivityColumns.Remove(column);
+              _ = layout.ActivityColumns.Remove(column);
             }
           }
         }
@@ -1241,34 +1250,34 @@ namespace NAS.ViewModel
 
     #region Private Members
 
-    private void OnActivityAdded(Activity a)
+    private void OnActivityAdded(ActivityViewModel a)
     {
-      ActivityAdded?.Invoke(this, new ItemEventArgs<Activity>(a));
+      ActivityAdded?.Invoke(this, new ItemEventArgs<ActivityViewModel>(a));
     }
 
-    private void OnActivityDeleted(Activity a)
+    private void OnActivityDeleted(ActivityViewModel a)
     {
-      ActivityDeleted?.Invoke(this, new ItemEventArgs<Activity>(a));
+      ActivityDeleted?.Invoke(this, new ItemEventArgs<ActivityViewModel>(a));
     }
 
-    private void OnActivityChanged(Activity a)
+    private void OnActivityChanged(ActivityViewModel a)
     {
-      ActivityChanged?.Invoke(this, new ItemEventArgs<Activity>(a));
+      ActivityChanged?.Invoke(this, new ItemEventArgs<ActivityViewModel>(a));
     }
 
-    private void OnRelationshipAdded(Relationship r)
+    private void OnRelationshipAdded(RelationshipViewModel r)
     {
-      RelationshipAdded?.Invoke(this, new ItemEventArgs<Relationship>(r));
+      RelationshipAdded?.Invoke(this, new ItemEventArgs<RelationshipViewModel>(r));
     }
 
-    private void OnRelationshipDeleted(Relationship r)
+    private void OnRelationshipDeleted(RelationshipViewModel r)
     {
-      RelationshipDeleted?.Invoke(this, new ItemEventArgs<Relationship>(r));
+      RelationshipDeleted?.Invoke(this, new ItemEventArgs<RelationshipViewModel>(r));
     }
 
-    private void OnRelationshipChanged(Relationship r)
+    private void OnRelationshipChanged(RelationshipViewModel r)
     {
-      RelationshipChanged?.Invoke(this, new ItemEventArgs<Relationship>(r));
+      RelationshipChanged?.Invoke(this, new ItemEventArgs<RelationshipViewModel>(r));
     }
 
     private void OnRefreshLayout(bool typeChanged)
@@ -1308,7 +1317,7 @@ namespace NAS.ViewModel
         var newVM = LayoutVMFactory.CreateVM(layout);
         Layouts.Insert(idx, newVM);
         CurrentLayout = newVM;
-        Layouts.Remove(oldVM);
+        _ = Layouts.Remove(oldVM);
       }
     }
 

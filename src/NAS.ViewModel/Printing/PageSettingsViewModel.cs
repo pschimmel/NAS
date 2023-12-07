@@ -117,20 +117,14 @@ namespace NAS.ViewModel.Printing
       if (SelectedPrinter != null)
       {
         var capabilities = SelectedPrinter.GetPrintCapabilities();
-        if (capabilities != null)
-        {
-          capabilities.PageMediaSizeCapability.OrderBy(x => x.PageMediaSizeName).ToList().ForEach(x => PageSizes.Add(x));
-        }
+        capabilities?.PageMediaSizeCapability.OrderBy(x => x.PageMediaSizeName).ToList().ForEach(x => PageSizes.Add(x));
 
         if (!string.IsNullOrWhiteSpace(oldSelectedPageSize))
         {
           SelectedPageSize = PageSizes.FirstOrDefault(x => x.PageMediaSizeName.ToString() == oldSelectedPageSize);
         }
 
-        if (SelectedPageSize == null)
-        {
-          SelectedPageSize = PageSizes.FirstOrDefault(x => x.PageMediaSizeName == SelectedPrinter.DefaultPrintTicket.PageMediaSize.PageMediaSizeName);
-        }
+        SelectedPageSize ??= PageSizes.FirstOrDefault(x => x.PageMediaSizeName == SelectedPrinter.DefaultPrintTicket.PageMediaSize.PageMediaSizeName);
       }
     }
 

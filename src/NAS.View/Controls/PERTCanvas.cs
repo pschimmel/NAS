@@ -8,12 +8,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ES.Tools.Adorners;
+using ES.Tools.Core.MVVM;
+using ES.Tools.UI;
 using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.View.Helpers;
 using NAS.View.Shapes;
 using NAS.ViewModel;
+using NAS.ViewModel.Base;
 
 namespace NAS.View.Controls
 {
@@ -111,25 +114,25 @@ namespace NAS.View.Controls
       Refresh();
     }
 
-    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       var activity = e.Item;
-      var data = activity.Schedule.GetOrAddActivityData(activity);
+      var data = activity.Schedule.GetOrAddActivityData(activity.Activity);
       AddActivity(data);
       VM.CurrentActivity = activity;
     }
 
-    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       RemoveActivity(e.Item);
     }
 
-    private void ViewModel_RelationshipAdded(object sender, ItemEventArgs<Relationship> e)
+    private void ViewModel_RelationshipAdded(object sender, ItemEventArgs<RelationshipViewModel> e)
     {
       AddRelationship(e.Item);
     }
 
-    private void ViewModel_RelationshipDeleted(object sender, ItemEventArgs<Relationship> e)
+    private void ViewModel_RelationshipDeleted(object sender, ItemEventArgs<RelationshipViewModel> e)
     {
       RemoveRelationship(e.Item);
     }
@@ -148,11 +151,11 @@ namespace NAS.View.Controls
 
       if (e.PropertyName == "CurrentActivity")
       {
-        Select<PERTDiagram, Activity>(VM.CurrentActivity);
+        Select<PERTDiagram, ActivityViewModel>(VM.CurrentActivity);
       }
       else if (e.PropertyName == "CurrentRelationship")
       {
-        Select<RelationshipPath, Relationship>(VM.CurrentRelationship);
+        Select<RelationshipPath, RelationshipViewModel>(VM.CurrentRelationship);
       }
     }
 
@@ -176,7 +179,7 @@ namespace NAS.View.Controls
           template = Layout.PERTDefinition;
         }
         // Draw Activities
-        var view = ViewModelExtensions.GetView(VM.Activities);
+        var view = VM.Activities.GetView();
         if (view != null)
         {
           // Filtering
@@ -200,9 +203,9 @@ namespace NAS.View.Controls
           }
 
           // Draw Relationships
-          foreach (var r in VM.Schedule.Relationships)
+          foreach (var r in VM.Relationships)
           {
-            if (visibleActivities.Contains(r.GetActivity1()) && visibleActivities.Contains(r.GetActivity2()))
+            if (visibleActivities.Contains(r.Activity1) && visibleActivities.Contains(r.Activity2))
             {
               AddRelationship(r);
             }
@@ -289,30 +292,32 @@ namespace NAS.View.Controls
         }
       }
       matrix[a.LocationX, a.LocationY] = a;
-      var rect = GetActivityDiagram(a.GetActivity());
+      var rect = GetActivityDiagram(VM.Activities.FirstOrDefault(x => x.Activity == a.GetActivity()));
       a.PropertyChanged += (sender, args) =>
       {
         var activity = sender as Activity;
+        var vm = VM.Activities.FirstOrDefault(x => x.Activity == activity);
         if (args.PropertyName == "IsStarted" || args.PropertyName == "IsFinished" || args.PropertyName == "IsCritical")
         {
-          RefreshActivity(activity);
+          RefreshActivity(vm);
           foreach (var predecessor in activity.GetPreceedingRelationships())
           {
-            RefreshRelationship(predecessor);
+            RefreshRelationship(new RelationshipViewModel(predecessor));
           }
 
           foreach (var successor in activity.GetSucceedingRelationships())
           {
-            RefreshRelationship(successor);
+            RefreshRelationship(new RelationshipViewModel(successor));
           }
         }
       };
-      Children.Add(rect);
+      _ = Children.Add(rect);
       SetZIndex(rect, 3);
-      RefreshActivity(a.GetActivity());
+
+      RefreshActivity(VM.Activities.FirstOrDefault(x => x.Activity == a.GetActivity()));
     }
 
-    private PERTDiagram GetActivityDiagram(Activity activity)
+    private PERTDiagram GetActivityDiagram(ActivityViewModel activity)
     {
       var dia = new PERTDiagram(activity);
       dia.Width = template.Width;
@@ -332,7 +337,7 @@ namespace NAS.View.Controls
       return dia;
     }
 
-    private void RemoveActivity(Activity activity)
+    private void RemoveActivity(ActivityViewModel activity)
     {
       var dia = GetDiagramFromActivity(activity);
       if (dia != null)
@@ -352,7 +357,7 @@ namespace NAS.View.Controls
         {
           for (int y = 0; y < matrix.GetLength(1); y++)
           {
-            if (matrix[x, y].ActivityGuid == activity.Guid)
+            if (matrix[x, y].ActivityGuid == activity.Activity.Guid)
             {
               matrix[x, y] = null;
             }
@@ -361,7 +366,7 @@ namespace NAS.View.Controls
       }
     }
 
-    private void RefreshActivity(Activity a)
+    private void RefreshActivity(ActivityViewModel a)
     {
       if (a == null)
       {
@@ -378,10 +383,10 @@ namespace NAS.View.Controls
         SetTop(dia, y);
         x = GetXOfActivity(a);
         SetLeft(dia, x);
-        if (a.ActivityType == ActivityType.Milestone)
+        if (a.IsMilestone)
         {
           dia.Background = new SolidColorBrush(milestoneStandardColor);
-          if (a.IsCritical)
+          if (a.Activity.IsCritical)
           {
             dia.BorderBrush = new SolidColorBrush(milestoneCriticalColor);
           }
@@ -389,7 +394,7 @@ namespace NAS.View.Controls
         else
         {
           dia.Background = new SolidColorBrush(activityStandardColor);
-          if (a.IsCritical)
+          if (a.Activity.IsCritical)
           {
             dia.BorderBrush = new SolidColorBrush(activityCriticalColor);
           }
@@ -399,7 +404,7 @@ namespace NAS.View.Controls
         foreach (var item in template.Items)
         {
           var tb = new TextBlock();
-          BindingOperations.SetBinding(tb, TextBlock.TextProperty, a.GetBindingFromActivity(item.Property));
+          _ = BindingOperations.SetBinding(tb, TextBlock.TextProperty, a.Activity.GetBindingFromActivity(item.Property));
           var b = new Border();
           b.Child = tb;
           b.BorderBrush = Brushes.Gray;
@@ -428,7 +433,7 @@ namespace NAS.View.Controls
           }
 
           b.BorderThickness = new Thickness(left, top, right, bottom);
-          dia.Children.Add(b);
+          _ = dia.Children.Add(b);
           b.SetValue(Grid.RowProperty, item.Row);
           b.SetValue(Grid.ColumnProperty, item.Column);
           b.SetValue(Grid.RowSpanProperty, item.RowSpan);
@@ -468,12 +473,12 @@ namespace NAS.View.Controls
           Children.Remove(Children.OfType<Line>().First(l => l.Tag == a));
         }
 
-        if (a.IsStarted)
+        if (a.Activity.IsStarted)
         {
           var line = new Line();
           line.Stroke = Brushes.Black;
           line.StrokeThickness = 1;
-          Children.Add(line);              //     /
+          _ = Children.Add(line);              //     /
           line.X1 = x;                     //    /
           line.Y1 = y + template.Height;   //   /
           line.X2 = x + template.Width;    //  /
@@ -481,12 +486,12 @@ namespace NAS.View.Controls
           line.Tag = a;
           SetZIndex(line, 4);
         }
-        if (a.IsFinished)
+        if (a.Activity.IsFinished)
         {
           var line = new Line();
           line.Stroke = Brushes.Black;
           line.StrokeThickness = 1;
-          Children.Add(line);              //  \
+          _ = Children.Add(line);              //  \
           line.X1 = x;                     //   \
           line.Y1 = y;                     //    \
           line.X2 = x + template.Width;    //     \
@@ -496,17 +501,17 @@ namespace NAS.View.Controls
         }
 
         // Apply Distortion Icon
-        if (a.ActivityType == ActivityType.Activity && a.Distortions != null && a.Distortions.Count > 0)
+        if (a.Activity.ActivityType == ActivityType.Activity && a.Activity.Distortions != null && a.Activity.Distortions.Count > 0)
         {
           var image = Children.OfType<Image>().FirstOrDefault(i => i.Tag == a);
           if (image == null)
           {
             image = new Image() { Source = new BitmapImage(new Uri("pack://application:NAS,,,/images/Distortion.png")), Height = 16, Width = 16 };
             image.Tag = a;
-            Children.Add(image);
+            _ = Children.Add(image);
             image.IsHitTestVisible = false;
             string s = "";
-            foreach (var d in a.Distortions)
+            foreach (var d in a.Activity.Distortions)
             {
               if (!string.IsNullOrEmpty(s))
               {
@@ -528,7 +533,7 @@ namespace NAS.View.Controls
             Children.Remove(image);
           }
         }
-        dia.ToolTip = a.Name + " (" + a.StartDate.ToShortDateString() + " - " + a.FinishDate.ToShortDateString() + ")";
+        dia.ToolTip = a.Activity.Name + " (" + a.Activity.StartDate.ToShortDateString() + " - " + a.Activity.FinishDate.ToShortDateString() + ")";
       }
     }
 
@@ -536,7 +541,7 @@ namespace NAS.View.Controls
 
     #region Relationships
 
-    private void AddRelationship(Relationship r)
+    private void AddRelationship(RelationshipViewModel r)
     {
       if (!Layout.ShowRelationships)
       {
@@ -544,11 +549,11 @@ namespace NAS.View.Controls
       }
 
       var path = new RelationshipPath(r);
-      path.Stroke = r.IsCritical ? new SolidColorBrush(activityCriticalColor) : r.IsDriving ? Brushes.Black : Brushes.DarkGray;
+      path.Stroke = r.Relationship.IsCritical ? new SolidColorBrush(activityCriticalColor) : r.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
 
       if (!IsStandalone)
       {
-        r.PropertyChanged += (sender, args) => RefreshRelationship(sender as Relationship);
+        r.PropertyChanged += (sender, args) => RefreshRelationship(sender as RelationshipViewModel);
         path.ToolTip = r.ToString();
       }
 
@@ -557,7 +562,7 @@ namespace NAS.View.Controls
       RefreshRelationship(r);
     }
 
-    private void RemoveRelationship(Relationship relation)
+    private void RemoveRelationship(RelationshipViewModel relation)
     {
       foreach (var e in Children.OfType<RelationshipPath>().Where(x => x.Item == relation).ToList())
       {
@@ -567,7 +572,7 @@ namespace NAS.View.Controls
 
     private enum PointType { Left, Right };
 
-    private void RefreshRelationship(Relationship r)
+    private void RefreshRelationship(RelationshipViewModel r)
     {
       if (!Layout.ShowRelationships)
       {
@@ -575,8 +580,8 @@ namespace NAS.View.Controls
       }
 
       var path = GetPathFromRelationship(r);
-      var diagramm1 = GetDiagramFromActivity(r.GetActivity1());
-      var diagramm2 = GetDiagramFromActivity(r.GetActivity2());
+      var diagramm1 = GetDiagramFromActivity(new ActivityViewModel(r.Activity1));
+      var diagramm2 = GetDiagramFromActivity(new ActivityViewModel(r.Activity2));
       if (path == null || diagramm1 == null || diagramm2 == null)
       {
         return;
@@ -586,7 +591,7 @@ namespace NAS.View.Controls
       var endPoint = new Point(GetLeft(diagramm2), GetTop(diagramm2) + template.Height / 2);
       var startPointType = PointType.Left;
       var endPointType = PointType.Left;
-      switch (r.RelationshipType)
+      switch (r.Relationship.RelationshipType)
       {
         case RelationshipType.FinishStart:
           startPoint.X += diagramm1.Width;
@@ -658,14 +663,14 @@ namespace NAS.View.Controls
 
       if (e.OriginalSource is PERTDiagram || e.OriginalSource is TextBlock)
       {
-        var diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
+        PERTDiagram diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource as PERTDiagram : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
         if (diagramm == null)
         {
           return;
         }
 
         var activity = diagramm.Item;
-        dragActivityData = activity.GetActivityData();
+        dragActivityData = activity.Activity.GetActivityData();
 
         var rect = new Rect(diagramm.RenderSize);
         if (rect.Width > 10 && rect.Height > 10)
@@ -701,7 +706,7 @@ namespace NAS.View.Controls
           }
           else
           {
-            dragActivityData = activity.GetActivityData();
+            dragActivityData = activity.Activity.GetActivityData();
           }
 
           return;
@@ -752,12 +757,12 @@ namespace NAS.View.Controls
           if (tempLine == null)
           {
             tempLine = new Line();
-            Children.Add(tempLine);
+            _ = Children.Add(tempLine);
             tempLine.Stroke = Brushes.Black;
           }
 
           var activity = dragActivityData.GetActivity();
-          var diagram = GetDiagramFromActivity(activity);
+          var diagram = GetDiagramFromActivity(new ActivityViewModel(activity));
           tempLine.Y1 = GetTop(diagram) + template.Height / 2;
           tempLine.X1 = GetLeft(diagram);
           if (!(activity.ActivityType == ActivityType.Milestone))
@@ -832,16 +837,16 @@ namespace NAS.View.Controls
             dragActivityData.LocationY = tempY;
 
             var activity = dragActivityData.GetActivity();
-            RefreshActivity(activity);
+            RefreshActivity(new ActivityViewModel(activity));
 
             foreach (var rel in activity.GetVisiblePreceedingRelationships())
             {
-              RefreshRelationship(rel);
+              RefreshRelationship(new RelationshipViewModel(rel));
             }
 
             foreach (var rel in activity.GetVisibleSucceedingRelationships())
             {
-              RefreshRelationship(rel);
+              RefreshRelationship(new RelationshipViewModel(rel));
             }
           }
         }
@@ -851,16 +856,16 @@ namespace NAS.View.Controls
         var activity = dragActivityData.GetActivity();
 
         // Draw relationship
-        var diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
+        var diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource as PERTDiagram : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
         var selectedActivity = diagramm.Item;
         if (selectedActivity == null)
         {
           return;
         }
 
-        if (activity != selectedActivity && VM.AddRelationshipCommand.CanExecute(null))
+        if (activity != selectedActivity.Activity && VM.AddRelationshipCommand.CanExecute(null))
         {
-          VM.AddRelationshipCommand.Execute(new AddRelationshipInfo() { Activity1 = activity, Activity2 = selectedActivity });
+          VM.AddRelationshipCommand.Execute(new AddRelationshipInfo() { Activity1 = activity, Activity2 = selectedActivity.Activity });
         }
       }
       StopDrag();
@@ -883,24 +888,24 @@ namespace NAS.View.Controls
 
     #region Private Members
 
-    private double GetXOfActivity(Activity activity)
+    private double GetXOfActivity(ActivityViewModel activity)
     {
-      var a = activity.GetActivityData();
+      var a = activity.Activity.GetActivityData();
       return template.SpacingX + a.LocationX * (template.Width + template.SpacingX);
     }
 
-    private double GetYOfActivity(Activity activity)
+    private double GetYOfActivity(ActivityViewModel activity)
     {
-      var a = activity.GetActivityData();
+      var a = activity.Activity.GetActivityData();
       return template.SpacingY + a.LocationY * (template.Height + template.SpacingY);
     }
 
-    private PERTDiagram GetDiagramFromActivity(Activity activity)
+    private PERTDiagram GetDiagramFromActivity(ActivityViewModel activity)
     {
       return Children.OfType<PERTDiagram>().FirstOrDefault(x => x.Item == activity);
     }
 
-    private RelationshipPath GetPathFromRelationship(Relationship relationship)
+    private RelationshipPath GetPathFromRelationship(RelationshipViewModel relationship)
     {
       return Children.OfType<RelationshipPath>().FirstOrDefault(x => x.Item == relationship);
     }

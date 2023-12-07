@@ -97,10 +97,7 @@ namespace NAS.Model.Controllers
 
       foreach (var activity in schedule.Activities)
       {
-        if (activity.Calendar == null)
-        {
-          activity.Calendar = schedule.StandardCalendar;
-        }
+        activity.Calendar ??= schedule.StandardCalendar;
 
         if (activity.EarlyStartDate == default)
         {

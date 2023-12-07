@@ -38,7 +38,7 @@ namespace NAS.View.Controls
         {
           if (view.Groups == null)
           {
-            foreach (Activity activity in view)
+            foreach (ActivityViewModel activity in view)
             {
               AddActivity(activity);
               AddTableRow(activity);
@@ -46,14 +46,14 @@ namespace NAS.View.Controls
           }
           else
           {
-            foreach (CollectionViewGroup group in view.Groups)
+            foreach (CollectionViewGroup group in view.Groups.Cast<CollectionViewGroup>())
             {
               AddTableGroup(group, 0);
             }
           }
-          foreach (var r in VM.Schedule.Relationships)
+          foreach (var r in VM.Relationships)
           {
-            if (view.PassesFilter(r.GetActivity1()) && view.PassesFilter(r.GetActivity2()))
+            if (view.PassesFilter(r.Activity1) && view.PassesFilter(r.Activity2))
             {
               AddRelationship(r);
             }
@@ -81,18 +81,18 @@ namespace NAS.View.Controls
       double x2 = DateToX(lastDay, true);
       rect.Width = x2 - x1;
       rect.Height = row - columnHeaderHeight;
-      Children.Add(rect);
+      _ = Children.Add(rect);
       SetLeft(rect, tableWidth);
       SetTop(rect, columnHeaderHeight);
     }
 
     public void RefreshResources(VisibleResource resource)
     {
-      var viewModel = new ResourceViewModel(resource, VM as ScheduleViewModel);
+      var viewModel = new ResourceViewModel(resource, VM);
       var c = new ResourcePanelCanvas() { DataContext = viewModel, Height = 100 };
       c.Refresh();
       Height += 100;
-      Children.Add(c);
+      _ = Children.Add(c);
       SetTop(c, Height - 100);
       SetLeft(c, tableWidth);
     }
@@ -116,14 +116,14 @@ namespace NAS.View.Controls
       row += ColumnHeaderHeight;
     }
 
-    private void AddTableRow(Activity activity)
+    private void AddTableRow(ActivityViewModel activity)
     {
       double x = 0;
       foreach (var column in layout.ActivityColumns)
       {
         double width = Math.Max(columnWidths[column.Property], minColumnWidth) + 1;
         AddTableCell(
-          activity.GetTextFromActivity(column.Property),
+          activity.Activity.GetTextFromActivity(column.Property),
           ActivityPropertyHelper.GetAlignment(ActivityPropertyHelper.GetPropertyType(column.Property)),
           x,
           width,
@@ -155,7 +155,7 @@ namespace NAS.View.Controls
       row += GroupHeaderHeight;
       if (group.IsBottomLevel)
       {
-        foreach (Activity activity in group.Items)
+        foreach (ActivityViewModel activity in group.Items.Cast<ActivityViewModel>())
         {
           AddActivity(activity);
           AddTableRow(activity);
@@ -163,7 +163,7 @@ namespace NAS.View.Controls
       }
       else
       {
-        foreach (CollectionViewGroup subGroup in group.Items)
+        foreach (CollectionViewGroup subGroup in group.Items.Cast<CollectionViewGroup>())
         {
           AddTableGroup(subGroup, level + 1);
         }
@@ -184,7 +184,7 @@ namespace NAS.View.Controls
       SetLeft(border, x);
       SetTop(border, y);
       SetZIndex(border, 6);
-      Children.Add(border);
+      _ = Children.Add(border);
     }
 
     private double GetColumnWidth(ActivityProperty property)
@@ -222,7 +222,7 @@ namespace NAS.View.Controls
       var line = new Line();
       line.Stroke = Brushes.Blue;
       line.StrokeThickness = 3;
-      Children.Add(line);
+      _ = Children.Add(line);
       double x = DateToX(VM.Schedule.DataDate, false);
       line.X1 = x;
       line.X2 = x;

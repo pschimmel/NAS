@@ -20,10 +20,10 @@ namespace NAS.Model.ImportExport
     public void Export(Schedule project, string fileName)
     {
       var xml = new XmlDocument();
-      xml.CreateXmlDeclaration("1.0", "iso-8859-1", "yes");
+      _ = xml.CreateXmlDeclaration("1.0", "iso-8859-1", "yes");
       // Add general project data
       var projectElement = xml.CreateElement("Project");
-      xml.AppendChild(projectElement);
+      _ = xml.AppendChild(projectElement);
       WriteProject(project, xml, projectElement);
       xml.Save(fileName);
     }
@@ -59,13 +59,13 @@ namespace NAS.Model.ImportExport
     {
       var applicationName = xml.CreateAttribute("Application");
       applicationName.InnerText = "NAS";
-      projectElement.Attributes.Append(applicationName);
+      _ = projectElement.Attributes.Append(applicationName);
       var applicationVersion = xml.CreateAttribute("Version");
       applicationVersion.InnerText = "1.0";
-      projectElement.Attributes.Append(applicationVersion);
+      _ = projectElement.Attributes.Append(applicationVersion);
       var saveDate = xml.CreateAttribute("SaveDate");
       saveDate.InnerText = DateTime.Now.ToString("yyyy-MM-dd");
-      projectElement.Attributes.Append(saveDate);
+      _ = projectElement.Attributes.Append(saveDate);
       projectElement.AppendTextChild("Name", schedule.Name);
       projectElement.AppendTextChild("Description", schedule.Description);
       projectElement.AppendTextChild("StartDate", schedule.StartDate);
@@ -77,11 +77,11 @@ namespace NAS.Model.ImportExport
       if (calendars.Count > 0)
       {
         var calendarsElement = xml.CreateElement("Calendars");
-        projectElement.AppendChild(calendarsElement);
+        _ = projectElement.AppendChild(calendarsElement);
         for (int i = 0; i < calendars.Count; i++)
         {
           var calendarElement = xml.CreateElement("Calendar");
-          calendarsElement.AppendChild(calendarElement);
+          _ = calendarsElement.AppendChild(calendarElement);
           calendarElement.AppendTextChild("ID", i);
           calendarElement.AppendTextChild("Name", calendars[i].Name);
           calendarElement.AppendTextChild("Sunday", calendars[i].Sunday);
@@ -94,7 +94,7 @@ namespace NAS.Model.ImportExport
           if (calendars[i].Holidays != null && calendars[i].Holidays.Count > 0)
           {
             var holidayElement = xml.CreateElement("Holidays");
-            calendarElement.AppendChild(holidayElement);
+            _ = calendarElement.AppendChild(holidayElement);
             foreach (var exception in calendars[i].Holidays)
             {
               holidayElement.AppendTextChild("Holiday", exception.Date);
@@ -111,11 +111,11 @@ namespace NAS.Model.ImportExport
       if (fragnets.Count > 0)
       {
         var fragnetsElement = xml.CreateElement("Fragnets");
-        projectElement.AppendChild(fragnetsElement);
+        _ = projectElement.AppendChild(fragnetsElement);
         for (int i = 0; i < fragnets.Count; i++)
         {
           var fragnetElement = xml.CreateElement("Fragnet");
-          fragnetsElement.AppendChild(fragnetElement);
+          _ = fragnetsElement.AppendChild(fragnetElement);
           fragnetElement.AppendTextChild("ID", fragnets[i].Number);
           fragnetElement.AppendTextChild("Name", fragnets[i].Name);
           fragnetElement.AppendTextChild("Description", fragnets[i].Description);
@@ -128,7 +128,7 @@ namespace NAS.Model.ImportExport
       }
       // Add WBS
       var wbsElement = xml.CreateElement("WBS");
-      projectElement.AppendChild(wbsElement);
+      _ = projectElement.AppendChild(wbsElement);
       if (schedule.WBSItem != null)
       {
         wbsElement.AppendTextChild("Number", schedule.WBSItem.Number);
@@ -140,11 +140,11 @@ namespace NAS.Model.ImportExport
       if (customAttributes1.Count > 0)
       {
         var attributes1Element = xml.CreateElement("CustomAttributes1");
-        projectElement.AppendChild(attributes1Element);
+        _ = projectElement.AppendChild(attributes1Element);
         for (int i = 0; i < customAttributes1.Count; i++)
         {
           var attributeElement = xml.CreateElement("CustomAttribute");
-          attributes1Element.AppendChild(attributeElement);
+          _ = attributes1Element.AppendChild(attributeElement);
           attributeElement.AppendTextChild("ID", i);
           attributeElement.AppendTextChild("Name", customAttributes1[i].Name);
         }
@@ -153,11 +153,11 @@ namespace NAS.Model.ImportExport
       if (customAttributes2.Count > 0)
       {
         var attributes2Element = xml.CreateElement("CustomAttributes2");
-        projectElement.AppendChild(attributes2Element);
+        _ = projectElement.AppendChild(attributes2Element);
         for (int i = 0; i < customAttributes2.Count; i++)
         {
           var attributeElement = xml.CreateElement("CustomAttribute");
-          attributes2Element.AppendChild(attributeElement);
+          _ = attributes2Element.AppendChild(attributeElement);
           attributeElement.AppendTextChild("ID", i);
           attributeElement.AppendTextChild("Name", customAttributes2[i].Name);
         }
@@ -166,11 +166,11 @@ namespace NAS.Model.ImportExport
       if (customAttributes3.Count > 0)
       {
         var attributes3Element = xml.CreateElement("CustomAttributes3");
-        projectElement.AppendChild(attributes3Element);
+        _ = projectElement.AppendChild(attributes3Element);
         for (int i = 0; i < customAttributes3.Count; i++)
         {
           var attributeElement = xml.CreateElement("CustomAttribute");
-          attributes3Element.AppendChild(attributeElement);
+          _ = attributes3Element.AppendChild(attributeElement);
           attributeElement.AppendTextChild("ID", i);
           attributeElement.AppendTextChild("Name", customAttributes3[i].Name);
         }
@@ -180,7 +180,7 @@ namespace NAS.Model.ImportExport
       if (resources.Count > 0)
       {
         var resourcesElement = xml.CreateElement("Resources");
-        projectElement.AppendChild(resourcesElement);
+        _ = projectElement.AppendChild(resourcesElement);
         for (int i = 0; i < resources.Count; i++)
         {
           XmlElement resourceElement = null;
@@ -199,7 +199,7 @@ namespace NAS.Model.ImportExport
           }
           if (resourceElement != null)
           {
-            resourcesElement.AppendChild(resourceElement);
+            _ = resourcesElement.AppendChild(resourceElement);
             resourceElement.AppendTextChild("Name", resources[i].Name);
             resourceElement.AppendTextChild("CostsPerUnit", resources[i].CostsPerUnit);
             resourceElement.AppendTextChild("Limit", resources[i].Limit);
@@ -209,7 +209,7 @@ namespace NAS.Model.ImportExport
       // Add Activities
       var activities = new List<Activity>(schedule.Activities);
       var activitiesElement = xml.CreateElement("Activities");
-      projectElement.AppendChild(activitiesElement);
+      _ = projectElement.AppendChild(activitiesElement);
       for (int i = 0; i < activities.Count; i++)
       {
         var a = activities[i];
@@ -223,7 +223,7 @@ namespace NAS.Model.ImportExport
           activityElement = xml.CreateElement("Activity");
           activityElement.AppendTextChild("OriginalDuration", a.OriginalDuration);
         }
-        activitiesElement.AppendChild(activityElement);
+        _ = activitiesElement.AppendChild(activityElement);
         activitiesElement.AppendTextChild("ID", a.Number);
         activitiesElement.AppendTextChild("Name", a.Name);
         activitiesElement.AppendTextChild("EarlyStartDate", a.EarlyStartDate);
@@ -274,9 +274,9 @@ namespace NAS.Model.ImportExport
         if (a.Constraint != ConstraintType.None)
         {
           var constraintsElement = xml.CreateElement("Constraints");
-          activityElement.AppendChild(constraintsElement);
+          _ = activityElement.AppendChild(constraintsElement);
           var constraintElement = xml.CreateElement("Constraint");
-          constraintsElement.AppendChild(constraintElement);
+          _ = constraintsElement.AppendChild(constraintElement);
           constraintElement.AppendTextChild("ConstraintType", a.Constraint);
           constraintElement.AppendTextChild("ConstraintDate", a.ConstraintDate);
         }
@@ -285,11 +285,11 @@ namespace NAS.Model.ImportExport
         if (resourceAssociations.Count > 0)
         {
           var resourcesElement = xml.CreateElement("Resources");
-          activityElement.AppendChild(resourcesElement);
+          _ = activityElement.AppendChild(resourcesElement);
           for (int j = 0; j < resourceAssociations.Count; j++)
           {
             var resourceElement = xml.CreateElement("Resource");
-            resourcesElement.AppendChild(resourceElement);
+            _ = resourcesElement.AppendChild(resourceElement);
             resourceElement.AppendTextChild("ResourceID", resources.IndexOf(resourceAssociations[j].Resource));
             resourceElement.AppendTextChild("Budget", resourceAssociations[j].Budget);
             resourceElement.AppendTextChild("FixedCosts", resourceAssociations[j].FixedCosts);
@@ -301,7 +301,7 @@ namespace NAS.Model.ImportExport
         if (distortions.Count > 0)
         {
           var distortionsElement = xml.CreateElement("Distortions");
-          activityElement.AppendChild(distortionsElement);
+          _ = activityElement.AppendChild(distortionsElement);
           foreach (var dis in distortions)
           {
             XmlElement distortionElement = null;
@@ -337,18 +337,18 @@ namespace NAS.Model.ImportExport
               distortionElement.AppendTextChild("Fragnet", fragnets.IndexOf(dis.Fragnet));
             }
 
-            distortionsElement.AppendChild(distortionElement);
+            _ = distortionsElement.AppendChild(distortionElement);
           }
         }
       }
       // Add relationships
       var relationships = new List<Relationship>(schedule.Relationships);
       var relationshipsElement = xml.CreateElement("Relationships");
-      projectElement.AppendChild(relationshipsElement);
+      _ = projectElement.AppendChild(relationshipsElement);
       for (int i = 0; i < relationships.Count; i++)
       {
         var relationshipElement = xml.CreateElement("Relationship");
-        relationshipsElement.AppendChild(relationshipElement);
+        _ = relationshipsElement.AppendChild(relationshipElement);
         relationshipElement.AppendTextChild("Activity1", schedule.GetActivity(relationships[i].Activity1Guid).Number);
         relationshipElement.AppendTextChild("Activity2", schedule.GetActivity(relationships[i].Activity2Guid).Number);
         relationshipElement.AppendTextChild("DependencyType", relationships[i].RelationshipType);
@@ -359,11 +359,11 @@ namespace NAS.Model.ImportExport
       if (schedule.Baselines.Count > 0)
       {
         var baseLinesElement = xml.CreateElement("Baselines");
-        projectElement.AppendChild(baseLinesElement);
+        _ = projectElement.AppendChild(baseLinesElement);
         foreach (var baseline in schedule.Baselines)
         {
           var baseLineElement = xml.CreateElement("Baseline");
-          baseLinesElement.AppendChild(baseLineElement);
+          _ = baseLinesElement.AppendChild(baseLineElement);
           WriteProject(baseline, xml, baseLineElement);
           baselines.Add(baseline);
         }
@@ -373,13 +373,13 @@ namespace NAS.Model.ImportExport
       if (perts.Count > 0)
       {
         var pertsElement = xml.CreateElement("PERTDefinitions");
-        projectElement.AppendChild(pertsElement);
+        _ = projectElement.AppendChild(pertsElement);
         for (int i = 0; i < perts.Count; i++)
         {
           if (perts[i] != null)
           {
             var pertElement = xml.CreateElement("PERTDefinition");
-            pertsElement.AppendChild(pertElement);
+            _ = pertsElement.AppendChild(pertElement);
             pertElement.AppendTextChild("Name", perts[i].Name);
             pertElement.AppendTextChild("Width", perts[i].Width);
             pertElement.AppendTextChild("Height", perts[i].Height);
@@ -390,11 +390,11 @@ namespace NAS.Model.ImportExport
             if (rows.Count > 0)
             {
               var rowsElement = xml.CreateElement("Rows");
-              pertElement.AppendChild(rowsElement);
+              _ = pertElement.AppendChild(rowsElement);
               for (int j = 0; j < rows.Count; j++)
               {
                 var rowElement = xml.CreateElement("Row");
-                rowsElement.AppendChild(rowElement);
+                _ = rowsElement.AppendChild(rowElement);
                 rowElement.AppendTextChild("Sort", j);
                 rowElement.AppendTextChild("Height", rows[j].Height);
               }
@@ -403,11 +403,11 @@ namespace NAS.Model.ImportExport
             if (cols.Count > 0)
             {
               var colsElement = xml.CreateElement("Columns");
-              pertElement.AppendChild(colsElement);
+              _ = pertElement.AppendChild(colsElement);
               for (int j = 0; j < cols.Count; j++)
               {
                 var colElement = xml.CreateElement("Column");
-                colsElement.AppendChild(colElement);
+                _ = colsElement.AppendChild(colElement);
                 colElement.AppendTextChild("Sort", j);
                 colElement.AppendTextChild("Width", cols[j].Width);
               }
@@ -416,11 +416,11 @@ namespace NAS.Model.ImportExport
             if (items.Count > 0)
             {
               var itemsElement = xml.CreateElement("Items");
-              pertElement.AppendChild(itemsElement);
+              _ = pertElement.AppendChild(itemsElement);
               for (int j = 0; j < items.Count; j++)
               {
                 var itemElement = xml.CreateElement("Item");
-                itemsElement.AppendChild(itemElement);
+                _ = itemsElement.AppendChild(itemElement);
                 itemElement.AppendTextChild("Row", items[j].Row);
                 itemElement.AppendTextChild("Column", items[j].Column);
                 itemElement.AppendTextChild("RowSpan", items[j].RowSpan);
@@ -438,13 +438,13 @@ namespace NAS.Model.ImportExport
       if (layouts.Count > 0)
       {
         var layoutsElement = xml.CreateElement("Layouts");
-        projectElement.AppendChild(layoutsElement);
+        _ = projectElement.AppendChild(layoutsElement);
         for (int i = 0; i < layouts.Count; i++)
         {
           if (layouts[i] != null)
           {
             var layoutElement = xml.CreateElement("Layout");
-            layoutsElement.AppendChild(layoutElement);
+            _ = layoutsElement.AppendChild(layoutElement);
             layoutElement.AppendTextChild("ID", i);
             layoutElement.AppendTextChild("Name", layouts[i].Name);
             layoutElement.AppendTextChild("ActivityStandardColor", layouts[i].ActivityStandardColor);
@@ -462,11 +462,11 @@ namespace NAS.Model.ImportExport
             layoutElement.AppendTextChild("ShowRelationships", layouts[i].ShowRelationships);
             layoutElement.AppendTextChild("ShowFloat", layouts[i].ShowFloat);
             var visibleColumnsElement = xml.CreateElement("VisibleColumns");
-            layoutElement.AppendChild(visibleColumnsElement);
+            _ = layoutElement.AppendChild(visibleColumnsElement);
             foreach (var activityColumn in layouts[i].ActivityColumns)
             {
               var activityColumnElement = xml.CreateElement("ActivityColumn");
-              visibleColumnsElement.AppendChild(activityColumnElement);
+              _ = visibleColumnsElement.AppendChild(activityColumnElement);
               activityColumnElement.AppendTextChild("Property", activityColumn.Property);
               if (activityColumn.ColumnWidth.HasValue)
               {
@@ -474,20 +474,20 @@ namespace NAS.Model.ImportExport
               }
             }
             var sortingDefinitionsElement = xml.CreateElement("SortingDefinitions");
-            layoutElement.AppendChild(sortingDefinitionsElement);
+            _ = layoutElement.AppendChild(sortingDefinitionsElement);
             foreach (var sortingDefinition in layouts[i].SortingDefinitions)
             {
               var sortingDefinitionElement = xml.CreateElement("SortingDefinition");
-              sortingDefinitionsElement.AppendChild(sortingDefinitionElement);
+              _ = sortingDefinitionsElement.AppendChild(sortingDefinitionElement);
               sortingDefinitionElement.AppendTextChild("Property", sortingDefinition.Property);
               sortingDefinitionElement.AppendTextChild("Direction", sortingDefinition.Direction);
             }
             var groupingDefinitionsElement = xml.CreateElement("GroupingDefinitions");
-            layoutElement.AppendChild(groupingDefinitionsElement);
+            _ = layoutElement.AppendChild(groupingDefinitionsElement);
             foreach (var groupingDefinition in layouts[i].GroupingDefinitions)
             {
               var groupingDefinitionElement = xml.CreateElement("GroupingDefinition");
-              groupingDefinitionsElement.AppendChild(groupingDefinitionElement);
+              _ = groupingDefinitionsElement.AppendChild(groupingDefinitionElement);
               groupingDefinitionElement.AppendTextChild("Property", groupingDefinition.Property);
               groupingDefinitionElement.AppendTextChild("Color", groupingDefinition.Color);
             }
@@ -498,21 +498,21 @@ namespace NAS.Model.ImportExport
             layoutElement.AppendTextChild("IsPert", layouts[i].LayoutType == LayoutType.PERT);
             layoutElement.AppendTextChild("PERTDefinition", perts.IndexOf(layouts[i].PERTDefinition));
             var filtersElement = xml.CreateElement("Filters");
-            layoutElement.AppendChild(filtersElement);
+            _ = layoutElement.AppendChild(filtersElement);
             foreach (var filter in layouts[i].FilterDefinitions)
             {
               var filterElement = xml.CreateElement("FilterDefinition");
-              filtersElement.AppendChild(filterElement);
+              _ = filtersElement.AppendChild(filterElement);
               filterElement.AppendTextChild("Property", filter.Property);
               filterElement.AppendTextChild("Relation", filter.Relation);
               filterElement.AppendTextChild("Object", filter.ObjectString);
             }
             var resourcesElement = xml.CreateElement("VisibleResources");
-            layoutElement.AppendChild(resourcesElement);
+            _ = layoutElement.AppendChild(resourcesElement);
             foreach (var resource in layouts[i].VisibleResources)
             {
               var resourceElement = xml.CreateElement("VisibleResource");
-              resourcesElement.AppendChild(resourceElement);
+              _ = resourcesElement.AppendChild(resourceElement);
               resourceElement.AppendTextChild("ID", resources.IndexOf(resource.Resource));
               resourceElement.AppendTextChild("ShowBudget", resource.ShowBudget);
               resourceElement.AppendTextChild("ShowActualCosts", resource.ShowActualCosts);
@@ -520,11 +520,11 @@ namespace NAS.Model.ImportExport
               resourceElement.AppendTextChild("ShowResourceAllocation", resource.ShowResourceAllocation);
             }
             var baselinesElement = xml.CreateElement("VisibleBaselines");
-            layoutElement.AppendChild(baselinesElement);
+            _ = layoutElement.AppendChild(baselinesElement);
             foreach (var baseline in layouts[i].VisibleBaselines)
             {
               var baselineElement = xml.CreateElement("VisibleBaseline");
-              resourcesElement.AppendChild(baselineElement);
+              _ = resourcesElement.AppendChild(baselineElement);
               baselineElement.AppendTextChild("ID", baselines.IndexOf(baseline.Schedule));
               baselineElement.AppendTextChild("Color", baseline.Color);
             }
@@ -544,11 +544,11 @@ namespace NAS.Model.ImportExport
       {
         var xml = parentElement.OwnerDocument;
         var itemsElement = xml.CreateElement("Items");
-        parentElement.AppendChild(itemsElement);
+        _ = parentElement.AppendChild(itemsElement);
         foreach (var item in items)
         {
           var itemElement = xml.CreateElement("WBSItem");
-          itemsElement.AppendChild(itemElement);
+          _ = itemsElement.AppendChild(itemElement);
           itemElement.AppendTextChild("Number", item.Number);
           itemElement.AppendTextChild("Name", item.Name);
           WriteWBSItems(itemElement, item.Children);
@@ -1023,10 +1023,7 @@ namespace NAS.Model.ImportExport
                 }
               }
             }
-            if (activity.Calendar == null)
-            {
-              activity.Calendar = schedule.StandardCalendar;
-            }
+            activity.Calendar ??= schedule.StandardCalendar;
           }
         }
         else if (node.Name == "Relationships")
@@ -1055,7 +1052,7 @@ namespace NAS.Model.ImportExport
                 }
                 else if (relationshipSubNode.Name == "DependencyType")
                 {
-                  Enum.TryParse(relationshipSubNode.InnerText, out type);
+                  _ = Enum.TryParse(relationshipSubNode.InnerText, out type);
                 }
               }
             }
@@ -1288,7 +1285,7 @@ namespace NAS.Model.ImportExport
                       {
                         if (columnSubNode.Name == "Property")
                         {
-                          Enum.TryParse(columnSubNode.InnerText, out a);
+                          _ = Enum.TryParse(columnSubNode.InnerText, out a);
                         }
                         else if (columnSubNode.Name == "ColumnWidth")
                         {
@@ -1317,11 +1314,11 @@ namespace NAS.Model.ImportExport
                       {
                         if (sortingDefinitionSubNode.Name == "Property")
                         {
-                          Enum.TryParse(sortingDefinitionSubNode.InnerText, out a);
+                          _ = Enum.TryParse(sortingDefinitionSubNode.InnerText, out a);
                         }
                         else if (sortingDefinitionSubNode.Name == "Direction")
                         {
-                          Enum.TryParse(sortingDefinitionSubNode.InnerText, out s);
+                          _ = Enum.TryParse(sortingDefinitionSubNode.InnerText, out s);
                         }
                       }
                       if (a != ActivityProperty.None)
@@ -1345,7 +1342,7 @@ namespace NAS.Model.ImportExport
                       {
                         if (groupingDefinitionSubNode.Name == "Property")
                         {
-                          Enum.TryParse(groupingDefinitionSubNode.InnerText, out a);
+                          _ = Enum.TryParse(groupingDefinitionSubNode.InnerText, out a);
                         }
                         else if (groupingDefinitionSubNode.Name == "Color")
                         {
@@ -1406,11 +1403,11 @@ namespace NAS.Model.ImportExport
                       {
                         if (filterSubNode.Name == "Property")
                         {
-                          Enum.TryParse(filterSubNode.InnerText, out property);
+                          _ = Enum.TryParse(filterSubNode.InnerText, out property);
                         }
                         else if (filterSubNode.Name == "Relation")
                         {
-                          Enum.TryParse(filterSubNode.InnerText, out relation);
+                          _ = Enum.TryParse(filterSubNode.InnerText, out relation);
                         }
                         else if (filterSubNode.Name == "Object")
                         {

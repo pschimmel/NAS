@@ -46,6 +46,8 @@ namespace NAS.ViewModel
 
     #region Public Properties
 
+    public PERTDefinition Definition => _definition;
+
     public override HelpTopic HelpTopicKey => HelpTopic.Pert;
 
     public ObservableCollection<RowDefinition> Rows { get; }
@@ -124,7 +126,7 @@ namespace NAS.ViewModel
 
     private void RemovePertItemCommandExecute()
     {
-      Items.Remove(CurrentItem);
+      _ = Items.Remove(CurrentItem);
       CurrentItem = null;
     }
 
@@ -153,7 +155,7 @@ namespace NAS.ViewModel
 
     private void RemoveColumnDefinitionCommandExecute()
     {
-      Columns.Remove(CurrentColumnDefinition);
+      _ = Columns.Remove(CurrentColumnDefinition);
       CurrentColumnDefinition = null;
     }
 
@@ -239,7 +241,7 @@ namespace NAS.ViewModel
 
     private void RemoveRowDefinitionCommandExecute()
     {
-      Rows.Remove(CurrentRowDefinition);
+      _ = Rows.Remove(CurrentRowDefinition);
       CurrentColumnDefinition = null;
     }
 

@@ -86,7 +86,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteFilter, () =>
       {
-        FilterDefinitions.Remove(CurrentFilterDefinition);
+        _ = FilterDefinitions.Remove(CurrentFilterDefinition);
         CurrentFilterDefinition = null;
       });
     }

@@ -120,7 +120,7 @@ namespace NAS.ViewModel
       var sourceItem = dropInfo.Data as ColumnViewModel;
       var targetItem = dropInfo.TargetItem as ColumnViewModel;
       int idx = EditColumns.IndexOf(targetItem);
-      EditColumns.Remove(sourceItem);
+      _ = EditColumns.Remove(sourceItem);
       EditColumns.Insert(idx, sourceItem);
       SelectedEditColumn = sourceItem;
     }

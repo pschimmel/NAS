@@ -331,7 +331,7 @@ namespace NAS.ViewModel.Printing
       height = Math.Ceiling(height / pageSize.Height) * pageSize.Height;
       var c = new Canvas { Width = width, Height = height };
       var clone = originalCanvas;
-      c.Children.Add(clone);
+      _ = c.Children.Add(clone);
       System.Windows.Controls.Canvas.SetLeft(clone, leftMargin);
       System.Windows.Controls.Canvas.SetTop(clone, topMargin + headerHeight);
       return c;
@@ -340,7 +340,7 @@ namespace NAS.ViewModel.Printing
     private void AddHeader(Canvas c, Layout layout, double width, double height, double left, double top)
     {
       var header = new Grid { Height = height, Width = width };
-      c.Children.Add(header);
+      _ = c.Children.Add(header);
       System.Windows.Controls.Canvas.SetTop(header, top);
       System.Windows.Controls.Canvas.SetLeft(header, left);
       foreach (var definition in layout.HeaderItems.OrderBy(x => x.Column))
@@ -352,7 +352,7 @@ namespace NAS.ViewModel.Printing
     private void AddFooter(Canvas c, Layout layout, double width, double height, double left, double top)
     {
       var footer = new Grid { Height = height, Width = width };
-      c.Children.Add(footer);
+      _ = c.Children.Add(footer);
       System.Windows.Controls.Canvas.SetTop(footer, top);
       System.Windows.Controls.Canvas.SetLeft(footer, left);
       foreach (var definition in layout.FooterItems.OrderBy(x => x.Column))

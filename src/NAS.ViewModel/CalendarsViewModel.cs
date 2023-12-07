@@ -177,7 +177,7 @@ namespace NAS.ViewModel
       {
         var calendarToDelete = CurrentCalendar;
         CurrentCalendar = null;
-        Calendars.Remove(calendarToDelete);
+        _ = Calendars.Remove(calendarToDelete);
         if (!_schedule.Calendars.Any(x => x.IsStandard))
         {
           _schedule.Calendars.First().IsStandard = true;

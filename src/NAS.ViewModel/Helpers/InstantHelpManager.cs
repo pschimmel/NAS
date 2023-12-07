@@ -33,7 +33,7 @@ namespace NAS.ViewModel.Helpers
         throw new ArgumentException($"Can only register types that implement {nameof(IHelpWindow)}.");
       }
 
-      _viewTypes.Add(type);
+      _ = _viewTypes.Add(type);
     }
 
     public void ShowHelpWindow()
@@ -45,7 +45,7 @@ namespace NAS.ViewModel.Helpers
         if (view != null)
         {
           view = (IHelpWindow)Activator.CreateInstance(viewType);
-          _activeViews.Add(view);
+          _ = _activeViews.Add(view);
           view.SelectTopic(_currentHelpTopic);
         }
 

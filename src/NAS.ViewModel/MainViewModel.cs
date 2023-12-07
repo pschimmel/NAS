@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using ES.Tools.Core.Infrastructure;
 using ES.Tools.Core.MVVM;
@@ -22,11 +17,11 @@ using NAS.Model.Controllers;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Model.ImportExport;
+using NAS.Model.Settings;
 using NAS.Resources;
 using NAS.ViewModel.Base;
 using NAS.ViewModel.Helpers;
 using NAS.ViewModel.Printing;
-using NAS.Model.Settings;
 
 namespace NAS.ViewModel
 {
@@ -500,7 +495,7 @@ namespace NAS.ViewModel
     {
       try
       {
-        System.Printing.LocalPrintServer.GetDefaultPrintQueue();
+        _ = System.Printing.LocalPrintServer.GetDefaultPrintQueue();
       }
       catch
       {
@@ -513,16 +508,11 @@ namespace NAS.ViewModel
 
         var args = new RequestItemEventArgs<LayoutType, IPrintableCanvas>(viewModel.CurrentLayout.LayoutType);
         GetCanvas?.Invoke(this, args);
-        var canvas = args.ReturnedItem;
-        if (canvas == null)
-        {
-          throw new ApplicationException("Canvas not defined");
-        }
-
+        var canvas = args.ReturnedItem ?? throw new ApplicationException("Canvas not defined");
         canvas.DataContext = viewModel;
 
         using var vm = new PrintPreviewViewModel(CurrentSchedule, canvas);
-        ViewFactory.Instance.ShowDialog(vm);
+        _ = ViewFactory.Instance.ShowDialog(vm);
       }
       catch (Exception ex)
       {
@@ -575,7 +565,7 @@ namespace NAS.ViewModel
         }
       };
 
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool ProgramSettingsCommandCanExecute => !IsBusy;
@@ -699,7 +689,7 @@ namespace NAS.ViewModel
 
     private static void AboutCommandExecute()
     {
-      ViewFactory.Instance.ShowDialog(new AboutViewModel());
+      _ = ViewFactory.Instance.ShowDialog(new AboutViewModel());
     }
 
     #endregion
@@ -767,7 +757,7 @@ namespace NAS.ViewModel
                   using var client = new HttpClient();
                   using var stream = await client.GetStreamAsync(fileURL);
                   using var fs = File.Create(saveFileDialog.FileName);
-                  stream.Seek(0, SeekOrigin.Begin);
+                  _ = stream.Seek(0, SeekOrigin.Begin);
                   stream.CopyTo(fs);
                 }));
               }
@@ -806,7 +796,7 @@ namespace NAS.ViewModel
       {
         try
         {
-          Process.Start(e.UserState.ToString(), @"/SILENT");
+          _ = Process.Start(e.UserState.ToString(), @"/SILENT");
           Environment.Exit(0);
         }
         catch (Exception ex)
@@ -826,7 +816,7 @@ namespace NAS.ViewModel
 
     public static void WebsiteCommandExecute()
     {
-      Process.Start("http://www.engineeringsolutions.de/");
+      _ = Process.Start("http://www.engineeringsolutions.de/");
     }
 
     #endregion
@@ -968,7 +958,7 @@ namespace NAS.ViewModel
     private void RemoveScheduleViewModel(ScheduleViewModel viewModel)
     {
       viewModel.LayoutTypeChanged -= ViewModel_LayoutTypeChanged;
-      Schedules.Remove(viewModel);
+      _ = Schedules.Remove(viewModel);
     }
 
     private void ViewModel_LayoutTypeChanged(object sender, EventArgs e)
@@ -994,7 +984,7 @@ namespace NAS.ViewModel
       string fileName = Path.Combine(ApplicationHelper.StartupPath, "NAS.Config.exe");
       if (File.Exists(fileName))
       {
-        Process.Start(fileName);
+        _ = Process.Start(fileName);
       }
       else
       {

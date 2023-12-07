@@ -52,7 +52,7 @@ namespace NAS.View.Controls
     protected double tableWidth;
     protected Layout layout;
     private bool suspendRefreshing = false;
-    private ActivityViewModel dragActivity;
+    private Activity dragActivity;
     private ActivityMousePosition dragActivityPosition = ActivityMousePosition.Middle;
     private ActivityMousePosition dropActivityPosition = ActivityMousePosition.Middle;
     private Line tempLine = null;
@@ -128,7 +128,7 @@ namespace NAS.View.Controls
           milestoneCriticalColor = DiagramHelperExtensions.TryParseColor(layout.MilestoneCriticalColor, milestoneCriticalColor);
           milestoneDoneColor = DiagramHelperExtensions.TryParseColor(layout.MilestoneDoneColor, milestoneDoneColor);
           dataDateColor = DiagramHelperExtensions.TryParseColor(layout.DataDateColor, dataDateColor);
-          SortFilterAndGroup();
+          _ = SortFilterAndGroup();
         }
         Refresh();
       }
@@ -174,7 +174,7 @@ namespace NAS.View.Controls
       Refresh();
     }
 
-    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       AddActivity(e.Item);
     }
@@ -191,49 +191,40 @@ namespace NAS.View.Controls
       }
     }
 
-    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       Refresh();
     }
 
-    private void ViewModel_ActivityChanged(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityChanged(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       var activity = e.Item;
       RefreshActivity(activity);
-      foreach (var predecessor in activity.GetPreceedingRelationships())
+      foreach (var predecessor in activity.Activity.GetPreceedingRelationships())
       {
-        RefreshRelationship(predecessor);
+        RefreshRelationship(VM.Relationships.FirstOrDefault(x => x.Relationship == predecessor));
       }
 
-      foreach (var successor in activity.GetSucceedingRelationships())
+      foreach (var successor in activity.Activity.GetSucceedingRelationships())
       {
-        RefreshRelationship(successor);
+        RefreshRelationship(VM.Relationships.FirstOrDefault(x => x.Relationship == successor));
       }
     }
 
-    private void ViewModel_RelationshipAdded(object sender, ItemEventArgs<Relationship> e)
+    private void ViewModel_RelationshipAdded(object sender, ItemEventArgs<RelationshipViewModel> e)
     {
-      if (e.Item is Relationship relationship)
-      {
-        AddRelationship(relationship);
-      }
+      AddRelationship(e.Item);
     }
 
-    private void ViewModel_RelationshipDeleted(object sender, ItemEventArgs<Relationship> e)
+    private void ViewModel_RelationshipDeleted(object sender, ItemEventArgs<RelationshipViewModel> e)
     {
-      if (e.Item is Relationship relationship)
-      {
-        RemoveRelationship(relationship);
-      }
+      RemoveRelationship(e.Item);
     }
 
-    private void ViewModel_RelationshipChanged(object sender, ItemEventArgs<Relationship> e)
+    private void ViewModel_RelationshipChanged(object sender, ItemEventArgs<RelationshipViewModel> e)
     {
-      if (e.Item is Relationship relationship)
-      {
-        RemoveRelationship(relationship);
-        AddRelationship(relationship);
-      }
+      RemoveRelationship(e.Item);
+      AddRelationship(e.Item);
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -285,21 +276,21 @@ namespace NAS.View.Controls
       if (VM.Schedule != null)
       {
         // Filter, sort and group Activities
-        SortFilterAndGroup();
+        _ = SortFilterAndGroup();
 
         // Draw Activities
         var view = (CollectionView)CollectionViewSource.GetDefaultView(VM.Activities);
         if (view != null)
         {
-          foreach (var a in view.OfType<Activity>().ToList())
+          foreach (var a in view.OfType<ActivityViewModel>().ToList())
           {
             AddActivity(a);
           }
 
           // Draw Relationships
-          foreach (var r in VM.Schedule.Relationships)
+          foreach (var r in VM.Relationships)
           {
-            if (view.PassesFilter(r.GetActivity1()) && view.PassesFilter(r.GetActivity2()))
+            if (view.PassesFilter(r.Relationship.GetActivity1()) && view.PassesFilter(r.Relationship.GetActivity2()))
             {
               AddRelationship(r);
             }
@@ -329,45 +320,42 @@ namespace NAS.View.Controls
 
     #region Activities
 
-    protected void AddActivity(Activity activity)
+    protected void AddActivity(ActivityViewModel activity)
     {
       var shape = CreateActivityShape(activity);
-      shape.Tag = activityTag + activity.ID;
-      Children.Add(shape);
+      shape.Tag = activityTag + activity.Activity.ID;
+      _ = Children.Add(shape);
       SetZIndex(shape, 3);
       AddFloat(activity);
       RefreshActivity(activity, shape);
     }
 
-    private void AddFloat(Activity activity)
+    private void AddFloat(ActivityViewModel activity)
     {
       var rect = new Rectangle();
       rect.RadiusX = 2;
       rect.RadiusY = 2;
-      rect.Tag = floatTag + activity.ID;
-      Children.Add(rect);
+      rect.Tag = floatTag + activity.Activity.ID;
+      _ = Children.Add(rect);
       rect.Stroke = new SolidColorBrush(Color.FromArgb(150, 0, 0, 0));
       SetZIndex(rect, 2);
     }
 
-    private ActivityShapeBase CreateActivityShape(Activity activity)
+    private ActivityShapeBase CreateActivityShape(ActivityViewModel activity)
     {
-      return activity.ActivityType == ActivityType.Milestone
+      return activity.IsMilestone
         ? new MilestoneShape(activity) { Width = RowHeight, Height = RowHeight }
         : new ActivityShape(activity) { Height = RowHeight - 4 };
     }
 
-    private void RefreshActivity(Activity activity, Shape shape = null)
+    private void RefreshActivity(ActivityViewModel activity, Shape shape = null)
     {
       if (activity == null)
       {
         return;
       }
 
-      if (shape == null)
-      {
-        shape = GetShapeFromActivity(activity);
-      }
+      shape ??= GetShapeFromActivity(activity);
 
       Point location;
       if (shape == null)
@@ -375,19 +363,19 @@ namespace NAS.View.Controls
         return;
       }
 
-      location = activity.ActivityType == ActivityType.Milestone ? RefeshMilestoneShape(activity, shape) : RefreshActivityShape(activity, shape);
+      location = activity.IsMilestone ? RefeshMilestoneShape(activity, shape) : RefreshActivityShape(activity, shape);
 
-      if (activity.ActivityType == ActivityType.Activity && activity.Distortions != null && activity.Distortions.Count > 0)
+      if (activity.IsActivity && activity.Activity.Distortions != null && activity.Activity.Distortions.Count > 0)
       {
-        var image = Children.OfType<Image>().FirstOrDefault(i => Equals(i.Tag, imageTag + activity.ID));
+        var image = Children.OfType<Image>().FirstOrDefault(i => Equals(i.Tag, imageTag + activity.Activity.ID));
         if (image == null)
         {
           image = new Image() { Source = new BitmapImage(new Uri("pack://application:,,,/NAS.View;component/Images/Distortion.png")), Height = 16, Width = 16 };
-          image.Tag = imageTag + activity.ID;
-          Children.Add(image);
+          image.Tag = imageTag + activity.Activity.ID;
+          _ = Children.Add(image);
           image.IsHitTestVisible = false;
           string s = string.Empty;
-          foreach (var d in activity.Distortions)
+          foreach (var d in activity.Activity.Distortions)
           {
             if (!string.IsNullOrEmpty(s))
             {
@@ -403,7 +391,7 @@ namespace NAS.View.Controls
       }
       else
       {
-        var image = Children.OfType<Image>().FirstOrDefault(i => Equals(i.Tag, imageTag + activity.ID));
+        var image = Children.OfType<Image>().FirstOrDefault(i => Equals(i.Tag, imageTag + activity.Activity.ID));
         if (image != null)
         {
           Children.Remove(image);
@@ -411,7 +399,7 @@ namespace NAS.View.Controls
       }
       if (!IsStandalone)
       {
-        shape.ToolTip = activity.Name + " (" + activity.StartDate.ToShortDateString() + " - " + activity.FinishDate.ToShortDateString() + ")";
+        shape.ToolTip = activity.Activity.Name + " (" + activity.Activity.StartDate.ToShortDateString() + " - " + activity.Activity.FinishDate.ToShortDateString() + ")";
       }
 
       if (Width < location.X + shape.Width + 10)
@@ -428,11 +416,12 @@ namespace NAS.View.Controls
       RefreshActivityText(activity, shape);
     }
 
-    private Point RefreshActivityShape(Activity activity, Shape shape)
+    private Point RefreshActivityShape(ActivityViewModel activity, Shape shape)
     {
+      Debug.Assert(activity.IsActivity);
       var location = new Point();
       shape.Height = RowHeight - 4;
-      double width = DateToX(activity.FinishDate, true) - DateToX(activity.StartDate, false);
+      double width = DateToX(activity.Activity.FinishDate, true) - DateToX(activity.Activity.StartDate, false);
       if (width < 0)
       {
         width = 0;
@@ -441,20 +430,20 @@ namespace NAS.View.Controls
       shape.Width = width;
       location.Y = GetYOfActivity(activity) + 2;
       SetTop(shape, location.Y);
-      location.X = DateToX(activity.StartDate, false);
+      location.X = DateToX(activity.Activity.StartDate, false);
       SetLeft(shape, location.X);
       var remainingColor = activityStandardColor;
-      if (activity.IsCritical)
+      if (activity.Activity.IsCritical)
       {
         remainingColor = activityCriticalColor;
       }
 
       Brush paintBrush = new SolidColorBrush(remainingColor);
-      if (activity.IsFinished)
+      if (activity.Activity.IsFinished)
       {
         paintBrush = new SolidColorBrush(activityDoneColor);
       }
-      else if (activity.IsStarted && activity.StartDate < VM.Schedule.DataDate)
+      else if (activity.Activity.IsStarted && activity.Activity.StartDate < VM.Schedule.DataDate)
       {
         double center = DateToX(VM.Schedule.DataDate, false);
         center = (center - location.X) / shape.Width;
@@ -472,21 +461,21 @@ namespace NAS.View.Controls
       return location;
     }
 
-    private Point RefeshMilestoneShape(Activity milestone, Shape shape)
+    private Point RefeshMilestoneShape(ActivityViewModel milestone, Shape shape)
     {
-      Debug.Assert(milestone.ActivityType == ActivityType.Milestone);
+      Debug.Assert(milestone.IsMilestone);
       var location = new Point();
       location.Y = GetYOfActivity(milestone);
       SetTop(shape, location.Y);
-      location.X = DateToX(milestone.StartDate, false) - RowHeight / 2;
+      location.X = DateToX(milestone.Activity.StartDate, false) - RowHeight / 2;
       SetLeft(shape, location.X);
       var color = milestoneStandardColor;
-      if (milestone.IsCritical)
+      if (milestone.Activity.IsCritical)
       {
         color = milestoneCriticalColor;
       }
 
-      if (milestone.IsFinished)
+      if (milestone.Activity.IsFinished)
       {
         color = milestoneDoneColor;
       }
@@ -496,14 +485,14 @@ namespace NAS.View.Controls
       return location;
     }
 
-    private void RefreshFloat(Activity activity)
+    private void RefreshFloat(ActivityViewModel activity)
     {
-      foreach (var rect in Children.OfType<Rectangle>().Where(x => Equals(x.Tag, floatTag + activity.ID)))
+      foreach (var rect in Children.OfType<Rectangle>().Where(x => Equals(x.Tag, floatTag + activity.Activity.ID)))
       {
-        if (layout.ShowFloat && activity.TotalFloat > 0)
+        if (layout.ShowFloat && activity.Activity.TotalFloat > 0)
         {
           rect.Height = RowHeight - 14;
-          double width = DateToX(activity.LateFinishDate, true) - DateToX(activity.EarlyFinishDate, false);
+          double width = DateToX(activity.Activity.LateFinishDate, true) - DateToX(activity.Activity.EarlyFinishDate, false);
           if (width < 0)
           {
             width = 0;
@@ -512,7 +501,7 @@ namespace NAS.View.Controls
           rect.Width = width;
           double y = GetYOfActivity(activity) + 7;
           SetTop(rect, y);
-          double x = DateToX(activity.EarlyFinishDate, false);
+          double x = DateToX(activity.Activity.EarlyFinishDate, false);
           SetLeft(rect, x);
           if (Width < x + rect.Width + 10)
           {
@@ -528,7 +517,7 @@ namespace NAS.View.Controls
       }
     }
 
-    private void RefreshActivityText(Activity activity, Shape shape)
+    private void RefreshActivityText(ActivityViewModel activity, Shape shape)
     {
       int requiredBlocks = 0;
       if (layout.LeftText != ActivityProperty.None)
@@ -546,43 +535,43 @@ namespace NAS.View.Controls
         requiredBlocks++;
       }
 
-      var blocks = Children.OfType<TextBlock>().Where(x => Equals(x.Tag, blockTag + activity.ID)).ToList();
+      var blocks = Children.OfType<TextBlock>().Where(x => Equals(x.Tag, blockTag + activity.Activity.ID)).ToList();
       while (blocks.Count > requiredBlocks)
       {
-        var item = Children.OfType<TextBlock>().Last(x => Equals(x.Tag, blockTag + activity.ID));
+        var item = Children.OfType<TextBlock>().Last(x => Equals(x.Tag, blockTag + activity.Activity.ID));
         Children.Remove(item);
-        blocks.Remove(item);
+        _ = blocks.Remove(item);
       }
       while (blocks.Count < requiredBlocks)
       {
         var tb = new TextBlock();
         tb.IsHitTestVisible = false;
         tb.Height = RowHeight;
-        tb.Tag = blockTag + activity.ID;
-        Children.Add(tb);
+        tb.Tag = blockTag + activity.Activity.ID;
+        _ = Children.Add(tb);
         blocks.Add(tb);
         SetZIndex(tb, 4);
         double top = GetTop(shape);
-        if (activity.ActivityType == ActivityType.Milestone)
+        if (activity.IsMilestone)
         {
           top += 2;
         }
 
         SetTop(tb, top);
       }
-      if (layout.CenterText != ActivityProperty.None && activity.ActivityType == ActivityType.Activity)
+      if (layout.CenterText != ActivityProperty.None && activity.IsActivity)
       {
         var b = blocks[0];
-        b.Text = activity.GetTextFromActivity(layout.CenterText);
+        b.Text = activity.Activity.GetTextFromActivity(layout.CenterText);
         var f = new FormattedText(b.Text, CultureInfo.CurrentCulture, b.FlowDirection, new Typeface(b.FontFamily, b.FontStyle, b.FontWeight, b.FontStretch), b.FontSize, b.Foreground, pixelsPerDip);
         b.Width = f.Width;
         SetLeft(b, GetLeft(shape) + (shape.Width - b.Width) / 2);
-        blocks.Remove(b);
+        _ = blocks.Remove(b);
       }
       if (layout.LeftText != ActivityProperty.None)
       {
         var b = blocks[0];
-        b.Text = activity.GetTextFromActivity(layout.LeftText);
+        b.Text = activity.Activity.GetTextFromActivity(layout.LeftText);
         var f = new FormattedText(b.Text, CultureInfo.CurrentCulture, b.FlowDirection, new Typeface(b.FontFamily, b.FontStyle, b.FontWeight, b.FontStretch), b.FontSize, b.Foreground, pixelsPerDip);
         b.Width = f.Width;
         double d = GetLeft(shape) - b.Width - 2;
@@ -592,12 +581,12 @@ namespace NAS.View.Controls
         }
 
         SetLeft(b, d);
-        blocks.Remove(b);
+        _ = blocks.Remove(b);
       }
       if (layout.RightText != ActivityProperty.None)
       {
         var b = blocks[0];
-        b.Text = activity.GetTextFromActivity(layout.RightText);
+        b.Text = activity.Activity.GetTextFromActivity(layout.RightText);
         var f = new FormattedText(b.Text, CultureInfo.CurrentCulture, b.FlowDirection, new Typeface(b.FontFamily, b.FontStyle, b.FontWeight, b.FontStretch), b.FontSize, b.Foreground, pixelsPerDip);
         b.Width = f.Width;
         double d = GetLeft(shape) + 2;
@@ -611,7 +600,7 @@ namespace NAS.View.Controls
         }
 
         SetLeft(b, d);
-        blocks.Remove(b);
+        _ = blocks.Remove(b);
         if (Width < d + b.Width + 10)
         {
           Width = d + b.Width + 10;
@@ -633,12 +622,12 @@ namespace NAS.View.Controls
       var path = new RelationshipPath(relationship);
       if (!IsStandalone)
       {
-        relationship.PropertyChanged += (sender, args) => RefreshRelationship(sender as Relationship);
+        relationship.PropertyChanged += (sender, args) => RefreshRelationship(sender as RelationshipViewModel);
         path.ToolTip = relationship.ToString();
       }
       Children.Insert(0, path);
       SetZIndex(path, 1);
-      RefreshRelationship(relationship.Relationship);
+      RefreshRelationship(relationship);
     }
 
     private void RemoveRelationship(RelationshipViewModel relationship)
@@ -663,8 +652,8 @@ namespace NAS.View.Controls
           ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(layout.ActivityCriticalColor))
           : relationship.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
       }
-      var shape1 = GetShapeFromActivity(relationship.GetActivity1());
-      var shape2 = GetShapeFromActivity(relationship.GetActivity2());
+      var shape1 = GetShapeFromActivity(relationship.Relationship.GetActivity1());
+      var shape2 = GetShapeFromActivity(relationship.Relationship.GetActivity2());
       if (path == null || shape1 == null || shape2 == null)
       {
         return;
@@ -672,7 +661,7 @@ namespace NAS.View.Controls
 
       var startPoint = new Point(GetLeft(shape1), GetTop(shape1) + (RowHeight - 2) / 2);
       var endPoint = new Point(GetLeft(shape2), GetTop(shape2));
-      switch (relationship.RelationshipType)
+      switch (relationship.Relationship.RelationshipType)
       {
         case RelationshipType.FinishStart:
           startPoint.X += shape1.Width;
@@ -721,16 +710,16 @@ namespace NAS.View.Controls
     {
       foreach (var baselineActivity in baseline.Schedule.Activities)
       {
-        var activity = VM.Schedule.Activities.FirstOrDefault(x => x.Number == baselineActivity.Number);
+        var activity = VM.Activities.FirstOrDefault(x => x.Activity.Number == baselineActivity.Number);
         if (activity == null)
         {
           return;
         }
 
-        var shape = CreateActivityShape(baselineActivity);
+        var shape = CreateActivityShape(new ActivityViewModel(baselineActivity));
         shape.Tag = baselineTag + baseline.Schedule.ID.ToString();
 
-        Children.Add(shape);
+        _ = Children.Add(shape);
 
         if (baselineActivity.ActivityType == ActivityType.Milestone)
         {
@@ -752,7 +741,7 @@ namespace NAS.View.Controls
 
         SetZIndex(shape, 0);
         shape.IsHitTestVisible = false;
-        shape.Tag = baselineTag + baseline.Schedule.ID + "|" + activity.ID;
+        shape.Tag = baselineTag + baseline.Schedule.ID + "|" + activity.Activity.ID;
         SetLeft(shape, DateToX(baselineActivity.StartDate, false));
         var color = (Color)ColorConverter.ConvertFromString(baseline.Color);
         shape.Fill = new SolidColorBrush(color);
@@ -791,7 +780,7 @@ namespace NAS.View.Controls
           line.Tag = dataDateTag;
           line.Stroke = Brushes.Blue;
           line.StrokeThickness = 3;
-          Children.Add(line);
+          _ = Children.Add(line);
           line.IsHitTestVisible = false;
         }
         double x = DateToX(VM.Schedule.DataDate, false);
@@ -828,12 +817,12 @@ namespace NAS.View.Controls
         textBlock.Background = x % 2 == 0 ? Brushes.LightGreen : Brushes.LightGray;
 
         x++;
-        Children.Add(textBlock);
+        _ = Children.Add(textBlock);
         SetLeft(textBlock, x1);
         if (projectEnd != endDate)
         {
           var line = new Line() { Tag = "Calendar1", Stroke = Brushes.DarkGreen, StrokeThickness = 0.5, X1 = x2, X2 = x2, Y1 = 0, Y2 = Height };
-          Children.Add(line);
+          _ = Children.Add(line);
         }
         startDate = endDate.AddDays(1);
         endDate = startDate.AddYears(1).AddDays(-1);
@@ -872,12 +861,12 @@ namespace NAS.View.Controls
         textBlock.Background = x % 2 == 0 ? Brushes.BlanchedAlmond : Brushes.WhiteSmoke;
 
         x++;
-        Children.Add(textBlock);
+        _ = Children.Add(textBlock);
         SetLeft(textBlock, x1);
         if (projectEnd != endDate)
         {
           var line = new Line() { Tag = "Calendar2", Stroke = Brushes.Green, StrokeThickness = 0.1, X1 = x2, X2 = x2, Y1 = 0, Y2 = Height };
-          Children.Add(line);
+          _ = Children.Add(line);
         }
         startDate = endDate.AddDays(1);
         endDate = startDate.AddMonths(1).AddDays(-1);
@@ -927,7 +916,7 @@ namespace NAS.View.Controls
     {
       if (VM.Schedule != null)
       {
-        var view = ViewModelExtensions.GetView(VM.Schedule.Activities);
+        var view = ViewModelExtensions.GetView(VM.Activities);
         if (view != null)
         {
           // Filtering
@@ -1133,7 +1122,7 @@ namespace NAS.View.Controls
         VM.CurrentActivity = a;
         if (GetMousePosition(shape) != ActivityMousePosition.Middle)
         {
-          dragActivity = a;
+          dragActivity = a.Activity;
         }
       }
     }
@@ -1221,7 +1210,7 @@ namespace NAS.View.Controls
         if (tempLine == null)
         {
           tempLine = new Line();
-          Children.Add(tempLine);
+          _ = Children.Add(tempLine);
           tempLine.Stroke = Brushes.Black;
         }
         var shape = GetShapeFromActivity(dragActivity);
@@ -1260,7 +1249,7 @@ namespace NAS.View.Controls
 
       if (dragActivity != null && e.OriginalSource is ActivityShapeBase)
       {
-        var selectedActivity = (e.OriginalSource as ActivityShapeBase).Item;
+        var selectedActivity = (e.OriginalSource as ActivityShapeBase).Item.Activity;
         if (selectedActivity == null || dragActivity == selectedActivity)
         {
           if (tempLine != null)
@@ -1322,7 +1311,7 @@ namespace NAS.View.Controls
       return (date - VM.Schedule.FirstDay).TotalDays * VM.Zoom * 10 + tableWidth;
     }
 
-    private double GetYOfActivity(Activity a)
+    private double GetYOfActivity(ActivityViewModel a)
     {
       var view = ViewModelExtensions.GetView(VM.Activities);
       return view.GetRowY(a, RowHeight, GroupHeaderHeight) + ColumnHeaderHeight;
@@ -1330,12 +1319,17 @@ namespace NAS.View.Controls
 
     private Shape GetShapeFromActivity(ActivityViewModel activity)
     {
-      return Children.OfType<ActivityShapeBase>().FirstOrDefault(x => x.Item == activity);
+      return GetShapeFromActivity(activity.Activity);
+    }
+
+    private Shape GetShapeFromActivity(Activity activity)
+    {
+      return Children.OfType<ActivityShapeBase>().FirstOrDefault(x => x.Item.Activity == activity);
     }
 
     private RelationshipPath GetPathFromRelationship(RelationshipViewModel relationship)
     {
-      return Children.OfType<RelationshipPath>().FirstOrDefault(x => x.Item == relationship);
+      return Children.OfType<RelationshipPath>().FirstOrDefault(x => x.Item.Relationship == relationship.Relationship);
     }
 
     private static ActivityMousePosition GetMousePosition(Shape shape)

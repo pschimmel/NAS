@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace NAS.ViewModel.Helpers
 {
@@ -29,20 +28,11 @@ namespace NAS.ViewModel.Helpers
           }
           else
           {
-            switch (args[i])
+            settings.ScheduleToOpen = args[i] switch
             {
-              case "-u":
-                settings.UserName = args[i + 1];
-                break;
-              case "-pw":
-                settings.Password = args[i + 1];
-                break;
-              case "-o":
-                settings.ScheduleToOpen = args[i + 1]?.Trim()?.Trim(new char[] { '"' });
-                break;
-              default:
-                throw new NotImplementedException("Not recognized command line parameter.");
-            }
+              "-o" => args[i + 1]?.Trim()?.Trim(new char[] { '"' }),
+              _ => throw new NotImplementedException("Not recognized command line parameter."),
+            };
           }
         }
       }

@@ -97,7 +97,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteDistortion, () =>
       {
-        Distortions.Remove(CurrentDistortion);
+        _ = Distortions.Remove(CurrentDistortion);
         CurrentDistortion = null;
       });
     }
@@ -113,7 +113,7 @@ namespace NAS.ViewModel
     private void EditDistortionCommandExecute()
     {
       using var vm = new DistortionViewModel(CurrentDistortion);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditDistortionCommandCanExecute => CurrentDistortion != null;

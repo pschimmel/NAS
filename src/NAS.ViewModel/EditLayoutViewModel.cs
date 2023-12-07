@@ -142,7 +142,7 @@ namespace NAS.ViewModel
 
     private void RemoveVisibleBaselineCommandExecute()
     {
-      CurrentLayout.VisibleBaselines.Remove(CurrentVisibleBaseline);
+      _ = CurrentLayout.VisibleBaselines.Remove(CurrentVisibleBaseline);
     }
 
     private bool RemoveVisibleBaselineCommandCanExecute => CurrentVisibleBaseline != null;

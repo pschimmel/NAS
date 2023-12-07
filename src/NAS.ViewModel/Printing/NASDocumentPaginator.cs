@@ -112,10 +112,7 @@ namespace NAS.ViewModel.Printing
     ///   <paramref number="pageNumber"/> is negative.</exception>
     public override DocumentPage GetPage(int pageNumber)
     {
-      if (pageBuffer == null)
-      {
-        pageBuffer = new Dictionary<int, DocumentPage>();
-      }
+      pageBuffer ??= new Dictionary<int, DocumentPage>();
 
       Progress?.Invoke(this, ProgressEventArgs.Progress(PageCount > 0 ? ((double)pageNumber + 1) * 100 / PageCount : 100));
       if (pageBuffer.ContainsKey(pageNumber))

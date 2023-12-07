@@ -20,7 +20,7 @@ namespace NAS.ViewModel.Base
         throw new ArgumentNullException(nameof(propertyName));
       }
 
-      propertyErrors.TryGetValue(propertyName, out var errors);
+      _ = propertyErrors.TryGetValue(propertyName, out var errors);
       return errors;
     }
 
@@ -65,7 +65,7 @@ namespace NAS.ViewModel.Base
 
     protected void ClearErrors(string propertyName)
     {
-      propertyErrors.Remove(propertyName);
+      _ = propertyErrors.Remove(propertyName);
       OnErrorsChanged(propertyName);
     }
 

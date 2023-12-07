@@ -131,7 +131,7 @@ namespace NAS.ViewModel
 
       UserNotificationService.Instance.Question(NASResources.MessageDeleteAttribute, () =>
       {
-        CustomAttributes1.Remove(CurrentCustomAttribute1);
+        _ = CustomAttributes1.Remove(CurrentCustomAttribute1);
         CurrentCustomAttribute1 = null;
       });
     }
@@ -186,7 +186,7 @@ namespace NAS.ViewModel
 
       UserNotificationService.Instance.Question(NASResources.MessageDeleteAttribute, () =>
       {
-        CustomAttributes2.Remove(CurrentCustomAttribute2);
+        _ = CustomAttributes2.Remove(CurrentCustomAttribute2);
         CurrentCustomAttribute2 = null;
       });
     }
@@ -241,7 +241,7 @@ namespace NAS.ViewModel
 
       UserNotificationService.Instance.Question(NASResources.MessageDeleteAttribute, () =>
       {
-        CustomAttributes1.Remove(CurrentCustomAttribute3);
+        _ = CustomAttributes1.Remove(CurrentCustomAttribute3);
         CurrentCustomAttribute3 = null;
       });
     }

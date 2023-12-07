@@ -24,7 +24,7 @@ namespace NAS.ViewModel.Helpers
     /// </summary>
     public void RegisterTarget(IUserNotificationTarget target)
     {
-      _targets.Add(target);
+      _ = _targets.Add(target);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace NAS.ViewModel.Helpers
     /// </summary>
     public void UnregisterTarget(IUserNotificationTarget target)
     {
-      _targets.Remove(target);
+      _ = _targets.Remove(target);
     }
 
     /// <summary>

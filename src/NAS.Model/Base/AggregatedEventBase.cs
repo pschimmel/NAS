@@ -22,7 +22,7 @@
 
     protected void InternalUnregister(IEventSubscription subscription)
     {
-      _subscriptions.Remove(subscription);
+      _ = _subscriptions.Remove(subscription);
     }
   }
 }

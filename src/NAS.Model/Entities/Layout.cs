@@ -100,10 +100,7 @@ namespace NAS.Model.Entities
         {
           isCurrent = value;
           OnPropertyChanged(nameof(IsCurrent));
-          if (Schedule != null)
-          {
-            Schedule.UpdateCurrentLayout();
-          }
+          Schedule?.UpdateCurrentLayout();
         }
       }
     }

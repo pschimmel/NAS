@@ -36,10 +36,7 @@ namespace NAS.ViewModel
     {
       get
       {
-        if (activities == null)
-        {
-          activities = new List<Activity>(Schedule.Activities);
-        }
+        activities ??= new List<Activity>(Schedule.Activities);
         return activities;
       }
     }

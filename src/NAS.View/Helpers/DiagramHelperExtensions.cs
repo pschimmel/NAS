@@ -30,7 +30,7 @@ namespace NAS.View.Helpers
         return rowHeight * view.IndexOf(o);
       }
 
-      foreach (CollectionViewGroup gd in view.Groups)
+      foreach (CollectionViewGroup gd in view.Groups.Cast<CollectionViewGroup>())
       {
         result += groupHeaderHeight + GetItemY(gd, o, rowHeight, groupHeaderHeight, out bool found);
         if (found)
@@ -59,7 +59,7 @@ namespace NAS.View.Helpers
       else
       {
         double result = 0;
-        foreach (CollectionViewGroup g in gd.Items)
+        foreach (CollectionViewGroup g in gd.Items.Cast<CollectionViewGroup>())
         {
           if (found == false)
           {
@@ -88,7 +88,7 @@ namespace NAS.View.Helpers
       else
       {
         int result = 0;
-        foreach (CollectionViewGroup g in gd.Items)
+        foreach (CollectionViewGroup g in gd.Items.Cast<CollectionViewGroup>())
         {
           if (found == false)
           {
@@ -110,7 +110,7 @@ namespace NAS.View.Helpers
       }
       else
       {
-        foreach (CollectionViewGroup g in gd.Items)
+        foreach (CollectionViewGroup g in gd.Items.Cast<CollectionViewGroup>())
         {
           int i = GetLevel(g, o, lastLevel + 1);
           if (i > -1)
@@ -140,18 +140,18 @@ namespace NAS.View.Helpers
 
       if (string.IsNullOrWhiteSpace(sb.ToString()))
       {
-        sb.Append("M ");
+        _ = sb.Append("M ");
       }
       else
       {
         if (sb.ToString() != null && !sb.ToString().EndsWith(" "))
         {
-          sb.Append(' ');
+          _ = sb.Append(' ');
         }
 
-        sb.Append("L ");
+        _ = sb.Append("L ");
       }
-      sb.AppendFormat(CultureInfo.GetCultureInfo("en"), "{0} {1}", x, y);
+      _ = sb.AppendFormat(CultureInfo.GetCultureInfo("en"), "{0} {1}", x, y);
     }
 
     public static Color TryParseColor(this string s, Color defaultColor)

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using NAS.Model.Entities;
+using NAS.ViewModel;
 
 namespace NAS.View.Shapes
 {
-  public class PERTDiagram : Border, IActivityDiagram<Activity>
+  public class PERTDiagram : Border, IActivityDiagram<ActivityViewModel>
   {
     private readonly Grid grid;
 
-    public PERTDiagram(Activity activity)
+    public PERTDiagram(ActivityViewModel activity)
     {
       BorderBrush = Brushes.Black;
       Background = Brushes.LightYellow;
@@ -23,7 +22,7 @@ namespace NAS.View.Shapes
       Item = activity;
     }
 
-    public Activity Item { get; private set; }
+    public ActivityViewModel Item { get; private set; }
 
     public override UIElement Child
     {

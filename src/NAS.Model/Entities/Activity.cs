@@ -601,12 +601,12 @@ namespace NAS.Model.Entities
       // Move all successors of activity to new activity
       foreach (var r in GetSucceedingRelationships().ToList())
       {
-        Schedule.AddRelationship(newActivity, r.GetActivity2());
+        _ = Schedule.AddRelationship(newActivity, r.GetActivity2());
         Schedule.RemoveRelationship(r);
       }
 
       // Add default relationships between split activitiess
-      Schedule.AddRelationship(this, newActivity);
+      _ = Schedule.AddRelationship(this, newActivity);
       newActivity.EarlyStartDate = Calendar.GetEndDate(EarlyFinishDate, 2);
       return newActivity;
     }
@@ -631,7 +631,7 @@ namespace NAS.Model.Entities
 
       foreach (var successorOfSuccessor in successor.GetSuccessors())
       {
-        schedule.AddRelationship(this, successorOfSuccessor);
+        _ = schedule.AddRelationship(this, successorOfSuccessor);
       }
 
       foreach (var relationship in successor.GetSucceedingRelationships())

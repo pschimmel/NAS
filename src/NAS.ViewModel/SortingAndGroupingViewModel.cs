@@ -109,7 +109,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteSortingDefinition, () =>
       {
-        SortingDefinitions.Remove(CurrentSortingDefinition);
+        _ = SortingDefinitions.Remove(CurrentSortingDefinition);
         CurrentSortingDefinition = null;
       });
     }
@@ -202,7 +202,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteGroupingDefinition, () =>
       {
-        GroupingDefinitions.Remove(CurrentGroupingDefinition);
+        _ = GroupingDefinitions.Remove(CurrentGroupingDefinition);
         CurrentGroupingDefinition = null;
       });
     }

@@ -23,7 +23,7 @@ namespace NAS.View.Controls
     {
       Loaded -= UserControlPERT_Loaded;
 
-      Keyboard.Focus(this);
+      _ = Keyboard.Focus(this);
     }
 
     #endregion

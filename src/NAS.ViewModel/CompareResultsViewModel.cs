@@ -74,7 +74,7 @@ namespace NAS.ViewModel
     private void ShowComparisonGraphicCommandExecute()
     {
       using var vm = new ShowSchedulesComparisonViewModel(p1, p2);
-      ViewFactory.Instance.ShowDialog(vm);
+      _ = ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool ShowComparisonGraphicCommandCanExecute => p1 != null && p2 != null;

@@ -5,6 +5,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using AvalonDock;
 using Fluent;
+using NAS.Model.Enums;
+using NAS.Model.Settings;
 using NAS.Resources;
 using NAS.View.Controls;
 using NAS.ViewModel;
@@ -47,27 +49,17 @@ namespace NAS.View
           viewModel.CheckForUpdatesCommand.Execute(false);
         }
 #endif
-        viewModel.TestConnection();
+
         if (MainViewModel.ShutdownRequested)
         {
           return;
         }
 
         _startupSettings = CommandLineParser.GetStartupSettings();
-        viewModel.CheckReportsImport();
-
-        if (!string.IsNullOrWhiteSpace(_startupSettings.UserName) && !string.IsNullOrWhiteSpace(_startupSettings.Password))
-        {
-          viewModel.Login(_startupSettings.UserName, _startupSettings.Password);
-        }
-        else
-        {
-          viewModel.Login();
-        }
       }
       catch (Exception ex)
       {
-        ES.WPF.Toolkit.MessageBox.Show(ex.Message, NASResources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+        MessageBox.Show(ex.Message, NASResources.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         Application.Current.Shutdown();
       }
 
@@ -76,18 +68,18 @@ namespace NAS.View
         DataContext = viewModel;
         viewModel.DownloadProgress += ViewModel_DownloadProgress;
         viewModel.RequestThemeChange += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
-        viewModel.RequestSelectFirstTab += (s, args) => Ribbon.Tabs.First().IsSelected = true;
+
         viewModel.GetCanvas += (s, args) =>
         {
-          args.Item = args.Info switch
+          args.ReturnedItem = args.Item switch
           {
             LayoutType.Gantt => new StandaloneGanttCanvas(),
             LayoutType.PERT => new StandalonePERTCanvas(),
-            _ => throw new ArgumentException($"Unknown layout type {args.Info}"),
+            _ => throw new ArgumentException($"Unknown layout type {args.Item}"),
           };
         };
         InitializeComponent();
-        Helpers.ThemeManager.SetTheme(CurrentInfoHolder.ProgramSettings.Theme, dockingManager);
+        Helpers.ThemeManager.SetTheme(SettingsController.Settings.Theme, dockingManager);
 
         Dispatcher.BeginInvoke(new Action(() =>
         {
@@ -98,11 +90,7 @@ namespace NAS.View
 
         if (!string.IsNullOrWhiteSpace(_startupSettings.ScheduleToOpen))
         {
-          viewModel.OpenSchedule(_startupSettings.ScheduleToOpen, true);
-        }
-        else if (_startupSettings.ImportFileName?.Exists ?? false && viewModel.ScheduleManagerViewModel.ImportScheduleCommand.CanExecute(_startupSettings?.ImportFileName.FullName))
-        {
-          viewModel.ScheduleManagerViewModel.ImportScheduleCommand.Execute(_startupSettings?.ImportFileName.FullName);
+          viewModel.OpenScheduleCommand.Execute(_startupSettings.ScheduleToOpen);
         }
 
         Ribbon.AreTabHeadersVisible = true;
@@ -126,8 +114,8 @@ namespace NAS.View
       {
         foreach (var scheduleViewModel in viewModel.Schedules)
         {
-          scheduleViewModel.UnlockSchedule();
-          scheduleViewModel.SaveChanges();
+          //scheduleViewModel.UnlockSchedule();
+          //scheduleViewModel.SaveChanges();
         }
       }
 
@@ -159,14 +147,15 @@ namespace NAS.View
     private void dockManager_DocumentClosed(object sender, DocumentClosedEventArgs e)
     {
       var scheduleViewModel = e.Document.Content as ScheduleViewModel;
-      (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
+      _ = (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
     }
 
     private void dockingManager_DocumentClosing(object sender, DocumentClosingEventArgs e)
     {
       var scheduleViewModel = e.Document.Content as ScheduleViewModel;
-      scheduleViewModel.UnlockSchedule();
-      scheduleViewModel.SaveChanges();
+      //scheduleViewModel.UnlockSchedule();
+      //scheduleViewModel.SaveChanges();
+      //??
     }
 
     #endregion
@@ -187,10 +176,7 @@ namespace NAS.View
       }
       else
       {
-        if (windowProgress != null)
-        {
-          windowProgress.SetProgress(e.CurrentProgress);
-        }
+        windowProgress?.SetProgress(e.CurrentProgress);
       }
     }
 

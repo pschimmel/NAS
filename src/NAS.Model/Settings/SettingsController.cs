@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace NAS.Model.Settings
+﻿namespace NAS.Model.Settings
 {
   public class SettingsController
   {
@@ -30,7 +27,7 @@ namespace NAS.Model.Settings
     {
       foreach (var schedule in Settings.RecentlyOpenedSchedules.Where(x => x.ID == id).ToList())
       {
-        Settings.RecentlyOpenedSchedules.Remove(schedule);
+        _ = Settings.RecentlyOpenedSchedules.Remove(schedule);
       }
     }
 

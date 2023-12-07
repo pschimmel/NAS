@@ -6,6 +6,7 @@
         xmlns:toolConverters="clr-namespace:ES.Tools.Converters;assembly=ES.Tools"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
         Title="{x:Static resx:NASResources.Layout}"
         Width="400"
         Height="450"
@@ -14,9 +15,13 @@
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
   <Window.Resources>
-    <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
-    <toolConverters:ColorToStringConverter x:Key="ColorConverter" />
-    <converters:IsNotNullConverter x:Key="IsNotNullConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/MainResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
+      <toolConverters:ColorToStringConverter x:Key="ColorConverter" />
+    </ResourceDictionary>
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -211,7 +216,7 @@
           </ComboBox>
           <TextBlock Grid.Row="2"
                      Margin="5"
-                     Text="{x:Static resx:NASResources.RightText}" />
+                     Text="{x:Static resx:NASResources.Right}" />
           <ComboBox Grid.Row="2"
                     Grid.Column="1"
                     Height="25"

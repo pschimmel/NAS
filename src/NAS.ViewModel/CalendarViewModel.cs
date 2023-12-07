@@ -97,7 +97,7 @@ namespace NAS.ViewModel
 
     private void RemoveHolidayCommandExecute()
     {
-      Holidays.Remove(CurrentHoliday);
+      _ = Holidays.Remove(CurrentHoliday);
     }
 
     private bool RemoveHolidayCommandCanExecute => CurrentHoliday != null;

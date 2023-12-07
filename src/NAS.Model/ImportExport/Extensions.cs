@@ -11,7 +11,7 @@ namespace NAS.Model.ImportExport
       if (obj != null)
       {
         newElement.InnerText = obj is DateTime date ? date.ToString("yyyy-MM-dd") : obj.ToString();
-        parentElement.AppendChild(newElement);
+        _ = parentElement.AppendChild(newElement);
       }
     }
 

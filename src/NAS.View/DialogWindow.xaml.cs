@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using ES.Tools.Core.MVVM;
+using NAS.ViewModel.Base;
 
 namespace NAS.View
 {
@@ -20,17 +21,16 @@ namespace NAS.View
     public DialogWindow(UIElement child)
       : this()
     {
-      Debug.Assert(child is IDialog);
       InnerControlBorder.Child = child;
     }
 
     public IViewModel ViewModel
     {
-      get => DataContext as IDialogViewModel;
+      get => DataContext as DialogViewModel;
       set
       {
-        Debug.Assert(value is IDialogViewModel);
-        if (value is IDialogViewModel vm)
+        Debug.Assert(value is DialogViewModel);
+        if (value is DialogViewModel vm)
         {
           DataContext = vm;
 

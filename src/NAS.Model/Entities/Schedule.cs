@@ -281,10 +281,7 @@ namespace NAS.Model.Entities
         activity.Number = GetNewID();
       }
 
-      if (activity.Calendar == null)
-      {
-        activity.Calendar = StandardCalendar;
-      }
+      activity.Calendar ??= StandardCalendar;
 
       _activities.Add(activity);
       OnActivityAdded(activity);
@@ -393,7 +390,7 @@ namespace NAS.Model.Entities
 
     public void RemoveRelationship(Relationship relationship)
     {
-      _relationships.Remove(relationship);
+      _ = _relationships.Remove(relationship);
       OnRelationshipRemoved(relationship);
     }
 
@@ -585,14 +582,14 @@ namespace NAS.Model.Entities
     public void RemoveBaseline(Schedule baseline)
     {
       baseline.BaselineOf = null;
-      Baselines.Remove(baseline);
+      _ = Baselines.Remove(baseline);
 
       // Also remove the visible baseline defintion from the layouts.
       foreach (var layout in Layouts)
       {
         foreach (var visibleBaseline in layout.VisibleBaselines.Where(x => x.Schedule == baseline).ToList())
         {
-          layout.VisibleBaselines.Remove(visibleBaseline);
+          _ = layout.VisibleBaselines.Remove(visibleBaseline);
         }
       }
     }

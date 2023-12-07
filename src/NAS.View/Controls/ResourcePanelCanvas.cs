@@ -89,7 +89,7 @@ namespace NAS.View.Controls
       line.Stroke = Brushes.Black;
       line.Visibility = Visibility.Hidden;
       line.Tag = "Limit";
-      Children.Add(line);
+      _ = Children.Add(line);
     }
 
     public void Refresh()
@@ -185,10 +185,7 @@ namespace NAS.View.Controls
 
     private Brush GetBrush(DisplayType display)
     {
-      if (brushCache == null)
-      {
-        brushCache = new Dictionary<DisplayType, Brush>();
-      }
+      brushCache ??= new Dictionary<DisplayType, Brush>();
 
       if (brushCache.ContainsKey(display))
       {
@@ -223,7 +220,7 @@ namespace NAS.View.Controls
       rect.Tag = new Tuple<DateTime, DisplayType>(day, display);
       rect.Fill = GetBrush(display);
       rect.Visibility = Visibility.Hidden;
-      Children.Add(rect);
+      _ = Children.Add(rect);
     }
 
     private void UpdateRect(Rectangle rect, double resourceAmount, DateTime date)

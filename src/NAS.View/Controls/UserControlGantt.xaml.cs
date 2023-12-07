@@ -69,7 +69,7 @@ namespace NAS.View.Controls
     {
       Loaded -= UserControlGantt_Loaded;
 
-      Keyboard.Focus(this);
+      _ = Keyboard.Focus(this);
       var sv = GetScrollViewer();
       if (sv != null)
       {
@@ -162,7 +162,7 @@ namespace NAS.View.Controls
       RefreshColumns();
     }
 
-    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityAdded(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       foreach (var column in dataGrid.Columns)
       {
@@ -175,7 +175,7 @@ namespace NAS.View.Controls
       RefreshProject();
     }
 
-    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<Activity> e)
+    private void ViewModel_ActivityDeleted(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       RefreshProject();
     }
@@ -190,8 +190,8 @@ namespace NAS.View.Controls
         }
 
         VM.CurrentRelationship = null;
-        dataGrid.Focus();
-        dataGrid.BeginEdit();
+        _ = dataGrid.Focus();
+        _ = dataGrid.BeginEdit();
       }
     }
 
@@ -367,7 +367,7 @@ namespace NAS.View.Controls
       dataGrid.Columns.Clear();
       foreach (var column in newColumns.OrderBy(x => x.DisplayIndex))
       {
-        dataGrid.Columns.Add((DataGridColumn)column);
+        dataGrid.Columns.Add(column);
 
         // Set column width
         var property = (ActivityProperty)(column as ITaggable).Tag;
@@ -376,7 +376,7 @@ namespace NAS.View.Controls
           var i = Layout.ActivityColumns.ToList().Find(x => x.Property == property);
           if (i != null)
           {
-            i.ColumnWidth = column.Width.IsAuto ? null : (double?)column.Width.Value;
+            i.ColumnWidth = column.Width.IsAuto ? null : column.Width.Value;
           }
         }
       }
@@ -393,7 +393,7 @@ namespace NAS.View.Controls
         if (col != null)
         {
           var columnList = Layout.ActivityColumns.OrderBy(x => x.Order).ToList();
-          columnList.Remove(col);
+          _ = columnList.Remove(col);
           columnList.Insert(idx, col);
 
           for (int i = 0; i < columnList.Count; i++)
@@ -401,7 +401,6 @@ namespace NAS.View.Controls
             columnList[i].Order = i;
           }
         }
-        VM.SaveChanges();
       }
     }
 
@@ -445,7 +444,7 @@ namespace NAS.View.Controls
       }
 
       textBlockDate.Visibility = Visibility.Visible;
-      textBlockDate.Text = xToDate(Mouse.GetPosition(canvas).X).ToShortDateString();
+      textBlockDate.Text = XToDate(Mouse.GetPosition(canvas).X).ToShortDateString();
     }
 
     private void Canvas_MouseLeave(object sender, MouseEventArgs e)
@@ -560,7 +559,7 @@ namespace NAS.View.Controls
         var grid = sender as DataGrid;
         if (grid.SelectedItem != null)
         {
-          grid.Dispatcher.BeginInvoke((Action)delegate
+          _ = grid.Dispatcher.BeginInvoke((Action)delegate
           {
             try
             {
@@ -572,7 +571,7 @@ namespace NAS.View.Controls
       }
     }
 
-    private DateTime xToDate(double x)
+    private DateTime XToDate(double x)
     {
       return VM.Schedule.StartDate.AddDays((x - 10) / 10 / VM.Zoom).Date;
     }

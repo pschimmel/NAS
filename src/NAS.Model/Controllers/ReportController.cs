@@ -21,7 +21,7 @@ namespace NAS.Model.Controllers
     public ReportController(string userReportsPath)
     {
       _userReportsPath = userReportsPath;
-      LoadReports();
+      _ = LoadReports();
     }
 
     /// <summary>
@@ -31,10 +31,7 @@ namespace NAS.Model.Controllers
     {
       get
       {
-        if (_reports == null)
-        {
-          _reports = LoadReports();
-        }
+        _reports ??= LoadReports();
 
         return _reports.AsReadOnly();
       }
@@ -50,7 +47,7 @@ namespace NAS.Model.Controllers
 
     public void DeleteReport(Report report)
     {
-      _reports.Remove(report);
+      _ = _reports.Remove(report);
       ReportsChanged?.Invoke(this, EventArgs.Empty);
     }
 

@@ -1125,6 +1125,9 @@
   <data name="MessageCreateBaseline" xml:space="preserve">
     <value>This function will set the current schedule as baseline. Would you like to continue?</value>
   </data>
+  <data name="MessageCustomAttributeHeaderCantBeEmpty" xml:space="preserve">
+    <value>Die Überschrift darf nicht leer sein.</value>
+  </data>
   <data name="MessageDeleteActivity" xml:space="preserve">
     <value>Would you really like to delete the selected activity ({0})?</value>
   </data>
@@ -1674,6 +1677,9 @@
   <data name="RetardedDuration" xml:space="preserve">
     <value>Retarded Duration</value>
   </data>
+  <data name="Right" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
   </data>
@@ -2024,8 +2030,5 @@
   </data>
   <data name="ZoomToPageWidth" xml:space="preserve">
     <value>Zoom to Page Width</value>
-  </data>
-  <data name="MessageCustomAttributeHeaderCantBeEmpty" xml:space="preserve">
-    <value>Die Überschrift darf nicht leer sein.</value>
   </data>
 </root>

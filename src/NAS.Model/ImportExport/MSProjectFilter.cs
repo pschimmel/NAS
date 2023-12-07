@@ -462,12 +462,12 @@ namespace NAS.Model.ImportExport
 
     private static DateTime XmlStringToDateTime(string xmlDate)
     {
-      int.TryParse(xmlDate.Substring(0, 4), out int year);
-      int.TryParse(xmlDate.Substring(5, 2), out int month);
-      int.TryParse(xmlDate.Substring(8, 2), out int day);
-      int.TryParse(xmlDate.Substring(11, 2), out int hour);
-      int.TryParse(xmlDate.Substring(14, 2), out int minute);
-      int.TryParse(xmlDate.Substring(17, 2), out int second);
+      _ = int.TryParse(xmlDate.Substring(0, 4), out int year);
+      _ = int.TryParse(xmlDate.Substring(5, 2), out int month);
+      _ = int.TryParse(xmlDate.Substring(8, 2), out int day);
+      _ = int.TryParse(xmlDate.Substring(11, 2), out int hour);
+      _ = int.TryParse(xmlDate.Substring(14, 2), out int minute);
+      _ = int.TryParse(xmlDate.Substring(17, 2), out int second);
       year = Math.Max(year, 1900);
       month = Math.Max(month, 1);
       month = Math.Min(month, 12);
@@ -487,13 +487,13 @@ namespace NAS.Model.ImportExport
       int idx2;
       int idx = xmlTimeSpan.IndexOf("T");
       idx2 = xmlTimeSpan.IndexOf("H");
-      int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int hours);
+      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int hours);
       idx = idx2;
       idx2 = xmlTimeSpan.IndexOf("M");
-      int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int minutes);
+      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int minutes);
       idx = idx2;
       idx2 = xmlTimeSpan.IndexOf("S");
-      int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int seconds);
+      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int seconds);
       hours = Math.Max(hours, 0);
       hours = Math.Min(hours, 24);
       minutes = Math.Max(minutes, 0);

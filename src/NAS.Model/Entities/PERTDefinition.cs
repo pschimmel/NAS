@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace NAS.Model.Entities
 {
@@ -131,13 +130,13 @@ namespace NAS.Model.Entities
 
     public virtual Schedule Schedule { get; set; }
 
-    public virtual List<RowDefinition> RowDefinitions { get; private set; }
+    public virtual ObservableCollection<RowDefinition> RowDefinitions { get; private set; }
 
-    public virtual List<ColumnDefinition> ColumnDefinitions { get; private set; }
+    public virtual ObservableCollection<ColumnDefinition> ColumnDefinitions { get; private set; }
 
-    public virtual List<PERTDataItem> Items { get; private set; }
+    public virtual ObservableCollection<PERTDataItem> Items { get; private set; }
 
-    public virtual List<PERTActivityData> ActivityData { get; private set; }
+    public virtual ObservableCollection<PERTActivityData> ActivityData { get; private set; }
 
     public PERTActivityData AddActivityData(Activity activity)
     {
@@ -160,7 +159,7 @@ namespace NAS.Model.Entities
       var items = ActivityData.Where(x => x.ActivityID == activity.ID).ToList();
       foreach (var item in items)
       {
-        ActivityData.Remove(item);
+        _ = ActivityData.Remove(item);
       }
     }
 
@@ -175,10 +174,10 @@ namespace NAS.Model.Entities
       spacingY = 5;
       height = 100;
       width = 150;
-      RowDefinitions = new List<RowDefinition>();
-      ColumnDefinitions = new List<ColumnDefinition>();
-      Items = new List<PERTDataItem>();
-      ActivityData = new List<PERTActivityData>();
+      RowDefinitions = new ObservableCollection<RowDefinition>();
+      ColumnDefinitions = new ObservableCollection<ColumnDefinition>();
+      Items = new ObservableCollection<PERTDataItem>();
+      ActivityData = new ObservableCollection<PERTActivityData>();
     }
 
     private void CreateCopy(PERTDefinition other)
