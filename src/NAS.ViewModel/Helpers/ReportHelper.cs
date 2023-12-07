@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using ES.Tools.Core.Infrastructure;
 using NAS.Model.Entities;
 using NAS.Resources;
-using NAS.ViewModel.Helpers;
 
-namespace NAS.Helpers
+namespace NAS.ViewModel.Helpers
 {
-  public static class FastReportHelper
+  public static class ReportHelper
   {
-    public static bool ShowFastReport(Schedule schedule, string fileName, CultureInfo language)
+    public static bool ShowReport(Schedule schedule, string fileName, CultureInfo language)
     {
       if (schedule == null)
       {
@@ -57,7 +54,7 @@ namespace NAS.Helpers
       return false;
     }
 
-    public static bool EditFastReport(Schedule schedule, string fileName, CultureInfo language)
+    public static bool EditReport(Schedule schedule, string fileName, CultureInfo language)
     {
       if (schedule == null)
       {
