@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using NAS.Model.Enums;
+﻿using NAS.Model.Enums;
+using NAS.Model.Settings;
 using NAS.Resources;
 using NAS.ViewModel.Base;
-using NAS.Model.Settings;
 
 namespace NAS.ViewModel
 {
-  public class SettingsViewModel : DialogViewModel
+  public class SettingsViewModel : DialogContentViewModel
   {
     #region Fields
 
     private Themes _selectedTheme;
+    private readonly Action _cancelAction;
 
     #endregion
 
@@ -20,16 +19,31 @@ namespace NAS.ViewModel
     public SettingsViewModel(Action cancelAction)
       : base(NASResources.Settings, "Gear", DialogSize.Fixed(300, 300))
     {
+      _cancelAction = cancelAction;
       var settings = SettingsController.Settings;
       _selectedTheme = settings.Theme;
       ShowInstantHelpOnStartUp = settings.ShowInstantHelpOnStartUp;
       AutoCheckForUpdates = settings.AutoCheckForUpdates;
-      Buttons = new List<IButtonViewModel> { ButtonViewModel.CreateCancelButton(cancelAction), ButtonViewModel.CreateOKButton(() =>
-      {
-        settings.Theme = SelectedTheme;
-        settings.AutoCheckForUpdates = AutoCheckForUpdates;
-        settings.ShowInstantHelpOnStartUp = ShowInstantHelpOnStartUp;
-      }) };
+    }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override IEnumerable<IButtonViewModel> Buttons
+    {
+      get => new List<ButtonViewModel>
+                 {
+                   ButtonViewModel.CreateCancelButton(_cancelAction),
+                   ButtonViewModel.CreateOKButton(() =>
+                   {
+                     var settings = SettingsController.Settings;
+                     settings.Theme = SelectedTheme;
+                     settings.AutoCheckForUpdates = AutoCheckForUpdates;
+                     settings.ShowInstantHelpOnStartUp = ShowInstantHelpOnStartUp;
+                     SettingsController.Save();
+                   })
+                 };
     }
 
     #endregion

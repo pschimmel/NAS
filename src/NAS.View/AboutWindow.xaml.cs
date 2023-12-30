@@ -6,11 +6,11 @@ using ES.Tools.Core.MVVM;
 namespace NAS
 {
   /// <summary>
-  /// Interaction logic for WindowAbout.xaml
+  /// Interaction logic for AboutWindow.xaml
   /// </summary>
-  public partial class WindowAbout : IView
+  public partial class AboutWindow : IView
   {
-    public WindowAbout()
+    public AboutWindow()
     {
       InitializeComponent();
     }
@@ -28,7 +28,7 @@ namespace NAS
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
     {
-      _ = Process.Start(e.Uri.ToString());
+      Process.Start(e.Uri.ToString());
     }
   }
 }

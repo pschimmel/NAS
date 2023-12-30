@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using ES.Tools.Core.MVVM;
 using NAS.ViewModel.Base;
+using NAS.ViewModel.Helpers;
 
 namespace NAS.View
 {
@@ -18,18 +20,13 @@ namespace NAS.View
       InitializeComponent();
     }
 
-    public DialogWindow(UIElement child)
-      : this()
-    {
-      InnerControlBorder.Child = child;
-    }
-
     public IViewModel ViewModel
     {
       get => DataContext as DialogViewModel;
       set
       {
         Debug.Assert(value is DialogViewModel);
+
         if (value is DialogViewModel vm)
         {
           DataContext = vm;
@@ -85,14 +82,33 @@ namespace NAS.View
               }
             }
           }
-          vm.CloseDialog += VM_CloseDialog;
+
+          vm.RequestOK += VM_CloseDialogOK;
+          vm.RequestCancel += VM_CloseDialogCancel;
+
+          var content = ViewFactory.Instance.CreateDialogContentView(vm.ContentViewModel);
+          InnerControlBorder.Child = (UIElement)content;
         }
       }
     }
 
-    private void VM_CloseDialog(object sender, EventArgs e)
+    private void VM_CloseDialogOK(object sender, EventArgs e)
     {
       DialogResult = true;
+    }
+
+    private void VM_CloseDialogCancel(object sender, EventArgs e)
+    {
+      DialogResult = false;
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+      base.OnClosing(e);
+      if (ViewModel is DialogViewModel vm && !vm.ContentViewModel.OnClosing(DialogResult))
+      {
+        e.Cancel = true;
+      }
     }
   }
 }

@@ -67,7 +67,7 @@ namespace NAS.ViewModel
       InstantHelpManager.Instance.HelpWindowsChanged += (_, __) => OnPropertyChanged(nameof(InstantHelpVisible));
 
       NewScheduleCommand = new ActionCommand(NewScheduleCommandExecute, () => NewScheduleCommandCanExecute);
-      OpenScheduleCommand = new ActionCommand(param => OpenScheduleCommandExecute(param), param => OpenScheduleCommandCanExecute);
+      OpenScheduleCommand = new ActionCommand(OpenScheduleCommandExecute, param => OpenScheduleCommandCanExecute);
       SaveScheduleCommand = new ActionCommand(SaveScheduleCommandExecute, () => SaveScheduleCommandCanExecute);
       SaveScheduleAsCommand = new ActionCommand(SaveScheduleAsCommandExecute, () => SaveScheduleAsCommandCanExecute);
       ImportScheduleCommand = new ActionCommand(ImportScheduleCommandExecute, () => ImportScheduleCommandCanExecute);
@@ -565,7 +565,7 @@ namespace NAS.ViewModel
         }
       };
 
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool ProgramSettingsCommandCanExecute => !IsBusy;
@@ -1007,7 +1007,6 @@ namespace NAS.ViewModel
 
     protected override void Dispose(bool disposing)
     {
-      SettingsController.Save();
       foreach (var vm in Schedules)
       {
         vm.Dispose();

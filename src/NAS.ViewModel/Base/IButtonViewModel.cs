@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 
 namespace NAS.ViewModel.Base
@@ -8,10 +7,15 @@ namespace NAS.ViewModel.Base
   {
     event EventHandler<CancelEventArgs> CommandExecuting;
     event EventHandler CommandExecuted;
-    bool ClosesDialog { get; set; }
+
+    bool ClosesDialog { get; }
+
     ICommand Command { get; }
-    bool IsCancel { get; set; }
-    bool IsDefault { get; set; }
+
+    bool IsCancel { get; }
+
+    bool IsDefault { get; }
+
     string Text { get; }
   }
 }

@@ -5,7 +5,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class SchedulingSettingsViewModel : DialogViewModel
+  public class SchedulingSettingsViewModel : DialogContentViewModel
   {
     #region Constructor
 

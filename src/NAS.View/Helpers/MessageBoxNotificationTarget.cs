@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using NAS.Resources;
 using NAS.ViewModel.Helpers;
 using MessageBox = Xceed.Wpf.Toolkit.MessageBox;

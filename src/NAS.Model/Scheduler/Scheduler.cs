@@ -705,7 +705,7 @@ namespace NAS.Model.Scheduler
         }
 
         var paths = _schedule.Activities.Where(x => !x.GetPreceedingRelationships().Any())
-                                              .Select(x => GetLongestPath(x)).ToList();
+                                              .Select(GetLongestPath).ToList();
         var longestPaths = paths.Where(x => x.Length == paths.Max(y => y.Length)).ToList();
         SetLongestPathCritical(longestPaths);
       }

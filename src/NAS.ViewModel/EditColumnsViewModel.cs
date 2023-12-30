@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
@@ -12,7 +10,7 @@ using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class EditColumnsViewModel : DialogViewModel, IDropTarget
+  public class EditColumnsViewModel : DialogContentViewModel, IDropTarget
   {
     #region Fields
 

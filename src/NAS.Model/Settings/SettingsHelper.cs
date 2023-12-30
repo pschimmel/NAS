@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -18,6 +17,7 @@ namespace NAS.Model.Settings
         writerSettings.Indent = true;
         writerSettings.OmitXmlDeclaration = true;
 
+        Directory.CreateDirectory(Path.GetDirectoryName(Globals.SettingsFileName));
         using var writer = XmlWriter.Create(Globals.SettingsFileName, writerSettings);
         serializer.Serialize(writer, settings, emptyNamespaces);
       }

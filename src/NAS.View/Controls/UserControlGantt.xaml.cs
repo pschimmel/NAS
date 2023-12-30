@@ -206,7 +206,7 @@ namespace NAS.View.Controls
         return;
       }
 
-      DispatcherWrapper.Default.BeginInvokeIfRequired(() => RefreshProject());
+      DispatcherWrapper.Default.BeginInvokeIfRequired(RefreshProject);
     }
 
     private void RefreshProject()

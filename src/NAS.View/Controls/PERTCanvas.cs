@@ -185,7 +185,7 @@ namespace NAS.View.Controls
           // Filtering
           if (view.CanFilter)
           {
-            view.Filter = x => Contains(x);
+            view.Filter = Contains;
           }
 
           var visibleActivities = view.Cast<Activity>().ToList();

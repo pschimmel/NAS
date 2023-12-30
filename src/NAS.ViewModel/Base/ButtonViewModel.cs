@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Resources;
@@ -17,24 +16,24 @@ namespace NAS.ViewModel.Base
       Text = text;
       _command = new ActionCommand
       (
-        (x) =>
+        x =>
         {
           var resultArgs= new CancelEventArgs();
           CommandExecuting?.Invoke(this, resultArgs);
-          bool cancel = resultArgs.Cancel;
 
-          if (cancel)
+          if (resultArgs.Cancel)
           {
             return;
           }
 
           executeDelegate?.Invoke();
+
           if (ClosesDialog)
           {
             CommandExecuted?.Invoke(this, EventArgs.Empty);
           }
         },
-        (x) => canExecuteDelegate?.Invoke() ?? true
+        x => canExecuteDelegate?.Invoke() ?? true
       );
     }
 

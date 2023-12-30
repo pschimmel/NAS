@@ -1,65 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using ES.Tools.Core.MVVM;
+﻿using ES.Tools.Core.MVVM;
 
 namespace NAS.ViewModel.Base
 {
-  public abstract class DialogViewModel : ViewModelBase, IViewModel
+  public sealed class DialogViewModel : ViewModelBase, IViewModel
   {
-    public event EventHandler CloseDialog;
+    public event EventHandler RequestOK;
+    public event EventHandler RequestCancel;
 
-    private IList<IButtonViewModel> _buttons = new List<IButtonViewModel>();
+    private readonly List<IButtonViewModel> _buttons;
 
-    protected DialogViewModel(string title, string icon, DialogSize dialogSize = null)
+    public DialogViewModel(IDialogContentViewModel contentViewModel)
       : base()
     {
-      Title = title;
-      Icon = icon;
-      DialogSize = dialogSize ?? DialogSize.Auto;
-      Buttons = new List<IButtonViewModel> { ButtonViewModel.CreateCancelButton(), ButtonViewModel.CreateOKButton() };
-    }
+      ContentViewModel = contentViewModel;
+      _buttons = new List<IButtonViewModel>();
 
-    public string Title { get; }
-
-    public string Icon { get; }
-
-    public DialogSize DialogSize { get; }
-
-    public IList<IButtonViewModel> Buttons
-    {
-      get => _buttons;
-      protected set
+      foreach (var buttonVM in contentViewModel.Buttons)
       {
-        if (_buttons != null)
+        _buttons.Add(buttonVM);
+
+        if (buttonVM.IsCancel)
         {
-          _buttons.ToList().ForEach(x => x.CommandExecuting -= Button_CommandExecuting);
-          _buttons.ToList().ForEach(x => x.CommandExecuted -= Button_CommandExecuted);
+          buttonVM.CommandExecuting += Button_Cancel;
         }
-        _buttons = value;
-        if (_buttons != null)
+        else if (buttonVM.ClosesDialog)
         {
-          _buttons.ToList().ForEach(x => x.CommandExecuting += Button_CommandExecuting);
-          _buttons.ToList().ForEach(x => x.CommandExecuted += Button_CommandExecuted);
+          buttonVM.CommandExecuted += Button_OK;
         }
       }
     }
 
-    private void Button_CommandExecuting(object sender, CancelEventArgs e)
+    public string Title => ContentViewModel.Title;
+
+    public string Icon => ContentViewModel.Icon;
+
+    public IDialogContentViewModel ContentViewModel { get; }
+
+    public DialogSize DialogSize => ContentViewModel.DialogSize;
+
+    public IEnumerable<IButtonViewModel> Buttons => _buttons;
+
+    private void Button_OK(object sender, EventArgs e)
     {
-      if (sender is ButtonViewModel buttonVM && this is IValidatable vm && buttonVM.ClosesDialog && !buttonVM.IsCancel)
-      {
-        e.Cancel = !vm.Validate();
-      }
+      RequestOK?.Invoke(this, EventArgs.Empty);
     }
 
-    private void Button_CommandExecuted(object sender, EventArgs e)
+    private void Button_Cancel(object sender, EventArgs e)
     {
-      if (sender is ButtonViewModel buttonVM && buttonVM.ClosesDialog)
-      {
-        CloseDialog?.Invoke(this, EventArgs.Empty);
-      }
+      RequestCancel?.Invoke(this, EventArgs.Empty);
     }
   }
 }

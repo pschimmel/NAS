@@ -3,7 +3,7 @@ using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class AddResourceViewModel : DialogViewModel
+  public class AddResourceViewModel : DialogContentViewModel
   {
     public AddResourceViewModel()
       : base(NASResources.AddResource, "Resources")

@@ -9,7 +9,7 @@ namespace NAS.Model.Settings
 {
   public class Settings
   {
-    private readonly Lazy<List<string>> _lazyLanguages = new(() => InitLanguages());
+    private readonly Lazy<List<string>> _lazyLanguages = new(InitLanguages);
     private string _language;
 
     public Themes Theme { get; set; } = Themes.Default;

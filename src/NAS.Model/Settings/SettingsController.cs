@@ -2,7 +2,7 @@
 {
   public class SettingsController
   {
-    private static readonly Lazy<Settings> _lazySettings = new(() => LoadProgramSettings());
+    private static readonly Lazy<Settings> _lazySettings = new(LoadProgramSettings);
     private const int maxRecentFiles = 15;
 
     private SettingsController()

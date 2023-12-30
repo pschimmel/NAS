@@ -59,7 +59,7 @@ namespace NAS.ViewModel
       };
 
       RefreshData();
-      SelectAggregationTypeCommand = new ActionCommand(SelectAggregationTypeCommandExecute, param => SelectAggregationTypeCommandCanExecute(param));
+      SelectAggregationTypeCommand = new ActionCommand(SelectAggregationTypeCommandExecute, SelectAggregationTypeCommandCanExecute);
       CloseCommand = new ActionCommand(CloseCommandExecute, () => CloseCommandCanExecute);
     }
 

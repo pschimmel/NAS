@@ -7,7 +7,7 @@ namespace NAS.Model
   {
     public const string ApplicationName = "Network Analysis System";
 
-    public const string ApplicationShortName = "NASPro";
+    public const string ApplicationShortName = "NAS";
 
     public static Version Version => Assembly.GetEntryAssembly().GetName().Version;
 

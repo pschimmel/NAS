@@ -67,13 +67,13 @@ namespace NAS.ViewModel
         Relationships.Add(new RelationshipViewModel(relationship));
       }
 
-      CalculateCommand = new ActionCommand(param => CalculateCommandExecute(param), param => CalculateCommandCanExecute);
+      CalculateCommand = new ActionCommand(CalculateCommandExecute, param => CalculateCommandCanExecute);
       SchedulingSettingsCommand = new ActionCommand(SchedulingSettingsCommandExecute, () => SchedulingSettingsCommandCanExecute);
-      AddActivityCommand = new ActionCommand(param => AddActivityCommandExecute(param), param => AddActivityCommandCanExecute);
-      AddMilestoneCommand = new ActionCommand(param => AddMilestoneCommandExecute(param), param => AddMilestoneCommandCanExecute);
+      AddActivityCommand = new ActionCommand(AddActivityCommandExecute, param => AddActivityCommandCanExecute);
+      AddMilestoneCommand = new ActionCommand(AddMilestoneCommandExecute, param => AddMilestoneCommandCanExecute);
       RemoveActivityCommand = new ActionCommand(RemoveActivityCommandExecute, () => RemoveActivityCommandCanExecute);
       EditActivityCommand = new ActionCommand(EditActivityCommandExecute, () => EditActivityCommandCanExecute);
-      AddRelationshipCommand = new ActionCommand(param => AddRelationshipCommandExecute(param), param => AddRelationshipCommandCanExecute);
+      AddRelationshipCommand = new ActionCommand(AddRelationshipCommandExecute, param => AddRelationshipCommandCanExecute);
       RemoveRelationshipCommand = new ActionCommand(RemoveRelationshipCommandExecute, () => RemoveRelationshipCommandCanExecute);
       EditRelationshipCommand = new ActionCommand(EditRelationshipCommandExecute, () => EditRelationshipCommandCanExecute);
       EditLogicCommand = new ActionCommand(EditLogicCommandExecute, () => EditLogicCommandCanExecute);
@@ -84,11 +84,11 @@ namespace NAS.ViewModel
       EditCalendarsCommand = new ActionCommand(EditCalendarsCommandExecute, () => EditCalendarsCommandCanExecute);
       ShowAsGanttCommand = new ActionCommand(ShowAsGanttCommandExecute, () => ShowAsGanttCommandCanExecute);
       ShowAsPertCommand = new ActionCommand(ShowAsPertCommandExecute, () => ShowAsPertCommandCanExecute);
-      ZoomCommand = new ActionCommand(param => ZoomCommandExecute(param), param => ZoomCommandCanExecute);
+      ZoomCommand = new ActionCommand(ZoomCommandExecute, param => ZoomCommandCanExecute);
       ShowRelationshipsCommand = new ActionCommand(ShowRelationshipsCommandExecute, () => ShowRelationshipsCommandCanExecute);
       ShowFloatCommand = new ActionCommand(ShowFloatCommandExecute, () => ShowFloatCommandCanExecute);
       ShowResourceCommand = new ActionCommand(ShowResourceCommandExecute, () => ShowResourceCommandCanExecute);
-      CloseResourceCommand = new ActionCommand(param => CloseResourceCommandExecute(param), param => CloseResourceCommandCanExecute(param));
+      CloseResourceCommand = new ActionCommand(CloseResourceCommandExecute, CloseResourceCommandCanExecute);
       AddLayoutCommand = new ActionCommand(AddLayoutCommandExecute);
       RemoveLayoutCommand = new ActionCommand(RemoveLayoutCommandExecute, () => RemoveLayoutCommandCanExecute);
       EditLayoutCommand = new ActionCommand(EditLayoutCommandExecute, () => EditLayoutCommandCanExecute);

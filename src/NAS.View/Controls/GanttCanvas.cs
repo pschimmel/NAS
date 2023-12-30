@@ -922,7 +922,7 @@ namespace NAS.View.Controls
           // Filtering
           if (view.CanFilter)
           {
-            view.Filter = x => Contains(x);
+            view.Filter = Contains;
           }
 
           // Sorting

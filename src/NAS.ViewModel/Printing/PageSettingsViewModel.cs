@@ -117,7 +117,7 @@ namespace NAS.ViewModel.Printing
       if (SelectedPrinter != null)
       {
         var capabilities = SelectedPrinter.GetPrintCapabilities();
-        capabilities?.PageMediaSizeCapability.OrderBy(x => x.PageMediaSizeName).ToList().ForEach(x => PageSizes.Add(x));
+        capabilities?.PageMediaSizeCapability.OrderBy(x => x.PageMediaSizeName).ToList().ForEach(PageSizes.Add);
 
         if (!string.IsNullOrWhiteSpace(oldSelectedPageSize))
         {
