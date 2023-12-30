@@ -85,7 +85,7 @@ namespace NAS.View
         {
           ActivityContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
           RelationshipContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
-          Ribbon.Tabs.First().IsSelected = true;
+          //Ribbon.Tabs.First().IsSelected = true;
         }), DispatcherPriority.Normal);
 
         if (!string.IsNullOrWhiteSpace(_startupSettings.ScheduleToOpen))
@@ -93,7 +93,7 @@ namespace NAS.View
           viewModel.OpenScheduleCommand.Execute(_startupSettings.ScheduleToOpen);
         }
 
-        Ribbon.AreTabHeadersVisible = true;
+        //Ribbon.AreTabHeadersVisible = true;
       }
       else
       {

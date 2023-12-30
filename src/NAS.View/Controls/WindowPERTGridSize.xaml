@@ -6,7 +6,7 @@
         Title="{x:Static resx:NASResources.Size}"
         Width="300"
         Height="120"
-        Icon="pack://application:,,,/NAS;component/Stones.ico"
+        Icon="pack://application:,,,/NAS.View;component/Images/Stones.ico"
         WindowStartupLocation="CenterScreen">
   <Grid>
     <Grid.RowDefinitions>

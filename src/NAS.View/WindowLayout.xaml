@@ -17,7 +17,7 @@
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
-        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/MainResources.xaml" />
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
       <toolConverters:ColorToStringConverter x:Key="ColorConverter" />

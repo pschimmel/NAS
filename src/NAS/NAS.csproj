@@ -5,6 +5,7 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Images\Stones.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,6 +18,10 @@
 
   <ItemGroup>
     <None Remove="Images\Splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\Stones.ico" />
   </ItemGroup>
 
   <ItemGroup>

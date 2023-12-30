@@ -6,7 +6,7 @@
         Title="{x:Static resx:NASResources.CreateNewSchedule}"
         Width="550"
         Height="350"
-        Icon="pack://application:,,,/NAS;component/Stones.ico"
+        Icon="pack://application:,,,/NAS.View;component/Images/Stones.ico"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen"

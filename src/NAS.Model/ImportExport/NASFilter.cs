@@ -556,7 +556,7 @@ namespace NAS.Model.ImportExport
       }
     }
 
-    private void ReadProject(Schedule schedule, XmlNode projectNode)
+    private static void ReadProject(Schedule schedule, XmlNode projectNode)
     {
       foreach (XmlNode node in projectNode.ChildNodes)
       {

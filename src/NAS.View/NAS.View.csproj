@@ -14,13 +14,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Stones.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Aero" Version="4.72.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Expression" Version="4.72.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.Metro" Version="4.72.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2010" Version="4.72.1" />
     <PackageReference Include="Dirkster.AvalonDock.Themes.VS2013" Version="4.72.1" />
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.106" />
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.113" />
     <PackageReference Include="ES.Tools" Version="0.6.30.123" />
     <PackageReference Include="ES.Tools.Core" Version="0.6.30.123" />
     <PackageReference Include="Fluent.Ribbon" Version="10.0.4" />
@@ -284,6 +288,7 @@
     <Resource Include="Images\Split.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\Stones.ico" />
     <Resource Include="Images\Table.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

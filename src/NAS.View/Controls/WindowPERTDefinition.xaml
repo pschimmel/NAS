@@ -10,7 +10,7 @@
         Title="{x:Static resx:NASResources.PertTemplate}"
         Width="600"
         Height="500"
-        Icon="pack://application:,,,/NAS;component/Stones.ico"
+        Icon="pack://application:,,,/NAS.View;component/Images/Stones.ico"
         WindowStartupLocation="CenterScreen">
   <Window.Resources>
     <ObjectDataProvider x:Key="HorizontalAlignmentEnumValues"

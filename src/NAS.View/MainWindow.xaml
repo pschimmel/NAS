@@ -11,14 +11,13 @@
                      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
                      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
                      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
-                     xmlns:views="clr-namespace:NAS.View"
+                     xmlns:views="clr-namespace:NAS.View" xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
                      Title="{Binding WindowTitle}"
                      d:DesignHeight="756"
                      d:DesignWidth="1024"
                      BorderThickness="1"
                      Closing="RibbonWindow_Closing"
-                     Focusable="True"
-                     Icon="pack://application:,,,/NAS;component/Stones.ico"
+                     Icon="pack://application:,,,/NAS.View;component/Images/Stones.ico"
                      ResizeMode="CanResizeWithGrip"
                      WindowState="Maximized"
                      mc:Ignorable="d">
@@ -26,7 +25,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;Component/RibbonResources.xaml" />
-        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/MainResources.xaml" />
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
       <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
       <converters:ZoomToBoolConverter x:Key="ZoomToBoolConverter" />
@@ -47,7 +46,7 @@
                 Modifiers="Control" />
     <KeyBinding Key="F1" Command="{Binding InstantHelpCommand}" />
   </Window.InputBindings>
-  <toolkit:BusyIndicator x:Name="bi" IsBusy="{Binding IsBusy}">
+  <!--<toolkit:BusyIndicator x:Name="bi" IsBusy="{Binding IsBusy}">
     <toolkit:BusyIndicator.OverlayStyle>
       <Style TargetType="Rectangle">
         <Setter Property="Fill" Value="#50000000" />
@@ -76,14 +75,14 @@
                      Text="{Binding DataContext.ProgressMessage, RelativeSource={RelativeSource AncestorType=Window}}" />
         </Grid>
       </DataTemplate>
-    </toolkit:BusyIndicator.BusyContentTemplate>
-    <Grid x:Name="mainGrid">
+    </toolkit:BusyIndicator.BusyContentTemplate>-->
+    <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <fluent:Ribbon x:Name="Ribbon" AreTabHeadersVisible="False">
+      <fluent:Ribbon>
         <fluent:Ribbon.Menu>
           <fluent:Backstage IsOpen="{Binding BackstageOpen, Mode=TwoWay}">
             <fluent:BackstageTabControl>
@@ -1123,5 +1122,5 @@
         </fluent:StatusBarItem>
       </fluent:StatusBar>
     </Grid>
-  </toolkit:BusyIndicator>
+  <!--</toolkit:BusyIndicator>-->
 </fluent:RibbonWindow>
