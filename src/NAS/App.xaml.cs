@@ -29,10 +29,10 @@ namespace NAS
     private static void RegisterViews()
     {
       // Windows
-      ViewFactory.Instance.Register<AboutViewModel, AboutWindow>();
       ViewFactory.Instance.Register<DialogViewModel, DialogWindow>();
 
       // Dialogs
+      ViewFactory.Instance.RegisterDialog<AboutViewModel, AboutView>();
       ViewFactory.Instance.RegisterDialog<SettingsViewModel, SettingsView>();
     }
 

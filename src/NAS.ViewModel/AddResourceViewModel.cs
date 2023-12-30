@@ -5,9 +5,9 @@ namespace NAS.ViewModel
 {
   public class AddResourceViewModel : DialogContentViewModel
   {
-    public AddResourceViewModel()
-      : base(NASResources.AddResource, "Resources")
-    { }
+    public override string Title => NASResources.AddResource;
+
+    public override string Icon => "Resources";
 
     public bool IsMaterialResourceSelected { get; set; } = true;
 

@@ -10,10 +10,18 @@ namespace NAS.ViewModel
     #region Constructor
 
     public SchedulingSettingsViewModel(string settingsString)
-      : base(NASResources.SchedulingSettings, "Settings")
+      : base()
     {
       Settings = SchedulingSettingsHelper.LoadSchedulingSettings(settingsString);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.SchedulingSettings;
+
+    public override string Icon => "Settings";
 
     #endregion
 

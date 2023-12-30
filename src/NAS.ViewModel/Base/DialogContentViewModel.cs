@@ -2,19 +2,15 @@
 {
   public abstract class DialogContentViewModel : ViewModelBase, IDialogContentViewModel
   {
-    protected DialogContentViewModel(string title, string icon, DialogSize dialogSize = null)
+    protected DialogContentViewModel()
       : base()
-    {
-      Title = title;
-      Icon = icon;
-      DialogSize = dialogSize ?? DialogSize.Auto;
-    }
+    { }
 
-    public string Title { get; }
+    public abstract string Title { get; }
 
-    public string Icon { get; }
+    public virtual string Icon => "Icon";
 
-    public DialogSize DialogSize { get; }
+    public virtual DialogSize DialogSize => DialogSize.Auto;
 
     public virtual IEnumerable<IButtonViewModel> Buttons => new List<IButtonViewModel>
     {

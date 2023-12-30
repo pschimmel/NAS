@@ -21,7 +21,7 @@ namespace NAS.ViewModel
     #region Constructor
 
     public EditColumnsViewModel(Layout layout)
-      : base(NASResources.EditColumns, "Table", DialogSize.Fixed(400, 350))
+      : base()
     {
       if (layout != null)
       {
@@ -44,6 +44,16 @@ namespace NAS.ViewModel
       MoveColumnUpCommand = new ActionCommand(MoveColumnUpCommandExecute, () => MoveColumnUpCommandCanExecute);
       MoveColumnDownCommand = new ActionCommand(MoveColumnDownCommandExecute, () => MoveColumnDownCommandCanExecute);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.EditColumns;
+
+    public override string Icon => "Table";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(400, 350);
 
     #endregion
 

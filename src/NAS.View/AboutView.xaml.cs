@@ -1,29 +1,24 @@
 ﻿using System.Diagnostics;
-using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Navigation;
-using ES.Tools.Core.MVVM;
+using NAS.ViewModel.Base;
 
 namespace NAS
 {
   /// <summary>
-  /// Interaction logic for AboutWindow.xaml
+  /// Interaction logic for AboutView.xaml
   /// </summary>
-  public partial class AboutWindow : IView
+  public partial class AboutView : Grid, IDialogContentView
   {
-    public AboutWindow()
+    public AboutView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-      DialogResult = true;
     }
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)

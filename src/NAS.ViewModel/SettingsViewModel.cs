@@ -17,7 +17,7 @@ namespace NAS.ViewModel
     #region Constructor
 
     public SettingsViewModel(Action cancelAction)
-      : base(NASResources.Settings, "Gear", DialogSize.Fixed(300, 300))
+      : base()
     {
       _cancelAction = cancelAction;
       var settings = SettingsController.Settings;
@@ -29,6 +29,12 @@ namespace NAS.ViewModel
     #endregion
 
     #region Overwritten Members
+
+    public override string Title => NASResources.Settings;
+
+    public override string Icon => "Gear";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(300, 300);
 
     public override IEnumerable<IButtonViewModel> Buttons
     {
