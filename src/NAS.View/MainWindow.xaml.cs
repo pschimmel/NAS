@@ -44,10 +44,10 @@ namespace NAS.View
       {
         viewModel = new MainViewModel();
 #if !DEBUG
-        if (CurrentInfoHolder.Settings.AutoCheckForUpdates)
-        {
-          viewModel.CheckForUpdatesCommand.Execute(false);
-        }
+        //if (CurrentInfoHolder.Settings.AutoCheckForUpdates)
+        //{
+        //  viewModel.CheckForUpdatesCommand.Execute(false);
+        //}
 #endif
 
         if (MainViewModel.ShutdownRequested)
