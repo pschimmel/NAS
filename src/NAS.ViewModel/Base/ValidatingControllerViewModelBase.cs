@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NAS.ViewModel.Base
+﻿namespace NAS.ViewModel.Base
 {
   public abstract class ValidatingViewModelBase : ViewModelBase, IValidatable
   {
@@ -17,11 +14,11 @@ namespace NAS.ViewModel.Base
     {
       ResetErrors();
 
-      foreach (var validationItem in ValidationList)
+      foreach (var (Validation, Message) in ValidationList)
       {
-        if (!validationItem.Validation.Invoke())
+        if (!Validation.Invoke())
         {
-          AddError(validationItem.Message);
+          AddError(Message);
         }
       }
 

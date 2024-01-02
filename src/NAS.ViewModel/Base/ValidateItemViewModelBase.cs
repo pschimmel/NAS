@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace NAS.ViewModel.Base
@@ -11,15 +8,11 @@ namespace NAS.ViewModel.Base
   {
     public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-    private readonly Dictionary<string, List<string>> propertyErrors = new Dictionary<string, List<string>>();
+    private readonly Dictionary<string, List<string>> propertyErrors = [];
 
     public IEnumerable GetErrors(string propertyName)
     {
-      if (propertyName == null)
-      {
-        throw new ArgumentNullException(nameof(propertyName));
-      }
-
+      ArgumentNullException.ThrowIfNull(propertyName);
       _ = propertyErrors.TryGetValue(propertyName, out var errors);
       return errors;
     }
@@ -48,18 +41,19 @@ namespace NAS.ViewModel.Base
 
     protected void SetError(string propertyName, string message)
     {
-      propertyErrors[propertyName] = new List<string> { message };
+      propertyErrors[propertyName] = [message];
       OnErrorsChanged(propertyName);
     }
 
     protected void AddError(string propertyName, string message)
     {
-      if (!propertyErrors.ContainsKey(propertyName))
+      if (!propertyErrors.TryGetValue(propertyName, out var propertyErrorList))
       {
-        propertyErrors[propertyName] = new List<string>();
+        propertyErrorList = ([]);
+        propertyErrors[propertyName] = propertyErrorList;
       }
 
-      propertyErrors[propertyName].Add(message);
+      propertyErrorList.Add(message);
       OnErrorsChanged(propertyName);
     }
 
@@ -71,7 +65,7 @@ namespace NAS.ViewModel.Base
 
     protected void ClearAllErrors()
     {
-      string[] propertyNames = propertyErrors.Keys.ToArray();
+      string[] propertyNames = [.. propertyErrors.Keys];
       propertyErrors.Clear();
       foreach (string propertyName in propertyNames)
       {

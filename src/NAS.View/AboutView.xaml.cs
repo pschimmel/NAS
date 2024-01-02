@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using NAS.ViewModel.Base;
 
-namespace NAS
+namespace NAS.View
 {
   /// <summary>
   /// Interaction logic for AboutView.xaml

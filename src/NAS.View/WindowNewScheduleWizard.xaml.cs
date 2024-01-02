@@ -1,23 +1,24 @@
 ﻿using System.Windows;
-using ES.Tools.Core.MVVM;
+using System.Windows.Controls;
+using NAS.ViewModel;
 using NAS.ViewModel.Base;
 using Xceed.Wpf.Toolkit;
 
-namespace NAS
+namespace NAS.View
 {
   /// <summary>
   /// Interaction logic for WindowNewScheduleWizard.xaml
   /// </summary>
-  public partial class WindowNewScheduleWizard : IView
+  public partial class NewScheduleView : Grid, IDialogContentView
   {
-    public WindowNewScheduleWizard()
+    public NewScheduleView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
     }
 
@@ -25,9 +26,9 @@ namespace NAS
     {
       if ((e.OriginalSource as Wizard).CurrentPage == LastPage)
       {
-        if (DataContext is IValidatable)
+        if (DataContext is NewScheduleViewModel vm)
         {
-          _ = (DataContext as IValidatable).Validate();
+          vm.Validate();
         }
       }
     }

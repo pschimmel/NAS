@@ -49,6 +49,13 @@ namespace NAS.ViewModel
     private readonly Lazy<SaveFileDialog> _lazySaveFileDialog = new(GetSaveFileDialog);
     private readonly Lazy<OpenFileDialog> _lazyImportFileDialog = new(GetImportFileDialog);
     private readonly Lazy<SaveFileDialog> _lazyExportFileDialog = new(GetExportFileDialog);
+    private ActionCommand _newScheduleCommand;
+    private ActionCommand<string> _openScheduleCommand;
+    private ActionCommand _closeScheduleCommand;
+    private ActionCommand _saveScheduleCommand;
+    private ActionCommand _saveScheduleAsCommand;
+    private ActionCommand _importScheduleCommand;
+    private ActionCommand _exportScheduleAsCommand;
 
     #endregion
 
@@ -66,13 +73,6 @@ namespace NAS.ViewModel
 
       InstantHelpManager.Instance.HelpWindowsChanged += (_, __) => OnPropertyChanged(nameof(InstantHelpVisible));
 
-      NewScheduleCommand = new ActionCommand(NewScheduleCommandExecute, () => NewScheduleCommandCanExecute);
-      OpenScheduleCommand = new ActionCommand(OpenScheduleCommandExecute, param => OpenScheduleCommandCanExecute);
-      SaveScheduleCommand = new ActionCommand(SaveScheduleCommandExecute, () => SaveScheduleCommandCanExecute);
-      SaveScheduleAsCommand = new ActionCommand(SaveScheduleAsCommandExecute, () => SaveScheduleAsCommandCanExecute);
-      ImportScheduleCommand = new ActionCommand(ImportScheduleCommandExecute, () => ImportScheduleCommandCanExecute);
-      ExportScheduleCommand = new ActionCommand(ExportScheduleCommandExecute, () => ExportScheduleCommandCanExecute);
-      CloseScheduleCommand = new ActionCommand(CloseScheduleCommandExecute, () => CloseScheduleCommandCanExecute);
       PrintCommand = new ActionCommand(PrintCommandExecute, () => PrintCommandCanExecute);
       CloseCommand = new ActionCommand(CloseCommandExecute, () => CloseCommandCanExecute);
       ProgramSettingsCommand = new ActionCommand(ProgramSettingsCommandExecute, () => ProgramSettingsCommandCanExecute);
@@ -141,7 +141,7 @@ namespace NAS.ViewModel
       {
         if (_schedules == null)
         {
-          _schedules = new ObservableCollection<ScheduleViewModel>();
+          _schedules = [];
           _schedules.CollectionChanged += (sender, e) =>
           {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
@@ -162,21 +162,6 @@ namespace NAS.ViewModel
         }
         return _schedules;
       }
-    }
-
-    private void Schedule_CalculationProgress(object sender, ProgressEventArgs e)
-    {
-      if (e == ProgressEventArgs.Starting)
-      {
-        SetIsBusy(true);
-      }
-      else if (e == ProgressEventArgs.Finished)
-      {
-        SetIsBusy(false);
-        SetProgressMessage(NASResources.PleaseWait);
-      }
-
-      SetProgressMessage($"{NASResources.Calculating}: {e.CurrentProgress:#.0} %");
     }
 
     public ScheduleViewModel CurrentSchedule
@@ -207,13 +192,7 @@ namespace NAS.ViewModel
       }
     }
 
-    public ObservableCollection<ReportViewModel> Reports { get; } = new ObservableCollection<ReportViewModel>();
-
-    public void RefreshReports()
-    {
-      Reports.Clear();
-      _reportsController.Reports.ToList().ForEach(x => Reports.Add(new ReportViewModel(x)));
-    }
+    public ObservableCollection<ReportViewModel> Reports { get; } = [];
 
     public ReportViewModel SelectedReport
     {
@@ -232,9 +211,9 @@ namespace NAS.ViewModel
 
     #region New Schedule
 
-    public ICommand NewScheduleCommand { get; }
+    public ICommand NewScheduleCommand => _newScheduleCommand ??= new ActionCommand(NewScheduleExecute, NewScheduleCanExecute);
 
-    private void NewScheduleCommandExecute()
+    private void NewScheduleExecute()
     {
       using var vm = new NewScheduleViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -246,23 +225,26 @@ namespace NAS.ViewModel
       }
     }
 
-    private bool NewScheduleCommandCanExecute => !IsBusy;
+    private bool NewScheduleCanExecute()
+    {
+      return !IsBusy;
+    }
 
     #endregion
 
     #region Open Schedule
 
-    public ICommand OpenScheduleCommand { get; }
+    public ICommand OpenScheduleCommand => _openScheduleCommand ??= new ActionCommand<string>(OpenScheduleExecute, OpenScheduleCanExecute);
 
-    private void OpenScheduleCommandExecute(object param)
+    private void OpenScheduleExecute(string param)
     {
       string fileName = null;
 
-      if (param != null && param is string paramAsString)
+      if (!string.IsNullOrWhiteSpace(param))
       {
-        if (File.Exists(paramAsString))
+        if (File.Exists(param))
         {
-          fileName = paramAsString;
+          fileName = param;
         }
         else
         {
@@ -318,21 +300,40 @@ namespace NAS.ViewModel
       }
     }
 
-    public bool OpenScheduleCommandCanExecute => !IsBusy;
+    public bool OpenScheduleCanExecute(string _)
+    {
+      return !IsBusy;
+    }
+
+    #endregion
+
+    #region Close Schedule
+
+    public ICommand CloseScheduleCommand => _closeScheduleCommand ??= new ActionCommand(CloseScheduleExecute, CloseScheduleCanExecute);
+
+    public void CloseScheduleExecute()
+    {
+      RemoveScheduleViewModel(CurrentSchedule);
+    }
+
+    private bool CloseScheduleCanExecute()
+    {
+      return CurrentSchedule != null && !IsBusy;
+    }
 
     #endregion
 
     #region Save Schedule
 
-    public ICommand SaveScheduleCommand { get; }
+    public ICommand SaveScheduleCommand => _saveScheduleCommand ??= new ActionCommand(SaveScheduleExecute, SaveScheduleCanExecute);
 
-    private void SaveScheduleCommandExecute()
+    private void SaveScheduleExecute()
     {
       string fileName = null;
 
-      if (string.IsNullOrWhiteSpace(CurrentSchedule.Schedule.FileName) && SaveScheduleAsCommandCanExecute)
+      if (string.IsNullOrWhiteSpace(CurrentSchedule.Schedule.FileName) && SaveScheduleAsCanExecute())
       {
-        SaveScheduleAsCommandExecute();
+        SaveScheduleAsExecute();
       }
 
       try
@@ -351,34 +352,40 @@ namespace NAS.ViewModel
       }
     }
 
-    public bool SaveScheduleCommandCanExecute => CurrentSchedule != null && !IsBusy;
+    public bool SaveScheduleCanExecute()
+    {
+      return CurrentSchedule != null && !IsBusy;
+    }
 
     #endregion
 
     #region Save Schedule As
 
-    public ICommand SaveScheduleAsCommand { get; }
+    public ICommand SaveScheduleAsCommand => _saveScheduleAsCommand ??= new ActionCommand(SaveScheduleAsExecute, SaveScheduleAsCanExecute);
 
-    private void SaveScheduleAsCommandExecute()
+    private void SaveScheduleAsExecute()
     {
       var saveFileDialog = _lazySaveFileDialog.Value;
 
       if (saveFileDialog.ShowDialog() == true)
       {
         CurrentSchedule.Schedule.FileName = saveFileDialog.FileName;
-        SaveScheduleCommandExecute();
+        SaveScheduleExecute();
       }
     }
 
-    public bool SaveScheduleAsCommandCanExecute => CurrentSchedule != null && !IsBusy;
+    public bool SaveScheduleAsCanExecute()
+    {
+      return CurrentSchedule != null && !IsBusy;
+    }
 
     #endregion
 
     #region Import Schedule
 
-    public ICommand ImportScheduleCommand { get; }
+    public ICommand ImportScheduleCommand => _importScheduleCommand ??= new ActionCommand(ImportScheduleExecute, ImportScheduleCanExecute);
 
-    internal void ImportScheduleCommandExecute()
+    private void ImportScheduleExecute()
     {
       var openFileDialog = _lazyImportFileDialog.Value;
 
@@ -427,20 +434,18 @@ namespace NAS.ViewModel
       }
     }
 
-    private void Controller_ImportMessages(object sender, ItemEventArgs<string> e)
+    private bool ImportScheduleCanExecute()
     {
-      UserNotificationService.Instance.Error(e.Item);
+      return CurrentSchedule != null && !IsBusy;
     }
-
-    private bool ImportScheduleCommandCanExecute => CurrentSchedule != null && !IsBusy;
 
     #endregion
 
     #region Export Schedule
 
-    public ICommand ExportScheduleCommand { get; }
+    public ICommand ExportScheduleCommand => _exportScheduleAsCommand ??= new ActionCommand(ExportScheduleExecute, ExportScheduleCanExecute);
 
-    private void ExportScheduleCommandExecute()
+    private void ExportScheduleExecute()
     {
       var saveFileDialog = _lazyExportFileDialog.Value;
 
@@ -470,20 +475,10 @@ namespace NAS.ViewModel
       }
     }
 
-    private bool ExportScheduleCommandCanExecute => CurrentSchedule != null && !IsBusy;
-
-    #endregion
-
-    #region Close Schedule
-
-    public ICommand CloseScheduleCommand { get; }
-
-    public void CloseScheduleCommandExecute()
+    private bool ExportScheduleCanExecute()
     {
-      RemoveScheduleViewModel(CurrentSchedule);
+      return CurrentSchedule != null && !IsBusy;
     }
-
-    private bool CloseScheduleCommandCanExecute => CurrentSchedule != null && !IsBusy;
 
     #endregion
 
@@ -841,7 +836,32 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region Private Members
+    #region Public Methods
+
+    public void RefreshReports()
+    {
+      Reports.Clear();
+      _reportsController.Reports.ToList().ForEach(x => Reports.Add(new ReportViewModel(x)));
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void Schedule_CalculationProgress(object sender, ProgressEventArgs e)
+    {
+      if (e == ProgressEventArgs.Starting)
+      {
+        SetIsBusy(true);
+      }
+      else if (e == ProgressEventArgs.Finished)
+      {
+        SetIsBusy(false);
+        SetProgressMessage(NASResources.PleaseWait);
+      }
+
+      SetProgressMessage($"{NASResources.Calculating}: {e.CurrentProgress:#.0} %");
+    }
 
     private static OpenFileDialog GetOpenFileDialog()
     {

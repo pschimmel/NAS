@@ -556,7 +556,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adds a new relationship between two activities to the schedule..
+        ///   Looks up a localized string similar to Adds a new relationship between two activities..
         /// </summary>
         public static string AddRelationshipToolTipDescription {
             get {
@@ -610,24 +610,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Administration.
-        /// </summary>
-        public static string Administration {
-            get {
-                return ResourceManager.GetString("Administration", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Administrator.
-        /// </summary>
-        public static string Administrator {
-            get {
-                return ResourceManager.GetString("Administrator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Aero - Dark.
         /// </summary>
         public static string AeroDark {
@@ -637,20 +619,11 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aero - Hell.
+        ///   Looks up a localized string similar to Aero - Light.
         /// </summary>
         public static string AeroLight {
             get {
                 return ResourceManager.GetString("AeroLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Always show at Startup.
-        /// </summary>
-        public static string AlwaysShowAtStartup {
-            get {
-                return ResourceManager.GetString("AlwaysShowAtStartup", resourceCulture);
             }
         }
         
@@ -1078,15 +1051,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear.
-        /// </summary>
-        public static string Clear {
-            get {
-                return ResourceManager.GetString("Clear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string Close {
@@ -1330,24 +1294,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created.
-        /// </summary>
-        public static string Created {
-            get {
-                return ResourceManager.GetString("Created", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Created by.
-        /// </summary>
-        public static string CreatedBy {
-            get {
-                return ResourceManager.GetString("CreatedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Create multiple new Activities.
         /// </summary>
         public static string CreateMultipleNewActivities {
@@ -1546,15 +1492,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete Schedule.
-        /// </summary>
-        public static string DeleteSchedule {
-            get {
-                return ResourceManager.GetString("DeleteSchedule", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Descending.
         /// </summary>
         public static string Descending {
@@ -1573,7 +1510,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Das Network Analysis System wurde als Diplomarbeit im Fach Informatik an der Wilhelm Büchner Hochschule in Pfungstadt entwickelt..
+        ///   Looks up a localized string similar to The Network Analysis System NAS was developed as diploma thesis during my studies of Information Technology at Wilhelm Büchner Hochschule in Pfungstadt..
         /// </summary>
         public static string DescriptionText1 {
             get {
@@ -1582,7 +1519,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit diesem Programm können Sie sehr einfach Terminpläne mit Netzplantechnik erstellen, die Plantermine, Kosten und Ressourcen überwachen..
+        ///   Looks up a localized string similar to The goal of this software is to easily create schedules that utilize the Network Analysis technique, control scheduled dates, budget, and resources..
         /// </summary>
         public static string DescriptionText2 {
             get {
@@ -1591,7 +1528,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mit NAS können Störungen und Änderungen am Projektverlauf dokumentiert und nachverfolgt werden..
+        ///   Looks up a localized string similar to You can document disturbances and contract changes..
         /// </summary>
         public static string DescriptionText3 {
             get {
@@ -1645,7 +1582,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compare the current schedule with and without distortions..
+        ///   Looks up a localized string similar to Compares the current schedule with and without distortions..
         /// </summary>
         public static string DistortionComparisonToolTipDescription {
             get {
@@ -1807,7 +1744,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edits user defined attributes.
+        ///   Looks up a localized string similar to Edits user defined attributes..
         /// </summary>
         public static string EditAttributesToolTipDescription {
             get {
@@ -1816,7 +1753,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit Resources.
+        ///   Looks up a localized string similar to Edit Attributes.
         /// </summary>
         public static string EditAttributesToolTipTitle {
             get {
@@ -2068,7 +2005,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Opens a window where you can easily edit relationships and check the network logic..
+        ///   Looks up a localized string similar to Edit relationships and check the network logic..
         /// </summary>
         public static string EditLogicToolTipDescription {
             get {
@@ -2113,7 +2050,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edits the details of the selected relationship..
+        ///   Looks up a localized string similar to Edits the details of the current relationship..
         /// </summary>
         public static string EditRelationshipToolTipDescription {
             get {
@@ -2950,15 +2887,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage schedules.
-        /// </summary>
-        public static string ManageSchedules {
-            get {
-                return ResourceManager.GetString("ManageSchedules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Margins.
         /// </summary>
         public static string Margins {
@@ -3679,11 +3607,11 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New Project.
+        ///   Looks up a localized string similar to New Schedule.
         /// </summary>
-        public static string NewProject {
+        public static string NewSchedule {
             get {
-                return ResourceManager.GetString("NewProject", resourceCulture);
+                return ResourceManager.GetString("NewSchedule", resourceCulture);
             }
         }
         
@@ -4782,6 +4710,24 @@ namespace NAS.Resources {
         public static string Saturday {
             get {
                 return ResourceManager.GetString("Saturday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Schedule.
+        /// </summary>
+        public static string SaveSchedule {
+            get {
+                return ResourceManager.GetString("SaveSchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Schedule As....
+        /// </summary>
+        public static string SaveScheduleAs {
+            get {
+                return ResourceManager.GetString("SaveScheduleAs", resourceCulture);
             }
         }
         

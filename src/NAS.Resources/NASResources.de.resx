@@ -253,373 +253,352 @@
     <value>Gruppierung hinzufügen</value>
   </data>
   <data name="AddHoliday" xml:space="preserve">
-    <value>Add Holiday</value>
+    <value>Feiertag hinzufügen</value>
   </data>
   <data name="AddLayout" xml:space="preserve">
-    <value>Add Layout</value>
+    <value>Layout hinzufügen</value>
   </data>
   <data name="AddLayoutToolTipDescription" xml:space="preserve">
-    <value>Add a new layout.</value>
+    <value>Ein neues Layout hinzufügen.</value>
   </data>
   <data name="AddLayoutToolTipTitle" xml:space="preserve">
-    <value>Add Layout</value>
+    <value>Layout hinzufügen</value>
   </data>
   <data name="AddMilestone" xml:space="preserve">
-    <value>Add Milestone</value>
+    <value>Meilenstein hinzufügen</value>
   </data>
   <data name="AddMilestoneToolTipDescription" xml:space="preserve">
-    <value>Adds a new milestone to the schedule.</value>
+    <value>Fügt einen neuen Meilenstein zum Terminplan hinzu.</value>
   </data>
   <data name="AddMilestoneToolTipTitle" xml:space="preserve">
-    <value>Add Milestone (Alt-Ins)</value>
+    <value>Meilenstein hinzufügen (Alt-Ins)</value>
   </data>
   <data name="AddPertTemplate" xml:space="preserve">
-    <value>Add PERT Template</value>
+    <value>PERT-Vorlage hinzufügen</value>
   </data>
   <data name="AddProperty" xml:space="preserve">
-    <value>Add Property</value>
+    <value>Eigenschaft hinzufügen</value>
   </data>
   <data name="AddRelationship" xml:space="preserve">
-    <value>Add Relationship</value>
+    <value>Abhängigkeit hinzufügen</value>
   </data>
   <data name="AddRelationshipToolTipDescription" xml:space="preserve">
-    <value>Adds a new relationship between two activities to the schedule.</value>
+    <value>Fügt eine neue Abhängigkeit zwischen zwei Vorgängen hinzu.</value>
   </data>
   <data name="AddRelationshipToolTipTitle" xml:space="preserve">
-    <value>Add Relationship (Ctrl-INS)</value>
+    <value>Abhängigkeit hinzufügen (Ctrl-INS)</value>
   </data>
   <data name="AddResource" xml:space="preserve">
-    <value>Add Resource</value>
+    <value>Ressource hinzufügen</value>
   </data>
   <data name="AddRow" xml:space="preserve">
-    <value>Add Row</value>
+    <value>Zeile hinzufügen</value>
   </data>
   <data name="AddSortingDefinition" xml:space="preserve">
-    <value>Add Sorting Definition</value>
+    <value>Sortierung hinzufügen</value>
   </data>
   <data name="AddWBSItem" xml:space="preserve">
-    <value>Add WBS Item</value>
-  </data>
-  <data name="Administration" xml:space="preserve">
-    <value>Administration</value>
-  </data>
-  <data name="Administrator" xml:space="preserve">
-    <value>Administrator</value>
+    <value>PSP-Element hinzufügen</value>
   </data>
   <data name="AeroDark" xml:space="preserve">
-    <value>Aero - Dark</value>
+    <value>Aero - Dunkel</value>
   </data>
   <data name="AeroLight" xml:space="preserve">
     <value>Aero - Hell</value>
   </data>
-  <data name="AlwaysShowAtStartup" xml:space="preserve">
-    <value>Always show at Startup</value>
-  </data>
   <data name="And" xml:space="preserve">
-    <value>And</value>
+    <value>Und</value>
   </data>
   <data name="Announced" xml:space="preserve">
-    <value>Announced</value>
+    <value>Angekündigt</value>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>Application</value>
+    <value>Anwendung</value>
   </data>
   <data name="ApplicationSettings" xml:space="preserve">
-    <value>Application settings</value>
+    <value>Anwendungseinstellungen</value>
   </data>
   <data name="Ascending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Aufsteigend</value>
   </data>
   <data name="AssignToWBS" xml:space="preserve">
-    <value>Assign To WBS</value>
+    <value>Zu PSP zuordnen</value>
   </data>
   <data name="AtComplete" xml:space="preserve">
-    <value>At Complete</value>
+    <value>Beim Abschluss</value>
   </data>
   <data name="Attention" xml:space="preserve">
-    <value>Attention</value>
+    <value>Achtung</value>
   </data>
   <data name="Attribute1" xml:space="preserve">
-    <value>Attribute 1</value>
+    <value>Attribut 1</value>
   </data>
   <data name="Attribute2" xml:space="preserve">
-    <value>Attribute 2</value>
+    <value>Attribut 2</value>
   </data>
   <data name="Attribute3" xml:space="preserve">
-    <value>Attribute 3</value>
+    <value>Attribut 3</value>
   </data>
   <data name="Auto" xml:space="preserve">
     <value>Auto</value>
   </data>
   <data name="AutomaticallyCheckForUpdates" xml:space="preserve">
-    <value>Automatically Check for Updates</value>
+    <value>Automatisch nach Updates suchen</value>
   </data>
   <data name="AvailableColors" xml:space="preserve">
-    <value>Available Colors</value>
+    <value>Verfügbare Farben</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Back</value>
+    <value>Zurück</value>
   </data>
   <data name="Baseline" xml:space="preserve">
-    <value>Baseline</value>
+    <value>Basisplan</value>
   </data>
   <data name="BaselineComparison" xml:space="preserve">
-    <value>Baseline Comparison</value>
+    <value>Basisplanvergleich</value>
   </data>
   <data name="BaselineComparisonToolTipDescription" xml:space="preserve">
-    <value>Compare the current schedule with a baseline.</value>
+    <value>Den aktuellen Terminplan mit einem Basisplan vergleichen.</value>
   </data>
   <data name="BaselineComparisonToolTipTitle" xml:space="preserve">
-    <value>Baseline Comparison</value>
+    <value>Basisplanvergleich</value>
   </data>
   <data name="Baselines" xml:space="preserve">
-    <value>Baselines</value>
+    <value>Basispläne</value>
   </data>
   <data name="BaselinesCompared" xml:space="preserve">
-    <value>The baseline {0} ({1}) and the current schedule have been compared.</value>
+    <value>Der Basisplan {0} ({1}) wurde mit dem  aktuellen Terminplan verglichen.</value>
   </data>
   <data name="BasicData" xml:space="preserve">
-    <value>Basic Data</value>
+    <value>Grunddaten</value>
   </data>
   <data name="Bold" xml:space="preserve">
-    <value>Bold</value>
+    <value>Fett</value>
   </data>
   <data name="Bottom" xml:space="preserve">
-    <value>Bottom</value>
+    <value>Unten</value>
   </data>
   <data name="Budget" xml:space="preserve">
     <value>Budget</value>
   </data>
   <data name="Calculate" xml:space="preserve">
-    <value>Calculate</value>
+    <value>Berechnen</value>
   </data>
   <data name="CalculateToolTipDescription" xml:space="preserve">
-    <value>Recalculates all dates based on a new current date.</value>
+    <value>Berechnet alle Daten neu, basierend auf dem aktuellen Berechnungs-Datum.</value>
   </data>
   <data name="CalculateToolTipTitle" xml:space="preserve">
-    <value>Calculate (F9)</value>
+    <value>Berechnen (F9)</value>
   </data>
   <data name="Calculating" xml:space="preserve">
-    <value>Calculating</value>
+    <value>Berechne</value>
   </data>
   <data name="Calendar" xml:space="preserve">
-    <value>Calendar</value>
+    <value>Kalender</value>
   </data>
   <data name="CalendarDay" xml:space="preserve">
-    <value>Calendar Day</value>
+    <value>Kalender Tag</value>
   </data>
   <data name="CalendarResource" xml:space="preserve">
-    <value>Calendar Resource</value>
+    <value>Kalender Ressource</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Abbrechen</value>
   </data>
   <data name="Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Mitte</value>
   </data>
   <data name="CenterText" xml:space="preserve">
-    <value>Center Text</value>
+    <value>Mittiger Text</value>
   </data>
   <data name="ChangeActivity" xml:space="preserve">
-    <value>Change Activity</value>
+    <value>Vorgang ändern</value>
   </data>
   <data name="ChangeIntoActivity" xml:space="preserve">
-    <value>Change Into Activity</value>
+    <value>In Aktivität ändern</value>
   </data>
   <data name="ChangeIntoActivityToolTipDescription" xml:space="preserve">
-    <value>Changes a milestone into an activity.</value>
+    <value>Ändert einen Meilenstein in eine Aktivität.</value>
   </data>
   <data name="ChangeIntoActivityToolTipTitle" xml:space="preserve">
-    <value>Change Into Activity</value>
+    <value>In Aktivität ändern</value>
   </data>
   <data name="ChangeIntoMilestone" xml:space="preserve">
-    <value>Change Into Milestone</value>
+    <value>In Meilenstein ändern</value>
   </data>
   <data name="ChangeIntoMilestoneToolTipDescription" xml:space="preserve">
-    <value>Chances an activity into a milestone.</value>
+    <value>Ändert eine Aktivität in einen Meilenstein.</value>
   </data>
   <data name="ChangeIntoMilestoneToolTipTitle" xml:space="preserve">
-    <value>Change Into Milestone</value>
+    <value>In Meilenstein ändern</value>
   </data>
   <data name="Changes" xml:space="preserve">
-    <value>Changes</value>
+    <value>Änderungen</value>
   </data>
   <data name="ChartType" xml:space="preserve">
-    <value>Chart Type</value>
+    <value>Diagrammtyp</value>
   </data>
   <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for Updates</value>
+    <value>Auf Updates prüfen</value>
   </data>
   <data name="CheckForUpdatesToolTipDescription" xml:space="preserve">
-    <value>Checks if a software update ist available.</value>
+    <value>Prüft ob eine neuere Version des Programms zur Verfügung steht.</value>
   </data>
   <data name="CheckForUpdatesToolTipTitle" xml:space="preserve">
-    <value>Check for Updates</value>
-  </data>
-  <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
+    <value>Auf Updates prüfen</value>
   </data>
   <data name="Close" xml:space="preserve">
-    <value>Close</value>
+    <value>Schließen</value>
   </data>
   <data name="CloseSchedule" xml:space="preserve">
-    <value>Close Schedule</value>
+    <value>Terminplan schließen</value>
   </data>
   <data name="Color" xml:space="preserve">
-    <value>Color</value>
+    <value>Farbe</value>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Colors</value>
+    <value>Farben</value>
   </data>
   <data name="Column" xml:space="preserve">
-    <value>Column</value>
+    <value>Spalte</value>
   </data>
   <data name="Columns" xml:space="preserve">
-    <value>Columns</value>
+    <value>Spalten</value>
   </data>
   <data name="ColumnSpan" xml:space="preserve">
-    <value>Column Span</value>
+    <value>Spaltenzahl</value>
   </data>
   <data name="Combination" xml:space="preserve">
-    <value>Combination</value>
+    <value>Kombination</value>
   </data>
   <data name="CombineActivities" xml:space="preserve">
-    <value>Combine Activities</value>
+    <value>Vorgänge kombinieren</value>
   </data>
   <data name="CombineActivitiesToolTipDescription" xml:space="preserve">
-    <value>Combines two depending activities into one.</value>
+    <value>Kombiniert zwei abhängige Vorgänge zu einem Vorgang.</value>
   </data>
   <data name="CombineActivitiesToolTipTitle" xml:space="preserve">
-    <value>Combine Activities</value>
+    <value>Vorgänge kombinieren</value>
   </data>
   <data name="Commissioned" xml:space="preserve">
-    <value>Commissioned</value>
+    <value>Beauftragt</value>
   </data>
   <data name="Comparison" xml:space="preserve">
-    <value>Comparison</value>
+    <value>Vergleich</value>
   </data>
   <data name="Confirmation" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Bestätigung</value>
   </data>
   <data name="Constraint" xml:space="preserve">
-    <value>Constraint</value>
+    <value>Randbedingung</value>
   </data>
   <data name="Controlling" xml:space="preserve">
     <value>Controlling</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Kopieren</value>
   </data>
   <data name="CopyCalendar" xml:space="preserve">
-    <value>Copy Calendar</value>
+    <value>Kalender kopieren</value>
   </data>
   <data name="CopyLayout" xml:space="preserve">
-    <value>Copy Layout</value>
+    <value>Layout kopieren</value>
   </data>
   <data name="CopyLayoutToolTipDescription" xml:space="preserve">
-    <value>Copies the current layout.</value>
+    <value>Kopiert das aktuelle Layout.</value>
   </data>
   <data name="CopyLayoutToolTipTitle" xml:space="preserve">
-    <value>Copy Layout</value>
+    <value>Layout kopieren</value>
   </data>
   <data name="CopyPertTemplate" xml:space="preserve">
-    <value>Copy PERT template</value>
+    <value>PERT-Vorlage kopieren</value>
   </data>
   <data name="CopyReport" xml:space="preserve">
-    <value>Copy Report</value>
+    <value>Bericht kopieren</value>
   </data>
   <data name="Copyright" xml:space="preserve">
     <value>Copyright</value>
   </data>
   <data name="Costs" xml:space="preserve">
-    <value>Costs</value>
+    <value>Kosten</value>
   </data>
   <data name="CostsHigherAsBudget" xml:space="preserve">
-    <value>The costs are {0} € higher than the budget.</value>
+    <value>Die Kosten sind {0} € höher als das Budget.</value>
   </data>
   <data name="CostsPerUnit" xml:space="preserve">
-    <value>Costs per Unit</value>
-  </data>
-  <data name="Created" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="CreatedBy" xml:space="preserve">
-    <value>Created by</value>
+    <value>Kosten pro Einheit</value>
   </data>
   <data name="CreateMultipleNewActivities" xml:space="preserve">
-    <value>Create multiple new Activities</value>
+    <value>Mehrere neue Vorgänge erzeugen</value>
   </data>
   <data name="CreateNewSchedule" xml:space="preserve">
-    <value>Create New Schedule</value>
+    <value>Neuen Terminplan erzeugen</value>
   </data>
   <data name="CreatingPagesProgress" xml:space="preserve">
-    <value>Creating Pages: {0}%.</value>
+    <value>Erstelle Seiten: {0}%.</value>
   </data>
   <data name="Critical" xml:space="preserve">
-    <value>Critical</value>
+    <value>Kritisch</value>
   </data>
   <data name="CriticalActivities" xml:space="preserve">
-    <value>Critical Activities</value>
+    <value>Kritische Vorgänge</value>
   </data>
   <data name="CriticalMilestones" xml:space="preserve">
-    <value>Critical Milestones</value>
+    <value>Kritische Meilensteine</value>
   </data>
   <data name="CriticalPath" xml:space="preserve">
-    <value>Critical Path</value>
+    <value>Kritischer Weg</value>
   </data>
   <data name="CriticalPathDefinedAs" xml:space="preserve">
-    <value>Critical Path defined as</value>
+    <value>Kritischer Weg ist definiert als</value>
   </data>
   <data name="CurrentActivity" xml:space="preserve">
-    <value>Current activity</value>
+    <value>Aktueller Vorgang</value>
   </data>
   <data name="CurrentDate" xml:space="preserve">
-    <value>Current Calculation date</value>
+    <value>Aktuelles Berechnungs-Datum</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Data</value>
+    <value>Daten</value>
   </data>
   <data name="DataDate" xml:space="preserve">
-    <value>Data Date</value>
+    <value>Berechnungs-Datum</value>
   </data>
   <data name="DataDateNotEarlierThanStartDate" xml:space="preserve">
-    <value>The data date may not be earlier than the start date.</value>
+    <value>Das Berechnungs-Datum kann nicht früher als das Start-Datum sein.</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>Datum</value>
   </data>
   <data name="Day" xml:space="preserve">
-    <value>Day</value>
+    <value>Tag</value>
   </data>
   <data name="Days" xml:space="preserve">
-    <value>Days</value>
+    <value>Tage</value>
   </data>
   <data name="DecreaseDuration" xml:space="preserve">
-    <value>Decrease Duration</value>
+    <value>Dauer verringern</value>
   </data>
   <data name="DecreaseDurationToolTipDescription" xml:space="preserve">
-    <value>Decreases the planned duration.</value>
+    <value>Verringert die geplante Dauer.</value>
   </data>
   <data name="DecreaseDurationToolTipTitle" xml:space="preserve">
-    <value>Decrease Duration</value>
+    <value>Dauer verringern</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>Standard</value>
   </data>
   <data name="Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Verzögerung</value>
   </data>
   <data name="DeleteReport" xml:space="preserve">
-    <value>Delete Report</value>
-  </data>
-  <data name="DeleteSchedule" xml:space="preserve">
-    <value>Delete Schedule</value>
+    <value>Bericht löschen</value>
   </data>
   <data name="Descending" xml:space="preserve">
-    <value>Descending</value>
+    <value>Absteigend</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
   </data>
   <data name="DescriptionText1" xml:space="preserve">
     <value>Das Network Analysis System wurde als Diplomarbeit im Fach Informatik an der Wilhelm Büchner Hochschule in Pfungstadt entwickelt.</value>
@@ -634,199 +613,199 @@
     <value>Details</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>Richtung</value>
   </data>
   <data name="Discovered" xml:space="preserve">
-    <value>Discovered</value>
+    <value>Gefunden</value>
   </data>
   <data name="Distortion" xml:space="preserve">
-    <value>Distortion</value>
+    <value>Störung</value>
   </data>
   <data name="DistortionComparison" xml:space="preserve">
-    <value>Distortion Comparison</value>
+    <value>Störungsvergleich</value>
   </data>
   <data name="DistortionComparisonToolTipDescription" xml:space="preserve">
-    <value>Compare the current schedule with and without distortions.</value>
+    <value>Vergleicht den Terminplan mit und ohne Störungen.</value>
   </data>
   <data name="DistortionComparisonToolTipTitle" xml:space="preserve">
-    <value>Distortion Comparison</value>
+    <value>Störungsvergleich</value>
   </data>
   <data name="Distortions" xml:space="preserve">
-    <value>Distortions</value>
+    <value>Störungen</value>
   </data>
   <data name="DistortionsCompared" xml:space="preserve">
-    <value>The current schedule has been compared with and without distortions.</value>
+    <value>Der aktuelle Terminplan wurde mit und ohne Störungen verglichen.</value>
   </data>
   <data name="Downloading" xml:space="preserve">
-    <value>Downloading</value>
+    <value>Downloade</value>
   </data>
   <data name="Driving" xml:space="preserve">
-    <value>Driving</value>
+    <value>Treibend</value>
   </data>
   <data name="DurationDecreased" xml:space="preserve">
-    <value>The duration was decreased {0} days.</value>
+    <value>Die Dauer wurde um {0} Tage verringert.</value>
   </data>
   <data name="DurationIncreased" xml:space="preserve">
-    <value>The duration was increased {0} days.</value>
+    <value>Die Dauer wurde um {0} Tage erhöht.</value>
   </data>
   <data name="EarliestDateOfSchedule" xml:space="preserve">
-    <value>Earliest date of schedule</value>
+    <value>Erster Termin im Terminplan</value>
   </data>
   <data name="EarlyFinishDate" xml:space="preserve">
-    <value>Early Finish Date</value>
+    <value>Frühes Enddatum</value>
   </data>
   <data name="EarlyStartDate" xml:space="preserve">
-    <value>Early Start Date</value>
+    <value>Frühes Startdatum</value>
   </data>
   <data name="EarlyStartDateChanged" xml:space="preserve">
-    <value>The early start date changed from {0} to {1}.</value>
+    <value>Das frühe Startdatum wurde von {0} nach {1} geändert.</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Bearbeiten</value>
   </data>
   <data name="EditActivity" xml:space="preserve">
-    <value>Edit Activity</value>
+    <value>Vorgang bearbeiten</value>
   </data>
   <data name="EditActivityToolTipDescription" xml:space="preserve">
-    <value>Edit the current activity.</value>
+    <value>Bearbeitet den aktuellen Vorgang.</value>
   </data>
   <data name="EditActivityToolTipTitle" xml:space="preserve">
-    <value>Edit Activity</value>
+    <value>Vorgang bearbeiten</value>
   </data>
   <data name="EditAttribute" xml:space="preserve">
-    <value>Edit Attribute</value>
+    <value>Attribut bearbeiten</value>
   </data>
   <data name="EditAttributes" xml:space="preserve">
-    <value>Edit Attributes</value>
+    <value>Attribute bearbeiten</value>
   </data>
   <data name="EditAttributesToolTipDescription" xml:space="preserve">
-    <value>Edits user defined attributes</value>
+    <value>Bearbeiten der benutzerdefinierten Attribute.</value>
   </data>
   <data name="EditAttributesToolTipTitle" xml:space="preserve">
-    <value>Edit Resources</value>
+    <value>Attribute bearbeiten</value>
   </data>
   <data name="EditBaselines" xml:space="preserve">
-    <value>Edit Baselines</value>
+    <value>Basispläne bearbeiten</value>
   </data>
   <data name="EditBaselinesToolTipDescription" xml:space="preserve">
-    <value>Edit the Project Baselines</value>
+    <value>Bearbeitet die Basispläne</value>
   </data>
   <data name="EditBaselinesToolTipTitle" xml:space="preserve">
-    <value>Edit Baselines</value>
+    <value>Basispläne bearbeiten</value>
   </data>
   <data name="EditCalendars" xml:space="preserve">
-    <value>Edit Calendars</value>
+    <value>Kalender bearbeiten</value>
   </data>
   <data name="EditCalendarsToolTipDescription" xml:space="preserve">
-    <value>Edit the project calendars.</value>
+    <value>Bearbeitet die Projektkalender.</value>
   </data>
   <data name="EditCalendarsToolTipTitle" xml:space="preserve">
-    <value>Edit Calendars</value>
+    <value>Kalender bearbeiten</value>
   </data>
   <data name="EditColumns" xml:space="preserve">
-    <value>Edit Columns</value>
+    <value>Spalten bearbeiten</value>
   </data>
   <data name="EditDelay" xml:space="preserve">
-    <value>Edit Delay</value>
+    <value>Verzögerung bearbeiten</value>
   </data>
   <data name="EditDistortions" xml:space="preserve">
-    <value>Edit Distortions</value>
+    <value>Störungen bearbeiten</value>
   </data>
   <data name="EditDistortionsToolTipDescription" xml:space="preserve">
-    <value>Add or remove distortions of the current activity.</value>
+    <value>Bearbeiten der Störungen des aktuellen Vorgangs.</value>
   </data>
   <data name="EditDistortionsToolTipTitle" xml:space="preserve">
-    <value>Edit Distortions</value>
+    <value>Störungen bearbeiten</value>
   </data>
   <data name="EditExtension" xml:space="preserve">
-    <value>Edit Extension</value>
+    <value>Verlängerung bearbeiten</value>
   </data>
   <data name="EditFilters" xml:space="preserve">
-    <value>Edit Filters</value>
+    <value>Filter bearbeiten</value>
   </data>
   <data name="EditFiltersToolTipDescription" xml:space="preserve">
-    <value>Edit the activity filters.</value>
+    <value>Bearbeiten der Vorgangsfilter.</value>
   </data>
   <data name="EditFiltersToolTipTitle" xml:space="preserve">
-    <value>Edit Filters</value>
+    <value>Filter bearbeiten</value>
   </data>
   <data name="EditFragnet" xml:space="preserve">
-    <value>Edit Fragnet</value>
+    <value>Fragnet bearbeiten</value>
   </data>
   <data name="EditFragnets" xml:space="preserve">
-    <value>Edit Fragnets</value>
+    <value>Fragnets bearbeiten</value>
   </data>
   <data name="EditFragnetsToolTipDescription" xml:space="preserve">
-    <value>Edit the fragnets of the current schedule.</value>
+    <value>Bearbeiten der Fragnets des aktuellen Terminplans.</value>
   </data>
   <data name="EditFragnetsToolTipTitle" xml:space="preserve">
-    <value>Edit Fragnets</value>
+    <value>Fragnets bearbeiten</value>
   </data>
   <data name="EditGlobalCalendars" xml:space="preserve">
-    <value>Edit global calendars</value>
+    <value>Globale Kalender bearbeiten</value>
   </data>
   <data name="EditGlobalResources" xml:space="preserve">
-    <value>Edit global resources</value>
+    <value>Globale Ressourcen bearbeiten</value>
   </data>
   <data name="EditInhibition" xml:space="preserve">
-    <value>Edit Inhibition</value>
+    <value>Verhinderung bearbeiten</value>
   </data>
   <data name="EditInterruption" xml:space="preserve">
-    <value>Edit Interruption</value>
+    <value>Unterbrechung bearbeiten</value>
   </data>
   <data name="EditLayout" xml:space="preserve">
-    <value>Edit Layout</value>
+    <value>Layout bearbeiten</value>
   </data>
   <data name="EditLayoutToolTipDescription" xml:space="preserve">
-    <value>Edit the current layout.</value>
+    <value>Bearbeiten des aktuellen Layouts.</value>
   </data>
   <data name="EditLayoutToolTipTitle" xml:space="preserve">
-    <value>Edit Layout</value>
+    <value>Layout bearbeiten</value>
   </data>
   <data name="EditLogic" xml:space="preserve">
-    <value>Edit Logic</value>
+    <value>Logik bearbeiten</value>
   </data>
   <data name="EditLogicToolTipDescription" xml:space="preserve">
-    <value>Opens a window where you can easily edit relationships and check the network logic.</value>
+    <value>Bearbeiten der Abhängigkeiten und Überprüfen der Netzplanlogik.</value>
   </data>
   <data name="EditLogicToolTipTitle" xml:space="preserve">
-    <value>Edit Logic</value>
+    <value>Logik bearbeiten</value>
   </data>
   <data name="EditPrintLayout" xml:space="preserve">
-    <value>Edit Print Layout</value>
+    <value>Drucklayout bearbeiten</value>
   </data>
   <data name="EditReduction" xml:space="preserve">
-    <value>Edit Reduction</value>
+    <value>Verringerung bearbeiten</value>
   </data>
   <data name="EditRelationship" xml:space="preserve">
-    <value>Edit Relationship</value>
+    <value>Abhängigkeit bearbeiten</value>
   </data>
   <data name="EditRelationshipToolTipDescription" xml:space="preserve">
-    <value>Edits the details of the selected relationship.</value>
+    <value>Bearbeiten der Details der aktuellen Abhängigkeit.</value>
   </data>
   <data name="EditRelationshipToolTipTitle" xml:space="preserve">
-    <value>Edit Relationship</value>
+    <value>Abhängigkeit bearbeiten</value>
   </data>
   <data name="EditReport" xml:space="preserve">
-    <value>Edit Report</value>
+    <value>Bericht bearbeiten</value>
   </data>
   <data name="EditResources" xml:space="preserve">
-    <value>Edit Resources</value>
+    <value>Ressourcen bearbeiten</value>
   </data>
   <data name="EditResourcesToolTipDescription" xml:space="preserve">
-    <value>Edits the project resources.</value>
+    <value>Bearbeitet die Projektressourcen.</value>
   </data>
   <data name="EditResourcesToolTipTitle" xml:space="preserve">
-    <value>Edit Resources</value>
+    <value>Ressourcen bearbeiten</value>
   </data>
   <data name="EditTemplate" xml:space="preserve">
-    <value>Edit Template</value>
+    <value>Vorlage bearbeiten</value>
   </data>
   <data name="EditWBS" xml:space="preserve">
-    <value>Edit WBS</value>
+    <value>PSP bearbeiten</value>
   </data>
   <data name="EditWBSItem" xml:space="preserve">
-    <value>Edit WBS Item</value>
+    <value>PSP-Eintrag bearbeiten</value>
   </data>
   <data name="EditWBSToolTipDescription" xml:space="preserve">
     <value>Edit the hierarchically structure of the activities.</value>
@@ -1080,9 +1059,6 @@
   <data name="LongestPath" xml:space="preserve">
     <value>Longest Path</value>
   </data>
-  <data name="ManageSchedules" xml:space="preserve">
-    <value>Manage schedules</value>
-  </data>
   <data name="Margins" xml:space="preserve">
     <value>Margins</value>
   </data>
@@ -1323,8 +1299,8 @@
   <data name="NewMilestone" xml:space="preserve">
     <value>New Milestone</value>
   </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
+  <data name="NewSchedule" xml:space="preserve">
+    <value>Neuer Terminplan</value>
   </data>
   <data name="NewTemplate" xml:space="preserve">
     <value>New Template</value>
@@ -1691,6 +1667,12 @@
   </data>
   <data name="Saturday" xml:space="preserve">
     <value>Saturday</value>
+  </data>
+  <data name="SaveSchedule" xml:space="preserve">
+    <value>Terminplan speichern</value>
+  </data>
+  <data name="SaveScheduleAs" xml:space="preserve">
+    <value>Terminplan speichern unter...</value>
   </data>
   <data name="Schedule" xml:space="preserve">
     <value>Schedule</value>

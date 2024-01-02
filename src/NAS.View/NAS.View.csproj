@@ -14,6 +14,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\CloseProject.png" />
+    <None Remove="Images\SaveProject.png" />
+    <None Remove="Images\SaveProjectAs.png" />
     <None Remove="Images\Stones.ico" />
   </ItemGroup>
 
@@ -207,10 +210,19 @@
     <Resource Include="Images\MaterialResource.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\CloseProject.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SaveProjectAs.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SaveProject.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\NewProject.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\Open.png">
+    <Resource Include="Images\OpenProject.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Options.png">
@@ -262,9 +274,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Right.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\Save.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Settings.png">

@@ -283,7 +283,7 @@
     <value>Add Relationship</value>
   </data>
   <data name="AddRelationshipToolTipDescription" xml:space="preserve">
-    <value>Adds a new relationship between two activities to the schedule.</value>
+    <value>Adds a new relationship between two activities.</value>
   </data>
   <data name="AddRelationshipToolTipTitle" xml:space="preserve">
     <value>Add Relationship (Ctrl-INS)</value>
@@ -300,20 +300,11 @@
   <data name="AddWBSItem" xml:space="preserve">
     <value>Add WBS Item</value>
   </data>
-  <data name="Administration" xml:space="preserve">
-    <value>Administration</value>
-  </data>
-  <data name="Administrator" xml:space="preserve">
-    <value>Administrator</value>
-  </data>
   <data name="AeroDark" xml:space="preserve">
     <value>Aero - Dark</value>
   </data>
   <data name="AeroLight" xml:space="preserve">
-    <value>Aero - Hell</value>
-  </data>
-  <data name="AlwaysShowAtStartup" xml:space="preserve">
-    <value>Always show at Startup</value>
+    <value>Aero - Light</value>
   </data>
   <data name="And" xml:space="preserve">
     <value>And</value>
@@ -456,9 +447,6 @@
   <data name="CheckForUpdatesToolTipTitle" xml:space="preserve">
     <value>Check for Updates</value>
   </data>
-  <data name="Clear" xml:space="preserve">
-    <value>Clear</value>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -540,12 +528,6 @@
   <data name="CostsPerUnit" xml:space="preserve">
     <value>Costs per Unit</value>
   </data>
-  <data name="Created" xml:space="preserve">
-    <value>Created</value>
-  </data>
-  <data name="CreatedBy" xml:space="preserve">
-    <value>Created by</value>
-  </data>
   <data name="CreateMultipleNewActivities" xml:space="preserve">
     <value>Create multiple new Activities</value>
   </data>
@@ -612,9 +594,6 @@
   <data name="DeleteReport" xml:space="preserve">
     <value>Delete Report</value>
   </data>
-  <data name="DeleteSchedule" xml:space="preserve">
-    <value>Delete Schedule</value>
-  </data>
   <data name="Descending" xml:space="preserve">
     <value>Descending</value>
   </data>
@@ -622,13 +601,13 @@
     <value>Description</value>
   </data>
   <data name="DescriptionText1" xml:space="preserve">
-    <value>Das Network Analysis System wurde als Diplomarbeit im Fach Informatik an der Wilhelm Büchner Hochschule in Pfungstadt entwickelt.</value>
+    <value>The Network Analysis System NAS was developed as diploma thesis during my studies of Information Technology at Wilhelm Büchner Hochschule in Pfungstadt.</value>
   </data>
   <data name="DescriptionText2" xml:space="preserve">
-    <value>Mit diesem Programm können Sie sehr einfach Terminpläne mit Netzplantechnik erstellen, die Plantermine, Kosten und Ressourcen überwachen.</value>
+    <value>The goal of this software is to easily create schedules that utilize the Network Analysis technique, control scheduled dates, budget, and resources.</value>
   </data>
   <data name="DescriptionText3" xml:space="preserve">
-    <value>Mit NAS können Störungen und Änderungen am Projektverlauf dokumentiert und nachverfolgt werden.</value>
+    <value>You can document disturbances and contract changes.</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
@@ -646,7 +625,7 @@
     <value>Distortion Comparison</value>
   </data>
   <data name="DistortionComparisonToolTipDescription" xml:space="preserve">
-    <value>Compare the current schedule with and without distortions.</value>
+    <value>Compares the current schedule with and without distortions.</value>
   </data>
   <data name="DistortionComparisonToolTipTitle" xml:space="preserve">
     <value>Distortion Comparison</value>
@@ -700,10 +679,10 @@
     <value>Edit Attributes</value>
   </data>
   <data name="EditAttributesToolTipDescription" xml:space="preserve">
-    <value>Edits user defined attributes</value>
+    <value>Edits user defined attributes.</value>
   </data>
   <data name="EditAttributesToolTipTitle" xml:space="preserve">
-    <value>Edit Resources</value>
+    <value>Edit Attributes</value>
   </data>
   <data name="EditBaselines" xml:space="preserve">
     <value>Edit Baselines</value>
@@ -787,7 +766,7 @@
     <value>Edit Logic</value>
   </data>
   <data name="EditLogicToolTipDescription" xml:space="preserve">
-    <value>Opens a window where you can easily edit relationships and check the network logic.</value>
+    <value>Edit relationships and check the network logic.</value>
   </data>
   <data name="EditLogicToolTipTitle" xml:space="preserve">
     <value>Edit Logic</value>
@@ -802,7 +781,7 @@
     <value>Edit Relationship</value>
   </data>
   <data name="EditRelationshipToolTipDescription" xml:space="preserve">
-    <value>Edits the details of the selected relationship.</value>
+    <value>Edits the details of the current relationship.</value>
   </data>
   <data name="EditRelationshipToolTipTitle" xml:space="preserve">
     <value>Edit Relationship</value>
@@ -1080,9 +1059,6 @@
   <data name="LongestPath" xml:space="preserve">
     <value>Longest Path</value>
   </data>
-  <data name="ManageSchedules" xml:space="preserve">
-    <value>Manage schedules</value>
-  </data>
   <data name="Margins" xml:space="preserve">
     <value>Margins</value>
   </data>
@@ -1323,8 +1299,8 @@
   <data name="NewMilestone" xml:space="preserve">
     <value>New Milestone</value>
   </data>
-  <data name="NewProject" xml:space="preserve">
-    <value>New Project</value>
+  <data name="NewSchedule" xml:space="preserve">
+    <value>New Schedule</value>
   </data>
   <data name="NewTemplate" xml:space="preserve">
     <value>New Template</value>
@@ -1691,6 +1667,12 @@
   </data>
   <data name="Saturday" xml:space="preserve">
     <value>Saturday</value>
+  </data>
+  <data name="SaveSchedule" xml:space="preserve">
+    <value>Save Schedule</value>
+  </data>
+  <data name="SaveScheduleAs" xml:space="preserve">
+    <value>Save Schedule As...</value>
   </data>
   <data name="Schedule" xml:space="preserve">
     <value>Schedule</value>

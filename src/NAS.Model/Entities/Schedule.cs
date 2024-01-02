@@ -40,13 +40,13 @@ namespace NAS.Model.Entities
       CustomAttributes1 = new ObservableCollection<CustomAttribute>();
       CustomAttributes2 = new ObservableCollection<CustomAttribute>();
       CustomAttributes3 = new ObservableCollection<CustomAttribute>();
-      _fragnets = new ObservableCollection<Fragnet>();
+      _fragnets = [];
       _fragnets.CollectionChanged += Fragnets_CollectionChanged;
       Layouts = new ObservableCollection<Layout>();
       Resources = new ObservableCollection<Resource>();
       DataDate = DateTime.Today;
       StartDate = DateTime.Today;
-      Name = NASResources.NewProject;
+      Name = NASResources.NewSchedule;
       CreatedDate = DateTime.Now;
       CustomAttribute1Header = NASResources.Attribute1;
       CustomAttribute2Header = NASResources.Attribute2;
