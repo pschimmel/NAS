@@ -28,7 +28,6 @@ UsePreviousAppDir=true
 OutputBaseFilename=Setup_{#ApplicationShortName}_{#ApplicationVersion}
 WizardImageFile=NormalImage.bmp
 WizardSmallImageFile=SmallImage.bmp
-ShowLanguageDialog=auto
 ChangesAssociations=true
 WizardImageStretch=false
 AppId={{20DD815A-97BC-4BFD-A4C0-773E414DE257}
@@ -48,11 +47,10 @@ Name: "Examples"; Description: "Examples"; Types: full custom
 Name: "{app}"; Components: Application Reports Examples; Permissions: everyone-full
 
 [Files]
-Source: "..\src\Output\bin\release\net8.0-windows\*.dll"; DestDir: "{app}"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Application
-Source: "..\src\Output\bin\release\net8.0-windows\*.exe"; DestDir: "{app}"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Application
-Source: "..\src\Output\bin\release\net8.0-windows\*.json"; DestDir: "{app}"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Application
-Source: "Examples\*.nas"; DestDir: "{app}\Examples"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Examples
-Source: "Examples\*.XER"; DestDir: "{app}\Examples"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Examples
+Source: "..\src\Output\bin\release\net8.0-windows\*.dll"; DestDir: "{app}"; Flags: IgnoreVersion recursesubdirs replacesameversion; Components: Application
+Source: "..\src\Output\bin\release\net8.0-windows\*.exe"; DestDir: "{app}"; Flags: IgnoreVersion recursesubdirs replacesameversion; Components: Application
+Source: "..\src\Output\bin\release\net8.0-windows\*.json"; DestDir: "{app}"; Flags: IgnoreVersion recursesubdirs replacesameversion; Components: Application
+Source: "Examples\*.*"; DestDir: "{app}\Examples"; Flags: IgnoreVersion sortfilesbyextension replacesameversion; Components: Examples
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; 
@@ -68,11 +66,20 @@ Name: "{userdesktop}\{#ApplicationName}"; Filename: "{app}\NAS.exe"; WorkingDir:
 Filename: "{app}\NAS.exe"; Flags: nowait postinstall skipifdoesntexist; Description: "{cm:LaunchProgram,{#ApplicationName}}"
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"; LicenseFile: Lizenz.rtf; InfoBeforeFile: Setup.rtf; 
-Name: "french"; MessagesFile: "compiler:Languages\French.isl"; LicenseFile: Lizenz.rtf; InfoBeforeFile: Setup.rtf; 
-Name: "german"; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: Lizenz.rtf; InfoBeforeFile: Setup.rtf; 
-Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: Lizenz.rtf; InfoBeforeFile: Setup.rtf; 
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: Lizenz.rtf; InfoBeforeFile: Setup.rtf; 
+Name: "Bulgarian"; MessagesFile: "compiler:Languages\Bulgarian.isl"; LicenseFile: "..\LICENSE"
+Name: "Czech"; MessagesFile: "compiler:Languages\Czech.isl"; LicenseFile: "..\LICENSE"
+Name: "Danish"; MessagesFile: "compiler:Languages\Danish.isl"; LicenseFile: "..\LICENSE"
+Name: "Dutch"; MessagesFile: "compiler:Languages\Dutch.isl"; LicenseFile: "..\LICENSE"
+Name: "English"; MessagesFile: "compiler:Default.isl"; LicenseFile: "..\LICENSE"
+Name: "Finnish"; MessagesFile: "compiler:Languages\Finnish.isl"; LicenseFile: "..\LICENSE"
+Name: "French"; MessagesFile: "compiler:Languages\French.isl"; LicenseFile: "..\LICENSE"
+Name: "German"; MessagesFile: "compiler:Languages\German.isl"; LicenseFile: "..\LICENSE"
+Name: "Italian"; MessagesFile: "compiler:Languages\Italian.isl"; LicenseFile: "..\LICENSE"
+Name: "Japanese"; MessagesFile: "compiler:Languages\Japanese.isl"; LicenseFile: "..\LICENSE"
+Name: "Norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"; LicenseFile: "..\LICENSE"
+Name: "Polish"; MessagesFile: "compiler:Languages\Polish.isl"; LicenseFile: "..\LICENSE"
+Name: "Portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"; LicenseFile: "..\LICENSE"
+Name: "Spanish"; MessagesFile: "compiler:Languages\Spanish.isl"; LicenseFile: "..\LICENSE"
 
 [Registry]
 Root: HKCR; SubKey: ".nas"; ValueType: string; ValueData: "Network Analysis System"; Flags: uninsdeletekey
