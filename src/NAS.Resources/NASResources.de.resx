@@ -808,64 +808,64 @@
     <value>PSP-Eintrag bearbeiten</value>
   </data>
   <data name="EditWBSToolTipDescription" xml:space="preserve">
-    <value>Edit the hierarchically structure of the activities.</value>
+    <value>Bearbeiten der hierarchischen Struktur der Vorgänge.</value>
   </data>
   <data name="EditWBSToolTipTitle" xml:space="preserve">
-    <value>Edit Work Breakdown Structure</value>
+    <value>Projektstrukturplan bearbeiten</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-Mail</value>
   </data>
   <data name="EndOn" xml:space="preserve">
-    <value>Ends on</value>
+    <value>Endet am</value>
   </data>
   <data name="EndOnOrEarlier" xml:space="preserve">
-    <value>Ends on or earlier</value>
+    <value>Endet am oder früher</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler</value>
   </data>
   <data name="Evaluations" xml:space="preserve">
-    <value>Evaluations</value>
+    <value>Beurteilungen</value>
   </data>
   <data name="ExportBaseline" xml:space="preserve">
-    <value>Export Baseline</value>
+    <value>Basisplan exportieren</value>
   </data>
   <data name="ExportSchedule" xml:space="preserve">
-    <value>Export Schedule</value>
+    <value>Terminplan exportieren</value>
   </data>
   <data name="ExtendedData" xml:space="preserve">
-    <value>Extended Data</value>
+    <value>Erweiterte Daten</value>
   </data>
   <data name="Extension" xml:space="preserve">
-    <value>Extension</value>
+    <value>Verlängerung</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>File</value>
+    <value>Datei</value>
   </data>
   <data name="FileName" xml:space="preserve">
-    <value>File Name</value>
+    <value>Dateiname</value>
   </data>
   <data name="Filter" xml:space="preserve">
     <value>Filter</value>
   </data>
   <data name="Finances" xml:space="preserve">
-    <value>Finances</value>
+    <value>Finanzen</value>
   </data>
   <data name="FinishDate" xml:space="preserve">
-    <value>Finish Date</value>
+    <value>Enddatum</value>
   </data>
   <data name="FinishDateNotEarlierThanStartDate" xml:space="preserve">
-    <value>The finish date may not be earlier than the start date.</value>
+    <value>Das Enddatum darf nicht früher als das Startdatum sein.</value>
   </data>
   <data name="Finished" xml:space="preserve">
-    <value>Finished</value>
+    <value>Beendet</value>
   </data>
   <data name="FinishedActivities" xml:space="preserve">
-    <value>Finished Activities</value>
+    <value>Abgeschlossene Aktivitäten</value>
   </data>
   <data name="FinishedMilestones" xml:space="preserve">
-    <value>Finished Milestones</value>
+    <value>Abgeschlossene Meilensteine</value>
   </data>
   <data name="FinishFinish" xml:space="preserve">
     <value>Ende - Ende</value>
@@ -874,46 +874,46 @@
     <value>Ende - Anfang</value>
   </data>
   <data name="Fixed" xml:space="preserve">
-    <value>Fixed</value>
+    <value>Fixiert</value>
   </data>
   <data name="FixedCosts" xml:space="preserve">
-    <value>Fixed Costs</value>
+    <value>Festkosten</value>
   </data>
   <data name="FixedEndDate" xml:space="preserve">
-    <value>Fixed end date</value>
+    <value>Fester Endtermin</value>
   </data>
   <data name="FloatZeroOrLess" xml:space="preserve">
-    <value>Float is zero or less</value>
+    <value>Float ist Null oder geringer</value>
   </data>
   <data name="FontSize" xml:space="preserve">
-    <value>Font Size</value>
+    <value>Schriftgröße</value>
   </data>
   <data name="FontType" xml:space="preserve">
-    <value>Font Type</value>
+    <value>Schriftstil</value>
   </data>
   <data name="Footer" xml:space="preserve">
-    <value>Footer</value>
+    <value>Fußzeile</value>
   </data>
   <data name="FooterHeight" xml:space="preserve">
-    <value>Footer Height</value>
+    <value>Höhe der Fußzeile</value>
   </data>
   <data name="Forward" xml:space="preserve">
-    <value>Forward</value>
+    <value>Vorwärts</value>
   </data>
   <data name="Fragnet" xml:space="preserve">
     <value>Fragnet</value>
   </data>
   <data name="FragnetComparison" xml:space="preserve">
-    <value>Fragnet Comparison</value>
+    <value>Fragnet-Vergleich</value>
   </data>
   <data name="FragnetComparisonToolTipDescription" xml:space="preserve">
-    <value>Compare the current schedule with and without fragnets.</value>
+    <value>Vergleicht den aktuellen Terminplan mit und ohne Fragnets.</value>
   </data>
   <data name="FragnetComparisonToolTipTitle" xml:space="preserve">
-    <value>Fragnet Comparison</value>
+    <value>Fragnet-Vergleich</value>
   </data>
   <data name="FragnetIsVisible" xml:space="preserve">
-    <value>Fragnet is Visible</value>
+    <value>Fragnet ist sichtbar</value>
   </data>
   <data name="Fragnets" xml:space="preserve">
     <value>Fragnets</value>
@@ -922,112 +922,109 @@
     <value>Free Float</value>
   </data>
   <data name="Friday" xml:space="preserve">
-    <value>Friday</value>
+    <value>Freitag</value>
   </data>
   <data name="GanttChart" xml:space="preserve">
-    <value>Gantt Chart</value>
+    <value>Gantt Diagramm</value>
   </data>
   <data name="GlobalCalendar" xml:space="preserve">
-    <value>Global Calendar</value>
+    <value>Globaler Kalender</value>
   </data>
   <data name="GlobalCalendars" xml:space="preserve">
-    <value>Global Calendars</value>
+    <value>Globale Kalender</value>
   </data>
   <data name="GlobalResources" xml:space="preserve">
-    <value>Global Resources</value>
+    <value>Globale Ressourcen</value>
   </data>
   <data name="GlobalTemplates" xml:space="preserve">
-    <value>Global Templates</value>
+    <value>Globale Vorlagen</value>
   </data>
   <data name="GoToActivity" xml:space="preserve">
-    <value>Go to Activity</value>
+    <value>Zu Vorgang gehen</value>
   </data>
   <data name="GroupAndSort" xml:space="preserve">
-    <value>Group and Sort</value>
+    <value>Gruppieren und Sortieren</value>
   </data>
   <data name="GroupAndSortToolTipDescription" xml:space="preserve">
-    <value>Group and sort the activities.</value>
+    <value>Gruppieren und Sortieren der Vorgänge.</value>
   </data>
   <data name="GroupAndSortToolTipTitle" xml:space="preserve">
-    <value>Group and Sort</value>
+    <value>Gruppieren und Sortieren</value>
   </data>
   <data name="Grouping" xml:space="preserve">
-    <value>Grouping</value>
+    <value>Gruppierung</value>
   </data>
   <data name="Header" xml:space="preserve">
-    <value>Header</value>
+    <value>Kopfzeile</value>
   </data>
   <data name="HeaderHeight" xml:space="preserve">
-    <value>Header Height</value>
+    <value>Höhe Kopfzeile</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Height</value>
+    <value>Höhe</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Hilfe</value>
   </data>
   <data name="Holidays" xml:space="preserve">
-    <value>Holidays</value>
+    <value>Feiertage</value>
   </data>
   <data name="HorizontalAlignment" xml:space="preserve">
-    <value>Horizontal Alignment</value>
+    <value>Horizontale Ausrichtung</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value>Stunden</value>
   </data>
-  <data name="ID" xml:space="preserve">
-    <value>ID</value>
-  </data>
   <data name="ImportBaseline" xml:space="preserve">
-    <value>Import Baseline</value>
+    <value>Basisplan importieren</value>
   </data>
   <data name="ImportSchedule" xml:space="preserve">
-    <value>Import Schedule</value>
+    <value>Terminplan importieren</value>
   </data>
   <data name="IncreaseDuration" xml:space="preserve">
-    <value>Increase Duration</value>
+    <value>Dauer erhöhen</value>
   </data>
   <data name="IncreaseDurationToolTipDescription" xml:space="preserve">
-    <value>Increases the planned duration.</value>
+    <value>Erhöht die geplante Dauer.</value>
   </data>
   <data name="IncreaseDurationToolTipTitle" xml:space="preserve">
-    <value>Increase Duration</value>
+    <value>Dauer erhöhen</value>
   </data>
   <data name="Information" xml:space="preserve">
-    <value>Information</value>
+    <value>Informationen</value>
   </data>
   <data name="Inhibition" xml:space="preserve">
-    <value>Inhibition</value>
+    <value>Verhinderung</value>
   </data>
   <data name="InstantHelp" xml:space="preserve">
-    <value>Instant Help</value>
+    <value>Instant-Hilfe</value>
   </data>
   <data name="InstantHelpToolTipDescription" xml:space="preserve">
-    <value>Shows or hides the instant help window.</value>
+    <value>Zeigt oder versteckt die Instant-Hilfe.</value>
   </data>
   <data name="InstantHelpToolTipTitle" xml:space="preserve">
-    <value>Instant Help</value>
+    <value>Instant-Hilfe</value>
   </data>
   <data name="Interruption" xml:space="preserve">
-    <value>Interruption</value>
+    <value>Unterbrechung</value>
   </data>
   <data name="Italic" xml:space="preserve">
-    <value>Italic</value>
+    <value>Kursiv</value>
   </data>
   <data name="Lag" xml:space="preserve">
     <value>Lag</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="LateFinishDate" xml:space="preserve">
-    <value>Late Finish Date</value>
+    <value>Spätes Enddatum</value>
   </data>
   <data name="LateStartDate" xml:space="preserve">
-    <value>Late Start Date</value>
+    <value>Spätes Startdatum</value>
   </data>
   <data name="LatestDateOfSchedule" xml:space="preserve">
-    <value>Latest date of schedule (optional)</value>
+    <value>Spätestes Datum des Terminplans (optional)</value>
   </data>
   <data name="Layout" xml:space="preserve">
     <value>Layout</value>
@@ -1036,34 +1033,25 @@
     <value>Layouts</value>
   </data>
   <data name="LayoutSettings" xml:space="preserve">
-    <value>Layout Settings</value>
+    <value>Layout-Einstellungen</value>
   </data>
   <data name="Left" xml:space="preserve">
-    <value>Left</value>
+    <value>Links</value>
   </data>
   <data name="LeftText" xml:space="preserve">
-    <value>Left Text</value>
+    <value>Linker Text</value>
   </data>
   <data name="Limit" xml:space="preserve">
-    <value>Limit</value>
-  </data>
-  <data name="Locked" xml:space="preserve">
-    <value>Locked</value>
-  </data>
-  <data name="LockedBy" xml:space="preserve">
-    <value>Locked by</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Begrenzung</value>
   </data>
   <data name="LongestPath" xml:space="preserve">
-    <value>Longest Path</value>
+    <value>Längster Pfad</value>
   </data>
   <data name="Margins" xml:space="preserve">
-    <value>Margins</value>
+    <value>Ränder</value>
   </data>
   <data name="MaterialResource" xml:space="preserve">
-    <value>Material Resource</value>
+    <value>Materialressource</value>
   </data>
   <data name="MessageActivityAlreadyAssignedToFragnet" xml:space="preserve">
     <value>The Activity {0} is already assigned to fragnet {1}.</value>

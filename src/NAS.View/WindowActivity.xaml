@@ -30,7 +30,7 @@
       <ColumnDefinition Width="3*" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
-    <TextBlock Margin="5" Text="{x:Static resx:NASResources.ID}" />
+    <TextBlock Margin="5" Text="ID" />
     <TextBox Grid.Column="1"
              Margin="2"
              Text="{Binding CurrentActivity.Number}" />

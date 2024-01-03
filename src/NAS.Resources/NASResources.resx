@@ -808,7 +808,7 @@
     <value>Edit WBS Item</value>
   </data>
   <data name="EditWBSToolTipDescription" xml:space="preserve">
-    <value>Edit the hierarchically structure of the activities.</value>
+    <value>Edit the hierarchical structure of the activities.</value>
   </data>
   <data name="EditWBSToolTipTitle" xml:space="preserve">
     <value>Edit Work Breakdown Structure</value>
@@ -823,7 +823,7 @@
     <value>Ends on or earlier</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Fehler</value>
+    <value>Error</value>
   </data>
   <data name="Evaluations" xml:space="preserve">
     <value>Evaluations</value>
@@ -868,10 +868,10 @@
     <value>Finished Milestones</value>
   </data>
   <data name="FinishFinish" xml:space="preserve">
-    <value>Ende - Ende</value>
+    <value>Finish - Finish</value>
   </data>
   <data name="FinishStart" xml:space="preserve">
-    <value>Ende - Anfang</value>
+    <value>Finsih - Start</value>
   </data>
   <data name="Fixed" xml:space="preserve">
     <value>Fixed</value>
@@ -973,10 +973,7 @@
     <value>Horizontal Alignment</value>
   </data>
   <data name="Hours" xml:space="preserve">
-    <value>Stunden</value>
-  </data>
-  <data name="ID" xml:space="preserve">
-    <value>ID</value>
+    <value>Hours</value>
   </data>
   <data name="ImportBaseline" xml:space="preserve">
     <value>Import Baseline</value>
@@ -1046,15 +1043,6 @@
   </data>
   <data name="Limit" xml:space="preserve">
     <value>Limit</value>
-  </data>
-  <data name="Locked" xml:space="preserve">
-    <value>Locked</value>
-  </data>
-  <data name="LockedBy" xml:space="preserve">
-    <value>Locked by</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
   </data>
   <data name="LongestPath" xml:space="preserve">
     <value>Longest Path</value>

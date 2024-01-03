@@ -2131,7 +2131,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit the hierarchically structure of the activities..
+        ///   Looks up a localized string similar to Edit the hierarchical structure of the activities..
         /// </summary>
         public static string EditWBSToolTipDescription {
             get {
@@ -2176,7 +2176,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fehler.
+        ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
             get {
@@ -2311,7 +2311,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ende - Ende.
+        ///   Looks up a localized string similar to Finish - Finish.
         /// </summary>
         public static string FinishFinish {
             get {
@@ -2320,7 +2320,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ende - Anfang.
+        ///   Looks up a localized string similar to Finsih - Start.
         /// </summary>
         public static string FinishStart {
             get {
@@ -2626,20 +2626,11 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stunden.
+        ///   Looks up a localized string similar to Hours.
         /// </summary>
         public static string Hours {
             get {
                 return ResourceManager.GetString("Hours", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ID.
-        /// </summary>
-        public static string ID {
-            get {
-                return ResourceManager.GetString("ID", resourceCulture);
             }
         }
         
@@ -2847,33 +2838,6 @@ namespace NAS.Resources {
         public static string Limit {
             get {
                 return ResourceManager.GetString("Limit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locked.
-        /// </summary>
-        public static string Locked {
-            get {
-                return ResourceManager.GetString("Locked", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Locked by.
-        /// </summary>
-        public static string LockedBy {
-            get {
-                return ResourceManager.GetString("LockedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login.
-        /// </summary>
-        public static string Login {
-            get {
-                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
