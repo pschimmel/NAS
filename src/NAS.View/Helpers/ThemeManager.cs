@@ -3,43 +3,59 @@ using System.Windows;
 using AvalonDock;
 using ES.Tools.UI;
 using NAS.Model.Enums;
+using NAS.Resources;
 
 namespace NAS.View.Helpers
 {
   public static class ThemeManager
   {
-    public static void SetTheme(Themes theme, DockingManager dockingManager = null)
+    public static string GetNameOfTheme(Theme theme)
+    {
+      return theme switch
+      {
+        Theme.Default => NASResources.Default,
+        Theme.DefaultLight => $"{NASResources.Default} {NASResources.Light}",
+        Theme.DefaultDark => $"{NASResources.Default} {NASResources.Dark}",
+        Theme.AeroLight => $"Aero {NASResources.Light}",
+        Theme.AeroDark => $"Aero {NASResources.Dark}",
+        Theme.MetroLight => $"Metro {NASResources.Light}",
+        Theme.MetroDark => $"Metro {NASResources.Dark}",
+        _ => throw new ApplicationException($"Unknown theme {theme}."),
+      };
+    }
+
+    public static void SetTheme(Theme theme, DockingManager dockingManager = null)
     {
       AvalonDock.Themes.Theme avalonTheme;
       ControlzEx.Theming.Theme fluentTheme;
 
       switch (theme)
       {
-        case Themes.StandardLight:
+        case Theme.DefaultLight:
           avalonTheme = new AvalonDock.Themes.VS2010Theme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Light.Blue");
           break;
-        case Themes.StandardDark:
+        case Theme.DefaultDark:
           avalonTheme = new AvalonDock.Themes.VS2010Theme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Dark.Blue");
           break;
-        case Themes.AeroLight:
+        case Theme.AeroLight:
           avalonTheme = new AvalonDock.Themes.AeroTheme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Light.Orange");
           break;
-        case Themes.AeroDark:
+        case Theme.AeroDark:
           avalonTheme = new AvalonDock.Themes.AeroTheme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Dark.Orange");
           break;
-        case Themes.MetroLight:
+        case Theme.MetroLight:
           avalonTheme = new AvalonDock.Themes.MetroTheme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Light.Blue");
           break;
-        case Themes.MetroDark:
+        case Theme.MetroDark:
           avalonTheme = new AvalonDock.Themes.MetroTheme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Dark.Blue");
           break;
-        case Themes.Default:
+        case Theme.Default:
           avalonTheme = new AvalonDock.Themes.MetroTheme();
           fluentTheme = ControlzEx.Theming.ThemeManager.Current.GetTheme("Light.Blue.Colorful");
           break;

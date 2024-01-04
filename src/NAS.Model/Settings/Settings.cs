@@ -12,7 +12,7 @@ namespace NAS.Model.Settings
     private readonly Lazy<List<string>> _lazyLanguages = new(InitLanguages);
     private string _language;
 
-    public Themes Theme { get; set; } = Themes.Default;
+    public Theme Theme { get; set; } = Theme.Default;
 
     public bool ShowInstantHelpOnStartUp { get; set; } = true;
 

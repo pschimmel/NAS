@@ -30,7 +30,7 @@ namespace NAS.ViewModel
     #region Events
 
     public event EventHandler<ProgressEventArgs> DownloadProgress;
-    public event EventHandler<ItemEventArgs<Themes>> RequestThemeChange;
+    public event EventHandler<ItemEventArgs<Theme>> RequestThemeChange;
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> ShowFastReport;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> EditFastReport;
@@ -490,13 +490,14 @@ namespace NAS.ViewModel
     {
       try
       {
-        _ = System.Printing.LocalPrintServer.GetDefaultPrintQueue();
+        System.Printing.LocalPrintServer.GetDefaultPrintQueue();
       }
       catch
       {
-        UserNotificationService.Instance.Error(NASResources.MessageNoStandardPrinter);
+        UserNotificationService.Instance.Error(NASResources.MessageNoDefaultPrinter);
         return;
       }
+
       try
       {
         var viewModel = CurrentSchedule;
@@ -551,12 +552,12 @@ namespace NAS.ViewModel
     {
       var oldTheme = SettingsController.Settings.Theme;
 
-      var vm = new SettingsViewModel(() => RequestThemeChange?.Invoke(this, new ItemEventArgs<Themes>(oldTheme)));
+      var vm = new SettingsViewModel(() => RequestThemeChange?.Invoke(this, new ItemEventArgs<Theme>(oldTheme)));
       vm.PropertyChanged += (sender, args) =>
       {
         if (args.PropertyName == nameof(SettingsViewModel.SelectedTheme))
         {
-          RequestThemeChange?.Invoke(this, new ItemEventArgs<Themes>(vm.SelectedTheme));
+          RequestThemeChange?.Invoke(this, new ItemEventArgs<Theme>(vm.SelectedTheme));
         }
       };
 

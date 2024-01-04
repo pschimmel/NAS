@@ -300,12 +300,6 @@
   <data name="AddWBSItem" xml:space="preserve">
     <value>PSP-Element hinzufügen</value>
   </data>
-  <data name="AeroDark" xml:space="preserve">
-    <value>Aero - Dunkel</value>
-  </data>
-  <data name="AeroLight" xml:space="preserve">
-    <value>Aero - Hell</value>
-  </data>
   <data name="And" xml:space="preserve">
     <value>Und</value>
   </data>
@@ -1054,313 +1048,295 @@
     <value>Materialressource</value>
   </data>
   <data name="MessageActivityAlreadyAssignedToFragnet" xml:space="preserve">
-    <value>The Activity {0} is already assigned to fragnet {1}.</value>
+    <value>Vorgang {0} ist bereits Fragnet {1} zugeordnet.</value>
   </data>
   <data name="MessageCannotCloseWindow" xml:space="preserve">
-    <value>An error has occured. The window cannot be closed.</value>
+    <value>Es ist ein Fehler aufgetreten. Das Fenster kann nicht geschlossen werden.</value>
   </data>
   <data name="MessageCannotRemoveBaseCalendar" xml:space="preserve">
-    <value>The base calendar is assigned to a project calendar and cannot be removed.</value>
+    <value>Der Basiskalender it einem Projektkalender zugeordnet und kann nicht gelöscht werden.</value>
   </data>
   <data name="MessageCannotRemoveCalendar" xml:space="preserve">
-    <value>Cannot remove calendars that are defined as standard calendar or that are assigned to activities.</value>
+    <value>Kalender die als Standardkalender definiert sind oder Vorgängen zugeordnet sind können nicht entfernt werden.</value>
   </data>
   <data name="MessageCannotRemoveCustomAttribute" xml:space="preserve">
-    <value>Cannot remove custom attribute as it is assigned to activities.</value>
+    <value>Benutzerdefinierte Attribut kann nicht entfernt werden, da es Vorgängen zugeordnet ist.</value>
   </data>
   <data name="MessageCannotRemoveResource" xml:space="preserve">
-    <value>Cannot remove resource as it is already assigned to activities.</value>
+    <value>Kann Ressource nicht entfernen, da sie Vorgängen zugeordnet ist.</value>
   </data>
   <data name="MessageChangeIntoActivity" xml:space="preserve">
-    <value>Would you really like to change the selected milestone into an activity?</value>
+    <value>Möchten Sie wirklich den ausgewählten Meilenstein in einen Vorgang umwandeln?</value>
   </data>
   <data name="MessageChangeIntoMilestone" xml:space="preserve">
-    <value>Would you really like to change the selected activity into a milestone?</value>
+    <value>Möchten Sie wirklich den ausgewählten Vorgang in einen Meilenstein umwandeln?</value>
   </data>
   <data name="MessageChangingFragnetVisibilityWarning" xml:space="preserve">
-    <value>Changing the visibility of the fragnet will reschedule with the current data date. Would you like to continue?</value>
+    <value>Wenn die Sichtbarkeit eines Fragnets geändert wird muss der Terminplan mit dem aktuellen Berechnungsdatum neu berechnet werden. Möchten Sie fortfahren?</value>
   </data>
   <data name="MessageCircularDependency" xml:space="preserve">
-    <value>A circular dependency has been detected.</value>
+    <value>Es wurde eine zirkuläre Abhängigkeit entdeckt.</value>
   </data>
   <data name="MessageClose" xml:space="preserve">
-    <value>Would you really like to close the application?</value>
+    <value>Möchten Sie wirklich die Anwendung schließen?</value>
   </data>
   <data name="MessageCreateBaseline" xml:space="preserve">
-    <value>This function will set the current schedule as baseline. Would you like to continue?</value>
+    <value>Dies wird den aktuellen Terminplan als Basisplan setzen. Möchten Sie fortfahren?</value>
   </data>
   <data name="MessageCustomAttributeHeaderCantBeEmpty" xml:space="preserve">
     <value>Die Überschrift darf nicht leer sein.</value>
   </data>
   <data name="MessageDeleteActivity" xml:space="preserve">
-    <value>Would you really like to delete the selected activity ({0})?</value>
+    <value>Möchten Sie wirklich den Vorgang {0} löschen?</value>
   </data>
   <data name="MessageDeleteAllFilters" xml:space="preserve">
-    <value>Would you really like to delete all filters?</value>
+    <value>Möchten Sie wirklich alle Filter löschen?</value>
   </data>
   <data name="MessageDeleteAttribute" xml:space="preserve">
-    <value>Would you really like to delete the selected attribute?</value>
+    <value>Möchten Sie wirklich das ausgewählte Attribut löschen?</value>
   </data>
   <data name="MessageDeleteBaseline" xml:space="preserve">
-    <value>Would you really like to delete the selected baseline?</value>
+    <value>Möchten Sie wirklich den ausgewählten Basisplan löschen?</value>
   </data>
   <data name="MessageDeleteCalendar" xml:space="preserve">
-    <value>Would you really like to delete the selected calendar?</value>
+    <value>Möchten Sie wirklich den ausgewählten Kalender löschen?</value>
   </data>
   <data name="MessageDeleteDistortion" xml:space="preserve">
-    <value>Would you really like to delete the selected distortion?</value>
+    <value>Möchten Sie wirklich die ausgewählte Störung löschen?</value>
   </data>
   <data name="MessageDeleteFilter" xml:space="preserve">
-    <value>Would you really like to delete the selected filter?</value>
+    <value>Möchten Sie wirklich den ausgewählten Filter löschen?</value>
   </data>
   <data name="MessageDeleteFragnet" xml:space="preserve">
-    <value>Would you really like to delete the selected fragnet?</value>
+    <value>Möchten Sie wirklich den ausgewählten Fragnet löschen?</value>
   </data>
   <data name="MessageDeleteGroupingDefinition" xml:space="preserve">
-    <value>Would you really like to delete the selected grouping definition?</value>
+    <value>Möchten Sie wirklich die ausgewählte Gruppierung löschen?</value>
   </data>
   <data name="MessageDeleteLayout" xml:space="preserve">
-    <value>Would you really like to delete the selected layout?</value>
+    <value>Möchten Sie wirklich das ausgewählten Layout löschen?</value>
   </data>
   <data name="MessageDeleteMilestone" xml:space="preserve">
-    <value>Would you really like to delete the selected milestone ({0})?</value>
+    <value>Möchten Sie wirklich den Meilenstein {0} löschen?</value>
   </data>
   <data name="MessageDeleteRelationship" xml:space="preserve">
-    <value>Would you really like to delete the selected relationship ({0})?</value>
+    <value>Möchten Sie wirklich die Abhängigkeit {0} löschen?</value>
   </data>
   <data name="MessageDeleteReport" xml:space="preserve">
-    <value>Would you really like to delete report {0}?</value>
+    <value>Möchten Sie wirklich den Bericht {0} löschen?</value>
   </data>
   <data name="MessageDeleteResource" xml:space="preserve">
-    <value>Would you really like to delete the selected resource?</value>
+    <value>Möchten Sie wirklich die ausgewählte Ressource löschen?</value>
   </data>
   <data name="MessageDeleteResourceAssociation" xml:space="preserve">
-    <value>Would you really like to delete the selected resource association?</value>
-  </data>
-  <data name="MessageDeleteSchedule" xml:space="preserve">
-    <value>Would you really like to delete the selected schedule?</value>
+    <value>Möchten Sie wirklich die ausgewählte Ressourcenzuordnung löschen?</value>
   </data>
   <data name="MessageDeleteSortingDefinition" xml:space="preserve">
-    <value>Would you relly like to delete the selected sorting definition?</value>
+    <value>Möchten Sie wirklich die ausgewählte Sortierung löschen?</value>
   </data>
   <data name="MessageDeleteTemplate" xml:space="preserve">
-    <value>Would you really like to delete the selected PERT template?</value>
+    <value>Möchten Sie wirklich die ausgewählte PERT-Vorlage löschen?</value>
   </data>
   <data name="MessageDeleteWBS" xml:space="preserve">
-    <value>Would you really like to delete the selected WBS item?</value>
+    <value>Möchten Sie wirklich den ausgewählten PSP-Eintrag löschen?</value>
   </data>
   <data name="MessageDownloadCanceled" xml:space="preserve">
-    <value>The download has been canceled.</value>
+    <value>Der Download wurde abgebrochen.</value>
   </data>
   <data name="MessageDownloadFinished" xml:space="preserve">
-    <value>Download finished. Would you like to install the update now?</value>
+    <value>Download abgeschlossen. Möchten Sie das Update jetzt installieren?</value>
   </data>
   <data name="MessageErrorCheckingVersion" xml:space="preserve">
-    <value>An error occured while checking for a new version.</value>
+    <value>Beim Prüfen auf eine neue Version ist ein Fehler aufgetreten.</value>
   </data>
   <data name="MessageErrorPreparingReport" xml:space="preserve">
-    <value>An error occured while preparing the report.</value>
+    <value>Beim Vorbereiten des Berichts ist ein Fehler aufgetreten.</value>
   </data>
   <data name="MessageFileNotFound" xml:space="preserve">
-    <value>File {0} not found.</value>
-  </data>
-  <data name="MessageImportMessages" xml:space="preserve">
-    <value>Import Messages</value>
+    <value>Datei {0} konnte nicht gefunden werden.</value>
   </data>
   <data name="MessageInitializingPrinterQueueError" xml:space="preserve">
-    <value>Unable to initialize the printer queue.</value>
+    <value>Die Druckerwarteschlange konnte nicht initialisiert werden.</value>
   </data>
   <data name="MessageNetworkLoopError" xml:space="preserve">
-    <value>Adding the relationship would create a network loop.</value>
+    <value>Das Hinzufügen der Abhängigkeit würde eine Schleife im Terminplan erzeugen.</value>
   </data>
   <data name="MessageNewVersionFound" xml:space="preserve">
     <value>Es wurde eine neuere Version gefunden ({0}). Zur Zeit ist die Version {1} installiert. Möchten Sie das Update herunterladen?</value>
   </data>
   <data name="MessageNoNewVersion" xml:space="preserve">
-    <value>You are using the current version ({0}).</value>
+    <value>Sie verwenden die aktuelle Version ({0}).</value>
   </data>
-  <data name="MessageNoStandardPrinter" xml:space="preserve">
-    <value>Unable to find standard printer.</value>
+  <data name="MessageNoDefaultPrinter" xml:space="preserve">
+    <value>Es ist kein Standarddrucker definiert.</value>
   </data>
   <data name="Messages" xml:space="preserve">
-    <value>Messages</value>
+    <value>Meldungen</value>
   </data>
   <data name="MessageSaveChangedReport" xml:space="preserve">
     <value>Möchten Sie den geänderten Bericht speichern?</value>
   </data>
   <data name="MessageSaveConfigChanges" xml:space="preserve">
-    <value>Would you like to save the configuration?</value>
+    <value>Möchten Sie die geänderte Konfiguration speichern?</value>
   </data>
   <data name="MessageScheduleNotFound" xml:space="preserve">
-    <value>The schedule could not be found.</value>
+    <value>Der Terminplan konnte nicht gefunden werden.</value>
   </data>
   <data name="MessageShowBaselineInLayout" xml:space="preserve">
-    <value>Would you like to show the baseline in the current layout?</value>
+    <value>Möchten Sie den Basisplan im aktuellen Layout anzeigen?</value>
   </data>
   <data name="MessageTextMayNotBeEmpty" xml:space="preserve">
-    <value>Text may not be empty.</value>
+    <value>Der Text kann nicht leer sein.</value>
   </data>
   <data name="MessageUpdateError" xml:space="preserve">
-    <value>The update could not be started.</value>
+    <value>Das Update konnte nicht gestartet werden.</value>
   </data>
   <data name="MessageUseWBS" xml:space="preserve">
-    <value>This will add an activity the the schedule for each entry of the Work Breakdown Structure.</value>
-  </data>
-  <data name="MetroDark" xml:space="preserve">
-    <value>Metro - Dark</value>
-  </data>
-  <data name="MetroLight" xml:space="preserve">
-    <value>Metro - Light</value>
+    <value>Dies wird einen Vorgang im Terminplan für jeden Eintrag im PSP erstellen.</value>
   </data>
   <data name="Milestones" xml:space="preserve">
-    <value>Milestones</value>
+    <value>Meilensteine</value>
   </data>
   <data name="ModificationIsDisputable" xml:space="preserve">
-    <value>Modification is Disputable</value>
-  </data>
-  <data name="Modified" xml:space="preserve">
-    <value>Modified</value>
-  </data>
-  <data name="ModifiedBy" xml:space="preserve">
-    <value>Modified by</value>
+    <value>Nachtrag ist strittig</value>
   </data>
   <data name="Monday" xml:space="preserve">
-    <value>Monday</value>
+    <value>Montag</value>
   </data>
   <data name="Month" xml:space="preserve">
-    <value>Month</value>
+    <value>Monat</value>
   </data>
   <data name="MoveColumnDown" xml:space="preserve">
-    <value>Move Column Down</value>
+    <value>Spalte nach unten</value>
   </data>
   <data name="MoveColumnUp" xml:space="preserve">
-    <value>Move Column Up</value>
+    <value>Spalte nach oben</value>
   </data>
   <data name="MoveGroupingDefinitionDown" xml:space="preserve">
-    <value>Move Grouping Definition Down</value>
+    <value>Gruppierung nach unten</value>
   </data>
   <data name="MoveGroupingDefinitionUp" xml:space="preserve">
-    <value>Move Grouping Definition Up</value>
+    <value>Gruppierung nach oben</value>
   </data>
   <data name="MoveRowDown" xml:space="preserve">
-    <value>Move Row Down</value>
+    <value>Zeile nach unten</value>
   </data>
   <data name="MoveRowUp" xml:space="preserve">
-    <value>Move Row Up</value>
+    <value>Zeile nach oben</value>
   </data>
   <data name="MoveSortingDefinitionDown" xml:space="preserve">
-    <value>Move Sorting Definition Down</value>
+    <value>Sortierung nach unten</value>
   </data>
   <data name="MoveSortingDefinitionUp" xml:space="preserve">
-    <value>Move Sorting Definition Up</value>
+    <value>Sortierung nach oben</value>
   </data>
   <data name="MoveWBSItemDown" xml:space="preserve">
-    <value>Move WBS item down</value>
+    <value>PSP-Eintrag nach unten</value>
   </data>
   <data name="MoveWBSItemLeft" xml:space="preserve">
-    <value>Move WBS item left</value>
+    <value>PSP-Eintrag nach links</value>
   </data>
   <data name="MoveWBSItemRight" xml:space="preserve">
-    <value>Move WBS item right</value>
+    <value>PSP-Eintrag nach rechts</value>
   </data>
   <data name="MoveWBSItemUp" xml:space="preserve">
-    <value>Move WBS item up</value>
+    <value>PSP-Eintrag nach oben</value>
   </data>
   <data name="MSProjectFiles" xml:space="preserve">
-    <value>MS Project XML files</value>
+    <value>MS Project XML-Dateien</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="NASFiles" xml:space="preserve">
-    <value>Network Analysis System files</value>
+    <value>Network Analysis System-Dateien</value>
   </data>
   <data name="NewActivity" xml:space="preserve">
-    <value>New Activity</value>
+    <value>Neuer Vorgang</value>
   </data>
   <data name="NewCalendar" xml:space="preserve">
-    <value>New Calendar</value>
+    <value>Neuer Kalender</value>
   </data>
   <data name="NewLayout" xml:space="preserve">
-    <value>New Layout</value>
+    <value>Neues Layout</value>
   </data>
   <data name="NewMilestone" xml:space="preserve">
-    <value>New Milestone</value>
+    <value>Neuer Meilenstein</value>
   </data>
   <data name="NewSchedule" xml:space="preserve">
     <value>Neuer Terminplan</value>
   </data>
   <data name="NewTemplate" xml:space="preserve">
-    <value>New Template</value>
+    <value>Neue Vorlage</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Nein</value>
   </data>
   <data name="NoActiveFragnets" xml:space="preserve">
-    <value>No active fragnets.</value>
+    <value>Keine aktiven Fragnets.</value>
   </data>
   <data name="NoConstraint" xml:space="preserve">
-    <value>No Constraint</value>
+    <value>Keine Randbedingung</value>
   </data>
   <data name="None" xml:space="preserve">
-    <value>None</value>
+    <value>Kein</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>Number</value>
+    <value>Nummer</value>
   </data>
   <data name="NumberMustBeUnique" xml:space="preserve">
-    <value>The number must be unique.</value>
+    <value>Die Nummer muss eindeutig sein.</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="OpenSchedule" xml:space="preserve">
-    <value>Open Schedule</value>
+    <value>Terminplan öffnen</value>
   </data>
   <data name="Or" xml:space="preserve">
-    <value>Or</value>
+    <value>Oder</value>
   </data>
   <data name="Orientation" xml:space="preserve">
-    <value>Orientation</value>
+    <value>Ausrichtung</value>
   </data>
   <data name="PageSettings" xml:space="preserve">
-    <value>Page Settings</value>
+    <value>Seiteneinstellungen</value>
   </data>
   <data name="PageSize" xml:space="preserve">
-    <value>Page size</value>
+    <value>Seitengröße</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="Percent" xml:space="preserve">
-    <value>Percent</value>
+    <value>Prozent</value>
   </data>
   <data name="PercentComplete" xml:space="preserve">
-    <value>Percent Complete</value>
+    <value>Prozent abgeschlossen</value>
   </data>
   <data name="PertChart" xml:space="preserve">
-    <value>PERT Chart</value>
+    <value>PERT-Diagramm</value>
   </data>
   <data name="PertTemplate" xml:space="preserve">
-    <value>PERT Template</value>
+    <value>PERT-Vorlage</value>
   </data>
   <data name="PertTemplates" xml:space="preserve">
-    <value>PERT Templates</value>
+    <value>PERT-Vorlagen</value>
   </data>
   <data name="PlannedCosts" xml:space="preserve">
-    <value>Planned Costs</value>
+    <value>Geplante Kosten</value>
   </data>
   <data name="PlannedCostsDecreased" xml:space="preserve">
-    <value>The planned costs were decreased by {0} €.</value>
+    <value>Die geplanten Kosten wurden um {0} € verringert.</value>
   </data>
   <data name="PlannedCostsIncreased" xml:space="preserve">
-    <value>The planned costs were increased by {0} €.</value>
+    <value>Die geplanten Kosten wurden um {0} € erhöht.</value>
   </data>
   <data name="PlannedDates" xml:space="preserve">
-    <value>Planned Dates</value>
+    <value>Plandaten</value>
   </data>
   <data name="PlannedDuration" xml:space="preserve">
-    <value>Planned Duration</value>
+    <value>Geplante Dauer</value>
   </data>
   <data name="PlannedProjectCostsDecreased" xml:space="preserve">
     <value>The planned project costs were decreased by {0} €.</value>
@@ -1809,11 +1785,11 @@
   <data name="StandardColors" xml:space="preserve">
     <value>Standard Colors</value>
   </data>
-  <data name="StandardDark" xml:space="preserve">
-    <value>Standard - Dark</value>
+  <data name="Dark" xml:space="preserve">
+    <value>Dunkel</value>
   </data>
-  <data name="StandardLight" xml:space="preserve">
-    <value>Standard - Light</value>
+  <data name="Light" xml:space="preserve">
+    <value>Hell</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>

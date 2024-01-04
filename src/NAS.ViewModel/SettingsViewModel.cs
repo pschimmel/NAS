@@ -9,7 +9,7 @@ namespace NAS.ViewModel
   {
     #region Fields
 
-    private Themes _selectedTheme;
+    private Theme _selectedTheme;
     private readonly Action _cancelAction;
 
     #endregion
@@ -56,7 +56,7 @@ namespace NAS.ViewModel
 
     #region Public Members
 
-    public Themes SelectedTheme
+    public Theme SelectedTheme
     {
       get => _selectedTheme;
       set

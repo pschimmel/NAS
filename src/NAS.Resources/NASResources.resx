@@ -300,12 +300,6 @@
   <data name="AddWBSItem" xml:space="preserve">
     <value>Add WBS Item</value>
   </data>
-  <data name="AeroDark" xml:space="preserve">
-    <value>Aero - Dark</value>
-  </data>
-  <data name="AeroLight" xml:space="preserve">
-    <value>Aero - Light</value>
-  </data>
   <data name="And" xml:space="preserve">
     <value>And</value>
   </data>
@@ -1054,7 +1048,7 @@
     <value>Material Resource</value>
   </data>
   <data name="MessageActivityAlreadyAssignedToFragnet" xml:space="preserve">
-    <value>The Activity {0} is already assigned to fragnet {1}.</value>
+    <value>The activity {0} is already assigned to fragnet {1}.</value>
   </data>
   <data name="MessageCannotCloseWindow" xml:space="preserve">
     <value>An error has occured. The window cannot be closed.</value>
@@ -1093,7 +1087,7 @@
     <value>The header can't be empty.</value>
   </data>
   <data name="MessageDeleteActivity" xml:space="preserve">
-    <value>Would you really like to delete the selected activity ({0})?</value>
+    <value>Would you really like to delete activity {0}?</value>
   </data>
   <data name="MessageDeleteAllFilters" xml:space="preserve">
     <value>Would you really like to delete all filters?</value>
@@ -1123,10 +1117,10 @@
     <value>Would you really like to delete the selected layout?</value>
   </data>
   <data name="MessageDeleteMilestone" xml:space="preserve">
-    <value>Would you really like to delete the selected milestone ({0})?</value>
+    <value>Would you really like to delete milestone {0}?</value>
   </data>
   <data name="MessageDeleteRelationship" xml:space="preserve">
-    <value>Would you really like to delete the selected relationship ({0})?</value>
+    <value>Would you really like to delete relationship {0}?</value>
   </data>
   <data name="MessageDeleteReport" xml:space="preserve">
     <value>Would you really like to delete report {0}?</value>
@@ -1137,11 +1131,8 @@
   <data name="MessageDeleteResourceAssociation" xml:space="preserve">
     <value>Would you really like to delete the selected resource association?</value>
   </data>
-  <data name="MessageDeleteSchedule" xml:space="preserve">
-    <value>Would you really like to delete the selected schedule?</value>
-  </data>
   <data name="MessageDeleteSortingDefinition" xml:space="preserve">
-    <value>Would you relly like to delete the selected sorting definition?</value>
+    <value>Would you really like to delete the selected sorting definition?</value>
   </data>
   <data name="MessageDeleteTemplate" xml:space="preserve">
     <value>Would you really like to delete the selected PERT template?</value>
@@ -1164,9 +1155,6 @@
   <data name="MessageFileNotFound" xml:space="preserve">
     <value>File {0} not found.</value>
   </data>
-  <data name="MessageImportMessages" xml:space="preserve">
-    <value>Import Messages</value>
-  </data>
   <data name="MessageInitializingPrinterQueueError" xml:space="preserve">
     <value>Unable to initialize the printer queue.</value>
   </data>
@@ -1174,13 +1162,13 @@
     <value>Adding the relationship would create a network loop.</value>
   </data>
   <data name="MessageNewVersionFound" xml:space="preserve">
-    <value>Es wurde eine neuere Version gefunden ({0}). Zur Zeit ist die Version {1} installiert. Möchten Sie das Update herunterladen?</value>
+    <value>A new version was found ({0}). Installed version is {1}. Would you like to download the update?</value>
   </data>
   <data name="MessageNoNewVersion" xml:space="preserve">
     <value>You are using the current version ({0}).</value>
   </data>
-  <data name="MessageNoStandardPrinter" xml:space="preserve">
-    <value>Unable to find standard printer.</value>
+  <data name="MessageNoDefaultPrinter" xml:space="preserve">
+    <value>Unable to find default printer.</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>Messages</value>
@@ -1189,7 +1177,7 @@
     <value>Möchten Sie den geänderten Bericht speichern?</value>
   </data>
   <data name="MessageSaveConfigChanges" xml:space="preserve">
-    <value>Would you like to save the configuration?</value>
+    <value>Would you like to save the changed configuration?</value>
   </data>
   <data name="MessageScheduleNotFound" xml:space="preserve">
     <value>The schedule could not be found.</value>
@@ -1206,23 +1194,11 @@
   <data name="MessageUseWBS" xml:space="preserve">
     <value>This will add an activity the the schedule for each entry of the Work Breakdown Structure.</value>
   </data>
-  <data name="MetroDark" xml:space="preserve">
-    <value>Metro - Dark</value>
-  </data>
-  <data name="MetroLight" xml:space="preserve">
-    <value>Metro - Light</value>
-  </data>
   <data name="Milestones" xml:space="preserve">
     <value>Milestones</value>
   </data>
   <data name="ModificationIsDisputable" xml:space="preserve">
     <value>Modification is Disputable</value>
-  </data>
-  <data name="Modified" xml:space="preserve">
-    <value>Modified</value>
-  </data>
-  <data name="ModifiedBy" xml:space="preserve">
-    <value>Modified by</value>
   </data>
   <data name="Monday" xml:space="preserve">
     <value>Monday</value>
@@ -1300,7 +1276,7 @@
     <value>No active fragnets.</value>
   </data>
   <data name="NoConstraint" xml:space="preserve">
-    <value>No Constraint</value>
+    <value>No constraint</value>
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
@@ -1809,11 +1785,11 @@
   <data name="StandardColors" xml:space="preserve">
     <value>Standard Colors</value>
   </data>
-  <data name="StandardDark" xml:space="preserve">
-    <value>Standard - Dark</value>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
   </data>
-  <data name="StandardLight" xml:space="preserve">
-    <value>Standard - Light</value>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>

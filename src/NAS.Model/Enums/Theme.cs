@@ -1,10 +1,10 @@
 ﻿namespace NAS.Model.Enums
 {
-  public enum Themes
+  public enum Theme
   {
     Default,
-    StandardLight,
-    StandardDark,
+    DefaultLight,
+    DefaultDark,
     AeroLight,
     AeroDark,
     MetroLight,

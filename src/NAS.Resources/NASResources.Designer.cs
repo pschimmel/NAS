@@ -610,24 +610,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aero - Dark.
-        /// </summary>
-        public static string AeroDark {
-            get {
-                return ResourceManager.GetString("AeroDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Aero - Light.
-        /// </summary>
-        public static string AeroLight {
-            get {
-                return ResourceManager.GetString("AeroLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to And.
         /// </summary>
         public static string And {
@@ -1380,6 +1362,15 @@ namespace NAS.Resources {
         public static string CurrentDate {
             get {
                 return ResourceManager.GetString("CurrentDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dark.
+        /// </summary>
+        public static string Dark {
+            get {
+                return ResourceManager.GetString("Dark", resourceCulture);
             }
         }
         
@@ -2833,6 +2824,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Light.
+        /// </summary>
+        public static string Light {
+            get {
+                return ResourceManager.GetString("Light", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limit.
         /// </summary>
         public static string Limit {
@@ -2869,7 +2869,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Activity {0} is already assigned to fragnet {1}..
+        ///   Looks up a localized string similar to The activity {0} is already assigned to fragnet {1}..
         /// </summary>
         public static string MessageActivityAlreadyAssignedToFragnet {
             get {
@@ -2986,7 +2986,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you really like to delete the selected activity ({0})?.
+        ///   Looks up a localized string similar to Would you really like to delete activity {0}?.
         /// </summary>
         public static string MessageDeleteActivity {
             get {
@@ -3076,7 +3076,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you really like to delete the selected milestone ({0})?.
+        ///   Looks up a localized string similar to Would you really like to delete milestone {0}?.
         /// </summary>
         public static string MessageDeleteMilestone {
             get {
@@ -3085,7 +3085,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you really like to delete the selected relationship ({0})?.
+        ///   Looks up a localized string similar to Would you really like to delete relationship {0}?.
         /// </summary>
         public static string MessageDeleteRelationship {
             get {
@@ -3121,16 +3121,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you really like to delete the selected schedule?.
-        /// </summary>
-        public static string MessageDeleteSchedule {
-            get {
-                return ResourceManager.GetString("MessageDeleteSchedule", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Would you relly like to delete the selected sorting definition?.
+        ///   Looks up a localized string similar to Would you really like to delete the selected sorting definition?.
         /// </summary>
         public static string MessageDeleteSortingDefinition {
             get {
@@ -3202,15 +3193,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Import Messages.
-        /// </summary>
-        public static string MessageImportMessages {
-            get {
-                return ResourceManager.GetString("MessageImportMessages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Unable to initialize the printer queue..
         /// </summary>
         public static string MessageInitializingPrinterQueueError {
@@ -3229,11 +3211,20 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Es wurde eine neuere Version gefunden ({0}). Zur Zeit ist die Version {1} installiert. Möchten Sie das Update herunterladen?.
+        ///   Looks up a localized string similar to A new version was found ({0}). Installed version is {1}. Would you like to download the update?.
         /// </summary>
         public static string MessageNewVersionFound {
             get {
                 return ResourceManager.GetString("MessageNewVersionFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to find default printer..
+        /// </summary>
+        public static string MessageNoDefaultPrinter {
+            get {
+                return ResourceManager.GetString("MessageNoDefaultPrinter", resourceCulture);
             }
         }
         
@@ -3243,15 +3234,6 @@ namespace NAS.Resources {
         public static string MessageNoNewVersion {
             get {
                 return ResourceManager.GetString("MessageNoNewVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unable to find standard printer..
-        /// </summary>
-        public static string MessageNoStandardPrinter {
-            get {
-                return ResourceManager.GetString("MessageNoStandardPrinter", resourceCulture);
             }
         }
         
@@ -3274,7 +3256,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you like to save the configuration?.
+        ///   Looks up a localized string similar to Would you like to save the changed configuration?.
         /// </summary>
         public static string MessageSaveConfigChanges {
             get {
@@ -3328,24 +3310,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Metro - Dark.
-        /// </summary>
-        public static string MetroDark {
-            get {
-                return ResourceManager.GetString("MetroDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Metro - Light.
-        /// </summary>
-        public static string MetroLight {
-            get {
-                return ResourceManager.GetString("MetroLight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Milestones.
         /// </summary>
         public static string Milestones {
@@ -3360,24 +3324,6 @@ namespace NAS.Resources {
         public static string ModificationIsDisputable {
             get {
                 return ResourceManager.GetString("ModificationIsDisputable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Modified.
-        /// </summary>
-        public static string Modified {
-            get {
-                return ResourceManager.GetString("Modified", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Modified by.
-        /// </summary>
-        public static string ModifiedBy {
-            get {
-                return ResourceManager.GetString("ModifiedBy", resourceCulture);
             }
         }
         
@@ -3607,7 +3553,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No Constraint.
+        ///   Looks up a localized string similar to No constraint.
         /// </summary>
         public static string NoConstraint {
             get {
@@ -5133,24 +5079,6 @@ namespace NAS.Resources {
         public static string StandardColors {
             get {
                 return ResourceManager.GetString("StandardColors", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Standard - Dark.
-        /// </summary>
-        public static string StandardDark {
-            get {
-                return ResourceManager.GetString("StandardDark", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Standard - Light.
-        /// </summary>
-        public static string StandardLight {
-            get {
-                return ResourceManager.GetString("StandardLight", resourceCulture);
             }
         }
         

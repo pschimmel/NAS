@@ -25,7 +25,7 @@
                           MethodName="GetValues"
                           ObjectType="{x:Type sys:Enum}">
         <ObjectDataProvider.MethodParameters>
-          <x:Type TypeName="model:Themes" />
+          <x:Type TypeName="model:Theme" />
         </ObjectDataProvider.MethodParameters>
       </ObjectDataProvider>
 
