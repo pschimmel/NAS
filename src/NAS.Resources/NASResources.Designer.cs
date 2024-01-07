@@ -3760,15 +3760,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please check the settings..
-        /// </summary>
-        public static string PleaseCheckSettings {
-            get {
-                return ResourceManager.GetString("PleaseCheckSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Please enter a constraint date..
         /// </summary>
         public static string PleaseEnterConstraintDate {
@@ -3913,15 +3904,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Port.
-        /// </summary>
-        public static string Port {
-            get {
-                return ResourceManager.GetString("Port", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Predecessor.
         /// </summary>
         public static string Predecessor {
@@ -4030,7 +4012,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ProjectComparison.
+        ///   Looks up a localized string similar to Project Comparison.
         /// </summary>
         public static string ProjectComparison {
             get {
@@ -4039,7 +4021,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The project end has changed from {0} to {1}..
+        ///   Looks up a localized string similar to The project end changed from {0} to {1}..
         /// </summary>
         public static string ProjectEndChanged {
             get {
@@ -4048,7 +4030,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The project end has not changed.
+        ///   Looks up a localized string similar to The project end has not changed..
         /// </summary>
         public static string ProjectEndUnchanged {
             get {
@@ -4237,7 +4219,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove all Filters.
+        ///   Looks up a localized string similar to Remove All Filters.
         /// </summary>
         public static string RemoveAllFilters {
             get {
@@ -4471,7 +4453,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select a report from the list and press the buttons to preview the report..
+        ///   Looks up a localized string similar to Please select a report from the list and press the button to preview the report..
         /// </summary>
         public static string ReportsToolTipDescription {
             get {
@@ -4507,7 +4489,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resets the PERT diagramm and automatically sets the layout..
+        ///   Looks up a localized string similar to Resets the PERT chart and arranges the activities automatically..
         /// </summary>
         public static string ResetPertToolTipDescription {
             get {
@@ -4516,7 +4498,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset PERT Diagramm.
+        ///   Looks up a localized string similar to Reset PERT.
         /// </summary>
         public static string ResetPertToolTipTitle {
             get {
@@ -4750,15 +4732,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Server.
-        /// </summary>
-        public static string Server {
-            get {
-                return ResourceManager.GetString("Server", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Set as Standard Calendar.
         /// </summary>
         public static string SetAsStandardCalendar {
@@ -4786,7 +4759,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show actual Cost.
+        ///   Looks up a localized string similar to Show Actual Cost.
         /// </summary>
         public static string ShowActualCost {
             get {
@@ -4957,7 +4930,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Resource.
+        ///   Looks up a localized string similar to Show Resources.
         /// </summary>
         public static string ShowResource {
             get {
@@ -4975,7 +4948,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows a resource distribution..
+        ///   Looks up a localized string similar to Shows the resource distribution..
         /// </summary>
         public static string ShowResourceToolTipDescription {
             get {
@@ -4984,7 +4957,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show Resource.
+        ///   Looks up a localized string similar to Show Resources.
         /// </summary>
         public static string ShowResourceToolTipTitle {
             get {
@@ -5128,7 +5101,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Anfang - Anfang.
+        ///   Looks up a localized string similar to Start - Start.
         /// </summary>
         public static string StartStart {
             get {
@@ -5326,15 +5299,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to WARNING: The program was not started with admin rights..
-        /// </summary>
-        public static string WarningToolNotStartedWithAdminRights {
-            get {
-                return ResourceManager.GetString("WarningToolNotStartedWithAdminRights", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to WBS.
         /// </summary>
         public static string WBS {
@@ -5362,7 +5326,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shows the program web site.
+        ///   Looks up a localized string similar to Shows the program web site..
         /// </summary>
         public static string WebsiteToolTipDescription {
             get {
@@ -5416,7 +5380,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This Wizard helps you creating a new project. Please go through the pages step by step..
+        ///   Looks up a localized string similar to This wizard will help you to create a new schedule. Please follow the instructions on the following pages..
         /// </summary>
         public static string WizardDescriptionIntroPage {
             get {

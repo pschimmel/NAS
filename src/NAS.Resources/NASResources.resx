@@ -1344,9 +1344,6 @@
   <data name="PlannedProjectCostsIncreased" xml:space="preserve">
     <value>The planned project costs were increased by {0} €.</value>
   </data>
-  <data name="PleaseCheckSettings" xml:space="preserve">
-    <value>Please check the settings.</value>
-  </data>
   <data name="PleaseEnterConstraintDate" xml:space="preserve">
     <value>Please enter a constraint date.</value>
   </data>
@@ -1395,9 +1392,6 @@
   <data name="PleaseWait" xml:space="preserve">
     <value>Please wait...</value>
   </data>
-  <data name="Port" xml:space="preserve">
-    <value>Port</value>
-  </data>
   <data name="Predecessor" xml:space="preserve">
     <value>Predecessor</value>
   </data>
@@ -1435,13 +1429,13 @@
     <value>Project Calendars</value>
   </data>
   <data name="ProjectComparison" xml:space="preserve">
-    <value>ProjectComparison</value>
+    <value>Project Comparison</value>
   </data>
   <data name="ProjectEndChanged" xml:space="preserve">
-    <value>The project end has changed from {0} to {1}.</value>
+    <value>The project end changed from {0} to {1}.</value>
   </data>
   <data name="ProjectEndUnchanged" xml:space="preserve">
-    <value>The project end has not changed</value>
+    <value>The project end has not changed.</value>
   </data>
   <data name="ProjectFinishDate" xml:space="preserve">
     <value>Project Finish Date</value>
@@ -1504,7 +1498,7 @@
     <value>Remove Activity (DEL)</value>
   </data>
   <data name="RemoveAllFilters" xml:space="preserve">
-    <value>Remove all Filters</value>
+    <value>Remove All Filters</value>
   </data>
   <data name="RemoveAssignment" xml:space="preserve">
     <value>Remove Assignment</value>
@@ -1582,7 +1576,7 @@
     <value>Reports</value>
   </data>
   <data name="ReportsToolTipDescription" xml:space="preserve">
-    <value>Please select a report from the list and press the buttons to preview the report.</value>
+    <value>Please select a report from the list and press the button to preview the report.</value>
   </data>
   <data name="ReportsToolTipTitle" xml:space="preserve">
     <value>Reports</value>
@@ -1594,10 +1588,10 @@
     <value>Resert PERT</value>
   </data>
   <data name="ResetPertToolTipDescription" xml:space="preserve">
-    <value>Resets the PERT diagramm and automatically sets the layout.</value>
+    <value>Resets the PERT chart and arranges the activities automatically.</value>
   </data>
   <data name="ResetPertToolTipTitle" xml:space="preserve">
-    <value>Reset PERT Diagramm</value>
+    <value>Reset PERT</value>
   </data>
   <data name="ResetSelection" xml:space="preserve">
     <value>Reset Selection</value>
@@ -1674,9 +1668,6 @@
   <data name="SelectTemplate" xml:space="preserve">
     <value>Select Template</value>
   </data>
-  <data name="Server" xml:space="preserve">
-    <value>Server</value>
-  </data>
   <data name="SetAsStandardCalendar" xml:space="preserve">
     <value>Set as Standard Calendar</value>
   </data>
@@ -1687,7 +1678,7 @@
     <value>Show</value>
   </data>
   <data name="ShowActualCost" xml:space="preserve">
-    <value>Show actual Cost</value>
+    <value>Show Actual Cost</value>
   </data>
   <data name="ShowAsGantt" xml:space="preserve">
     <value>Show as Gantt Chart</value>
@@ -1744,16 +1735,16 @@
     <value>Show Relationships</value>
   </data>
   <data name="ShowResource" xml:space="preserve">
-    <value>Show Resource</value>
+    <value>Show Resources</value>
   </data>
   <data name="ShowResourceAllocation" xml:space="preserve">
     <value>Show Resource Allocation</value>
   </data>
   <data name="ShowResourceToolTipDescription" xml:space="preserve">
-    <value>Shows a resource distribution.</value>
+    <value>Shows the resource distribution.</value>
   </data>
   <data name="ShowResourceToolTipTitle" xml:space="preserve">
-    <value>Show Resource</value>
+    <value>Show Resources</value>
   </data>
   <data name="ShowWBSSummary" xml:space="preserve">
     <value>Show WBS Summary</value>
@@ -1807,7 +1798,7 @@
     <value>Starts on or later</value>
   </data>
   <data name="StartStart" xml:space="preserve">
-    <value>Anfang - Anfang</value>
+    <value>Start - Start</value>
   </data>
   <data name="Stop" xml:space="preserve">
     <value>Stop</value>
@@ -1872,9 +1863,6 @@
   <data name="Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
-  <data name="WarningToolNotStartedWithAdminRights" xml:space="preserve">
-    <value>WARNING: The program was not started with admin rights.</value>
-  </data>
   <data name="WBS" xml:space="preserve">
     <value>WBS</value>
   </data>
@@ -1885,7 +1873,7 @@
     <value>Website</value>
   </data>
   <data name="WebsiteToolTipDescription" xml:space="preserve">
-    <value>Shows the program web site</value>
+    <value>Shows the program web site.</value>
   </data>
   <data name="WebsiteToolTipTitle" xml:space="preserve">
     <value>Website</value>
@@ -1903,7 +1891,7 @@
     <value>Width</value>
   </data>
   <data name="WizardDescriptionIntroPage" xml:space="preserve">
-    <value>This Wizard helps you creating a new project. Please go through the pages step by step.</value>
+    <value>This wizard will help you to create a new schedule. Please follow the instructions on the following pages.</value>
   </data>
   <data name="WizardDescriptionLastPage" xml:space="preserve">
     <value>All required data has been entered.</value>

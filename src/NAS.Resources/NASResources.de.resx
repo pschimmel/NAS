@@ -460,7 +460,7 @@
     <value>Spalten</value>
   </data>
   <data name="ColumnSpan" xml:space="preserve">
-    <value>Spaltenzahl</value>
+    <value>Spalten verbinden</value>
   </data>
   <data name="Combination" xml:space="preserve">
     <value>Kombination</value>
@@ -877,7 +877,7 @@
     <value>Fester Endtermin</value>
   </data>
   <data name="FloatZeroOrLess" xml:space="preserve">
-    <value>Float ist Null oder geringer</value>
+    <value>Buffer ist Null oder geringer</value>
   </data>
   <data name="FontSize" xml:space="preserve">
     <value>Schriftgröße</value>
@@ -913,7 +913,7 @@
     <value>Fragnets</value>
   </data>
   <data name="FreeFloat" xml:space="preserve">
-    <value>Free Float</value>
+    <value>Freier Puffer</value>
   </data>
   <data name="Friday" xml:space="preserve">
     <value>Freitag</value>
@@ -991,13 +991,13 @@
     <value>Verhinderung</value>
   </data>
   <data name="InstantHelp" xml:space="preserve">
-    <value>Instant-Hilfe</value>
+    <value>Soforthilfe</value>
   </data>
   <data name="InstantHelpToolTipDescription" xml:space="preserve">
-    <value>Zeigt oder versteckt die Instant-Hilfe.</value>
+    <value>Zeigt oder versteckt die Soforthilfe.</value>
   </data>
   <data name="InstantHelpToolTipTitle" xml:space="preserve">
-    <value>Instant-Hilfe</value>
+    <value>Soforthilfe</value>
   </data>
   <data name="Interruption" xml:space="preserve">
     <value>Unterbrechung</value>
@@ -1339,298 +1339,292 @@
     <value>Geplante Dauer</value>
   </data>
   <data name="PlannedProjectCostsDecreased" xml:space="preserve">
-    <value>The planned project costs were decreased by {0} €.</value>
+    <value>Die Plankosten wurden um {0} € verringert.</value>
   </data>
   <data name="PlannedProjectCostsIncreased" xml:space="preserve">
-    <value>The planned project costs were increased by {0} €.</value>
-  </data>
-  <data name="PleaseCheckSettings" xml:space="preserve">
-    <value>Please check the settings.</value>
+    <value>Die Plankosten wurden um {0} € erhöht.</value>
   </data>
   <data name="PleaseEnterConstraintDate" xml:space="preserve">
-    <value>Please enter a constraint date.</value>
+    <value>Bitte geben Sie ein Datum für die Randbedingung ein.</value>
   </data>
   <data name="PleaseEnterDate" xml:space="preserve">
-    <value>Please enter a date.</value>
+    <value>Bitte geben Sie ein Datum ein.</value>
   </data>
   <data name="PleaseEnterDescription" xml:space="preserve">
-    <value>Please enter a description.</value>
+    <value>Bitte geben Sie eine Beschreibung ein.</value>
   </data>
   <data name="PleaseEnterLag" xml:space="preserve">
-    <value>Please enter the lag.</value>
+    <value>Bitte geben Sie den Lag ein.</value>
   </data>
   <data name="PleaseEnterName" xml:space="preserve">
-    <value>Please enter a name.</value>
+    <value>Bitte geben Sie einen Namen ein.</value>
   </data>
   <data name="PleaseEnterNumber" xml:space="preserve">
-    <value>Please enter a number.</value>
+    <value>Bitte geben Sie eine Zahl ein.</value>
   </data>
   <data name="PleaseEnterNumberOfDays" xml:space="preserve">
-    <value>Please enter the number of days.</value>
+    <value>Bitte geben Sie die Anzahl der Tage ein.</value>
   </data>
   <data name="PleaseEnterNumbersFromTo" xml:space="preserve">
-    <value>Please enter numbers between {0} and {1} only.</value>
+    <value>Bitte geben Sie nur Zahlen zwischen {0} und {1} ein.</value>
   </data>
   <data name="PleaseEnterPercentage" xml:space="preserve">
-    <value>Please enter the percentage.</value>
+    <value>Bitte geben Sie eine Prozentzahl ein.</value>
   </data>
   <data name="PleaseEnterPlannedDuration" xml:space="preserve">
-    <value>Please enter the planned duration.</value>
+    <value>Bitte geben Sie die Plandauer ein.</value>
   </data>
   <data name="PleaseEnterStartDate" xml:space="preserve">
-    <value>Please enter the start date.</value>
+    <value>Bitte geben Sie einen Starttermin ein.</value>
   </data>
   <data name="PleaseSelectCalendar" xml:space="preserve">
-    <value>Please select a calendar.</value>
+    <value>Bitte wählen Sie einen Kalender aus.</value>
   </data>
   <data name="PleaseSelectProperty" xml:space="preserve">
-    <value>Please select a property.</value>
+    <value>Bitte wählen Sie eine Eigenschaft aus.</value>
   </data>
   <data name="PleaseSelectTemplate" xml:space="preserve">
-    <value>Please select a tempate.</value>
+    <value>Bitte wählen Sie eine Vorlage aus.</value>
   </data>
   <data name="PleaseSelectTwoActivities" xml:space="preserve">
-    <value>Please select two activities or milestones.</value>
+    <value>Bitte selektieren Sie zwei Vorgänge oder Meilensteine.</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
-    <value>Please wait...</value>
-  </data>
-  <data name="Port" xml:space="preserve">
-    <value>Port</value>
+    <value>Bitte warten...</value>
   </data>
   <data name="Predecessor" xml:space="preserve">
-    <value>Predecessor</value>
+    <value>Vorgänger</value>
   </data>
   <data name="PrimaveraFiles" xml:space="preserve">
-    <value>Primavera P6 files</value>
+    <value>Primavera P6-Dateien</value>
   </data>
   <data name="Print" xml:space="preserve">
-    <value>Print</value>
+    <value>Drucken</value>
   </data>
   <data name="Printer" xml:space="preserve">
-    <value>Printer</value>
+    <value>Drucker</value>
   </data>
   <data name="PrintLayout" xml:space="preserve">
-    <value>Print Layout</value>
+    <value>Drucklayout</value>
   </data>
   <data name="PrintReport" xml:space="preserve">
-    <value>Print Report</value>
+    <value>Bericht drucken</value>
   </data>
   <data name="PrintToolTipDescription" xml:space="preserve">
-    <value>Prints the current schedule.</value>
+    <value>Druckt den aktuellen Terminplan.</value>
   </data>
   <data name="PrintToolTipTitle" xml:space="preserve">
-    <value>Print</value>
+    <value>Drucken</value>
   </data>
   <data name="Progress" xml:space="preserve">
-    <value>Progress</value>
+    <value>Fortschritt</value>
   </data>
   <data name="ProjectBudgetDecreased" xml:space="preserve">
-    <value>The project budget was decreased by {0} €.</value>
+    <value>Das Projektbudget wurde um {0} € verringert.</value>
   </data>
   <data name="ProjectBudgetIncreased" xml:space="preserve">
-    <value>The project budget was increased by {0} €.</value>
+    <value>Das Projektbudget wurde um {0} € erhöht.</value>
   </data>
   <data name="ProjectCalendars" xml:space="preserve">
-    <value>Project Calendars</value>
+    <value>Projektkalender</value>
   </data>
   <data name="ProjectComparison" xml:space="preserve">
-    <value>ProjectComparison</value>
+    <value>Projektvergleich</value>
   </data>
   <data name="ProjectEndChanged" xml:space="preserve">
-    <value>The project end has changed from {0} to {1}.</value>
+    <value>Das Projektende ändert sich von {0} auf {1}.</value>
   </data>
   <data name="ProjectEndUnchanged" xml:space="preserve">
-    <value>The project end has not changed</value>
+    <value>Das Projektende hat sich nicht geändert.</value>
   </data>
   <data name="ProjectFinishDate" xml:space="preserve">
-    <value>Project Finish Date</value>
+    <value>Projektenddatum</value>
   </data>
   <data name="ProjectName" xml:space="preserve">
-    <value>Project Name</value>
+    <value>Projektname</value>
   </data>
   <data name="ProjectProperties" xml:space="preserve">
-    <value>Properties</value>
+    <value>Eigenschaften</value>
   </data>
   <data name="ProjectPropertiesToolTipDescription" xml:space="preserve">
-    <value>Edits the properties of the current project.</value>
+    <value>Bearbeiten der Eigenschaften des aktuellen Projekts.</value>
   </data>
   <data name="ProjectPropertiesToolTipTitle" xml:space="preserve">
-    <value>Project Properties</value>
+    <value>Projekteigenschaften</value>
   </data>
   <data name="ProjectResources" xml:space="preserve">
-    <value>Project Resources</value>
+    <value>Projektressourcen</value>
   </data>
   <data name="ProjectStartDate" xml:space="preserve">
-    <value>Project Start Date</value>
+    <value>Projektstartdatum</value>
   </data>
   <data name="ProjectTemplates" xml:space="preserve">
-    <value>Project Templates</value>
+    <value>Projektvorlagen</value>
   </data>
   <data name="Property" xml:space="preserve">
-    <value>Property</value>
+    <value>Eigenschaft</value>
   </data>
   <data name="Question" xml:space="preserve">
-    <value>Question</value>
+    <value>Frage</value>
   </data>
   <data name="RecentColors" xml:space="preserve">
-    <value>Recent Colors</value>
+    <value>Kürzlich verwendete Farben</value>
   </data>
   <data name="RecentSchedules" xml:space="preserve">
-    <value>Recent Schedules</value>
+    <value>Kürzlich geöffnete Terminpläne</value>
   </data>
   <data name="Reduction" xml:space="preserve">
-    <value>Reduction</value>
+    <value>Verringerung</value>
   </data>
   <data name="Relationship" xml:space="preserve">
-    <value>Relationship</value>
+    <value>Abhängigkeit</value>
   </data>
   <data name="Relationships" xml:space="preserve">
-    <value>Relationships</value>
+    <value>Abhängigkeiten</value>
   </data>
   <data name="RelationshipType" xml:space="preserve">
-    <value>Relationship Type</value>
+    <value>Typ der Abhängigkeit</value>
   </data>
   <data name="RemainingDuration" xml:space="preserve">
-    <value>Remaining Duration</value>
+    <value>Verbleibende Dauer</value>
   </data>
   <data name="RemoveActivity" xml:space="preserve">
-    <value>Remove Activity</value>
+    <value>Vorgang entfernen</value>
   </data>
   <data name="RemoveActivityToolTipDescription" xml:space="preserve">
-    <value>Removes an activity or milestone from the schedule.</value>
+    <value>Entfernt einen Vorgang oder Meilenstein vom Terminplan.</value>
   </data>
   <data name="RemoveActivityToolTipTitle" xml:space="preserve">
-    <value>Remove Activity (DEL)</value>
+    <value>Vorgang entfernen (DEL)</value>
   </data>
   <data name="RemoveAllFilters" xml:space="preserve">
-    <value>Remove all Filters</value>
+    <value>Alle Filter entfernen</value>
   </data>
   <data name="RemoveAssignment" xml:space="preserve">
-    <value>Remove Assignment</value>
+    <value>Zuordnung entfernen</value>
   </data>
   <data name="RemoveAttribute" xml:space="preserve">
-    <value>Remove Attribute</value>
+    <value>Attribut entfernen</value>
   </data>
   <data name="RemoveBaseline" xml:space="preserve">
-    <value>Remove Baseline</value>
+    <value>Basisplan entfernen</value>
   </data>
   <data name="RemoveCalendar" xml:space="preserve">
-    <value>Remove Calendar</value>
+    <value>Kalender entfernen</value>
   </data>
   <data name="RemoveColumn" xml:space="preserve">
-    <value>Remove Column</value>
+    <value>Spalte entfernen</value>
   </data>
   <data name="RemoveDistortion" xml:space="preserve">
-    <value>Remove Distortion</value>
+    <value>Störung entfernen</value>
   </data>
   <data name="RemoveFilter" xml:space="preserve">
-    <value>Remove Filter</value>
+    <value>Filter entfernen</value>
   </data>
   <data name="RemoveFragnet" xml:space="preserve">
-    <value>Remove Fragnet</value>
+    <value>Fragnet entfernen</value>
   </data>
   <data name="RemoveGroupingDefinition" xml:space="preserve">
-    <value>Remove Grouping Definition</value>
+    <value>Gruppierung entfernen</value>
   </data>
   <data name="RemoveHoliday" xml:space="preserve">
-    <value>Remove Holiday</value>
+    <value>Feiertag entfernen</value>
   </data>
   <data name="RemoveLayout" xml:space="preserve">
-    <value>Remove Layout</value>
+    <value>Layout entfernen</value>
   </data>
   <data name="RemoveLayoutToolTipDescription" xml:space="preserve">
-    <value>Remove the current layout.</value>
+    <value>Entfernt das aktuelle Layout.</value>
   </data>
   <data name="RemoveLayoutToolTipTitle" xml:space="preserve">
-    <value>Remove Layout</value>
+    <value>Layout entfernen</value>
   </data>
   <data name="RemovePertTemplate" xml:space="preserve">
-    <value>Remove PERT Template</value>
+    <value>PERT-Vorlage entfernen</value>
   </data>
   <data name="RemoveProperty" xml:space="preserve">
-    <value>Remove Property</value>
+    <value>Eigenschaft entfernen</value>
   </data>
   <data name="RemoveRelationship" xml:space="preserve">
-    <value>Remove Relationship</value>
+    <value>Abhängigkeit entfernen</value>
   </data>
   <data name="RemoveRelationshipToolTipDescription" xml:space="preserve">
-    <value>Removes the selected relationship from the schedule.</value>
+    <value>Entfernt die ausgewählte Abhängigkeit vom Terminplan.</value>
   </data>
   <data name="RemoveRelationshipToolTipTitle" xml:space="preserve">
-    <value>Remove Relationship (Ctrl-DEL)</value>
+    <value>Abhängigkeit entfernen (Ctrl-DEL)</value>
   </data>
   <data name="RemoveResource" xml:space="preserve">
-    <value>Remove Resource</value>
+    <value>Ressource entfernen</value>
   </data>
   <data name="RemoveRow" xml:space="preserve">
-    <value>Remove Row</value>
+    <value>Zeile entfernen</value>
   </data>
   <data name="RemoveSortingDefinition" xml:space="preserve">
-    <value>Remove Sorting Definition</value>
+    <value>Sortierung entfernen</value>
   </data>
   <data name="RemoveWBSItem" xml:space="preserve">
-    <value>Remove WBS Item</value>
+    <value>PSP-Eintrag entfernen</value>
   </data>
   <data name="RenameReport" xml:space="preserve">
-    <value>Rename Report</value>
+    <value>Bericht umbenennen</value>
   </data>
   <data name="ReportName" xml:space="preserve">
-    <value>Report Name</value>
+    <value>Berichtsname</value>
   </data>
   <data name="Reports" xml:space="preserve">
-    <value>Reports</value>
+    <value>Berichte</value>
   </data>
   <data name="ReportsToolTipDescription" xml:space="preserve">
-    <value>Please select a report from the list and press the buttons to preview the report.</value>
+    <value>Bitte wählen Sie einen Bericht aus der Liste und drücken Sie den Button um eine Vorschau des Berichts zu sehen.</value>
   </data>
   <data name="ReportsToolTipTitle" xml:space="preserve">
-    <value>Reports</value>
+    <value>Berichte</value>
   </data>
   <data name="Reschedule" xml:space="preserve">
-    <value>Reschedule</value>
+    <value>Neu berechnen</value>
   </data>
   <data name="ResetPert" xml:space="preserve">
-    <value>Resert PERT</value>
+    <value>PERT zurücksetzen</value>
   </data>
   <data name="ResetPertToolTipDescription" xml:space="preserve">
-    <value>Resets the PERT diagramm and automatically sets the layout.</value>
+    <value>Setzt das PERT-Diagramm zurück und ordnet die Vorgänge automatisch an.</value>
   </data>
   <data name="ResetPertToolTipTitle" xml:space="preserve">
-    <value>Reset PERT Diagramm</value>
+    <value>PERT-Diagramm zurücksetzen</value>
   </data>
   <data name="ResetSelection" xml:space="preserve">
-    <value>Reset Selection</value>
+    <value>Auswahl zurücksetzen</value>
   </data>
   <data name="Resource" xml:space="preserve">
-    <value>Resource</value>
+    <value>Ressource</value>
   </data>
   <data name="ResourceAssignment" xml:space="preserve">
-    <value>Resource Assignment</value>
+    <value>Ressourcenzuordnung</value>
   </data>
   <data name="ResourceAssignments" xml:space="preserve">
-    <value>Resource Assignments</value>
+    <value>Resssourcenzuordnungen</value>
   </data>
   <data name="Resources" xml:space="preserve">
-    <value>Resources</value>
+    <value>Ressourcen</value>
   </data>
   <data name="RetardedDuration" xml:space="preserve">
-    <value>Retarded Duration</value>
+    <value>Verzögerte Dauer</value>
   </data>
   <data name="Right" xml:space="preserve">
     <value>Rechts</value>
   </data>
   <data name="Row" xml:space="preserve">
-    <value>Row</value>
+    <value>Zeile</value>
   </data>
   <data name="Rows" xml:space="preserve">
-    <value>Rows</value>
+    <value>Zeilen</value>
   </data>
   <data name="RowSpan" xml:space="preserve">
-    <value>Row Span</value>
+    <value>Zeilen verbinden</value>
   </data>
   <data name="Saturday" xml:space="preserve">
-    <value>Saturday</value>
+    <value>Samstag</value>
   </data>
   <data name="SaveSchedule" xml:space="preserve">
     <value>Terminplan speichern</value>
@@ -1639,97 +1633,94 @@
     <value>Terminplan speichern unter...</value>
   </data>
   <data name="Schedule" xml:space="preserve">
-    <value>Schedule</value>
+    <value>Terminplan</value>
   </data>
   <data name="Schedule1" xml:space="preserve">
-    <value>Schedule 1</value>
+    <value>Terminplan 1</value>
   </data>
   <data name="Schedule2" xml:space="preserve">
-    <value>Schedule 2</value>
+    <value>Terminplan 2</value>
   </data>
   <data name="Schedules" xml:space="preserve">
-    <value>Schedules</value>
+    <value>Terminpläne</value>
   </data>
   <data name="SchedulesCompared" xml:space="preserve">
-    <value>The schedule {0} and schedule {1} have been compared.</value>
+    <value>Die Terminpläne {0} und {1} wurden miteinander verglichen.</value>
   </data>
   <data name="SchedulingSettings" xml:space="preserve">
-    <value>Scheduling Settings</value>
+    <value>Berechnungseinstellungen</value>
   </data>
   <data name="SchedulingSettingsToolTipDescription" xml:space="preserve">
-    <value>Change the settings for scheduling.</value>
+    <value>Ändern der Einstellungen für die Terminierung.</value>
   </data>
   <data name="SchedulingSettingsToolTipTitle" xml:space="preserve">
-    <value>Scheduling Settings</value>
+    <value>Berechnungseinstellungen</value>
   </data>
   <data name="SDEFFiles" xml:space="preserve">
-    <value>SDEF files</value>
+    <value>SDEF-Dateien</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Search</value>
+    <value>Suche</value>
   </data>
   <data name="Selection" xml:space="preserve">
-    <value>Selection</value>
+    <value>Auswahl</value>
   </data>
   <data name="SelectTemplate" xml:space="preserve">
-    <value>Select Template</value>
-  </data>
-  <data name="Server" xml:space="preserve">
-    <value>Server</value>
+    <value>Vorlage auswählen</value>
   </data>
   <data name="SetAsStandardCalendar" xml:space="preserve">
-    <value>Set as Standard Calendar</value>
+    <value>Als Standardkalender setzen</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Ansicht</value>
   </data>
   <data name="ShowActualCost" xml:space="preserve">
-    <value>Show actual Cost</value>
+    <value>Tatsächliche Kosten anzeigen</value>
   </data>
   <data name="ShowAsGantt" xml:space="preserve">
-    <value>Show as Gantt Chart</value>
+    <value>Zeige als Gantt-Diagramm</value>
   </data>
   <data name="ShowAsGanttToolTipDescription" xml:space="preserve">
-    <value>Displays the current Schedule as Gantt Chart.</value>
+    <value>Zeigt den aktuellen Terminplan als Gantt-Diagramm.</value>
   </data>
   <data name="ShowAsGanttToolTipTitle" xml:space="preserve">
-    <value>Show as Gantt Chart</value>
+    <value>Zeige als Gantt-Diagramm</value>
   </data>
   <data name="ShowAsPert" xml:space="preserve">
-    <value>Show as PERT Chart</value>
+    <value>Zeige als PERT-Diagramm</value>
   </data>
   <data name="ShowAsPertToolTipDescription" xml:space="preserve">
-    <value>Displays the current schedule as PERT chart.</value>
+    <value>Zeigt den aktuellen Terminplan als PERT-Diagramm.</value>
   </data>
   <data name="ShowAsPertToolTipTitle" xml:space="preserve">
-    <value>Show as PERT chart</value>
+    <value>Zeige als PERT-Diagramm</value>
   </data>
   <data name="ShowBudget" xml:space="preserve">
-    <value>Show Budget</value>
+    <value>Zeige Budget</value>
   </data>
   <data name="ShowChart" xml:space="preserve">
-    <value>Show Chart</value>
+    <value>Zeige Diagramm</value>
   </data>
   <data name="ShowComparisons" xml:space="preserve">
-    <value>Show Comparisons</value>
+    <value>Zeige Vergleiche</value>
   </data>
   <data name="ShowFloat" xml:space="preserve">
-    <value>Show Float</value>
+    <value>Zeige Puffer</value>
   </data>
   <data name="ShowFloatToolTipDescription" xml:space="preserve">
-    <value>Activates or deactivates the total float in the current layout.</value>
+    <value>Aktiviert oder deaktiviert die Anzeige des Gesamtpuffers im aktuellen Layout.</value>
   </data>
   <data name="ShowFloatToolTipTitle" xml:space="preserve">
-    <value>Show Float</value>
+    <value>Zeige Puffer</value>
   </data>
   <data name="ShowFragnet" xml:space="preserve">
-    <value>Show Fragnet</value>
+    <value>Zeige Fragnet</value>
   </data>
   <data name="ShowInstantHelpAtStartup" xml:space="preserve">
-    <value>Show instant help at startup</value>
+    <value>Zeigt Soforthilfe beim Start</value>
   </data>
   <data name="ShowPlannedCost" xml:space="preserve">
     <value>Show planned Cost</value>
@@ -1738,52 +1729,52 @@
     <value>Show Relationships</value>
   </data>
   <data name="ShowRelationshipsToolTipDescription" xml:space="preserve">
-    <value>Activates or deactivates the relationships in the current layout.</value>
+    <value>Aktiviert oder deaktiviert die Anzeige der Abhängigkeiten im aktuellen Layout.</value>
   </data>
   <data name="ShowRelationshipsToolTipTitle" xml:space="preserve">
-    <value>Show Relationships</value>
+    <value>Zeige Abhängigkeiten</value>
   </data>
   <data name="ShowResource" xml:space="preserve">
-    <value>Show Resource</value>
+    <value>Zeige Ressourcen</value>
   </data>
   <data name="ShowResourceAllocation" xml:space="preserve">
-    <value>Show Resource Allocation</value>
+    <value>Zeige Ressourcenzuordnung</value>
   </data>
   <data name="ShowResourceToolTipDescription" xml:space="preserve">
-    <value>Shows a resource distribution.</value>
+    <value>Zeigt die Verteilungen der Ressourcen.</value>
   </data>
   <data name="ShowResourceToolTipTitle" xml:space="preserve">
-    <value>Show Resource</value>
+    <value>Zeige Ressourcen</value>
   </data>
   <data name="ShowWBSSummary" xml:space="preserve">
-    <value>Show WBS Summary</value>
+    <value>Zeige PSP-Zusammenfassung</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Größe</value>
   </data>
   <data name="SomeChangesRequireRestart" xml:space="preserve">
-    <value>Some changes will be activated when you restart the application.</value>
+    <value>Einige Änderungen werden erst aktiv, wenn die Anwendung neu gestartet wird.</value>
   </data>
   <data name="Sorting" xml:space="preserve">
-    <value>Sorting</value>
+    <value>Sortierung</value>
   </data>
   <data name="SplitActivity" xml:space="preserve">
-    <value>Split Activity</value>
+    <value>Vorgang teilen</value>
   </data>
   <data name="SplitActivityToolTipDescription" xml:space="preserve">
-    <value>Splits an activity into two activites with a finish-start relationship.</value>
+    <value>Teilt einen Vorgang in zwei Vorgänge, die mit einer Ende-Start-Abhängigkeit verbunden sind.</value>
   </data>
   <data name="SplitActivityToolTipTitle" xml:space="preserve">
-    <value>Split Activity</value>
+    <value>Teile Vorgang</value>
   </data>
   <data name="Standard" xml:space="preserve">
     <value>Standard</value>
   </data>
   <data name="StandardCalendar" xml:space="preserve">
-    <value>Standard Calendar</value>
+    <value>Standardkalender</value>
   </data>
   <data name="StandardColors" xml:space="preserve">
-    <value>Standard Colors</value>
+    <value>Standardfarben</value>
   </data>
   <data name="Dark" xml:space="preserve">
     <value>Dunkel</value>
@@ -1795,186 +1786,183 @@
     <value>Start</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
+    <value>Startdatum</value>
   </data>
   <data name="Started" xml:space="preserve">
-    <value>Started</value>
+    <value>Begonnen</value>
   </data>
   <data name="StartOn" xml:space="preserve">
-    <value>Starts on</value>
+    <value>Beginnt am</value>
   </data>
   <data name="StartOnOrLater" xml:space="preserve">
-    <value>Starts on or later</value>
+    <value>Beginnt am oder später</value>
   </data>
   <data name="StartStart" xml:space="preserve">
     <value>Anfang - Anfang</value>
   </data>
   <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>Anhalten</value>
   </data>
   <data name="Successor" xml:space="preserve">
-    <value>Successor</value>
+    <value>Vorgänger</value>
   </data>
   <data name="Sunday" xml:space="preserve">
-    <value>Sunday</value>
+    <value>Sonntag</value>
   </data>
   <data name="Template" xml:space="preserve">
-    <value>Template</value>
+    <value>Vorlage</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Thema</value>
   </data>
   <data name="Thursday" xml:space="preserve">
-    <value>Thursday</value>
+    <value>Donnerstag</value>
   </data>
   <data name="Top" xml:space="preserve">
-    <value>Top</value>
+    <value>Open</value>
   </data>
   <data name="TotalFloat" xml:space="preserve">
-    <value>Total Float</value>
+    <value>Gesamtpuffer</value>
   </data>
   <data name="TotalFloatDecreased" xml:space="preserve">
-    <value>The total float of the activity was decreased {0} days.</value>
+    <value>Der Gesamtpuffer des Vorgangs wurde um {0} Tage verringert.</value>
   </data>
   <data name="TotalFloatIncreased" xml:space="preserve">
-    <value>The total float of the activity was increased {0} days.</value>
+    <value>Der Gesamtpuffer des Vorgangs wurde um {0} Tage erhöht.</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
-    <value>Tuesday</value>
+    <value>Dienstag</value>
   </data>
   <data name="Unit" xml:space="preserve">
-    <value>Unit</value>
+    <value>Einheit</value>
   </data>
   <data name="UnitsPerDay" xml:space="preserve">
-    <value>Units per Day</value>
+    <value>Einheit pro Tag</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Value</value>
+    <value>Wert</value>
   </data>
   <data name="ValueNotValid" xml:space="preserve">
-    <value>The value entered is not valid.</value>
+    <value>Der eingegebene Wert ist ungültig.</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
   <data name="VerticalAlignment" xml:space="preserve">
-    <value>Vertical Alignment</value>
+    <value>Vertikale Ausrichtung</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>View</value>
+    <value>Ansicht</value>
   </data>
   <data name="Visible" xml:space="preserve">
-    <value>Visible</value>
+    <value>Sichtbar</value>
   </data>
   <data name="VisibleBaselines" xml:space="preserve">
-    <value>Visible Baselines</value>
+    <value>Sichtbare Basispläne</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
-  <data name="WarningToolNotStartedWithAdminRights" xml:space="preserve">
-    <value>WARNING: The program was not started with admin rights.</value>
+    <value>Warnung</value>
   </data>
   <data name="WBS" xml:space="preserve">
-    <value>WBS</value>
+    <value>PSP</value>
   </data>
   <data name="WBSItem" xml:space="preserve">
-    <value>WBS Item</value>
+    <value>PSP-Eintrag</value>
   </data>
   <data name="Website" xml:space="preserve">
     <value>Website</value>
   </data>
   <data name="WebsiteToolTipDescription" xml:space="preserve">
-    <value>Shows the program web site</value>
+    <value>Zeigt die Webseite dieser Anwendung.</value>
   </data>
   <data name="WebsiteToolTipTitle" xml:space="preserve">
     <value>Website</value>
   </data>
   <data name="Wednesday" xml:space="preserve">
-    <value>Wednesday</value>
+    <value>Mittwoch</value>
   </data>
   <data name="Week" xml:space="preserve">
-    <value>Week</value>
+    <value>Woche</value>
   </data>
   <data name="WhatWouldYouLikeToDo" xml:space="preserve">
-    <value>What would you like to do?</value>
+    <value>Was möchten Sie tun?</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Width</value>
+    <value>Breite</value>
   </data>
   <data name="WizardDescriptionIntroPage" xml:space="preserve">
-    <value>This Wizard helps you creating a new project. Please go through the pages step by step.</value>
+    <value>Dieser Assistent hilft Ihnen dabei einen neuen Terminplan anzulegen. Bitte folgen Sie den Anweisungen auf den folgenden Seiten.</value>
   </data>
   <data name="WizardDescriptionLastPage" xml:space="preserve">
-    <value>All required data has been entered.</value>
+    <value>Es wurden alle erforderlichen Daten eingegeben.</value>
   </data>
   <data name="WizardDescriptionLastPageError" xml:space="preserve">
-    <value>Not all required data has been entered.</value>
+    <value>Es wurden nicht alle erforderlichen Daten eingegeben.</value>
   </data>
   <data name="WizardDescriptionPage1" xml:space="preserve">
-    <value>Please enter the basic data of the project.</value>
+    <value>Bitte geben Sie die Grunddaten des Projekts ein.</value>
   </data>
   <data name="WizardDescriptionPage2" xml:space="preserve">
-    <value>Please enter basic dates of the project. The data date is the current date that is used for the calculation of the network.</value>
+    <value>Bitte geben Sie die grundlegenden Termine des Projekts ein. Das aktuelle Datum wird zum Berechnen des Terminplans genutzt.</value>
   </data>
   <data name="WizardDescriptionPage3" xml:space="preserve">
-    <value>Please enter a basic structure of the schedule and at least one project calendar.</value>
+    <value>Bitte geben Sie die grundlegende Struktur des Terminplans ein und mindestens einen Projektkalender.</value>
   </data>
   <data name="WizardTitleIntroPage" xml:space="preserve">
-    <value>Project Wizard</value>
+    <value>Projektassistent</value>
   </data>
   <data name="WizardTitleLastPage" xml:space="preserve">
-    <value>Congratulations!</value>
+    <value>Herzlichen Glückwunsch!</value>
   </data>
   <data name="WizardTitleLastPageError" xml:space="preserve">
-    <value>Error!</value>
+    <value>Fehler!</value>
   </data>
   <data name="WizardTitlePage1" xml:space="preserve">
-    <value>Basic Data</value>
+    <value>Grunddaten</value>
   </data>
   <data name="WizardTitlePage2" xml:space="preserve">
-    <value>Dates</value>
+    <value>Termine</value>
   </data>
   <data name="WizardTitlePage3" xml:space="preserve">
-    <value>Pre-Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="WorkDays" xml:space="preserve">
-    <value>Work Days</value>
+    <value>Werktage</value>
   </data>
   <data name="WorkResource" xml:space="preserve">
-    <value>Work Resource</value>
+    <value>Arbeitsressource</value>
   </data>
   <data name="XDays" xml:space="preserve">
-    <value>{0} Days</value>
+    <value>{0} Tage</value>
   </data>
   <data name="Year" xml:space="preserve">
-    <value>Year</value>
+    <value>Jahr</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Ja</value>
   </data>
   <data name="Zoom" xml:space="preserve">
     <value>Zoom</value>
   </data>
   <data name="ZoomIn" xml:space="preserve">
-    <value>Zoom In</value>
+    <value>Hereinzoomen</value>
   </data>
   <data name="ZoomOut" xml:space="preserve">
-    <value>Zoom Out</value>
+    <value>Herauszommen</value>
   </data>
   <data name="ZoomToActualSize" xml:space="preserve">
-    <value>Zoom to actual Size</value>
+    <value>Auf tatsächliche Größe zoomen</value>
   </data>
   <data name="ZoomToolTipDescription" xml:space="preserve">
-    <value>Adjusts the zoom of the current schedule.</value>
+    <value>Passt den Zoomfaktor des aktuellen Terminplans an.</value>
   </data>
   <data name="ZoomToolTipTitle" xml:space="preserve">
     <value>Zoom</value>
   </data>
   <data name="ZoomToPage" xml:space="preserve">
-    <value>Zoom to Page</value>
+    <value>Aus Seite zoomen</value>
   </data>
   <data name="ZoomToPageWidth" xml:space="preserve">
-    <value>Zoom to Page Width</value>
+    <value>Auf Seitenbreite zoomen</value>
   </data>
 </root>
