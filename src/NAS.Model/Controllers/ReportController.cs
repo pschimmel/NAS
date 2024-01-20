@@ -119,7 +119,7 @@ namespace NAS.Model.Controllers
         }
       }
 
-      return new ReportCollection();
+      return [];
     }
   }
 }

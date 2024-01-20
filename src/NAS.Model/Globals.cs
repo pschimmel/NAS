@@ -11,15 +11,17 @@ namespace NAS.Model
 
     public static Version Version => Assembly.GetEntryAssembly().GetName().Version;
 
-    public static string CopyRight => "Engineering Solutions 2012-" + DateTime.Now.Year;
+    public static string Copyright => "Engineering Solutions 2012-" + DateTime.Now.Year;
+
+    public const string Website = "http://www.engineeringsolutions.de/";
 
     public static string SettingsFileName => Path.Combine(GetStoragePath(), "NAS.Settings.xml");
 
-    public static string ReportsFileName => "NAS.Reports.xml";
+    public const string ReportsFileName = "NAS.Reports.xml";
 
     public static string UserReportsPath => Path.Combine(GetStoragePath(), ReportsFileName);
 
-    public static string ReportsPathName => "Reports";
+    public const string ReportsPathName = "Reports";
 
     public static string UserName => Environment.UserName;
 

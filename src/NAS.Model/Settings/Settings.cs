@@ -57,7 +57,7 @@ namespace NAS.Model.Settings
     [XmlIgnore]
     public List<string> Languages => _lazyLanguages.Value;
 
-    public ObservableCollection<RecentSchedule> RecentlyOpenedSchedules { get; } = new ObservableCollection<RecentSchedule>();
+    public ObservableCollection<RecentSchedule> RecentlyOpenedSchedules { get; } = [];
 
     private static List<string> InitLanguages()
     {

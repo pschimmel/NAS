@@ -174,10 +174,10 @@ namespace NAS.Model.Entities
       spacingY = 5;
       height = 100;
       width = 150;
-      RowDefinitions = new ObservableCollection<RowDefinition>();
-      ColumnDefinitions = new ObservableCollection<ColumnDefinition>();
-      Items = new ObservableCollection<PERTDataItem>();
-      ActivityData = new ObservableCollection<PERTActivityData>();
+      RowDefinitions = [];
+      ColumnDefinitions = [];
+      Items = [];
+      ActivityData = [];
     }
 
     private void CreateCopy(PERTDefinition other)

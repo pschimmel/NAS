@@ -37,7 +37,7 @@ namespace NAS.Model.Scheduler
       _schedule = schedule ?? throw new ArgumentException("Schedule may not be null");
       _settings = settings ?? throw new ArgumentException("Settings may not be null");
       RelationshipCalendar = RelationshipCalendarType.Predecessor;
-      scheduledActivities = new List<Activity>();
+      scheduledActivities = [];
     }
 
     public Scheduler(Schedule schedule, SchedulingSettings settings, OnCalculationStarted calculationStarted, OnCalculationEnded calculationEnded, OnCalculationProgress calculationProgress)

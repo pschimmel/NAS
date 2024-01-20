@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
@@ -13,12 +10,12 @@ namespace NAS.Model.ImportExport
   {
     //private ScheduleController controller;
     private Schedule schedule;
-    private readonly Dictionary<int, Calendar> calendars = new Dictionary<int, Calendar>();
-    private readonly Dictionary<int, Entities.Activity> activities = new Dictionary<int, Entities.Activity>();
+    private readonly Dictionary<int, Calendar> calendars = [];
+    private readonly Dictionary<int, Entities.Activity> activities = [];
 
     public string FilterName => NASResources.PrimaveraFiles;
 
-    public string FileExtension => "xer";
+    public string FileExtension => ".xer";
 
     public string Output { get; private set; } = string.Empty;
 
@@ -407,7 +404,7 @@ namespace NAS.Model.ImportExport
 
     private class Fragment
     {
-      private readonly List<List<string>> fragment = new List<List<string>>();
+      private readonly List<List<string>> fragment = [];
 
       public Fragment(string[] headers, SectionType name)
       {

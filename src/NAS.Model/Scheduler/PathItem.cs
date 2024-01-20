@@ -15,6 +15,6 @@ namespace NAS.Model.Scheduler
 
     public int Length { get; set; }
 
-    public List<PathItem> Children { get; } = new List<PathItem>();
+    public List<PathItem> Children { get; } = [];
   }
 }

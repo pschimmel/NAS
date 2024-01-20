@@ -8,12 +8,11 @@ namespace NAS.Model.ImportExport
 {
   public class NASFilter : IImportFilter, IExportFilter
   {
-    //private ScheduleController controller;
     private Schedule schedule;
 
     public string FilterName => NASResources.NASFiles;
 
-    public string FileExtension => "NAS";
+    public string FileExtension => ".nas";
 
     public string Output => string.Empty;
 
@@ -37,7 +36,7 @@ namespace NAS.Model.ImportExport
         throw new FileNotFoundException("File " + fileName + " not found!");
       }
 
-      if (!fileName.ToLower().EndsWith(FileExtension.ToLower(), StringComparison.Ordinal))
+      if (!string.Equals(Path.GetExtension(fileName), FileExtension, StringComparison.InvariantCultureIgnoreCase))
       {
         throw new Exception("Wrong file extension!");
       }

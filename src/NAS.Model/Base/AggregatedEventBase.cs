@@ -2,7 +2,7 @@
 {
   public abstract class AggregatedEventBase
   {
-    private readonly Dictionary<IEventSubscription, Func<object, bool>> _subscriptions = new();
+    private readonly Dictionary<IEventSubscription, Func<object, bool>> _subscriptions = [];
 
     protected void InternalPublish(params object[] args)
     {

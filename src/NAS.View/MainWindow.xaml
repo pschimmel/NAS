@@ -87,6 +87,14 @@
       <fluent:Ribbon>
         <fluent:Ribbon.Menu>
           <fluent:Backstage IsOpen="{Binding BackstageOpen, Mode=TwoWay}">
+            <fluent:Backstage.Resources>
+              <ResourceDictionary>
+                <Style TargetType="{x:Type Button}">
+                  <Setter Property="Padding" Value="5,2"/>
+                  <Setter Property="Margin" Value="2"/>
+                </Style>
+              </ResourceDictionary>
+            </fluent:Backstage.Resources>
             <fluent:BackstageTabControl>
               <fluent:Button Command="{Binding NewScheduleCommand}"
                              Header="{x:Static resx:NASResources.CreateNewSchedule}"
@@ -101,8 +109,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                   </Grid.RowDefinitions>
-                  <Button Padding="2,0"
-                          Command="{Binding OpenScheduleCommand}"
+                  <Button Command="{Binding OpenScheduleCommand}"
                           Content="{x:Static resx:NASResources.OpenSchedule}" />
                 </Grid>
               </fluent:BackstageTabItem>

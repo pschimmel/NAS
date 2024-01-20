@@ -8,7 +8,7 @@
 
     private EventAggregator()
     {
-      _events = new Dictionary<Type, AggregatedEventBase>();
+      _events = [];
     }
 
     public static EventAggregator Instance => _instance.Value;

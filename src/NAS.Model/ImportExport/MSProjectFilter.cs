@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Xml;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
@@ -12,11 +10,11 @@ namespace NAS.Model.ImportExport
   {
     //private ScheduleController controller;
     private Schedule schedule;
-    private readonly Dictionary<int, Calendar> calendars = new Dictionary<int, Calendar>();
-    private readonly Dictionary<string, Activity> tasks = new Dictionary<string, Activity>();
-    private readonly Dictionary<int, Resource> resources = new Dictionary<int, Resource>();
+    private readonly Dictionary<int, Calendar> calendars = [];
+    private readonly Dictionary<string, Activity> tasks = [];
+    private readonly Dictionary<int, Resource> resources = [];
 
-    public string FileExtension => "xml";
+    public string FileExtension => ".xml";
 
     public string FilterName => NASResources.MSProjectFiles;
 

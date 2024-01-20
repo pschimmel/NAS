@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -274,10 +275,10 @@ namespace NAS.ViewModel
 
         try
         {
-          string ext = Path.GetExtension(fileName).ToLower();
+          string ext = Path.GetExtension(fileName);
           var filter = new NASFilter();
 
-          if ("." + filter.FileExtension.ToLower() == ext)
+          if (string.Equals(filter.FileExtension, ext, StringComparison.InvariantCultureIgnoreCase))
           {
             var schedule = Persistency.Load(fileName);
 
@@ -812,7 +813,21 @@ namespace NAS.ViewModel
 
     public static void WebsiteCommandExecute()
     {
-      _ = Process.Start("http://www.engineeringsolutions.de/");
+      string url = Globals.Website;
+
+      try
+      {
+        Process.Start(url);
+      }
+      catch
+      {
+        // Hack because of this: https://github.com/dotnet/corefx/issues/10361
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+          url = url.Replace("&", "^&");
+          Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+      }
     }
 
     #endregion
@@ -868,7 +883,7 @@ namespace NAS.ViewModel
     {
       var openFileDialog = new OpenFileDialog();
       IFilter filter = new NASFilter();
-      string f = $"{filter.FilterName}|*.{filter.FileExtension}";
+      string f = $"{filter.FilterName}|*{filter.FileExtension}";
 
       openFileDialog.Filter = f;
       openFileDialog.AddExtension = true;
@@ -888,7 +903,7 @@ namespace NAS.ViewModel
           f += "|";
         }
 
-        f += $"{filter.FilterName}|*.{filter.FileExtension}";
+        f += $"{filter.FilterName}|*{filter.FileExtension}";
       }
       openFileDialog.Filter = f;
       openFileDialog.AddExtension = true;
@@ -901,7 +916,7 @@ namespace NAS.ViewModel
       var saveFileDialog = new SaveFileDialog();
 
       IFilter filter = new NASFilter();
-      string f = $"{filter.FilterName}|*.{filter.FileExtension}";
+      string f = $"{filter.FilterName}|*{filter.FileExtension}";
 
       saveFileDialog.Filter = f;
       saveFileDialog.AddExtension = true;
@@ -920,7 +935,7 @@ namespace NAS.ViewModel
           f += "|";
         }
 
-        f += $"{filter.FilterName}|*.{filter.FileExtension}";
+        f += $"{filter.FilterName}|*{filter.FileExtension}";
       }
       saveFileDialog.Filter = f;
       saveFileDialog.AddExtension = true;
