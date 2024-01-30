@@ -1,9 +1,11 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class Reduction : Distortion
   {
     private int? days;
+
+    public Reduction(Activity activity) : base(activity)
+    { }
 
     public int? Days
     {

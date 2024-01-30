@@ -1,16 +1,14 @@
-﻿using System;
-using System.Linq;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Model.Enums;
 
 namespace NAS.ViewModel.Helpers
 {
   public static class ResourceExtensions
   {
-    public static double GetResourceAllocation(this Resource resource, DateTime day)
+    public static double GetResourceAllocation(this Resource resource, Schedule schedule, DateTime day)
     {
-      var schedule = resource.Schedule;
       double result = 0;
+
       foreach (var a in schedule.Activities.Where(x => x.Fragnet == null || x.Fragnet.IsVisible))
       {
         if (a.ActivityType == ActivityType.Activity)
@@ -24,10 +22,10 @@ namespace NAS.ViewModel.Helpers
       return result;
     }
 
-    public static decimal GetResourceBudget(this Resource resource, DateTime day)
+    public static decimal GetResourceBudget(this Resource resource, Schedule schedule, DateTime day)
     {
-      var schedule = resource.Schedule;
       decimal result = 0;
+
       foreach (var a in schedule.Activities.Where(x => x.Fragnet == null || x.Fragnet.IsVisible))
       {
         if (a.ActivityType == ActivityType.Activity)
@@ -51,10 +49,10 @@ namespace NAS.ViewModel.Helpers
       return result;
     }
 
-    public static decimal GetActualResourceCosts(this Resource resource, DateTime day)
+    public static decimal GetActualResourceCosts(this Resource resource, Schedule schedule, DateTime day)
     {
-      var schedule = resource.Schedule;
       decimal result = 0;
+
       foreach (var a in schedule.Activities.Where(x => x.Fragnet == null || x.Fragnet.IsVisible))
       {
         if (a.ActivityType == ActivityType.Activity)
@@ -79,10 +77,10 @@ namespace NAS.ViewModel.Helpers
       return result;
     }
 
-    public static decimal GetPlannedResourceCosts(this Resource resource, DateTime day)
+    public static decimal GetPlannedResourceCosts(this Resource resource, Schedule schedule, DateTime day)
     {
-      var schedule = resource.Schedule;
       decimal result = 0;
+
       foreach (var a in schedule.Activities.Where(x => x.Fragnet == null || x.Fragnet.IsVisible))
       {
         if (a.ActivityType == ActivityType.Activity)

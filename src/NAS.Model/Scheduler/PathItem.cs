@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 
 namespace NAS.Model.Scheduler
 {
@@ -8,7 +6,7 @@ namespace NAS.Model.Scheduler
   {
     public PathItem(Activity activity)
     {
-      ActivityID = activity.Guid;
+      ActivityID = activity.ID;
     }
 
     public Guid ActivityID { get; }

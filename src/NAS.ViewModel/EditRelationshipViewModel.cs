@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
 using NAS.ViewModel.Base;
@@ -26,10 +23,10 @@ namespace NAS.ViewModel
 
     public EditRelationshipViewModel(Relationship relationShip, Schedule schedule)
     {
-      _schedule = schedule;
-      _relationship = relationShip;
-      _selectedActivity1 = relationShip.GetActivity1();
-      _selectedActivity2 = relationShip.GetActivity2();
+      _schedule = schedule ?? throw new ArgumentNullException(nameof(schedule));
+      _relationship = relationShip ?? throw new ArgumentNullException(nameof(relationShip));
+      _selectedActivity1 = relationShip.Activity1;
+      _selectedActivity2 = relationShip.Activity2;
       _selectedRelationshipType = relationShip.RelationshipType;
       _lag = relationShip.Lag;
     }
@@ -139,13 +136,13 @@ namespace NAS.ViewModel
       return !HasErrors;
     }
 
-    public void Apply()
-    {
-      _relationship.Activity1Guid = _selectedActivity1.Guid;
-      _relationship.Activity2Guid = _selectedActivity2.Guid;
-      _relationship.RelationshipType = _selectedRelationshipType;
-      _relationship.Lag = _lag;
-    }
+    //public void Apply()
+    //{
+    //  _relationship.Activity1 = _selectedActivity1; // Todo: Make Activity Readonly!
+    //  _relationship.Activity2 = _selectedActivity2;
+    //  _relationship.RelationshipType = _selectedRelationshipType;
+    //  _relationship.Lag = _lag;
+    //}
 
     #endregion
   }

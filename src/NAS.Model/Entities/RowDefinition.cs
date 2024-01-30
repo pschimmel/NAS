@@ -4,22 +4,21 @@ namespace NAS.Model.Entities
 {
   public class RowDefinition : NASObject
   {
-    private double? height = null;
-    private int sort;
+    private double? _height = null;
+    private int _sort;
 
     public RowDefinition()
     { }
 
     public RowDefinition(RowDefinition other)
     {
-      Definition = other.Definition;
       Height = other.Height;
       Sort = other.Sort;
     }
 
     public double? Height
     {
-      get => height;
+      get => _height;
       set
       {
         if (value < 0)
@@ -27,9 +26,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (height != value)
+        if (_height != value)
         {
-          height = value;
+          _height = value;
           OnPropertyChanged(nameof(Height));
           OnPropertyChanged(nameof(Name));
         }
@@ -38,7 +37,7 @@ namespace NAS.Model.Entities
 
     public int Sort
     {
-      get => sort;
+      get => _sort;
       set
       {
         if (value < 0)
@@ -46,24 +45,22 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (sort != value)
+        if (_sort != value)
         {
-          sort = value;
+          _sort = value;
           OnPropertyChanged(nameof(Sort));
         }
       }
     }
-
-    public virtual PERTDefinition Definition { get; set; }
 
     public string Name
     {
       get
       {
         string s = NASResources.Row;
-        if (height.HasValue)
+        if (_height.HasValue)
         {
-          s += " (" + height.Value + ")";
+          s += $" ({_height.Value})";
         }
         else
         {

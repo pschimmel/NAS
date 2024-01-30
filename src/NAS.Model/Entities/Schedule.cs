@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using NAS.Model.Base;
 using NAS.Model.Enums;
@@ -22,8 +21,8 @@ namespace NAS.Model.Entities
 
     #region Fields
 
-    private readonly IList<Activity> _activities;
-    private readonly IList<Relationship> _relationships;
+    private readonly List<Activity> _activities;
+    private readonly List<Relationship> _relationships;
     private readonly ObservableCollection<Fragnet> _fragnets;
 
     #endregion
@@ -32,8 +31,8 @@ namespace NAS.Model.Entities
 
     public Schedule()
     {
-      _activities = new List<Activity>();
-      _relationships = new List<Relationship>();
+      _activities = [];
+      _relationships = [];
       Baselines = new ObservableCollection<Schedule>();
       VisibleBaselines = new ObservableCollection<VisibleBaseline>();
       Calendars = new ObservableCollection<Calendar>();
@@ -105,33 +104,33 @@ namespace NAS.Model.Entities
 
     public string ModifiedBy { get; set; }
 
-    public virtual ICollection<Schedule> Baselines { get; set; }
+    public ICollection<Schedule> Baselines { get; set; }
 
-    public virtual Schedule BaselineOf { get; set; }
+    public Schedule BaselineOf { get; set; }
 
-    public virtual ICollection<VisibleBaseline> VisibleBaselines { get; set; }
+    public ICollection<VisibleBaseline> VisibleBaselines { get; set; }
 
     public IReadOnlyCollection<Activity> Activities => new ReadOnlyCollection<Activity>(_activities);
 
-    public virtual ICollection<Calendar> Calendars { get; set; }
+    public ICollection<Calendar> Calendars { get; set; }
 
-    public virtual ICollection<CustomAttribute> CustomAttributes1 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes1 { get; set; }
 
-    public virtual ICollection<CustomAttribute> CustomAttributes2 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes2 { get; set; }
 
-    public virtual ICollection<CustomAttribute> CustomAttributes3 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes3 { get; set; }
 
-    public virtual ICollection<Fragnet> Fragnets { get; set; }
+    public ICollection<Fragnet> Fragnets { get; set; }
 
-    public virtual ICollection<Layout> Layouts { get; set; }
+    public ICollection<Layout> Layouts { get; set; }
 
-    public virtual ICollection<Resource> Resources { get; set; }
+    public ICollection<Resource> Resources { get; set; }
 
-    public virtual ICollection<PERTDefinition> PERTDefinitions { get; set; }
+    public ICollection<PERTDefinition> PERTDefinitions { get; set; }
 
-    public virtual ICollection<PERTActivityData> PERTActivityItems { get; set; }
+    public ICollection<PERTActivityData> PERTActivityItems { get; set; }
 
-    public virtual WBSItem WBSItem { get; set; }
+    public WBSItem WBSItem { get; set; }
 
     public IReadOnlyCollection<Relationship> Relationships => new ReadOnlyCollection<Relationship>(_relationships);
 
@@ -141,12 +140,11 @@ namespace NAS.Model.Entities
 
     #region Standards
 
-    [NotMapped]
     public Layout CurrentLayout
     {
       get
       {
-        if (!Layouts.Any(x => x.IsCurrent == true) && Layouts.Any())
+        if (!Layouts.Any(x => x.IsCurrent == true) && Layouts.Count != 0)
         {
           var layout = Layouts.First();
           layout.IsCurrent = true;
@@ -171,12 +169,11 @@ namespace NAS.Model.Entities
       OnPropertyChanged(nameof(CurrentLayout));
     }
 
-    [NotMapped]
     public Calendar StandardCalendar
     {
       get
       {
-        if (!Calendars.Any(x => x.IsStandard == true) && Calendars.Any())
+        if (!Calendars.Any(x => x.IsStandard == true) && Calendars.Count != 0)
         {
           var calendar = Calendars.First();
           calendar.IsStandard = true;
@@ -212,7 +209,7 @@ namespace NAS.Model.Entities
     #region Costs
 
     /// <summary>
-    /// Gets the total budget.
+    /// Gets the total _budget.
     /// </summary>
     public decimal TotalBudget => Activities.OfType<Activity>().Where(a => a.Fragnet == null || a.Fragnet.IsVisible).Sum(x => x.TotalBudget);
 
@@ -349,19 +346,19 @@ namespace NAS.Model.Entities
 
     public Activity GetActivity(Guid guid)
     {
-      var activity = Activities.FirstOrDefault(x => x.Guid == guid);
+      var activity = Activities.FirstOrDefault(x => x.ID == guid);
       Debug.Assert(activity != null, "No matching activity found.");
       return activity;
     }
 
     public IEnumerable<Activity> GetPredecessors(Activity activity)
     {
-      return GetPreceedingRelationships(activity).Select(x => GetActivity(x.Activity1Guid));
+      return GetPreceedingRelationships(activity).Select(x => x.Activity1);
     }
 
     public IEnumerable<Activity> GetSuccessors(Activity activity)
     {
-      return GetSucceedingRelationships(activity).Select(x => GetActivity(x.Activity2Guid));
+      return GetSucceedingRelationships(activity).Select(x => x.Activity2);
     }
 
     #endregion
@@ -376,13 +373,7 @@ namespace NAS.Model.Entities
 
     public Relationship AddRelationship(Activity activity1, Activity activity2, RelationshipType type = RelationshipType.FinishFinish)
     {
-      var relationship = new Relationship
-      {
-        Activity1Guid = activity1.Guid,
-        Activity2Guid = activity2.Guid,
-        RelationshipType = type
-      };
-
+      var relationship = new Relationship(activity1, activity2, type);
       _relationships.Add(relationship);
       OnRelationshipAdded(relationship);
       return relationship;
@@ -390,23 +381,23 @@ namespace NAS.Model.Entities
 
     public void RemoveRelationship(Relationship relationship)
     {
-      _ = _relationships.Remove(relationship);
+      _relationships.Remove(relationship);
       OnRelationshipRemoved(relationship);
     }
 
     public Relationship GetRelationship(Activity activity1, Activity activity2)
     {
-      return Relationships.FirstOrDefault(x => x.Activity1Guid == activity1.Guid && x.Activity2Guid == activity2.Guid);
+      return Relationships.FirstOrDefault(x => x.Activity1 == activity1 && x.Activity2 == activity2);
     }
 
     public IEnumerable<Relationship> GetPreceedingRelationships(Activity activity)
     {
-      return Relationships.Where(x => x.Activity2Guid == activity.Guid);
+      return Relationships.Where(x => x.Activity2 == activity);
     }
 
     public IEnumerable<Relationship> GetSucceedingRelationships(Activity activity)
     {
-      return Relationships.Where(x => x.Activity1Guid == activity.Guid);
+      return Relationships.Where(x => x.Activity1 == activity);
     }
 
     #endregion
@@ -415,7 +406,7 @@ namespace NAS.Model.Entities
 
     public PERTActivityData GetOrAddActivityData(Activity activity)
     {
-      var data = PERTActivityItems.FirstOrDefault(x => x.ActivityGuid == activity.Guid);
+      var data = PERTActivityItems.FirstOrDefault(x => x.ActivityID == activity.ID);
 
       if (data == null)
       {
@@ -441,7 +432,7 @@ namespace NAS.Model.Entities
       return items;
     }
 
-    private void AddSubItems(WBSItem parent, List<WBSItem> items)
+    private static void AddSubItems(WBSItem parent, List<WBSItem> items)
     {
       foreach (var item in parent.Children)
       {
@@ -598,22 +589,22 @@ namespace NAS.Model.Entities
 
     #region Protected Methods
 
-    protected virtual void OnActivityAdded(Activity activity)
+    protected void OnActivityAdded(Activity activity)
     {
       ActivityAdded?.Invoke(this, new ItemEventArgs<Activity>(activity));
     }
 
-    protected virtual void OnActivityRemoved(Activity activity)
+    protected void OnActivityRemoved(Activity activity)
     {
       ActivityRemoved?.Invoke(this, new ItemEventArgs<Activity>(activity));
     }
 
-    protected virtual void OnRelationshipAdded(Relationship relationship)
+    protected void OnRelationshipAdded(Relationship relationship)
     {
       RelationshipAdded?.Invoke(this, new ItemEventArgs<Relationship>(relationship));
     }
 
-    protected virtual void OnRelationshipRemoved(Relationship relationship)
+    protected void OnRelationshipRemoved(Relationship relationship)
     {
       RelationshipRemoved?.Invoke(this, new ItemEventArgs<Relationship>(relationship));
     }
@@ -734,7 +725,7 @@ namespace NAS.Model.Entities
           foreach (var ra in a.ResourceAssociations)
           {
             var r = newSchedule.Resources.ToList()[oldSchedule.Resources.ToList().IndexOf(ra.Resource)];
-            var newResourceAssociation = new ResourceAssociation() { Resource = r, Activity = newItem };
+            var newResourceAssociation = new ResourceAssociation(newItem, r);
             newResourceAssociation.Budget = ra.Budget;
             newResourceAssociation.FixedCosts = ra.FixedCosts;
             newResourceAssociation.UnitsPerDay = ra.UnitsPerDay;
@@ -747,28 +738,28 @@ namespace NAS.Model.Entities
             Distortion newDistortion = null;
             if (d is Delay)
             {
-              newDistortion = new Delay();
+              newDistortion = new Delay(newItem);
               (newDistortion as Delay).Days = (d as Delay).Days;
             }
             else if (d is Interruption)
             {
-              newDistortion = new Interruption();
+              newDistortion = new Interruption(newItem);
               (newDistortion as Interruption).Days = (d as Interruption).Days;
               (newDistortion as Interruption).Start = (d as Interruption).Start;
             }
             else if (d is Inhibition)
             {
-              newDistortion = new Inhibition();
+              newDistortion = new Inhibition(newItem);
               (newDistortion as Inhibition).Percent = (d as Inhibition).Percent;
             }
             else if (d is Extension)
             {
-              newDistortion = new Extension();
+              newDistortion = new Extension(newItem);
               (newDistortion as Extension).Days = (d as Extension).Days;
             }
             else if (d is Reduction)
             {
-              newDistortion = new Reduction();
+              newDistortion = new Reduction(newItem);
               (newDistortion as Reduction).Days = (d as Reduction).Days;
             }
             if (newDistortion != null)
@@ -791,11 +782,7 @@ namespace NAS.Model.Entities
       newSchedule.Name = oldSchedule.Name;
       foreach (var r in oldSchedule.Relationships)
       {
-        var newRelationship = new Relationship()
-        {
-          Activity1Guid = newSchedule.GetActivity(r.GetActivity1().Number).Guid,
-          Activity2Guid = newSchedule.GetActivity(r.GetActivity2().Number).Guid
-        };
+        var newRelationship = new Relationship(newSchedule.GetActivity(r.Activity1.Number), newSchedule.GetActivity(r.Activity2.Number));
         newRelationship.Lag = r.Lag;
         newRelationship.RelationshipType = r.RelationshipType;
       }
@@ -830,7 +817,7 @@ namespace NAS.Model.Entities
       {
         foreach (var item in parent.Children.ToArray())
         {
-          var newItem = new WBSItem();
+          var newItem = new WBSItem(parent);
           newItem.Number = item.Number;
           newItem.Name = item.Name;
           copyTo.Children.Add(newItem);
@@ -858,23 +845,23 @@ namespace NAS.Model.Entities
       newLayout.ShowFloat = oldLayout.ShowFloat;
       foreach (var g in oldLayout.GroupingDefinitions)
       {
-        var definition = new GroupingDefinition() { Property = g.Property };
+        var definition = new GroupingDefinition(g.Property);
         definition.Color = g.Color;
         newLayout.GroupingDefinitions.Add(definition);
       }
       foreach (var s in oldLayout.SortingDefinitions)
       {
-        var definition = new SortingDefinition() { Property = s.Property };
+        var definition = new SortingDefinition(s.Property);
         definition.Direction = s.Direction;
         newLayout.SortingDefinitions.Add(definition);
       }
       foreach (var col in oldLayout.ActivityColumns)
       {
-        newLayout.ActivityColumns.Add(new ActivityColumn() { ColumnWidth = col.ColumnWidth, Order = col.Order, Property = col.Property });
+        newLayout.ActivityColumns.Add(new ActivityColumn(col.Property) { ColumnWidth = col.ColumnWidth, Order = col.Order });
       }
       foreach (var f in oldLayout.FilterDefinitions)
       {
-        var filter = new FilterDefinition() { Property = f.Property };
+        var filter = new FilterDefinition(f.Property);
         filter.ObjectString = f.ObjectString;
         filter.Relation = f.Relation;
         newLayout.FilterDefinitions.Add(filter);
@@ -883,7 +870,6 @@ namespace NAS.Model.Entities
       {
         var baseline = new VisibleBaseline(newLayout, b.Schedule);
         baseline.Color = b.Color;
-        baseline.Layout = newLayout;
         newLayout.VisibleBaselines.Add(baseline);
       }
       foreach (var r in oldLayout.VisibleResources)

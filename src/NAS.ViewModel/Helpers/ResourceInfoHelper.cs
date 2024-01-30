@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Model.Enums;
 
 namespace NAS.ViewModel.Helpers
@@ -10,15 +7,15 @@ namespace NAS.ViewModel.Helpers
   {
     #region Constructor
 
-    public ResourceInfoHelper(Resource resource, DateTime start, DateTime end, TimeAggregateType aggregate)
+    public ResourceInfoHelper(Resource resource, Schedule schedule, DateTime start, DateTime end, TimeAggregateType aggregate)
     {
       start = start.Date;
       end = end.Date;
 
-      ResourceAllocation = new Dictionary<DateTime, double>();
-      ResourceBudget = new Dictionary<DateTime, decimal>();
-      ResourceCostsActual = new Dictionary<DateTime, decimal>();
-      ResourceCostsPlanned = new Dictionary<DateTime, decimal>();
+      ResourceAllocation = [];
+      ResourceBudget = [];
+      ResourceCostsActual = [];
+      ResourceCostsPlanned = [];
 
       double allocation = 0;
       decimal budget = 0;
@@ -29,10 +26,10 @@ namespace NAS.ViewModel.Helpers
 
       for (var day = start; day <= end; day = day.AddDays(1))
       {
-        allocation += resource.GetResourceAllocation(day);
-        budget += resource.GetResourceBudget(day);
-        actualCost += resource.GetActualResourceCosts(day);
-        plannedCost += resource.GetPlannedResourceCosts(day);
+        allocation += resource.GetResourceAllocation(schedule, day);
+        budget += resource.GetResourceBudget(schedule, day);
+        actualCost += resource.GetActualResourceCosts(schedule, day);
+        plannedCost += resource.GetPlannedResourceCosts(schedule, day);
 
         if (aggregate == TimeAggregateType.Day ||
           aggregate == TimeAggregateType.Week && day.DayOfWeek == DayOfWeek.Saturday ||

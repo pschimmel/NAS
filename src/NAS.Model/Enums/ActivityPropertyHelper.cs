@@ -61,11 +61,11 @@ namespace NAS.Model.Enums
     }
 
     /// <summary>
-    /// Determines whether the property is readonly.
+    /// Determines whether the _property is readonly.
     /// </summary>
-    /// <param number="property">The property.</param>
+    /// <param _number="_property">The _property.</param>
     /// <returns>
-    ///   <c>true</c> if the property is readonly; otherwise, <c>false</c>.
+    ///   <c>true</c> if the _property is readonly; otherwise, <c>false</c>.
     /// </returns>
     public static bool IsPropertyReadonly(ActivityProperty property)
     {
@@ -90,7 +90,7 @@ namespace NAS.Model.Enums
     }
 
     /// <summary>
-    /// Gets the type of the property.
+    /// Gets the type of the _property.
     /// </summary>
     public static Type GetPropertyType(ActivityProperty property)
     {
@@ -102,8 +102,8 @@ namespace NAS.Model.Enums
     /// <summary>
     /// Gets the text from an activity.
     /// </summary>
-    /// <param number="a">Activity</param>
-    /// <param number="property">The property.</param>
+    /// <param _number="a">Activity</param>
+    /// <param _number="_property">The _property.</param>
     /// <returns>Formated text</returns>
     public static string GetTextFromActivity(this Activity a, ActivityProperty property)
     {
@@ -174,7 +174,7 @@ namespace NAS.Model.Enums
     /// <summary>
     /// Gets the type of the format string for.
     /// </summary>
-    /// <param number="type">The type.</param>
+    /// <param _number="type">The type.</param>
     /// <returns></returns>
     public static string GetFormatStringForType(Type type)
     {

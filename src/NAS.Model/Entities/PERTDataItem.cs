@@ -4,35 +4,33 @@ namespace NAS.Model.Entities
 {
   public class PERTDataItem : NASObject
   {
-    private ActivityProperty property;
-    private int row;
-    private int column;
-    private int rowSpan;
-    private int columnSpan;
-    private HorizontalAlignment horizontalAlignment;
-    private VerticalAlignment verticalAlignment;
+    private ActivityProperty _property;
+    private int _row;
+    private int _column;
+    private int _rowSpan;
+    private int _columnSpan;
+    private HorizontalAlignment _horizontalAlignment;
+    private VerticalAlignment _verticalAlignment;
 
     public PERTDataItem()
     {
-      property = ActivityProperty.None;
-      row = 0;
-      column = 0;
-      rowSpan = 1;
-      columnSpan = 1;
-      horizontalAlignment = HorizontalAlignment.Center;
-      verticalAlignment = VerticalAlignment.Center;
+      _property = ActivityProperty.None;
+      _row = 0;
+      _column = 0;
+      _rowSpan = 1;
+      _columnSpan = 1;
+      _horizontalAlignment = HorizontalAlignment.Center;
+      _verticalAlignment = VerticalAlignment.Center;
     }
 
-    public PERTDataItem(PERTDefinition definition, ActivityProperty property)
+    public PERTDataItem(ActivityProperty property)
       : this()
     {
-      Definition = definition;
       Property = property;
     }
 
     public PERTDataItem(PERTDataItem other)
     {
-      Definition = other.Definition;
       Property = other.Property;
       Column = other.Column;
       ColumnSpan = other.ColumnSpan;
@@ -44,12 +42,12 @@ namespace NAS.Model.Entities
 
     public ActivityProperty Property
     {
-      get => property;
+      get => _property;
       set
       {
-        if (property != value)
+        if (_property != value)
         {
-          property = value;
+          _property = value;
           OnPropertyChanged(nameof(Property));
         }
       }
@@ -57,7 +55,7 @@ namespace NAS.Model.Entities
 
     public int Row
     {
-      get => row;
+      get => _row;
       set
       {
         if (value < 0)
@@ -65,9 +63,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (row != value)
+        if (_row != value)
         {
-          row = value;
+          _row = value;
           OnPropertyChanged(nameof(Row));
         }
       }
@@ -75,7 +73,7 @@ namespace NAS.Model.Entities
 
     public int Column
     {
-      get => column;
+      get => _column;
       set
       {
         if (value < 0)
@@ -83,9 +81,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (column != value)
+        if (_column != value)
         {
-          column = value;
+          _column = value;
           OnPropertyChanged(nameof(Column));
         }
       }
@@ -93,7 +91,7 @@ namespace NAS.Model.Entities
 
     public int RowSpan
     {
-      get => rowSpan;
+      get => _rowSpan;
       set
       {
         if (value < 1)
@@ -101,9 +99,9 @@ namespace NAS.Model.Entities
           value = 1;
         }
 
-        if (rowSpan != value)
+        if (_rowSpan != value)
         {
-          rowSpan = value;
+          _rowSpan = value;
           OnPropertyChanged(nameof(RowSpan));
         }
       }
@@ -111,7 +109,7 @@ namespace NAS.Model.Entities
 
     public int ColumnSpan
     {
-      get => columnSpan;
+      get => _columnSpan;
       set
       {
         if (value < 1)
@@ -119,9 +117,9 @@ namespace NAS.Model.Entities
           value = 1;
         }
 
-        if (columnSpan != value)
+        if (_columnSpan != value)
         {
-          columnSpan = value;
+          _columnSpan = value;
           OnPropertyChanged(nameof(ColumnSpan));
         }
       }
@@ -129,12 +127,12 @@ namespace NAS.Model.Entities
 
     public HorizontalAlignment HorizontalAlignment
     {
-      get => horizontalAlignment;
+      get => _horizontalAlignment;
       set
       {
-        if (horizontalAlignment != value)
+        if (_horizontalAlignment != value)
         {
-          horizontalAlignment = value;
+          _horizontalAlignment = value;
           OnPropertyChanged(nameof(HorizontalAlignment));
         }
       }
@@ -142,17 +140,15 @@ namespace NAS.Model.Entities
 
     public VerticalAlignment VerticalAlignment
     {
-      get => verticalAlignment;
+      get => _verticalAlignment;
       set
       {
-        if (verticalAlignment != value)
+        if (_verticalAlignment != value)
         {
-          verticalAlignment = value;
+          _verticalAlignment = value;
           OnPropertyChanged(nameof(VerticalAlignment));
         }
       }
     }
-
-    public virtual PERTDefinition Definition { get; set; }
   }
 }

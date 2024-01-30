@@ -23,7 +23,7 @@ namespace NAS.ViewModel.Printing
     private readonly ScheduleViewModel viewModel;
     private NASDocumentPaginator paginator;
     private IDocumentPaginatorSource document;
-    private readonly List<string> tempFileNames = new();
+    private readonly List<string> tempFileNames = [];
 
     #endregion
 

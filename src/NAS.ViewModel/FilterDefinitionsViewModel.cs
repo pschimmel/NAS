@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -65,7 +62,7 @@ namespace NAS.ViewModel
 
     private void AddFilterDefinitionCommandExecute()
     {
-      var newFilterDefinition = new FilterDefinition { Property = ActivityProperty.None };
+      var newFilterDefinition = new FilterDefinition(ActivityProperty.None);
 
       using var vm = new FilterDefinitionViewModel(newFilterDefinition);
       if (ViewFactory.Instance.ShowDialog(vm) == true && newFilterDefinition.Property != ActivityProperty.None)

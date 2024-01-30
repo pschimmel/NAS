@@ -1,5 +1,4 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class FooterItem : NASObject, IPrintLayoutItem
   {
@@ -42,7 +41,5 @@ namespace NAS.Model.Entities
         }
       }
     }
-
-    public virtual Layout Layout { get; set; }
   }
 }

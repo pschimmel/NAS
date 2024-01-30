@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace NAS.Model.Entities
 {
   public class WBSItem : NASObject, IComparable, IComparable<WBSItem>
   {
-    private string number;
-    private string name;
-    private int order;
-    private WBSItem parent;
+    private string _number;
+    private string _name;
+    private int _order;
+    private WBSItem _parent;
 
-    public WBSItem()
+    public WBSItem(WBSItem parent = null)
     {
-      order = 0;
-      Activities = new ObservableCollection<Activity>();
-      Children = new ObservableCollection<WBSItem>();
+      _order = 0;
+      _parent = parent;
+      Children = [];
     }
 
     public string Number
     {
-      get => number;
+      get => _number;
       set
       {
-        if (number != value)
+        if (_number != value)
         {
-          number = value;
+          _number = value;
           OnPropertyChanged(nameof(Number));
           OnPropertyChanged(nameof(FullName));
           foreach (var child in Children)
@@ -38,12 +36,12 @@ namespace NAS.Model.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
           OnPropertyChanged(nameof(FullName));
         }
@@ -52,31 +50,27 @@ namespace NAS.Model.Entities
 
     public int Order
     {
-      get => order;
+      get => _order;
       set
       {
-        if (order != value)
+        if (_order != value)
         {
-          order = value;
+          _order = value;
           OnPropertyChanged(nameof(Order));
         }
       }
     }
 
-    public virtual ICollection<Activity> Activities { get; set; }
+    public ObservableCollection<WBSItem> Children { get; }
 
-    public virtual Schedule Schedule { get; set; }
-
-    public virtual ICollection<WBSItem> Children { get; set; }
-
-    public virtual WBSItem Parent
+    public WBSItem Parent
     {
-      get => parent;
+      get => _parent;
       set
       {
-        if (parent != value)
+        if (_parent != value)
         {
-          parent = value;
+          _parent = value;
           OnPropertyChanged(nameof(Parent));
         }
       }
@@ -87,14 +81,7 @@ namespace NAS.Model.Entities
       get
       {
         string number = GetFullNumber();
-        if (string.IsNullOrWhiteSpace(number))
-        {
-          return Name;
-        }
-        else
-        {
-          return number + " " + Name;
-        }
+        return string.IsNullOrWhiteSpace(number) ? Name : $"{number} {Name}";
       }
     }
 
@@ -106,33 +93,21 @@ namespace NAS.Model.Entities
       }
 
       string parentNumber = Parent.GetFullNumber();
-      return string.IsNullOrWhiteSpace(parentNumber) ? " ." + Number : parentNumber + "." + Number;
+      return string.IsNullOrWhiteSpace(parentNumber) ? $" .{Number}" : $"{parentNumber}.{Number}";
     }
 
     /// <summary>
-    /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+    /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the _sort _order as the other object.
     /// </summary>
-    /// <param number="obj">An object to compare with this instance.</param>
+    /// <param _number="obj">An object to compare with this instance.</param>
     /// <returns>
-    /// A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref number="obj"/>. Zero This instance is equal to <paramref number="obj"/>. Greater than zero This instance is greater than <paramref number="obj"/>.
+    /// A value that indicates the relative _order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref _number="obj"/>. Zero This instance is equal to <paramref _number="obj"/>. Greater than zero This instance is greater than <paramref _number="obj"/>.
     /// </returns>
     /// <exception cref="T:System.ArgumentException">
-    ///   <paramref number="obj"/> is not the same type as this instance. </exception>
+    ///   <paramref _number="obj"/> is not the same type as this instance. </exception>
     int IComparable.CompareTo(object obj)
     {
-      if (obj == null)
-      {
-        return -1;
-      }
-
-      if (obj is WBSItem other)
-      {
-        return CompareTo(other);
-      }
-      else
-      {
-        throw new ArgumentException("Obj is not the same type as this instance");
-      }
+      return obj is not WBSItem other ? -1 : CompareTo(other);
     }
 
     public int CompareTo(WBSItem other)
@@ -142,7 +117,7 @@ namespace NAS.Model.Entities
 
     public override bool Equals(object obj)
     {
-      return !(obj is WBSItem other) ? false : Equals(FullName, other.FullName);
+      return obj is WBSItem other && Equals(FullName, other.FullName);
     }
 
     public override int GetHashCode()
@@ -153,7 +128,7 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Determines whether the specified activity belongs to the WBS Item.
     /// </summary>
-    /// <param number="a">A.</param>
+    /// <param _number="a">A.</param>
     /// <returns>
     ///   <c>true</c> if the specified activity belongs to the WBS Item; otherwise, <c>false</c>.
     /// </returns>
@@ -197,7 +172,7 @@ namespace NAS.Model.Entities
 
     public static bool operator <(WBSItem left, WBSItem right)
     {
-      return left is null ? !(right is null) : left.CompareTo(right) < 0;
+      return left is null ? right is not null : left.CompareTo(right) < 0;
     }
 
     public static bool operator <=(WBSItem left, WBSItem right)
@@ -207,7 +182,7 @@ namespace NAS.Model.Entities
 
     public static bool operator >(WBSItem left, WBSItem right)
     {
-      return !(left is null) && left.CompareTo(right) > 0;
+      return left is not null && left.CompareTo(right) > 0;
     }
 
     public static bool operator >=(WBSItem left, WBSItem right)

@@ -51,7 +51,7 @@ namespace NAS.ViewModel
         throw new ArgumentNullException(nameof(schedule));
       }
 
-      Layouts = new ObservableCollection<IVisibleLayoutViewModel>();
+      Layouts = [];
       foreach (var layout in Schedule.Layouts)
       {
         _ = AddLayoutVM(layout, layout == Schedule.CurrentLayout);
@@ -146,9 +146,9 @@ namespace NAS.ViewModel
     /// </summary>
     public ObservableCollection<IVisibleLayoutViewModel> Layouts { get; }
 
-    public ObservableCollection<ActivityViewModel> Activities { get; } = new ObservableCollection<ActivityViewModel>();
+    public ObservableCollection<ActivityViewModel> Activities { get; } = [];
 
-    public ObservableCollection<RelationshipViewModel> Relationships { get; } = new ObservableCollection<RelationshipViewModel>();
+    public ObservableCollection<RelationshipViewModel> Relationships { get; } = [];
 
 #pragma warning disable CA1822 // Mark members as static
 
@@ -518,8 +518,7 @@ namespace NAS.ViewModel
       }
       else
       {
-        relationship = new Relationship();
-        var vm = new RelationshipViewModel(relationship);
+        var vm = new RelationshipViewModel(null);
         if (ViewFactory.Instance.ShowDialog(vm) != true)
         {
           return;
@@ -578,7 +577,7 @@ namespace NAS.ViewModel
       {
         if (vm.Validate())
         {
-          vm.Apply();
+          //vm.Apply();
           CurrentRelationship.Relationship = relationship;
           OnRelationshipChanged(CurrentRelationship);
         }
@@ -1230,7 +1229,7 @@ namespace NAS.ViewModel
 
     #region Resources
 
-    public ObservableCollection<ResourceViewModel> Resources { get; private set; } = new ObservableCollection<ResourceViewModel>();
+    public ObservableCollection<ResourceViewModel> Resources { get; private set; } = [];
 
     private void RefreshResources()
     {

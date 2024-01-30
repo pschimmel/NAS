@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.ViewModel.Base;
@@ -30,21 +27,21 @@ namespace NAS.ViewModel
 
       _layout = new Layout();
       _layout.FilterCombination = FilterCombinationType.Or;
-      _layout.FilterDefinitions.Add(new FilterDefinition { Property = ActivityProperty.Fragnet, Relation = FilterRelation.EqualTo, ObjectString = fragnet.Guid.ToString() });
+      _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
       foreach (var a in _scheduleVM.Schedule.Activities)
       {
         if (a.Distortions != null)
         {
           foreach (var d in a.Distortions.Where(x => x.Fragnet == fragnet))
           {
-            _layout.FilterDefinitions.Add(new FilterDefinition { Property = ActivityProperty.Number, Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
+            _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Number) { Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
           }
         }
       }
-      _layout.ActivityColumns.Add(new ActivityColumn { Property = ActivityProperty.Number });
-      _layout.ActivityColumns.Add(new ActivityColumn { Property = ActivityProperty.Name });
-      _layout.ActivityColumns.Add(new ActivityColumn { Property = ActivityProperty.StartDate });
-      _layout.ActivityColumns.Add(new ActivityColumn { Property = ActivityProperty.FinishDate });
+      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
+      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
+      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
+      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
       Title = "Fragnet " + fragnet;
     }
 

@@ -26,7 +26,7 @@ namespace NAS.ViewModel
       if (layout != null)
       {
         var visibleColumns = layout.ActivityColumns.OrderBy(x => x.Order).ToList();
-        EditColumns = new ObservableCollection<ColumnViewModel>();
+        EditColumns = [];
         foreach (var item in visibleColumns)
         {
           EditColumns.Add(new ColumnViewModel(item.Property) { IsVisible = true });

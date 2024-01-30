@@ -112,7 +112,7 @@ namespace NAS.ViewModel
       using var vm = new SelectActivityPropertyViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        var newItem = new PERTDataItem(_definition, vm.SelectedActivityProperty);
+        var newItem = new PERTDataItem(vm.SelectedActivityProperty);
         Items.Add(newItem);
         CurrentItem = newItem;
       }
@@ -141,7 +141,6 @@ namespace NAS.ViewModel
     private void AddColumnDefinitionCommandExecute()
     {
       var newItem = new ColumnDefinition();
-      newItem.Definition = _definition;
       newItem.Sort = Columns.Count == 0 ? 0 : Columns.Max(x => x.Sort) + 1;
       Columns.Add(newItem);
       CurrentColumnDefinition = newItem;
@@ -227,7 +226,6 @@ namespace NAS.ViewModel
     private void AddRowDefinitionCommandExecute()
     {
       var newItem = new RowDefinition();
-      newItem.Definition = _definition;
       newItem.Sort = Rows.Count == 0 ? 0 : Rows.Max(x => x.Sort) + 1;
       Rows.Add(newItem);
       CurrentRowDefinition = newItem;

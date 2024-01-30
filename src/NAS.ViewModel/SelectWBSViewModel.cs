@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
-using NAS.Model.Scheduler;
 using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
@@ -51,7 +47,7 @@ namespace NAS.ViewModel
           }
           RefreshWBS();
         }
-        return new List<WBSItemViewModel>() { _wbsRoot };
+        return [_wbsRoot];
       }
     }
 

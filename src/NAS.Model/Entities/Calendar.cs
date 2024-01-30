@@ -1,36 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using NAS.Resources;
 
 namespace NAS.Model.Entities
 {
   public class Calendar : NASObject
   {
-    private string name;
-    private bool monday;
-    private bool tuesday;
-    private bool wednesday;
-    private bool thursday;
-    private bool friday;
-    private bool saturday;
-    private bool sunday;
-    private bool isStandard;
-    private Calendar baseCalendar;
+    private string _name;
+    private bool _monday;
+    private bool _tuesday;
+    private bool _wednesday;
+    private bool _thursday;
+    private bool _friday;
+    private bool _saturday;
+    private bool _sunday;
+    private bool _isStandard;
+    private Calendar _baseCalendar;
 
     public Calendar(bool isBase = false)
     {
-      Activities = new ObservableCollection<Activity>();
-      Holidays = new ObservableCollection<Holiday>();
-      name = NASResources.NewCalendar;
-      monday = true;
-      tuesday = true;
-      wednesday = true;
-      thursday = true;
-      friday = true;
-      saturday = false;
-      sunday = false;
+      Holidays = [];
+      _name = NASResources.NewCalendar;
+      _monday = true;
+      _tuesday = true;
+      _wednesday = true;
+      _thursday = true;
+      _friday = true;
+      _saturday = false;
+      _sunday = false;
       IsGlobal = isBase;
     }
 
@@ -42,12 +38,12 @@ namespace NAS.Model.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
           OnPropertyChanged(nameof(FullName));
         }
@@ -56,12 +52,12 @@ namespace NAS.Model.Entities
 
     public bool Monday
     {
-      get => monday;
+      get => _monday;
       set
       {
-        if (monday != value)
+        if (_monday != value)
         {
-          monday = value;
+          _monday = value;
           OnPropertyChanged(nameof(Monday));
         }
       }
@@ -69,12 +65,12 @@ namespace NAS.Model.Entities
 
     public bool Tuesday
     {
-      get => tuesday;
+      get => _tuesday;
       set
       {
-        if (tuesday != value)
+        if (_tuesday != value)
         {
-          tuesday = value;
+          _tuesday = value;
           OnPropertyChanged(nameof(Tuesday));
         }
       }
@@ -82,12 +78,12 @@ namespace NAS.Model.Entities
 
     public bool Wednesday
     {
-      get => wednesday;
+      get => _wednesday;
       set
       {
-        if (wednesday != value)
+        if (_wednesday != value)
         {
-          wednesday = value;
+          _wednesday = value;
           OnPropertyChanged(nameof(Wednesday));
         }
       }
@@ -95,12 +91,12 @@ namespace NAS.Model.Entities
 
     public bool Thursday
     {
-      get => thursday;
+      get => _thursday;
       set
       {
-        if (thursday != value)
+        if (_thursday != value)
         {
-          thursday = value;
+          _thursday = value;
           OnPropertyChanged(nameof(Thursday));
         }
       }
@@ -108,12 +104,12 @@ namespace NAS.Model.Entities
 
     public bool Friday
     {
-      get => friday;
+      get => _friday;
       set
       {
-        if (friday != value)
+        if (_friday != value)
         {
-          friday = value;
+          _friday = value;
           OnPropertyChanged(nameof(Friday));
         }
       }
@@ -121,12 +117,12 @@ namespace NAS.Model.Entities
 
     public bool Saturday
     {
-      get => saturday;
+      get => _saturday;
       set
       {
-        if (saturday != value)
+        if (_saturday != value)
         {
-          saturday = value;
+          _saturday = value;
           OnPropertyChanged(nameof(Saturday));
         }
       }
@@ -134,12 +130,12 @@ namespace NAS.Model.Entities
 
     public bool Sunday
     {
-      get => sunday;
+      get => _sunday;
       set
       {
-        if (sunday != value)
+        if (_sunday != value)
         {
-          sunday = value;
+          _sunday = value;
           OnPropertyChanged(nameof(Sunday));
         }
       }
@@ -147,39 +143,32 @@ namespace NAS.Model.Entities
 
     public bool IsStandard
     {
-      get => isStandard;
+      get => _isStandard;
       set
       {
-        if (isStandard != value)
+        if (_isStandard != value)
         {
-          isStandard = value;
+          _isStandard = value;
           OnPropertyChanged(nameof(IsStandard));
           OnPropertyChanged(nameof(FullName));
-          Schedule?.UpdateStandardCalendar();
         }
       }
     }
 
     public string FullName => IsStandard ? Name + " (" + NASResources.Standard + ")" : Name;
 
-    public virtual ICollection<Activity> Activities { get; set; }
-
-    public virtual ICollection<Holiday> Holidays { get; set; }
-
-    public virtual ICollection<Calendar> SubCalendars { get; set; }
-
-    public virtual Schedule Schedule { get; set; }
+    public ObservableCollection<Holiday> Holidays { get; }
 
     public bool IsGlobal { get; }
 
     public Calendar BaseCalendar
     {
-      get => baseCalendar;
+      get => _baseCalendar;
       set
       {
-        if (baseCalendar != value)
+        if (_baseCalendar != value)
         {
-          baseCalendar = value;
+          _baseCalendar = value;
           OnPropertyChanged(nameof(BaseCalendar));
         }
       }
@@ -203,7 +192,7 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Returns if the given day is activity work day
     /// </summary>
-    /// <param number="day">The day which shall be checked.</param>
+    /// <param _number="day">The day which shall be checked.</param>
     /// <returns>True if day is workday</returns>
     public bool IsWorkDay(DateTime day)
     {
@@ -213,8 +202,8 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Returns the end day of activity work period
     /// </summary>
-    /// <param number="startDate">Start day of the period</param>
-    /// <param number="duration">The number of work duration between start and end.</param>
+    /// <param _number="startDate">Start day of the period</param>
+    /// <param _number="duration">The _number of work duration between _start and end.</param>
     /// <returns>End day</returns>
     public DateTime GetEndDate(DateTime startDate, int duration)
     {
@@ -281,8 +270,8 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Returns the end day of activity work period
     /// </summary>
-    /// <param number="endDate">End day of the period</param>
-    /// <param number="duration">The number of work duration between start and end.</param>
+    /// <param _number="endDate">End day of the period</param>
+    /// <param _number="duration">The _number of work duration between _start and end.</param>
     /// <returns>End day</returns>
     public DateTime GetStartDate(DateTime endDate, int duration)
     {
@@ -292,17 +281,15 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Returns the duration (work duration) between two dates
     /// </summary>
-    /// <param number="startDate">Start day of the period</param>
-    /// <param number="endDate">End day of the period</param>
+    /// <param _number="startDate">Start day of the period</param>
+    /// <param _number="endDate">End day of the period</param>
     /// <returns>Work duration.</returns>
     public int GetWorkDays(DateTime startDate, DateTime endDate, bool includeEndDate)
     {
       int sign = 1;
       if (endDate < startDate)
       {
-        var buffer = startDate;
-        startDate = endDate;
-        endDate = buffer;
+        (endDate, startDate) = (startDate, endDate);
         sign = -1;
       }
       int days = 0;
@@ -371,12 +358,6 @@ namespace NAS.Model.Entities
         throw new ArgumentException("The calendars have different levels.");
       }
 
-      if (newCalendar.Schedule != oldCalendar.Schedule)
-      {
-        throw new ArgumentException("The calendars have different schedules.");
-      }
-
-      newCalendar.Schedule = oldCalendar.Schedule;
       newCalendar.Name = oldCalendar.Name + " (" + NASResources.Copy + ")";
       newCalendar.Monday = oldCalendar.Monday;
       newCalendar.Tuesday = oldCalendar.Tuesday;

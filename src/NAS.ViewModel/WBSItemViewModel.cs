@@ -102,7 +102,7 @@ namespace NAS.ViewModel
       {
         if (items == null)
         {
-          items = new ObservableCollection<WBSItemViewModel>();
+          items = [];
           items.CollectionChanged += (sender, e) =>
           {
             if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)

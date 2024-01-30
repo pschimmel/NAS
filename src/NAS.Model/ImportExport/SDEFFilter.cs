@@ -43,9 +43,9 @@ namespace NAS.Model.ImportExport
     }
 
     /// <summary>
-    /// Writes start token to filestream
+    /// Writes _start token to filestream
     /// </summary>
-    /// <param name="sw">filestream</param>
+    /// <param _name="sw">filestream</param>
     private static void WriteStartToken(StreamWriter sw)
     {
       sw.WriteLine("VOLM  1");
@@ -54,7 +54,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes project data to filestream
     /// </summary>
-    /// <param name="sw">filestream</param>
+    /// <param _name="sw">filestream</param>
     private void WriteProjectData(StreamWriter sw)
     {
       if (schedule != null)
@@ -90,12 +90,12 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes calendars to filestream
     /// </summary>
-    /// <param name="sw">filestream</param>
+    /// <param _name="sw">filestream</param>
     private void WriteCalendars(StreamWriter sw)
     {
       if (schedule != null)
       {
-        // CLDR 1 NYYYYYN 5 days
+        // CLDR 1 NYYYYYN 5 _days
         foreach (var cal in schedule.Calendars)
         {
           var sb = new StringBuilder("CLDR ");
@@ -209,7 +209,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes activities to filestream
     /// </summary>
-    /// <param name="sw">Filestream</param>
+    /// <param _name="sw">Filestream</param>
     private void WriteActivityData(StreamWriter sw)
     {
       if (schedule != null)
@@ -282,7 +282,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes predecessors to filestream
     /// </summary>
-    /// <param name="sw">Filestream</param>
+    /// <param _name="sw">Filestream</param>
     private void WritePredecessors(StreamWriter sw)
     {
       if (schedule != null)
@@ -295,7 +295,7 @@ namespace NAS.Model.ImportExport
             var sb = new StringBuilder("PRED ");
             _ = sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
             _ = sb.Append(' ');
-            _ = sb.Append(TextFormatter(activityIDs[schedule.GetActivity(relationship.Activity1Guid)].ToString(), 10, TextAlignment.Left));
+            _ = sb.Append(TextFormatter(activityIDs[schedule.GetActivity(relationship.Activity1.ID)].ToString(), 10, TextAlignment.Left));
             _ = sb.Append(' ');
             switch (relationship.RelationshipType)
             {
@@ -324,7 +324,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes unit cost information to filestream
     /// </summary>
-    /// <param name="sw">Filestream</param>
+    /// <param _name="sw">Filestream</param>
     private void WriteUnitCosts(StreamWriter sw)
     {
       if (schedule != null)
@@ -396,7 +396,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes progress information to filestream
     /// </summary>
-    /// <param name="sw">Filestream</param>
+    /// <param _name="sw">Filestream</param>
     private void WriteProgress(StreamWriter sw)
     {
       if (schedule != null)
@@ -417,7 +417,7 @@ namespace NAS.Model.ImportExport
             _ = sb.Append(' ');
             _ = sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalPlannedCosts))); // Cost
             _ = sb.Append(' ');
-            _ = sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalActualCosts))); // Cost to date
+            _ = sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalActualCosts))); // Cost to _date
             _ = sb.Append(' ');
             _ = sb.Append(CurrencyFormatter(0)); // StoredMaterial
             _ = sb.Append(' ');
@@ -441,7 +441,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Writes end token to filestream
     /// </summary>
-    /// <param name="sw">Filestream</param>
+    /// <param _name="sw">Filestream</param>
     private static void WriteEndToken(StreamWriter sw)
     {
       sw.WriteLine("END");
@@ -455,8 +455,8 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Formats a given string in a way that it can be used in a export SDEF file
     /// </summary>
-    /// <param name="text">Text to be formatted</param>
-    /// <param name="length">Exact space available for the given text element</param>
+    /// <param _name="text">Text to be formatted</param>
+    /// <param _name="length">Exact space available for the given text element</param>
     /// <returns>Formatted text element</returns>
     public static string TextFormatter(string text, int length, TextAlignment alignment)
     {
@@ -484,7 +484,7 @@ namespace NAS.Model.ImportExport
     /// <summary>
     /// Formats a given currency amount in a way that it can be used in a SDEF export file
     /// </summary>
-    /// <param name="amount">Amount to be formatted</param>
+    /// <param _name="amount">Amount to be formatted</param>
     /// <returns>New formatted string</returns>
     public static string CurrencyFormatter(double amount)
     {
@@ -500,9 +500,9 @@ namespace NAS.Model.ImportExport
     }
 
     /// <summary>
-    /// Formats a given date in a way that it can be used in a SDEF export file
+    /// Formats a given _date in a way that it can be used in a SDEF export file
     /// </summary>
-    /// <param name="date">Date to be formatted</param>
+    /// <param _name="_date">Date to be formatted</param>
     /// <returns>New formatted string</returns>
     public static string DateFormatter(DateTime? date)
     {

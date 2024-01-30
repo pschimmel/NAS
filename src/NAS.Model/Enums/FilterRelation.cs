@@ -2,7 +2,7 @@
 namespace NAS.Model.Enums
 {
   /// <summary>
-  /// Comparison definition of activity filter
+  /// Comparison _definition of activity filter
   /// </summary>
   public enum FilterRelation
   {

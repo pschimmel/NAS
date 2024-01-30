@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using ES.Tools.Core.MVVM;
@@ -88,9 +87,8 @@ namespace NAS.ViewModel
       using var vm = new SortingDefinitionViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedActivityProperty != ActivityProperty.None)
       {
-        var newSortingDefinition = new SortingDefinition()
+        var newSortingDefinition = new SortingDefinition(vm.SelectedActivityProperty)
         {
-          Property = vm.SelectedActivityProperty,
           Direction = vm.SelectedSortDirection,
           Order = SortingDefinitions.Count,
         };
@@ -182,9 +180,8 @@ namespace NAS.ViewModel
       using var vm = new GroupingDefinitionViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedActivityProperty != ActivityProperty.None)
       {
-        var newGroupingDefinition = new GroupingDefinition
+        var newGroupingDefinition = new GroupingDefinition(vm.SelectedActivityProperty)
         {
-          Property = vm.SelectedActivityProperty,
           Order = GroupingDefinitions.Count,
           Color = vm.SelectedColor.ToString()
         };

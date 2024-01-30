@@ -68,7 +68,7 @@ namespace NAS.Model.ImportExport
       return schedule;
     }
 
-    private void SetCustomFields(XmlNode documentNode)
+    private static void SetCustomFields(XmlNode documentNode)
     {
       foreach (XmlNode node in documentNode.ChildNodes)
       {
@@ -107,7 +107,7 @@ namespace NAS.Model.ImportExport
 
     private void GetProjectData(XmlNode parentNode)
     {
-      // Read ID, name, start and end dates of project
+      // Read ID, _name, _start and end dates of project
       foreach (XmlNode node in parentNode.ChildNodes)
       {
         switch (node.Name)
@@ -369,7 +369,7 @@ namespace NAS.Model.ImportExport
       }
 
       var activity1 = tasks[parentNode.FirstChild.InnerText];
-      var relationship = new Relationship { Activity1Guid = activity1.Guid, Activity2Guid = activity2.Guid };
+      var relationship = new Relationship(activity1, activity2);
 
       foreach (XmlNode node in parentNode.ChildNodes)
       {
@@ -429,24 +429,23 @@ namespace NAS.Model.ImportExport
     {
       foreach (XmlNode node in parentNode.ChildNodes)
       {
-        if (node.Name == "Assignment" && node.FirstChild.Name == "UID" && int.TryParse(node.FirstChild.InnerText, out int id))
+        if (node.Name == "Assignment" &&
+            node.FirstChild.Name == "UID" &&
+            int.TryParse(node.FirstChild.InnerText, out int id) &&
+            node.FirstChild.NextSibling.Name == "TaskUID" &&
+            tasks.TryGetValue(node.FirstChild.NextSibling.InnerText, out Activity activity) &&
+            node.FirstChild.NextSibling.NextSibling.Name == "ResourceUID" &&
+            int.TryParse(node.FirstChild.NextSibling.NextSibling.InnerText, out int resourceID) &&
+            resources.TryGetValue(resourceID, out var resource))
         {
-          if (node.FirstChild.NextSibling.Name == "TaskUID" && tasks.ContainsKey(node.FirstChild.NextSibling.InnerText))
+          var assignment = new ResourceAssociation(activity, resource);
+          foreach (XmlNode resourceNode in node.ChildNodes)
           {
-            if (node.FirstChild.NextSibling.NextSibling.Name == "ResourceUID" && int.TryParse(node.FirstChild.NextSibling.NextSibling.InnerText, out int resourceID) && resources.ContainsKey(resourceID))
+            switch (resourceNode.Name)
             {
-              string taskID = node.FirstChild.NextSibling.InnerText;
-              var assignment = new ResourceAssociation();// controller.AddResourceAssociation(tasks[taskID], resources[resourceID]);
-              foreach (XmlNode resourceNode in node.ChildNodes)
-              {
-                switch (resourceNode.Name)
-                {
-                  case "Units":
-                    assignment.UnitsPerDay = double.Parse(resourceNode.InnerText);
-                    break;
-                }
-              }
-              //controller.SaveChanges();
+              case "Units":
+                assignment.UnitsPerDay = double.Parse(resourceNode.InnerText);
+                break;
             }
           }
         }
@@ -460,12 +459,12 @@ namespace NAS.Model.ImportExport
 
     private static DateTime XmlStringToDateTime(string xmlDate)
     {
-      _ = int.TryParse(xmlDate.Substring(0, 4), out int year);
-      _ = int.TryParse(xmlDate.Substring(5, 2), out int month);
-      _ = int.TryParse(xmlDate.Substring(8, 2), out int day);
-      _ = int.TryParse(xmlDate.Substring(11, 2), out int hour);
-      _ = int.TryParse(xmlDate.Substring(14, 2), out int minute);
-      _ = int.TryParse(xmlDate.Substring(17, 2), out int second);
+      int.TryParse(xmlDate.AsSpan(0, 4), out int year);
+      int.TryParse(xmlDate.AsSpan(5, 2), out int month);
+      int.TryParse(xmlDate.AsSpan(8, 2), out int day);
+      int.TryParse(xmlDate.AsSpan(11, 2), out int hour);
+      int.TryParse(xmlDate.AsSpan(14, 2), out int minute);
+      int.TryParse(xmlDate.AsSpan(17, 2), out int second);
       year = Math.Max(year, 1900);
       month = Math.Max(month, 1);
       month = Math.Min(month, 12);
@@ -483,15 +482,15 @@ namespace NAS.Model.ImportExport
     private static TimeSpan XmlStringToTimeSpan(string xmlTimeSpan)
     {
       int idx2;
-      int idx = xmlTimeSpan.IndexOf("T");
-      idx2 = xmlTimeSpan.IndexOf("H");
-      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int hours);
+      int idx = xmlTimeSpan.IndexOf('T');
+      idx2 = xmlTimeSpan.IndexOf('H');
+      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int hours);
       idx = idx2;
-      idx2 = xmlTimeSpan.IndexOf("M");
-      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int minutes);
+      idx2 = xmlTimeSpan.IndexOf('M');
+      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int minutes);
       idx = idx2;
-      idx2 = xmlTimeSpan.IndexOf("S");
-      _ = int.TryParse(xmlTimeSpan.Substring(idx, idx2 - idx), out int seconds);
+      idx2 = xmlTimeSpan.IndexOf('S');
+      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int seconds);
       hours = Math.Max(hours, 0);
       hours = Math.Min(hours, 24);
       minutes = Math.Max(minutes, 0);

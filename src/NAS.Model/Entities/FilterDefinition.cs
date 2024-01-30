@@ -8,8 +8,10 @@ namespace NAS.Model.Entities
     private FilterRelation _relation;
     private string _objectString;
 
-    public FilterDefinition()
-    { }
+    public FilterDefinition(ActivityProperty property)
+    {
+      _property = property;
+    }
 
     public FilterDefinition(FilterDefinition other)
     {
@@ -68,13 +70,12 @@ namespace NAS.Model.Entities
         if (Layout != null && Layout.Schedule != null)
         {
           var schedule = Layout.Schedule;
-          if (Guid.TryParse(ObjectString, out var guid))
+          if (Guid.TryParse(ObjectString, out var id))
           {
-            string id = guid.ToString();
             switch (Property)
             {
               case ActivityProperty.Fragnet:
-                if (schedule.Fragnets.Any(x => x.ID == id.ToString()))
+                if (schedule.Fragnets.Any(x => x.ID == id))
                 {
                   s = schedule.Fragnets.First(x => x.ID == id).Name;
                 }
@@ -319,12 +320,12 @@ namespace NAS.Model.Entities
       };
     }
 
-    private WBSItem FindWBSItem(string id)
+    private WBSItem FindWBSItem(Guid id)
     {
       return Layout == null || Layout.Schedule == null ? null : FindWBSItem(Layout.Schedule.WBSItem, id);
     }
 
-    private WBSItem FindWBSItem(WBSItem parent, string id)
+    private static WBSItem FindWBSItem(WBSItem parent, Guid id)
     {
       if (parent == null)
       {
@@ -351,19 +352,32 @@ namespace NAS.Model.Entities
     {
       return property switch
       {
-        ActivityProperty.None => Array.Empty<FilterRelation>(),
-        ActivityProperty.Number or ActivityProperty.Name or ActivityProperty.EarlyStartDate or ActivityProperty.EarlyFinishDate or ActivityProperty.LateStartDate or ActivityProperty.LateFinishDate or ActivityProperty.ActualStartDate or ActivityProperty.ActualFinishDate or ActivityProperty.StartDate or ActivityProperty.FinishDate or ActivityProperty.PercentComplete or ActivityProperty.OriginalDuration or ActivityProperty.RemainingDuration or ActivityProperty.RetardedDuration or ActivityProperty.ActualDuration or ActivityProperty.TotalFloat or ActivityProperty.FreeFloat or ActivityProperty.TotalBudget or ActivityProperty.TotalActualCosts or ActivityProperty.TotalPlannedCosts => new FilterRelation[] {
-            FilterRelation.EqualTo,
-            FilterRelation.GreaterThan,
-            FilterRelation.GreaterThanOrEqualTo,
-            FilterRelation.LessThan,
-            FilterRelation.LessThanOrEqualTo,
-            FilterRelation.NotEqualTo
-          },
-        ActivityProperty.WBSItem or ActivityProperty.Fragnet or ActivityProperty.CustomAttribute1 or ActivityProperty.CustomAttribute2 or ActivityProperty.CustomAttribute3 => new FilterRelation[] {
-            FilterRelation.EqualTo,
-            FilterRelation.NotEqualTo
-          },
+        ActivityProperty.None => [],
+        ActivityProperty.Number or
+        ActivityProperty.Name or
+        ActivityProperty.EarlyStartDate or
+        ActivityProperty.EarlyFinishDate or
+        ActivityProperty.LateStartDate or
+        ActivityProperty.LateFinishDate or
+        ActivityProperty.ActualStartDate or
+        ActivityProperty.ActualFinishDate or
+        ActivityProperty.StartDate or
+        ActivityProperty.FinishDate or
+        ActivityProperty.PercentComplete or
+        ActivityProperty.OriginalDuration or
+        ActivityProperty.RemainingDuration or
+        ActivityProperty.RetardedDuration or
+        ActivityProperty.ActualDuration or
+        ActivityProperty.TotalFloat or
+        ActivityProperty.FreeFloat or
+        ActivityProperty.TotalBudget or
+        ActivityProperty.TotalActualCosts or
+        ActivityProperty.TotalPlannedCosts => [FilterRelation.EqualTo, FilterRelation.GreaterThan, FilterRelation.GreaterThanOrEqualTo, FilterRelation.LessThan, FilterRelation.LessThanOrEqualTo, FilterRelation.NotEqualTo],
+        ActivityProperty.WBSItem or
+        ActivityProperty.Fragnet or
+        ActivityProperty.CustomAttribute1 or
+        ActivityProperty.CustomAttribute2 or
+        ActivityProperty.CustomAttribute3 => [FilterRelation.EqualTo, FilterRelation.NotEqualTo],
         _ => throw new ArgumentException(null, nameof(property)),
       };
     }

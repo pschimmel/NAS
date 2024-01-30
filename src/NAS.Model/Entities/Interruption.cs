@@ -1,25 +1,23 @@
-﻿using System;
-
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class Interruption : Distortion
   {
-    private int? days;
-    private DateTime? start;
+    private int? _days;
+    private DateTime? _start;
 
-    public Interruption()
+    public Interruption(Activity activity) : base(activity)
     {
-      start = DateTime.Today;
+      _start = DateTime.Today;
     }
 
     public int? Days
     {
-      get => days;
+      get => _days;
       set
       {
-        if (days != value)
+        if (_days != value)
         {
-          days = value;
+          _days = value;
           OnPropertyChanged(nameof(Days));
         }
       }
@@ -27,12 +25,12 @@ namespace NAS.Model.Entities
 
     public DateTime? Start
     {
-      get => start;
+      get => _start;
       set
       {
-        if (start != value)
+        if (_start != value)
         {
-          start = value;
+          _start = value;
           OnPropertyChanged(nameof(Start));
         }
       }

@@ -22,15 +22,15 @@ namespace NAS.ViewModel
 
     public Relationship Relationship { get; set; }
 
-    public Activity Activity1 => Relationship.GetActivity1();
+    public Activity Activity1 => Relationship.Activity1;
 
-    public Activity Activity2 => Relationship.GetActivity2();
+    public Activity Activity2 => Relationship.Activity2;
 
     public RelationshipType SelectedRelationshipType => Relationship.RelationshipType;
 
     public int Lag => Relationship.Lag;
 
-    public string DisplayName => $"{Relationship.GetActivity1().Number} - {Relationship.GetActivity2().Number}";
+    public string DisplayName => $"{Relationship.Activity1.Number} - {Relationship.Activity2.Number}";
 
     #endregion
   }

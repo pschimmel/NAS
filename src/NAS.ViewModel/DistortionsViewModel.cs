@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -65,11 +64,11 @@ namespace NAS.ViewModel
       {
         Distortion newDistortion = vm.DistortionType switch
         {
-          DistortionType.Delay => new Delay(),
-          DistortionType.Extension => new Extension(),
-          DistortionType.Inhibition => new Inhibition(),
-          DistortionType.Interruption => new Interruption(),
-          DistortionType.Reduction => new Reduction(),
+          DistortionType.Delay => new Delay(_activity),
+          DistortionType.Extension => new Extension(_activity),
+          DistortionType.Inhibition => new Inhibition(_activity),
+          DistortionType.Interruption => new Interruption(_activity),
+          DistortionType.Reduction => new Reduction(_activity),
           _ => throw new ApplicationException("Unknown DistortionType."),
         };
 

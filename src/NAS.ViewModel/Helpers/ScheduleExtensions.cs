@@ -4,12 +4,12 @@ namespace NAS.ViewModel.Helpers
 {
   public static class ScheduleExtensions
   {
-    public static WBSItem FindWBSItem(this Schedule schedule, string id)
+    public static WBSItem FindWBSItem(this Schedule schedule, Guid id)
     {
-      return findWBSItem(schedule.WBSItem, id);
+      return FindWBSItem(schedule.WBSItem, id);
     }
 
-    private static WBSItem findWBSItem(WBSItem parent, string id)
+    private static WBSItem FindWBSItem(WBSItem parent, Guid id)
     {
       if (parent == null)
       {
@@ -23,7 +23,7 @@ namespace NAS.ViewModel.Helpers
 
       foreach (var child in parent.Children)
       {
-        var foundItem = findWBSItem(child, id);
+        var foundItem = FindWBSItem(child, id);
         if (foundItem != null)
         {
           return foundItem;

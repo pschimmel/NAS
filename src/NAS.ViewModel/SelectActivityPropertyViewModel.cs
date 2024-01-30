@@ -19,7 +19,7 @@ namespace NAS.ViewModel
     public SelectActivityPropertyViewModel()
       : base()
     {
-      if (ActivityProperties.Any())
+      if (ActivityProperties.Count != 0)
       {
         selectedActivityProperty = ActivityProperties.First();
       }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class PERTActivityData : NASObject
   {
@@ -21,9 +19,7 @@ namespace NAS.Model.Entities
 
     public virtual Schedule Schedule { get; set; }
 
-    public string ActivityID { get; set; } = Guid.Empty.ToString();
-
-    public Guid ActivityGuid => Guid.Parse(ActivityID);
+    public Guid ActivityID { get; set; } = Guid.Empty;
 
     public int LocationX
     {
@@ -53,7 +49,7 @@ namespace NAS.Model.Entities
 
     public Activity GetActivity()
     {
-      return Schedule.GetActivity(ActivityGuid);
+      return Schedule.GetActivity(ActivityID);
     }
   }
 }

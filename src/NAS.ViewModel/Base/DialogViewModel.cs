@@ -13,7 +13,7 @@ namespace NAS.ViewModel.Base
       : base()
     {
       ContentViewModel = contentViewModel;
-      _buttons = new List<IButtonViewModel>();
+      _buttons = [];
 
       foreach (var buttonVM in contentViewModel.Buttons)
       {

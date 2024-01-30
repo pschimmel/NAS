@@ -1,28 +1,19 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public abstract class Resource : NASObject
   {
-    private string name;
-    private decimal costsPerUnit;
-    private double? limit;
-
-    protected Resource()
-    {
-      ResourceAssociations = new ObservableCollection<ResourceAssociation>();
-      VisibleResources = new ObservableCollection<VisibleResource>();
-    }
+    private string _name;
+    private decimal _costsPerUnit;
+    private double? _limit;
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
         }
       }
@@ -30,12 +21,12 @@ namespace NAS.Model.Entities
 
     public decimal CostsPerUnit
     {
-      get => costsPerUnit;
+      get => _costsPerUnit;
       set
       {
-        if (costsPerUnit != value)
+        if (_costsPerUnit != value)
         {
-          costsPerUnit = value;
+          _costsPerUnit = value;
           OnPropertyChanged(nameof(CostsPerUnit));
         }
       }
@@ -43,26 +34,15 @@ namespace NAS.Model.Entities
 
     public double? Limit
     {
-      get => limit;
+      get => _limit;
       set
       {
-        if (limit != value)
+        if (_limit != value)
         {
-          limit = value;
+          _limit = value;
           OnPropertyChanged(nameof(Limit));
         }
       }
-    }
-
-    public virtual ICollection<ResourceAssociation> ResourceAssociations { get; set; }
-
-    public virtual ICollection<VisibleResource> VisibleResources { get; set; }
-
-    public virtual Schedule Schedule { get; set; }
-
-    public override string ToString()
-    {
-      return base.ToString();
     }
   }
 }

@@ -5,9 +5,16 @@
       xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
-      xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel" xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       d:DataContext="{d:DesignInstance Type=viewmodel:NewScheduleViewModel}"
       mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Grid.Resources>
   <extToolkit:Wizard BackButtonContent="{x:Static resx:NASResources.Back}"
                      CancelButtonContent="{x:Static resx:NASResources.Cancel}"
                      FinishButtonClosesWindow="True"

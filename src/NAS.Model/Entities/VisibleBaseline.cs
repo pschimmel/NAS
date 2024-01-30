@@ -2,46 +2,34 @@
 {
   public class VisibleBaseline : NASObject
   {
-    private string color;
+    private string _color = "LightGray";
 
-    internal VisibleBaseline()
+    public VisibleBaseline(Layout layout, Schedule schedule)
     {
-      color = "LightGray";
+      Layout = layout;
+      Schedule = schedule;
     }
 
     public VisibleBaseline(VisibleBaseline other)
       : this(other.Layout, other.Schedule)
     { }
 
-    public VisibleBaseline(Layout layout, Schedule schedule)
-      : this()
-    {
-      Layout = layout;
-      Layout_ID = layout.ID;
-      Schedule = schedule;
-      Schedule_ID = schedule.ID;
-    }
-
     public string Color
     {
-      get => color;
+      get => _color;
       set
       {
-        if (color != value)
+        if (_color != value)
         {
-          color = value;
+          _color = value;
           OnPropertyChanged(nameof(Color));
         }
       }
     }
 
-    public string Layout_ID { get; set; }
+    public Layout Layout { get; }
 
-    public string Schedule_ID { get; set; }
-
-    public virtual Layout Layout { get; set; }
-
-    public virtual Schedule Schedule { get; set; }
+    public Schedule Schedule { get; }
 
     /// <summary>
     /// Returns activity <see cref="string"/> that represents this instance.

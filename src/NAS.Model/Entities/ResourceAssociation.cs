@@ -1,21 +1,25 @@
-﻿using System;
-
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class ResourceAssociation : NASObject
   {
-    private decimal budget;
-    private decimal fixedCosts;
-    private double unitsPerDay;
+    private decimal _budget;
+    private decimal _fixedCosts;
+    private double _unitsPerDay;
+
+    public ResourceAssociation(Activity activity, Resource resource)
+    {
+      Activity = activity;
+      Resource = resource;
+    }
 
     public decimal Budget
     {
-      get => budget;
+      get => _budget;
       set
       {
-        if (budget != value)
+        if (_budget != value)
         {
-          budget = value;
+          _budget = value;
           OnPropertyChanged(nameof(Budget));
         }
       }
@@ -23,12 +27,12 @@ namespace NAS.Model.Entities
 
     public decimal FixedCosts
     {
-      get => fixedCosts;
+      get => _fixedCosts;
       set
       {
-        if (fixedCosts != value)
+        if (_fixedCosts != value)
         {
-          fixedCosts = value;
+          _fixedCosts = value;
           OnPropertyChanged(nameof(FixedCosts));
         }
       }
@@ -36,19 +40,20 @@ namespace NAS.Model.Entities
 
     public double UnitsPerDay
     {
-      get => unitsPerDay;
+      get => _unitsPerDay;
       set
       {
-        if (unitsPerDay != value)
+        if (_unitsPerDay != value)
         {
-          unitsPerDay = value;
+          _unitsPerDay = value;
           OnPropertyChanged(nameof(UnitsPerDay));
         }
       }
     }
 
-    public virtual Activity Activity { get; set; }
-    public virtual Resource Resource { get; set; }
+    public Activity Activity { get; }
+
+    public Resource Resource { get; }
 
     /// <summary>
     /// Gets the actual costs.

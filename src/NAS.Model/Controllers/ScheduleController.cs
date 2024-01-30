@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
 
@@ -20,27 +19,27 @@ namespace NAS.Model.Controllers
       {
         if (layout.ActivityColumns.Count == 0)
         {
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.Number, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.Name, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.OriginalDuration, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.StartDate, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.FinishDate, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.PercentComplete, Layout = layout });
-          layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.TotalFloat, Layout = layout });
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.OriginalDuration));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.PercentComplete));
+          layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.TotalFloat));
         }
         if (layout.HeaderItems.Count == 0)
         {
-          layout.HeaderItems.Add(new HeaderItem() { Layout = layout });
+          layout.HeaderItems.Add(new HeaderItem());
         }
         if (layout.FooterItems.Count == 0)
         {
-          layout.FooterItems.Add(new FooterItem() { Layout = layout });
+          layout.FooterItems.Add(new FooterItem());
         }
         if (layout.LayoutType == LayoutType.PERT)
         {
           if (layout.PERTDefinition == null)
           {
-            if (layout.Schedule.PERTDefinitions.Any())
+            if (layout.Schedule.PERTDefinitions.Count != 0)
             {
               layout.PERTDefinition = layout.Schedule.PERTDefinitions.First();
             }

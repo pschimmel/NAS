@@ -1,9 +1,11 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public partial class Extension : Distortion
   {
     private int? days;
+
+    public Extension(Activity activity) : base(activity)
+    { }
 
     public int? Days
     {

@@ -8,8 +8,9 @@ namespace NAS.Model.Entities
     private int _order;
     private string _color;
 
-    public GroupingDefinition()
+    public GroupingDefinition(ActivityProperty property)
     {
+      _property = property;
       _order = 0;
     }
 
@@ -59,8 +60,6 @@ namespace NAS.Model.Entities
         }
       }
     }
-
-    public virtual Layout Layout { get; set; }
 
     public string Name => ActivityPropertyHelper.GetNameOfActivityProperty(Property);
 

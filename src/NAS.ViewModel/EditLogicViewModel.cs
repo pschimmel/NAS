@@ -56,19 +56,19 @@ namespace NAS.ViewModel
           {
             foreach (var relationship in _currentActivity.GetPreceedingRelationships())
             {
-              Predecessors.Add(new LogicRelatedViewModel(relationship.GetActivity1(), relationship));
+              Predecessors.Add(new LogicRelatedViewModel(relationship.Activity1, relationship));
             }
 
             foreach (var relationship in _currentActivity.GetSucceedingRelationships())
             {
-              Successors.Add(new LogicRelatedViewModel(relationship.GetActivity2(), relationship));
+              Successors.Add(new LogicRelatedViewModel(relationship.Activity2, relationship));
             }
           }
         }
       }
     }
 
-    public ObservableCollection<LogicRelatedViewModel> Predecessors { get; } = new ObservableCollection<LogicRelatedViewModel>();
+    public ObservableCollection<LogicRelatedViewModel> Predecessors { get; } = [];
 
     public LogicRelatedViewModel CurrentPredecessor
     {
@@ -83,7 +83,7 @@ namespace NAS.ViewModel
       }
     }
 
-    public ObservableCollection<LogicRelatedViewModel> Successors { get; } = new ObservableCollection<LogicRelatedViewModel>();
+    public ObservableCollection<LogicRelatedViewModel> Successors { get; } = [];
 
     public LogicRelatedViewModel CurrentSuccessor
     {
@@ -149,7 +149,7 @@ namespace NAS.ViewModel
 
     private void EditPredecessorCommandExecute()
     {
-      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1Guid == CurrentPredecessor.Activity.Guid && x.Activity2Guid == CurrentActivity.Guid);
+      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1 == CurrentPredecessor.Activity && x.Activity2 == CurrentActivity);
       using var vm = new EditRelationshipViewModel(relationship, CurrentActivity.Schedule)
       {
         SelectedActivity1 = CurrentPredecessor.Activity,
@@ -230,7 +230,7 @@ namespace NAS.ViewModel
 
     private void EditSuccessorCommandExecute()
     {
-      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1Guid == CurrentActivity.Guid && x.Activity2Guid == CurrentSuccessor.Activity.Guid);
+      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1 == CurrentActivity && x.Activity2 == CurrentSuccessor.Activity);
       using var vm = new EditRelationshipViewModel(relationship, CurrentActivity.Schedule)
       {
         SelectedActivity1 = CurrentActivity,

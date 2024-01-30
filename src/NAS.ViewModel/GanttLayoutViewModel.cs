@@ -37,7 +37,7 @@ namespace NAS.ViewModel
 
     public override LayoutType LayoutType => LayoutType.Gantt;
 
-    public ObservableCollection<ColumnViewModel> Columns { get; } = new ObservableCollection<ColumnViewModel>();
+    public ObservableCollection<ColumnViewModel> Columns { get; } = [];
 
     public string DataDateColor => Layout.DataDateColor;
 

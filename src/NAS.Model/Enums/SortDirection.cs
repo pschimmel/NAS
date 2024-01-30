@@ -1,7 +1,7 @@
 ﻿namespace NAS.Model.Enums
 {
   /// <summary>
-  /// Defines the direction of activity sorting
+  /// Defines the _direction of activity sorting
   /// </summary>
   public enum SortDirection { Ascending, Descending }
 }

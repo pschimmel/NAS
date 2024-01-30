@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Model.Base;
+﻿using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 
@@ -134,10 +131,10 @@ namespace NAS.Model.Scheduler
     //    DateTime dataDate = schedule.DataDate;
     //    while (!activity.Calendar.IsWorkingDay(dataDate)) // Ensure data day is workday!
     //      dataDate = dataDate.AddDays(1);
-    //    // If activity has no predecessors it is the beginning of the schedule so the early start day is the data day
+    //    // If activity has no predecessors it is the beginning of the schedule so the early _start day is the data day
     //    activity.EarlyStartDate = dataDate;
     //    List<Relationship> predecessors = activity.GetVisiblePredecessors();
-    //    if (predecessors.Count > 0) { // else calculate early start day based on predecessing activities
+    //    if (predecessors.Count > 0) { // else calculate early _start day based on predecessing activities
     //      activity.EarlyStartDate = dataDate;
     //      foreach (Relationship r in predecessors) {
     //        // Skip predecessing activities in invisible fragnets
@@ -146,7 +143,7 @@ namespace NAS.Model.Scheduler
     //        // Check if predecessor activity has been calculated before. Performance!
     //        if (!scheduledActivities.Contains(r.Activity1))
     //          calculateForward(r.Activity1);
-    //        // Calculate start day based on relationship type
+    //        // Calculate _start day based on relationship type
     //        DateTime startDate = r.Activity1.EarlyStartDate;
     //        DateTime finishDate = r.Activity1.EarlyFinishDate;
     //        if (r.Activity1.ActualFinishDate.HasValue)
@@ -276,7 +273,7 @@ namespace NAS.Model.Scheduler
         // Calculate predecessor first
         CalculateForward2(predecessor);
 
-        // Calculate start day based on relationship type
+        // Calculate _start day based on relationship type
         DateTime predecessorStartDate = predecessor.EarlyStartDate;
         DateTime predecessorFinishDate = predecessor.EarlyFinishDate;
         if (predecessor.ActualFinishDate.HasValue)
@@ -351,7 +348,7 @@ namespace NAS.Model.Scheduler
     //        // Check if successor activity has been calculated before. Performance!
     //        if (!scheduledActivities.Contains(r.Activity2))
     //          calculateBackward(r.Activity2);
-    //        // Calculate start day based on relationship type
+    //        // Calculate _start day based on relationship type
     //        DateTime startDate = r.Activity2.LateFinishDate;
     //        DateTime finishDate = r.Activity2.LateFinishDate;
     //        if (r.Activity2.ActualFinishDate.HasValue)
@@ -481,7 +478,7 @@ namespace NAS.Model.Scheduler
         // Calculate sucessors first
         CalculateBackward2(successor);
 
-        // Calculate start day based on relationship type
+        // Calculate _start day based on relationship type
         DateTime successorStartDate = successor.LateStartDate;
         DateTime successorFinishDate = successor.LateFinishDate;
         if (successor.ActualStartDate.HasValue)
@@ -581,7 +578,7 @@ namespace NAS.Model.Scheduler
     /// <summary>
     /// Checks for loops.
     /// </summary>
-    /// <param number="relationships">The relationships to check.</param>
+    /// <param _number="relationships">The relationships to check.</param>
     /// <returns>true, if no loop was found</returns>
     public static bool CheckForLoops(List<Activity> activities, List<Relationship> relationships)
     {
@@ -605,9 +602,9 @@ namespace NAS.Model.Scheduler
 
       foreach (Relationship relationship in relationships)
       {
-        if (activities.Any(x => x.Guid == relationship.Activity1Guid) && activities.Any(x => x.Guid == relationship.Activity2Guid))
+        if (activities.Any(x => x.ID == relationship.Activity1.ID) && activities.Any(x => x.ID == relationship.Activity2.ID))
         {
-          relatedActivities.Add((schedule.GetActivity(relationship.Activity1Guid), schedule.GetActivity(relationship.Activity2Guid)));
+          relatedActivities.Add((schedule.GetActivity(relationship.Activity1.ID), schedule.GetActivity(relationship.Activity2.ID)));
         }
       }
 
@@ -717,7 +714,7 @@ namespace NAS.Model.Scheduler
 
       foreach (Relationship relationship in parent.GetSucceedingRelationships())
       {
-        Activity successor = relationship.GetActivity2();
+        Activity successor = relationship.Activity2;
         int count = relationship.Lag + successor.AtCompletionDuration;
 
         if (count >= item.Length)
@@ -755,16 +752,16 @@ namespace NAS.Model.Scheduler
 
     public static void RefreshDates(Relationship relationship)
     {
-      // IsDriving
-      if (relationship.Activity1Guid == Guid.Empty || relationship.Activity2Guid == Guid.Empty)
+      // Refresh IsDriving
+      if (relationship.Activity1 == null || relationship.Activity2 == null)
       {
         relationship.IsDriving = false;
         relationship.IsCritical = false;
         return;
       }
 
-      Activity activity1 = relationship.GetActivity1();
-      Activity activity2 = relationship.GetActivity2();
+      Activity activity1 = relationship.Activity1;
+      Activity activity2 = relationship.Activity2;
 
       if (activity1.Calendar == null)
       {

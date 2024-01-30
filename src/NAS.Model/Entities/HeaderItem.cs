@@ -1,30 +1,29 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class HeaderItem : NASObject, IPrintLayoutItem
   {
-    private string definition;
-    private int column;
+    private string _definition;
+    private int _column;
 
     public HeaderItem()
     {
-      column = 0;
+      _column = 0;
     }
 
     public HeaderItem(HeaderItem other)
     {
-      column = other.column;
-      definition = other.definition;
+      _column = other._column;
+      _definition = other._definition;
     }
 
     public string Definition
     {
-      get => definition;
+      get => _definition;
       set
       {
-        if (definition != value)
+        if (_definition != value)
         {
-          definition = value;
+          _definition = value;
           OnPropertyChanged(nameof(Definition));
         }
       }
@@ -32,17 +31,15 @@ namespace NAS.Model.Entities
 
     public int Column
     {
-      get => column;
+      get => _column;
       set
       {
-        if (column != value)
+        if (_column != value)
         {
-          column = value;
+          _column = value;
           OnPropertyChanged(nameof(Column));
         }
       }
     }
-
-    public virtual Layout Layout { get; set; }
   }
 }

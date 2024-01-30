@@ -4,13 +4,18 @@ namespace NAS.Model.Entities
 {
   public class SortingDefinition : NASObject
   {
-    private ActivityProperty property;
-    private SortDirection direction;
-    private int order;
+    private ActivityProperty _property;
+    private SortDirection _direction;
+    private int _order;
 
-    public SortingDefinition()
-    { }
+    public SortingDefinition(ActivityProperty property)
+    {
+      _property = property;
+    }
 
+    /// <summary>
+    /// Copy constructor.
+    /// </summary>
     public SortingDefinition(SortingDefinition other)
     {
       Property = other.Property;
@@ -20,12 +25,12 @@ namespace NAS.Model.Entities
 
     public ActivityProperty Property
     {
-      get => property;
+      get => _property;
       set
       {
-        if (property != value)
+        if (_property != value)
         {
-          property = value;
+          _property = value;
           OnPropertyChanged(nameof(Property));
           OnPropertyChanged(nameof(Name));
         }
@@ -34,12 +39,12 @@ namespace NAS.Model.Entities
 
     public SortDirection Direction
     {
-      get => direction;
+      get => _direction;
       set
       {
-        if (direction != value)
+        if (_direction != value)
         {
-          direction = value;
+          _direction = value;
           OnPropertyChanged(nameof(Direction));
           OnPropertyChanged(nameof(Name));
         }
@@ -48,18 +53,16 @@ namespace NAS.Model.Entities
 
     public int Order
     {
-      get => order;
+      get => _order;
       set
       {
-        if (order != value)
+        if (_order != value)
         {
-          order = value;
+          _order = value;
           OnPropertyChanged(nameof(Order));
         }
       }
     }
-
-    public virtual Layout Layout { get; set; }
 
     public string Name => ActivityPropertyHelper.GetNameOfActivityProperty(Property) + " (" + SortDirectionHelper.GetNameOfSortDirection(Direction) + ")";
 

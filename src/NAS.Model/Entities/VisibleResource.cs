@@ -4,37 +4,31 @@ namespace NAS.Model.Entities
 {
   public class VisibleResource : NASObject
   {
-    private bool showResourceAllocation;
-    private bool showBudget;
-    private bool showPlannedCosts;
-    private bool showActualCosts;
-    private TimeAggregateType aggregationType;
+    private bool _showResourceAllocation;
+    private bool _showBudget;
+    private bool _showPlannedCosts;
+    private bool _showActualCosts;
+    private TimeAggregateType _aggregationType;
 
-    internal VisibleResource()
-    { }
+    public VisibleResource(Layout layout, Resource resource)
+    {
+      Layout = layout;
+      Resource = resource;
+      layout.VisibleResources.Add(this);
+    }
 
     public VisibleResource(VisibleResource other)
       : this(other.Layout, other.Resource)
     { }
 
-    public VisibleResource(Layout layout, Resource resource) : this()
-    {
-      Layout = layout;
-      Layout_ID = layout.ID;
-      Resource = resource;
-      Resource_ID = resource.ID;
-      layout.VisibleResources.Add(this);
-      resource.VisibleResources.Add(this);
-    }
-
     public bool ShowResourceAllocation
     {
-      get => showResourceAllocation;
+      get => _showResourceAllocation;
       set
       {
-        if (showResourceAllocation != value)
+        if (_showResourceAllocation != value)
         {
-          showResourceAllocation = value;
+          _showResourceAllocation = value;
           OnPropertyChanged(nameof(ShowResourceAllocation));
         }
       }
@@ -42,12 +36,12 @@ namespace NAS.Model.Entities
 
     public bool ShowBudget
     {
-      get => showBudget;
+      get => _showBudget;
       set
       {
-        if (showBudget != value)
+        if (_showBudget != value)
         {
-          showBudget = value;
+          _showBudget = value;
           OnPropertyChanged(nameof(ShowBudget));
         }
       }
@@ -55,12 +49,12 @@ namespace NAS.Model.Entities
 
     public bool ShowPlannedCosts
     {
-      get => showPlannedCosts;
+      get => _showPlannedCosts;
       set
       {
-        if (showPlannedCosts != value)
+        if (_showPlannedCosts != value)
         {
-          showPlannedCosts = value;
+          _showPlannedCosts = value;
           OnPropertyChanged(nameof(ShowPlannedCosts));
         }
       }
@@ -68,12 +62,12 @@ namespace NAS.Model.Entities
 
     public bool ShowActualCosts
     {
-      get => showActualCosts;
+      get => _showActualCosts;
       set
       {
-        if (showActualCosts != value)
+        if (_showActualCosts != value)
         {
-          showActualCosts = value;
+          _showActualCosts = value;
           OnPropertyChanged(nameof(ShowActualCosts));
         }
       }
@@ -81,23 +75,19 @@ namespace NAS.Model.Entities
 
     public virtual TimeAggregateType AggregationType
     {
-      get => aggregationType;
+      get => _aggregationType;
       set
       {
-        if (aggregationType != value)
+        if (_aggregationType != value)
         {
-          aggregationType = value;
+          _aggregationType = value;
           OnPropertyChanged(nameof(AggregationType));
         }
       }
     }
 
-    public string Layout_ID { get; set; }
+    public Layout Layout { get; }
 
-    public string Resource_ID { get; set; }
-
-    public virtual Layout Layout { get; set; }
-
-    public virtual Resource Resource { get; set; }
+    public Resource Resource { get; }
   }
 }

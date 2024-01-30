@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
@@ -90,9 +87,8 @@ namespace NAS.ViewModel
         newOrder = CurrentWBSItem.Items.Max(x => x.Order) + 1;
       }
 
-      var newWBSItem = new WBSItem
+      var newWBSItem = new WBSItem(CurrentWBSItem.Item)
       {
-        Parent = CurrentWBSItem.Item,
         Order = newOrder
       };
 

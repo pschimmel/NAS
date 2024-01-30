@@ -31,7 +31,7 @@ namespace NAS.ViewModel
       p1 = data.Schedule1;
       p2 = data.Schedule2;
       headline = data.Headline;
-      strings = data.Text ?? new List<string>();
+      strings = data.Text ?? [];
 
       ShowComparisonResults();
       PrintCommand = new ActionCommand(param => PrintCommandExecute(), param => PrintCommandCanExecute);

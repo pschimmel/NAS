@@ -1,24 +1,20 @@
-﻿using System;
-
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class Holiday : NASObject
   {
-    private DateTime date;
+    private DateTime _date;
 
     public DateTime Date
     {
-      get => date;
+      get => _date;
       set
       {
-        if (date != value)
+        if (_date != value)
         {
-          date = value;
+          _date = value;
           OnPropertyChanged(nameof(Date));
         }
       }
     }
-
-    public virtual Calendar Calendar { get; set; }
   }
 }

@@ -14,7 +14,7 @@ namespace NAS.ViewModel
 
     public string Version => Globals.Version.ToString(3);
 
-    public string Copy => Globals.CopyRight;
+    public string Copyright => Globals.Copyright;
 
     public string ApplicationName => Globals.ApplicationName;
 

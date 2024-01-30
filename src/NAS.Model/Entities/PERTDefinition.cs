@@ -4,12 +4,12 @@ namespace NAS.Model.Entities
 {
   public class PERTDefinition : NASObject
   {
-    private string name;
-    private double width;
-    private double height;
-    private double fontSize;
-    private double spacingX;
-    private double spacingY;
+    private string _name;
+    private double _width;
+    private double _height;
+    private double _fontSize;
+    private double _spacingX;
+    private double _spacingY;
 
     public PERTDefinition()
     {
@@ -27,12 +27,12 @@ namespace NAS.Model.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
         }
       }
@@ -40,7 +40,7 @@ namespace NAS.Model.Entities
 
     public double Width
     {
-      get => width;
+      get => _width;
       set
       {
         if (value < 0)
@@ -48,9 +48,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (width != value)
+        if (_width != value)
         {
-          width = value;
+          _width = value;
           OnPropertyChanged(nameof(Width));
         }
       }
@@ -58,7 +58,7 @@ namespace NAS.Model.Entities
 
     public double Height
     {
-      get => height;
+      get => _height;
       set
       {
         if (value < 0)
@@ -66,9 +66,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (height != value)
+        if (_height != value)
         {
-          height = value;
+          _height = value;
           OnPropertyChanged(nameof(Height));
         }
       }
@@ -76,7 +76,7 @@ namespace NAS.Model.Entities
 
     public double FontSize
     {
-      get => fontSize;
+      get => _fontSize;
       set
       {
         if (value < 3)
@@ -84,9 +84,9 @@ namespace NAS.Model.Entities
           value = 3;
         }
 
-        if (fontSize != value)
+        if (_fontSize != value)
         {
-          fontSize = value;
+          _fontSize = value;
           OnPropertyChanged(nameof(FontSize));
         }
       }
@@ -94,7 +94,7 @@ namespace NAS.Model.Entities
 
     public double SpacingX
     {
-      get => spacingX;
+      get => _spacingX;
       set
       {
         if (value < 0)
@@ -102,9 +102,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (spacingX != value)
+        if (_spacingX != value)
         {
-          spacingX = value;
+          _spacingX = value;
           OnPropertyChanged(nameof(SpacingX));
         }
       }
@@ -112,7 +112,7 @@ namespace NAS.Model.Entities
 
     public double SpacingY
     {
-      get => spacingY;
+      get => _spacingY;
       set
       {
         if (value < 0)
@@ -120,9 +120,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (spacingY != value)
+        if (_spacingY != value)
         {
-          spacingY = value;
+          _spacingY = value;
           OnPropertyChanged(nameof(SpacingY));
         }
       }
@@ -169,11 +169,11 @@ namespace NAS.Model.Entities
 
     private void Initialize()
     {
-      fontSize = 12;
-      spacingX = 5;
-      spacingY = 5;
-      height = 100;
-      width = 150;
+      _fontSize = 12;
+      _spacingX = 5;
+      _spacingY = 5;
+      _height = 100;
+      _width = 150;
       RowDefinitions = [];
       ColumnDefinitions = [];
       Items = [];
@@ -191,17 +191,17 @@ namespace NAS.Model.Entities
 
       foreach (var otherRow in other.RowDefinitions)
       {
-        RowDefinitions.Add(new RowDefinition(otherRow) { Definition = this });
+        RowDefinitions.Add(new RowDefinition(otherRow));
       }
 
       foreach (var otherColumn in other.ColumnDefinitions)
       {
-        ColumnDefinitions.Add(new ColumnDefinition(otherColumn) { Definition = this });
+        ColumnDefinitions.Add(new ColumnDefinition(otherColumn));
       }
 
       foreach (var otherItem in other.Items)
       {
-        Items.Add(new PERTDataItem(otherItem) { Definition = this });
+        Items.Add(new PERTDataItem(otherItem));
       }
 
       foreach (var otherData in other.ActivityData)
@@ -233,17 +233,17 @@ namespace NAS.Model.Entities
 
       foreach (var otherRow in rowDefinitions)
       {
-        RowDefinitions.Add(new RowDefinition(otherRow) { Definition = this });
+        RowDefinitions.Add(new RowDefinition(otherRow));
       }
 
       foreach (var otherColumn in columnDefinitions)
       {
-        ColumnDefinitions.Add(new ColumnDefinition(otherColumn) { Definition = this });
+        ColumnDefinitions.Add(new ColumnDefinition(otherColumn));
       }
 
       foreach (var otherItem in items)
       {
-        Items.Add(new PERTDataItem(otherItem) { Definition = this });
+        Items.Add(new PERTDataItem(otherItem));
       }
     }
   }

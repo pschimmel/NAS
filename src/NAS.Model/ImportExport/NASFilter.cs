@@ -348,8 +348,8 @@ namespace NAS.Model.ImportExport
       {
         var relationshipElement = xml.CreateElement("Relationship");
         _ = relationshipsElement.AppendChild(relationshipElement);
-        relationshipElement.AppendTextChild("Activity1", schedule.GetActivity(relationships[i].Activity1Guid).Number);
-        relationshipElement.AppendTextChild("Activity2", schedule.GetActivity(relationships[i].Activity2Guid).Number);
+        relationshipElement.AppendTextChild("Activity1", relationships[i].Activity1.Number);
+        relationshipElement.AppendTextChild("Activity2", relationships[i].Activity2.Number);
         relationshipElement.AppendTextChild("DependencyType", relationships[i].RelationshipType);
         relationshipElement.AppendTextChild("Lag", relationships[i].Lag);
       }
@@ -809,7 +809,7 @@ namespace NAS.Model.ImportExport
           foreach (XmlNode activityNode in node.ChildNodes)
           {
             Activity activity = null;
-            if (activityNode.Name == "Activity" || activityNode.Name == "Milestone")
+            if (activityNode.Name is "Activity" or "Milestone")
             {
               activity = activityNode.Name == "Activity" ? Activity.NewActivity() : Activity.NewMilestone();
               schedule.AddActivity(activity);
@@ -914,7 +914,7 @@ namespace NAS.Model.ImportExport
                       {
                         if (resourceSubNode.Name == "ResourceID" && resourceSubNode.GetInteger().HasValue && resourceSubNode.GetInteger().Value >= 0 && resourceSubNode.GetInteger().Value < schedule.Resources.Count)
                         {
-                          ra = new ResourceAssociation() { Resource = schedule.Resources.ToList()[resourceSubNode.GetInteger().Value], Activity = activity };
+                          ra = new ResourceAssociation(activity, schedule.Resources.ToList()[resourceSubNode.GetInteger().Value]);
                         }
                       }
                       if (ra != null)
@@ -946,7 +946,7 @@ namespace NAS.Model.ImportExport
                     Distortion distortion = null;
                     if (distortionNode.Name == "Delay")
                     {
-                      distortion = new Delay();
+                      distortion = new Delay(activity);
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -957,7 +957,7 @@ namespace NAS.Model.ImportExport
                     }
                     else if (distortionNode.Name == "Interruption")
                     {
-                      distortion = new Interruption();
+                      distortion = new Interruption(activity);
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -972,7 +972,7 @@ namespace NAS.Model.ImportExport
                     }
                     else if (distortionNode.Name == "Inhibition")
                     {
-                      distortion = new Inhibition();
+                      distortion = new Inhibition(activity);
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Percent" && distortionSubNode.GetDouble().HasValue)
@@ -983,7 +983,7 @@ namespace NAS.Model.ImportExport
                     }
                     else if (distortionNode.Name == "Extension")
                     {
-                      distortion = new Extension();
+                      distortion = new Extension(activity);
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -994,7 +994,7 @@ namespace NAS.Model.ImportExport
                     }
                     else if (distortionNode.Name == "Reduction")
                     {
-                      distortion = new Reduction();
+                      distortion = new Reduction(activity);
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -1293,7 +1293,7 @@ namespace NAS.Model.ImportExport
 
                         if (a != ActivityProperty.None)
                         {
-                          var col = new ActivityColumn() { Property = a };
+                          var col = new ActivityColumn(a);
                           col.ColumnWidth = width;
                           l.ActivityColumns.Add(col);
                         }
@@ -1322,7 +1322,7 @@ namespace NAS.Model.ImportExport
                       }
                       if (a != ActivityProperty.None)
                       {
-                        var def = new SortingDefinition() { Property = a };
+                        var def = new SortingDefinition(a);
                         def.Direction = s;
                         l.SortingDefinitions.Add(def);
                       }
@@ -1350,7 +1350,7 @@ namespace NAS.Model.ImportExport
                       }
                       if (a != ActivityProperty.None)
                       {
-                        var def = new GroupingDefinition() { Property = a };
+                        var def = new GroupingDefinition(a);
                         def.Color = c;
                         l.GroupingDefinitions.Add(def);
                       }
@@ -1413,7 +1413,7 @@ namespace NAS.Model.ImportExport
                           obj = filterSubNode.InnerText;
                         }
                       }
-                      var f = new FilterDefinition() { Property = property };
+                      var f = new FilterDefinition(property);
                       f.Relation = relation;
                       f.ObjectString = obj;
                       l.FilterDefinitions.Add(f);
@@ -1494,7 +1494,7 @@ namespace NAS.Model.ImportExport
           {
             if (childNode.Name == "WBSItem")
             {
-              var item = new WBSItem();
+              var item = new WBSItem(parent);
               parent.Children.Add(item);
               ReadWBSItems(childNode, item);
             }

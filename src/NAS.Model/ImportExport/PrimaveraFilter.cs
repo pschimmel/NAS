@@ -312,7 +312,7 @@ namespace NAS.Model.ImportExport
               continue;
             }
 
-            var r = new Relationship(); //controller.AddRelationship(activities[id1.Value], activities[id2.Value]);
+            var r = new Relationship(activities[id1.Value], activities[id2.Value]); //controller.AddRelationship(activities[id1.Value], activities[id2.Value]);
             string type = relationshipFragment.GetItem("pred_type", i);
             if (type == "PR_SS")
             {

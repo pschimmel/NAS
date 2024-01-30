@@ -55,13 +55,13 @@ namespace NAS.Model.Entities
 
       foreach (var r in predecessors)
       {
-        var newRelationship = new Relationship() { Activity1Guid = r.Activity1Guid, Activity2Guid = newActivity.Guid };
+        var newRelationship = new Relationship(r.Activity1, newActivity);
         newRelationship.RelationshipType = r.RelationshipType;
         newRelationship.Lag = r.Lag;
       }
       foreach (var r in successors)
       {
-        var newRelationship = new Relationship() { Activity1Guid = newActivity.Guid, Activity2Guid = r.Activity2Guid };
+        var newRelationship = new Relationship(newActivity, r.Activity2);
         newRelationship.RelationshipType = r.RelationshipType;
         newRelationship.Lag = r.Lag;
       }

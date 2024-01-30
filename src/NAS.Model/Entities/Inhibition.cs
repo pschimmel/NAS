@@ -1,18 +1,20 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class Inhibition : Distortion
   {
-    private double? percent;
+    private double? _percent;
+
+    public Inhibition(Activity activity) : base(activity)
+    { }
 
     public double? Percent
     {
-      get => percent;
+      get => _percent;
       set
       {
-        if (percent != value)
+        if (_percent != value)
         {
-          percent = value;
+          _percent = value;
           OnPropertyChanged(nameof(Percent));
         }
       }

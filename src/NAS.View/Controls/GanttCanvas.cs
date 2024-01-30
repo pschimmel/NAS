@@ -290,7 +290,7 @@ namespace NAS.View.Controls
           // Draw Relationships
           foreach (var r in VM.Relationships)
           {
-            if (view.PassesFilter(r.Relationship.GetActivity1()) && view.PassesFilter(r.Relationship.GetActivity2()))
+            if (view.PassesFilter(r.Relationship.Activity1) && view.PassesFilter(r.Relationship.Activity2))
             {
               AddRelationship(r);
             }
@@ -652,8 +652,8 @@ namespace NAS.View.Controls
           ? new SolidColorBrush((Color)ColorConverter.ConvertFromString(layout.ActivityCriticalColor))
           : relationship.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
       }
-      var shape1 = GetShapeFromActivity(relationship.Relationship.GetActivity1());
-      var shape2 = GetShapeFromActivity(relationship.Relationship.GetActivity2());
+      var shape1 = GetShapeFromActivity(relationship.Relationship.Activity1);
+      var shape2 = GetShapeFromActivity(relationship.Relationship.Activity2);
       if (path == null || shape1 == null || shape2 == null)
       {
         return;

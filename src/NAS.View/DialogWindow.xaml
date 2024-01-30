@@ -14,6 +14,7 @@
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
         <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/DataTemplates.xaml" />
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Window.Resources>

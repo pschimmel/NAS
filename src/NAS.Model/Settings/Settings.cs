@@ -37,7 +37,7 @@ namespace NAS.Model.Settings
           {
             _language = culture.NativeName;
           }
-          else if (Languages.Any())
+          else if (Languages.Count != 0)
           {
             Language = Languages.First();
           }

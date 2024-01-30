@@ -100,8 +100,6 @@ namespace NAS.ViewModel
           return;
         }
 
-        newResource.Schedule = _schedule;
-
         using var vm2 = new ResourceDetailsViewModel(newResource);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
@@ -181,8 +179,6 @@ namespace NAS.ViewModel
         {
           return;
         }
-
-        newResource.Schedule = _schedule;
 
         using var vm2 = new ResourceDetailsViewModel(newResource);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)

@@ -23,7 +23,7 @@ namespace NAS.ViewModel.Printing
     {
       var server = new PrintServer();
       var queues = server.GetPrintQueues(new[] { EnumeratedPrintQueueTypes.Local, EnumeratedPrintQueueTypes.Connections });
-      Printers = queues?.OrderBy(x => x.FullName).ToList() ?? new List<PrintQueue>();
+      Printers = queues?.OrderBy(x => x.FullName).ToList() ?? [];
       if (printer != null)
       {
         SelectedPrinter = Printers.FirstOrDefault(x => x.FullName == printer.FullName);
@@ -70,7 +70,7 @@ namespace NAS.ViewModel.Printing
       }
     }
 
-    public ObservableCollection<PageMediaSize> PageSizes { get; } = new ObservableCollection<PageMediaSize>();
+    public ObservableCollection<PageMediaSize> PageSizes { get; } = [];
 
     public PageMediaSize SelectedPageSize
     {

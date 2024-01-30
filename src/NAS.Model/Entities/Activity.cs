@@ -147,7 +147,7 @@ namespace NAS.Model.Entities
     public IEnumerable<Relationship> GetVisiblePreceedingRelationships()
     {
       var predecessors = GetVisiblePredecessors();
-      return GetPreceedingRelationships().Where(x => predecessors.Any(y => y.Guid == x.Activity1Guid));
+      return GetPreceedingRelationships().Where(x => predecessors.Any(y => y.ID == x.Activity1.ID));
     }
 
     public int GetVisiblePredecessorCount()
@@ -163,7 +163,7 @@ namespace NAS.Model.Entities
     public IEnumerable<Relationship> GetVisibleSucceedingRelationships()
     {
       var successors = GetVisibleSuccessors();
-      return GetSucceedingRelationships().Where(x => successors.Any(y => y.Guid == x.Activity2Guid));
+      return GetSucceedingRelationships().Where(x => successors.Any(y => y.ID == x.Activity2.ID));
     }
 
     public int GetVisibleSuccessorCount()
@@ -476,11 +476,11 @@ namespace NAS.Model.Entities
           OnPropertyChanged(nameof(Constraint));
           if (ConstraintDate == null)
           {
-            if (value == ConstraintType.StartOn || value == ConstraintType.StartOnOrLater)
+            if (value is ConstraintType.StartOn or ConstraintType.StartOnOrLater)
             {
               ConstraintDate = EarlyStartDate;
             }
-            else if (value == ConstraintType.EndOn || value == ConstraintType.EndOnOrEarlier)
+            else if (value is ConstraintType.EndOn or ConstraintType.EndOnOrEarlier)
             {
               ConstraintDate = EarlyFinishDate;
             }
@@ -515,7 +515,7 @@ namespace NAS.Model.Entities
     #region Costs
 
     /// <summary>
-    /// Gets the total budget.
+    /// Gets the total _budget.
     /// </summary>
     public decimal TotalBudget => ResourceAssociations == null ? 0 : ResourceAssociations.Sum(x => x.Budget);
 
@@ -601,7 +601,7 @@ namespace NAS.Model.Entities
       // Move all successors of activity to new activity
       foreach (var r in GetSucceedingRelationships().ToList())
       {
-        _ = Schedule.AddRelationship(newActivity, r.GetActivity2());
+        Schedule.AddRelationship(newActivity, r.Activity2);
         Schedule.RemoveRelationship(r);
       }
 
@@ -657,13 +657,13 @@ namespace NAS.Model.Entities
 
     #region Navigation Properties
 
-    public virtual ICollection<ResourceAssociation> ResourceAssociations { get; set; }
+    public ICollection<ResourceAssociation> ResourceAssociations { get; set; }
 
-    public virtual Schedule Schedule { get; set; }
+    public Schedule Schedule { get; set; }
 
-    public virtual ICollection<Distortion> Distortions { get; set; }
+    public ICollection<Distortion> Distortions { get; set; }
 
-    public virtual Calendar Calendar
+    public Calendar Calendar
     {
       get => calendar;
       set
@@ -806,13 +806,13 @@ namespace NAS.Model.Entities
 
       foreach (var r in predecessors)
       {
-        var newRelationship = new Relationship { Activity1Guid = r.Activity1Guid, Activity2Guid = newMilestone.Guid };
+        var newRelationship = new Relationship(r.Activity1, newMilestone);
         newRelationship.RelationshipType = r.RelationshipType;
         newRelationship.Lag = r.Lag;
       }
       foreach (var r in successors)
       {
-        var newRelationship = new Relationship { Activity1Guid = newMilestone.Guid, Activity2Guid = r.Activity2Guid };
+        var newRelationship = new Relationship(newMilestone, r.Activity2);
         newRelationship.RelationshipType = r.RelationshipType;
         newRelationship.Lag = r.Lag;
       }

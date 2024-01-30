@@ -56,14 +56,7 @@ namespace NAS.ViewModel
     {
       get
       {
-        if (activityProperties == null)
-        {
-          activityProperties = new List<ActivityProperty>();
-          foreach (ActivityProperty item in Enum.GetValues(typeof(ActivityProperty)))
-          {
-            activityProperties.Add(item);
-          }
-        }
+        activityProperties ??= new List<ActivityProperty>(Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>());
         return activityProperties;
       }
     }

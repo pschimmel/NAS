@@ -24,14 +24,10 @@ namespace NAS.ViewModel
     public EditActivityViewModel(Activity activity)
       : base()
     {
-      if (activity == null)
-      {
-        throw new ArgumentNullException(nameof(activity));
-      }
-
+      ArgumentNullException.ThrowIfNull(activity);
       _schedule = activity.Schedule;
       _activity = activity;
-      ResourceAssociations = new ObservableCollection<ResourceAssociation>();
+      ResourceAssociations = [];
       Calendars = new ObservableCollection<Calendar>(_schedule.Calendars);
       Fragnets = new ObservableCollection<Fragnet>(_schedule.Fragnets);
       CustomAttributes1 = new List<CustomAttribute>(_schedule.CustomAttributes1);
@@ -154,7 +150,7 @@ namespace NAS.ViewModel
       using var vm = new SelectResourceViewModel(_schedule);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
       {
-        var resourceAssociation = new ResourceAssociation() { Activity = _activity, Resource = vm.SelectedResource };
+        var resourceAssociation = new ResourceAssociation(_activity, vm.SelectedResource);
         using var vm2 = new ResourceAssociationViewModel(resourceAssociation);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
@@ -241,7 +237,7 @@ namespace NAS.ViewModel
         AddError(NASResources.PleaseEnterPlannedDuration);
       }
 
-      if (_activity.PercentComplete < 0d || _activity.PercentComplete > 100d)
+      if (_activity.PercentComplete is < 0d or > 100d)
       {
         AddError(string.Format(NASResources.PleaseEnterNumbersFromTo, 0, 100));
       }
@@ -279,6 +275,5 @@ namespace NAS.ViewModel
     }
 
     #endregion
-
   }
 }

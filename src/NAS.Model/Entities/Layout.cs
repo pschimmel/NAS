@@ -6,55 +6,55 @@ namespace NAS.Model.Entities
 {
   public class Layout : NASObject, IPrintLayout
   {
-    private string name;
-    private LayoutType layoutType;
-    private string milestoneCriticalColor;
-    private string milestoneStandardColor;
-    private string milestoneDoneColor;
-    private string activityCriticalColor;
-    private string activityStandardColor;
-    private string activityDoneColor;
-    private string dataDateColor;
-    private bool showRelationships;
-    private bool showFloat;
-    private FilterCombinationType filterCombination;
-    private ActivityProperty leftText;
-    private ActivityProperty centerText;
-    private ActivityProperty rightText;
-    private bool isCurrent;
-    private PERTDefinition pertDefinition;
-    private double headerHeight;
-    private double footerHeight;
-    private double marginLeft;
-    private double marginRight;
-    private double marginTop;
-    private double marginBottom;
+    private string _name;
+    private LayoutType _layoutType;
+    private string _milestoneCriticalColor;
+    private string _milestoneStandardColor;
+    private string _milestoneDoneColor;
+    private string _activityCriticalColor;
+    private string _activityStandardColor;
+    private string _activityDoneColor;
+    private string _dataDateColor;
+    private bool _showRelationships;
+    private bool _showFloat;
+    private FilterCombinationType _filterCombination;
+    private ActivityProperty _leftText;
+    private ActivityProperty _centerText;
+    private ActivityProperty _rightText;
+    private bool _isCurrent;
+    private PERTDefinition _pertDefinition;
+    private double _headerHeight;
+    private double _footerHeight;
+    private double _marginLeft;
+    private double _marginRight;
+    private double _marginTop;
+    private double _marginBottom;
 
     public Layout()
     {
-      Name = NASResources.NewLayout;
-      activityStandardColor = "Yellow";
-      activityCriticalColor = "Red";
-      activityDoneColor = "Blue";
-      milestoneStandardColor = "Black";
-      milestoneCriticalColor = "Red";
-      milestoneDoneColor = "Blue";
-      dataDateColor = "Blue";
-      showRelationships = true;
-      showFloat = false;
-      leftText = ActivityProperty.None;
-      centerText = ActivityProperty.None;
-      rightText = ActivityProperty.None;
-      headerHeight = 1;
-      footerHeight = 1;
-      ActivityColumns = new ObservableCollection<ActivityColumn>();
-      FilterDefinitions = new ObservableCollection<FilterDefinition>();
-      GroupingDefinitions = new ObservableCollection<GroupingDefinition>();
-      SortingDefinitions = new ObservableCollection<SortingDefinition>();
-      HeaderItems = new ObservableCollection<HeaderItem>();
-      FooterItems = new ObservableCollection<FooterItem>();
-      VisibleBaselines = new ObservableCollection<VisibleBaseline>();
-      VisibleResources = new ObservableCollection<VisibleResource>();
+      _name = NASResources.NewLayout;
+      _activityStandardColor = "Yellow";
+      _activityCriticalColor = "Red";
+      _activityDoneColor = "Blue";
+      _milestoneStandardColor = "Black";
+      _milestoneCriticalColor = "Red";
+      _milestoneDoneColor = "Blue";
+      _dataDateColor = "Blue";
+      _showRelationships = true;
+      _showFloat = false;
+      _leftText = ActivityProperty.None;
+      _centerText = ActivityProperty.None;
+      _rightText = ActivityProperty.None;
+      _headerHeight = 1;
+      _footerHeight = 1;
+      ActivityColumns = [];
+      FilterDefinitions = [];
+      GroupingDefinitions = [];
+      SortingDefinitions = [];
+      HeaderItems = [];
+      FooterItems = [];
+      VisibleBaselines = [];
+      VisibleResources = [];
     }
 
     /// <summary>
@@ -67,12 +67,12 @@ namespace NAS.Model.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
         }
       }
@@ -80,12 +80,12 @@ namespace NAS.Model.Entities
 
     public LayoutType LayoutType
     {
-      get => layoutType;
+      get => _layoutType;
       set
       {
-        if (layoutType != value)
+        if (_layoutType != value)
         {
-          layoutType = value;
+          _layoutType = value;
           OnPropertyChanged(nameof(LayoutType));
         }
       }
@@ -93,12 +93,12 @@ namespace NAS.Model.Entities
 
     public bool IsCurrent
     {
-      get => isCurrent;
+      get => _isCurrent;
       set
       {
-        if (isCurrent != value)
+        if (_isCurrent != value)
         {
-          isCurrent = value;
+          _isCurrent = value;
           OnPropertyChanged(nameof(IsCurrent));
           Schedule?.UpdateCurrentLayout();
         }
@@ -107,12 +107,12 @@ namespace NAS.Model.Entities
 
     public string MilestoneCriticalColor
     {
-      get => milestoneCriticalColor;
+      get => _milestoneCriticalColor;
       set
       {
-        if (milestoneCriticalColor != value)
+        if (_milestoneCriticalColor != value)
         {
-          milestoneCriticalColor = value;
+          _milestoneCriticalColor = value;
           OnPropertyChanged(nameof(MilestoneCriticalColor));
         }
       }
@@ -120,12 +120,12 @@ namespace NAS.Model.Entities
 
     public string MilestoneStandardColor
     {
-      get => milestoneStandardColor;
+      get => _milestoneStandardColor;
       set
       {
-        if (milestoneStandardColor != value)
+        if (_milestoneStandardColor != value)
         {
-          milestoneStandardColor = value;
+          _milestoneStandardColor = value;
           OnPropertyChanged(nameof(MilestoneStandardColor));
         }
       }
@@ -133,12 +133,12 @@ namespace NAS.Model.Entities
 
     public string MilestoneDoneColor
     {
-      get => milestoneDoneColor;
+      get => _milestoneDoneColor;
       set
       {
-        if (milestoneDoneColor != value)
+        if (_milestoneDoneColor != value)
         {
-          milestoneDoneColor = value;
+          _milestoneDoneColor = value;
           OnPropertyChanged(nameof(MilestoneDoneColor));
         }
       }
@@ -146,12 +146,12 @@ namespace NAS.Model.Entities
 
     public string ActivityCriticalColor
     {
-      get => activityCriticalColor;
+      get => _activityCriticalColor;
       set
       {
-        if (activityCriticalColor != value)
+        if (_activityCriticalColor != value)
         {
-          activityCriticalColor = value;
+          _activityCriticalColor = value;
           OnPropertyChanged(nameof(ActivityCriticalColor));
         }
       }
@@ -159,12 +159,12 @@ namespace NAS.Model.Entities
 
     public string ActivityStandardColor
     {
-      get => activityStandardColor;
+      get => _activityStandardColor;
       set
       {
-        if (activityStandardColor != value)
+        if (_activityStandardColor != value)
         {
-          activityStandardColor = value;
+          _activityStandardColor = value;
           OnPropertyChanged(nameof(ActivityStandardColor));
         }
       }
@@ -172,12 +172,12 @@ namespace NAS.Model.Entities
 
     public string ActivityDoneColor
     {
-      get => activityDoneColor;
+      get => _activityDoneColor;
       set
       {
-        if (activityDoneColor != value)
+        if (_activityDoneColor != value)
         {
-          activityDoneColor = value;
+          _activityDoneColor = value;
           OnPropertyChanged(nameof(ActivityDoneColor));
         }
       }
@@ -185,12 +185,12 @@ namespace NAS.Model.Entities
 
     public string DataDateColor
     {
-      get => dataDateColor;
+      get => _dataDateColor;
       set
       {
-        if (dataDateColor != value)
+        if (_dataDateColor != value)
         {
-          dataDateColor = value;
+          _dataDateColor = value;
           OnPropertyChanged(nameof(DataDateColor));
         }
       }
@@ -198,12 +198,12 @@ namespace NAS.Model.Entities
 
     public bool ShowRelationships
     {
-      get => showRelationships;
+      get => _showRelationships;
       set
       {
-        if (showRelationships != value)
+        if (_showRelationships != value)
         {
-          showRelationships = value;
+          _showRelationships = value;
           OnPropertyChanged(nameof(ShowRelationships));
         }
       }
@@ -211,12 +211,12 @@ namespace NAS.Model.Entities
 
     public bool ShowFloat
     {
-      get => showFloat;
+      get => _showFloat;
       set
       {
-        if (showFloat != value)
+        if (_showFloat != value)
         {
-          showFloat = value;
+          _showFloat = value;
           OnPropertyChanged(nameof(ShowFloat));
         }
       }
@@ -224,12 +224,12 @@ namespace NAS.Model.Entities
 
     public FilterCombinationType FilterCombination
     {
-      get => filterCombination;
+      get => _filterCombination;
       set
       {
-        if (filterCombination != value)
+        if (_filterCombination != value)
         {
-          filterCombination = value;
+          _filterCombination = value;
           OnPropertyChanged(nameof(FilterCombination));
         }
       }
@@ -237,12 +237,12 @@ namespace NAS.Model.Entities
 
     public ActivityProperty LeftText
     {
-      get => leftText;
+      get => _leftText;
       set
       {
-        if (leftText != value)
+        if (_leftText != value)
         {
-          leftText = value;
+          _leftText = value;
           OnPropertyChanged(nameof(LeftText));
         }
       }
@@ -250,12 +250,12 @@ namespace NAS.Model.Entities
 
     public ActivityProperty CenterText
     {
-      get => centerText;
+      get => _centerText;
       set
       {
-        if (centerText != value)
+        if (_centerText != value)
         {
-          centerText = value;
+          _centerText = value;
           OnPropertyChanged(nameof(CenterText));
         }
       }
@@ -263,12 +263,12 @@ namespace NAS.Model.Entities
 
     public ActivityProperty RightText
     {
-      get => rightText;
+      get => _rightText;
       set
       {
-        if (rightText != value)
+        if (_rightText != value)
         {
-          rightText = value;
+          _rightText = value;
           OnPropertyChanged(nameof(RightText));
         }
       }
@@ -276,12 +276,12 @@ namespace NAS.Model.Entities
 
     public PERTDefinition PERTDefinition
     {
-      get => pertDefinition;
+      get => _pertDefinition;
       set
       {
-        if (pertDefinition != value)
+        if (_pertDefinition != value)
         {
-          pertDefinition = value;
+          _pertDefinition = value;
           OnPropertyChanged(nameof(PERTDefinition));
         }
       }
@@ -289,12 +289,12 @@ namespace NAS.Model.Entities
 
     public double HeaderHeight
     {
-      get => headerHeight;
+      get => _headerHeight;
       set
       {
-        if (headerHeight != value)
+        if (_headerHeight != value)
         {
-          headerHeight = value;
+          _headerHeight = value;
           OnPropertyChanged(nameof(HeaderHeight));
         }
       }
@@ -302,12 +302,12 @@ namespace NAS.Model.Entities
 
     public double FooterHeight
     {
-      get => footerHeight;
+      get => _footerHeight;
       set
       {
-        if (footerHeight != value)
+        if (_footerHeight != value)
         {
-          footerHeight = value;
+          _footerHeight = value;
           OnPropertyChanged(nameof(FooterHeight));
         }
       }
@@ -315,12 +315,12 @@ namespace NAS.Model.Entities
 
     public double MarginLeft
     {
-      get => marginLeft;
+      get => _marginLeft;
       set
       {
-        if (marginLeft != value)
+        if (_marginLeft != value)
         {
-          marginLeft = value;
+          _marginLeft = value;
           OnPropertyChanged(nameof(MarginLeft));
         }
       }
@@ -328,12 +328,12 @@ namespace NAS.Model.Entities
 
     public double MarginRight
     {
-      get => marginRight;
+      get => _marginRight;
       set
       {
-        if (marginRight != value)
+        if (_marginRight != value)
         {
-          marginRight = value;
+          _marginRight = value;
           OnPropertyChanged(nameof(MarginRight));
         }
       }
@@ -341,12 +341,12 @@ namespace NAS.Model.Entities
 
     public double MarginTop
     {
-      get => marginTop;
+      get => _marginTop;
       set
       {
-        if (marginTop != value)
+        if (_marginTop != value)
         {
-          marginTop = value;
+          _marginTop = value;
           OnPropertyChanged(nameof(MarginTop));
         }
       }
@@ -354,26 +354,34 @@ namespace NAS.Model.Entities
 
     public double MarginBottom
     {
-      get => marginBottom;
+      get => _marginBottom;
       set
       {
-        if (marginBottom != value)
+        if (_marginBottom != value)
         {
-          marginBottom = value;
+          _marginBottom = value;
           OnPropertyChanged(nameof(MarginBottom));
         }
       }
     }
 
-    public virtual ICollection<ActivityColumn> ActivityColumns { get; set; }
-    public virtual ICollection<FilterDefinition> FilterDefinitions { get; set; }
-    public virtual ICollection<GroupingDefinition> GroupingDefinitions { get; set; }
-    public virtual ICollection<HeaderItem> HeaderItems { get; set; }
-    public virtual ICollection<FooterItem> FooterItems { get; set; }
-    public virtual ICollection<SortingDefinition> SortingDefinitions { get; set; }
-    public virtual ICollection<VisibleBaseline> VisibleBaselines { get; set; }
-    public virtual ICollection<VisibleResource> VisibleResources { get; set; }
-    public virtual Schedule Schedule { get; set; }
+    public ObservableCollection<ActivityColumn> ActivityColumns { get; }
+
+    public ObservableCollection<FilterDefinition> FilterDefinitions { get; }
+
+    public ObservableCollection<GroupingDefinition> GroupingDefinitions { get; }
+
+    public ObservableCollection<HeaderItem> HeaderItems { get; }
+
+    public ObservableCollection<FooterItem> FooterItems { get; }
+
+    public ObservableCollection<SortingDefinition> SortingDefinitions { get; }
+
+    public ObservableCollection<VisibleBaseline> VisibleBaselines { get; }
+
+    public ObservableCollection<VisibleResource> VisibleResources { get; }
+
+    public Schedule Schedule { get; }
 
     #region Filters
 

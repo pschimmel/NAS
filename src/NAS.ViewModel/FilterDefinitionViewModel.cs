@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
 using NAS.ViewModel.Base;
@@ -81,7 +78,7 @@ namespace NAS.ViewModel
       {
         if (items == null)
         {
-          items = new List<object>();
+          items = [];
           switch (Property)
           {
             case ActivityProperty.Fragnet:
@@ -126,9 +123,8 @@ namespace NAS.ViewModel
     {
       get
       {
-        if (Guid.TryParse(ObjectString, out var dummy))
+        if (Guid.TryParse(ObjectString, out Guid id))
         {
-          string id = dummy.ToString();
           switch (Property)
           {
             case ActivityProperty.Fragnet:
@@ -253,7 +249,7 @@ namespace NAS.ViewModel
             ErrorMessage = NASResources.ValueNotValid;
             return false;
           }
-          var f = _schedule.Fragnets.FirstOrDefault(x => x.ID == fragnetID.ToString());
+          var f = _schedule.Fragnets.FirstOrDefault(x => x.ID == fragnetID);
           if (f == null)
           {
             ErrorMessage = NASResources.ValueNotValid;
@@ -302,13 +298,13 @@ namespace NAS.ViewModel
           }
           break;
         case ActivityProperty.CustomAttribute1:
-          Guid ca1ID;
-          if (!Guid.TryParse(ObjectString, out ca1ID))
+          Guid customAttributeID;
+          if (!Guid.TryParse(ObjectString, out customAttributeID))
           {
             ErrorMessage = NASResources.ValueNotValid;
             return false;
           }
-          var customAttribute1 = _schedule.CustomAttributes1.FirstOrDefault(x => x.ID == ca1ID.ToString());
+          var customAttribute1 = _schedule.CustomAttributes1.FirstOrDefault(x => x.ID == customAttributeID);
           if (customAttribute1 == null)
           {
             ErrorMessage = NASResources.ValueNotValid;
@@ -316,13 +312,13 @@ namespace NAS.ViewModel
           }
           break;
         case ActivityProperty.CustomAttribute2:
-          Guid ca2ID;
-          if (!Guid.TryParse(ObjectString, out ca2ID))
+          Guid customAttribute2ID;
+          if (!Guid.TryParse(ObjectString, out customAttribute2ID))
           {
             ErrorMessage = NASResources.ValueNotValid;
             return false;
           }
-          var customAttribute2 = _schedule.CustomAttributes2.FirstOrDefault(x => x.ID == ca2ID.ToString());
+          var customAttribute2 = _schedule.CustomAttributes2.FirstOrDefault(x => x.ID == customAttribute2ID);
           if (customAttribute2 == null)
           {
             ErrorMessage = NASResources.ValueNotValid;
@@ -330,13 +326,13 @@ namespace NAS.ViewModel
           }
           break;
         case ActivityProperty.CustomAttribute3:
-          Guid ca3ID;
-          if (!Guid.TryParse(ObjectString, out ca3ID))
+          Guid customAttribute3ID;
+          if (!Guid.TryParse(ObjectString, out customAttribute3ID))
           {
             ErrorMessage = NASResources.ValueNotValid;
             return false;
           }
-          var customAttribute3 = _schedule.CustomAttributes3.FirstOrDefault(x => x.ID == ca3ID.ToString());
+          var customAttribute3 = _schedule.CustomAttributes3.FirstOrDefault(x => x.ID == customAttribute3ID);
           if (customAttribute3 == null)
           {
             ErrorMessage = NASResources.ValueNotValid;
@@ -364,9 +360,9 @@ namespace NAS.ViewModel
 
     #region Private Members
 
-    private WBSItem GetWBSItem(WBSItem parent, Guid id)
+    private static WBSItem GetWBSItem(WBSItem parent, Guid id)
     {
-      if (parent.Guid == id)
+      if (parent.ID == id)
       {
         return parent;
       }

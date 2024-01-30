@@ -4,22 +4,21 @@ namespace NAS.Model.Entities
 {
   public class ColumnDefinition : NASObject
   {
-    private double? width = null;
-    private int sort;
+    private double? _width;
+    private int _sort;
 
     public ColumnDefinition()
     { }
 
     public ColumnDefinition(ColumnDefinition other)
     {
-      Definition = other.Definition;
       Width = other.Width;
       Sort = other.Sort;
     }
 
     public double? Width
     {
-      get => width;
+      get => _width;
       set
       {
         if (value < 0)
@@ -27,9 +26,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (width != value)
+        if (_width != value)
         {
-          width = value;
+          _width = value;
           OnPropertyChanged(nameof(Width));
           OnPropertyChanged(nameof(Name));
         }
@@ -38,7 +37,7 @@ namespace NAS.Model.Entities
 
     public int Sort
     {
-      get => sort;
+      get => _sort;
       set
       {
         if (value < 0)
@@ -46,9 +45,9 @@ namespace NAS.Model.Entities
           value = 0;
         }
 
-        if (sort != value)
+        if (_sort != value)
         {
-          sort = value;
+          _sort = value;
           OnPropertyChanged(nameof(Sort));
         }
       }
@@ -59,9 +58,9 @@ namespace NAS.Model.Entities
       get
       {
         string s = NASResources.Column;
-        if (width.HasValue)
+        if (_width.HasValue)
         {
-          s += " (" + width.Value + ")";
+          s += $" ({_width.Value})";
         }
         else
         {
@@ -71,8 +70,6 @@ namespace NAS.Model.Entities
         return s;
       }
     }
-
-    public virtual PERTDefinition Definition { get; set; }
 
     public override string ToString()
     {

@@ -27,12 +27,12 @@ namespace NAS.ViewModel
     public SortingDefinitionViewModel()
       : base()
     {
-      if (ActivityProperties.Any())
+      if (ActivityProperties.Count != 0)
       {
         selectedActivityProperty = ActivityProperties.First();
       }
 
-      if (SortDirections.Any())
+      if (SortDirections.Count != 0)
       {
         selectedSortDirection = SortDirections.First();
       }

@@ -1,34 +1,38 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public abstract class Distortion : NASObject
   {
-    public string description;
-    private Fragnet fragnet;
+    public string _description;
+    private Fragnet _fragnet;
+
+    public Distortion(Activity activity)
+    {
+      Activity = activity;
+    }
 
     public string Description
     {
-      get => description;
+      get => _description;
       set
       {
-        if (description != value)
+        if (_description != value)
         {
-          description = value;
+          _description = value;
           OnPropertyChanged(nameof(Description));
         }
       }
     }
 
-    public virtual Activity Activity { get; set; }
+    public Activity Activity { get; }
 
-    public virtual Fragnet Fragnet
+    public Fragnet Fragnet
     {
-      get => fragnet;
+      get => _fragnet;
       set
       {
-        if (fragnet != value)
+        if (_fragnet != value)
         {
-          fragnet = value;
+          _fragnet = value;
           OnPropertyChanged(nameof(Fragnet));
         }
       }

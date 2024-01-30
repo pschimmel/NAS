@@ -28,7 +28,7 @@ namespace NAS.ViewModel
     public GroupingDefinitionViewModel()
       : base()
     {
-      if (ActivityProperties.Any())
+      if (ActivityProperties.Count != 0)
       {
         selectedActivityProperty = ActivityProperties.First();
       }

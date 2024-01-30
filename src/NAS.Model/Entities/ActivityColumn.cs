@@ -10,9 +10,6 @@ namespace NAS.Model.Entities
     private double? _columnWidth;
     private int _order;
 
-    public ActivityColumn()
-    { }
-
     public ActivityColumn(ActivityProperty property)
     {
       _property = property;
@@ -63,7 +60,5 @@ namespace NAS.Model.Entities
         }
       }
     }
-
-    public virtual Layout Layout { get; set; }
   }
 }

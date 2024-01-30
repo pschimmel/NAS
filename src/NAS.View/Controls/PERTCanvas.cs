@@ -189,8 +189,8 @@ namespace NAS.View.Controls
           }
 
           var visibleActivities = view.Cast<Activity>().ToList();
-          int matrixX = visibleActivities.Any() ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationX), 3) : 1;
-          int matrixY = visibleActivities.Any() ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationY), 3) : 1;
+          int matrixX = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationX), 3) : 1;
+          int matrixY = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationY), 3) : 1;
           if (matrixX * matrixY < visibleActivities.Count)
           {
             matrixX = Convert.ToInt32(Math.Sqrt(Math.Ceiling(Convert.ToDouble(visibleActivities.Count))));
@@ -357,7 +357,7 @@ namespace NAS.View.Controls
         {
           for (int y = 0; y < matrix.GetLength(1); y++)
           {
-            if (matrix[x, y].ActivityGuid == activity.Activity.Guid)
+            if (matrix[x, y].ActivityID == activity.Activity.ID)
             {
               matrix[x, y] = null;
             }

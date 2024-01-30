@@ -21,10 +21,10 @@ namespace NAS.ViewModel
 
       if (baseline != null)
       {
-        layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.Number });
-        layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.Name });
-        layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.StartDate });
-        layout.ActivityColumns.Add(new ActivityColumn() { Property = ActivityProperty.FinishDate });
+        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
+        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
+        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
+        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
         layout.VisibleBaselines.Add(new VisibleBaseline(layout, baseline));
         Title = NASResources.ProjectComparison;
       }

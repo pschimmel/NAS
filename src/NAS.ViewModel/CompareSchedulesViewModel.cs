@@ -52,7 +52,7 @@ namespace NAS.ViewModel
       {
         if (fragnets1 == null)
         {
-          fragnets1 = new List<CompareScheduleItem>();
+          fragnets1 = [];
           foreach (var f in Schedule.Fragnets)
           {
             fragnets1.Add(new CompareScheduleItem(f) { IsChecked = f.IsVisible });
@@ -68,7 +68,7 @@ namespace NAS.ViewModel
       {
         if (fragnets2 == null)
         {
-          fragnets2 = new List<CompareScheduleItem>();
+          fragnets2 = [];
           foreach (var f in Schedule.Fragnets)
           {
             fragnets2.Add(new CompareScheduleItem(f) { IsChecked = f.IsVisible });
@@ -148,7 +148,7 @@ namespace NAS.ViewModel
 
       h2 += ")";
       result.Headline = string.Format(NASResources.SchedulesCompared, h1, h2);
-      result.Text = new List<string>();
+      result.Text = [];
       foreach (var item in fragnets2)
       {
         if (!string.IsNullOrWhiteSpace(item.Description) && !string.IsNullOrWhiteSpace(item.Name))

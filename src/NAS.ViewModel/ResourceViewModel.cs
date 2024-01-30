@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -226,7 +224,7 @@ namespace NAS.ViewModel
 
     private void RefreshData()
     {
-      _helper = new ResourceInfoHelper(Resource.Resource, Start, End, AggregationType);
+      _helper = new ResourceInfoHelper(Resource.Resource, _vm.Schedule, Start, End, AggregationType);
       OnPropertyChanged(nameof(ResourceAllocation));
       OnPropertyChanged(nameof(ResourceBudget));
       OnPropertyChanged(nameof(ResourceCostsActual));

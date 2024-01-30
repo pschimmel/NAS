@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -83,7 +81,7 @@ namespace NAS.ViewModel
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        var newHoliday = new Holiday() { Calendar=_calendar, Date = vm.Date };
+        var newHoliday = new Holiday() { Date = vm.Date };
         Holidays.Add(newHoliday);
         CurrentHoliday = newHoliday;
       }

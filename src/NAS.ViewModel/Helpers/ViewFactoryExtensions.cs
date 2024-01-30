@@ -5,7 +5,7 @@ namespace NAS.ViewModel.Helpers
 {
   public static class ViewFactoryExtensions
   {
-    private static readonly Dictionary<Type, Type> _dialogs = new();
+    private static readonly Dictionary<Type, Type> _dialogs = [];
 
     public static bool? ShowDialog(this ViewFactory factory, IDialogContentViewModel viewModel)
     {
