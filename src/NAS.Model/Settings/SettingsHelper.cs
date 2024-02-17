@@ -11,7 +11,7 @@ namespace NAS.Model.Settings
     {
       try
       {
-        var emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+        var emptyNamespaces = new XmlSerializerNamespaces([XmlQualifiedName.Empty]);
         var serializer = new XmlSerializer(typeof(Settings));
         var writerSettings = new XmlWriterSettings();
         writerSettings.Indent = true;

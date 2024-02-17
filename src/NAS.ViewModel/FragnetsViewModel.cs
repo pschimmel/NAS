@@ -59,9 +59,9 @@ namespace NAS.ViewModel
 
     private void AddFragnetCommandExecute()
     {
-      var newFragnet = new Fragnet { Schedule = _schedule };
+      var newFragnet = new Fragnet();
       newFragnet.IsVisible = true;
-      using var vm = new FragnetViewModel(newFragnet);
+      using var vm = new FragnetViewModel(_schedule, newFragnet);
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
@@ -106,7 +106,7 @@ namespace NAS.ViewModel
 
     private void EditFragnetCommandExecute()
     {
-      using var vm = new FragnetViewModel(CurrentFragnet);
+      using var vm = new FragnetViewModel(_schedule, CurrentFragnet);
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {

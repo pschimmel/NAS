@@ -1,36 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace NAS.Model.Entities
 {
   public class Fragnet : NASObject
   {
-    private string number;
-    private string name;
-    private string description;
-    private bool isDisputable;
-    private DateTime identified;
-    private DateTime? approved;
-    private DateTime? submitted;
-    private bool isVisible;
+    private string _number;
+    private string _name;
+    private string _description;
+    private bool _isDisputable;
+    private DateTime _identified;
+    private DateTime? _approved;
+    private DateTime? _submitted;
+    private bool _isVisible;
 
     public Fragnet()
     {
-      identified = DateTime.Today;
-      isVisible = true;
-      Activities = new ObservableCollection<Activity>();
-      Distortion = new ObservableCollection<Distortion>();
+      _identified = DateTime.Today;
+      _isVisible = true;
+      Activities = [];
+      Distortion = [];
     }
 
     public string Number
     {
-      get => number;
+      get => _number;
       set
       {
-        if (number != value)
+        if (_number != value)
         {
-          number = value;
+          _number = value;
           OnPropertyChanged(nameof(Number));
         }
       }
@@ -38,12 +36,12 @@ namespace NAS.Model.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
         }
       }
@@ -51,12 +49,12 @@ namespace NAS.Model.Entities
 
     public string Description
     {
-      get => description;
+      get => _description;
       set
       {
-        if (description != value)
+        if (_description != value)
         {
-          description = value;
+          _description = value;
           OnPropertyChanged(nameof(Description));
         }
       }
@@ -64,12 +62,12 @@ namespace NAS.Model.Entities
 
     public bool IsDisputable
     {
-      get => isDisputable;
+      get => _isDisputable;
       set
       {
-        if (isDisputable != value)
+        if (_isDisputable != value)
         {
-          isDisputable = value;
+          _isDisputable = value;
           OnPropertyChanged(nameof(IsDisputable));
         }
       }
@@ -77,12 +75,12 @@ namespace NAS.Model.Entities
 
     public DateTime Identified
     {
-      get => identified;
+      get => _identified;
       set
       {
-        if (identified != value)
+        if (_identified != value)
         {
-          identified = value;
+          _identified = value;
           OnPropertyChanged(nameof(Identified));
         }
       }
@@ -90,12 +88,12 @@ namespace NAS.Model.Entities
 
     public DateTime? Approved
     {
-      get => approved;
+      get => _approved;
       set
       {
-        if (approved != value)
+        if (_approved != value)
         {
-          approved = value;
+          _approved = value;
           OnPropertyChanged(nameof(Approved));
         }
       }
@@ -103,12 +101,12 @@ namespace NAS.Model.Entities
 
     public DateTime? Submitted
     {
-      get => submitted;
+      get => _submitted;
       set
       {
-        if (submitted != value)
+        if (_submitted != value)
         {
-          submitted = value;
+          _submitted = value;
           OnPropertyChanged(nameof(Submitted));
         }
       }
@@ -116,29 +114,26 @@ namespace NAS.Model.Entities
 
     public bool IsVisible
     {
-      get => isVisible;
+      get => _isVisible;
       set
       {
-        if (isVisible != value)
+        if (_isVisible != value)
         {
-          isVisible = value;
+          _isVisible = value;
           OnPropertyChanged(nameof(IsVisible));
         }
       }
     }
 
-    public virtual ICollection<Activity> Activities { get; set; }
-    public virtual Schedule Schedule { get; set; }
-    public virtual ICollection<Distortion> Distortion { get; set; }
+    public ObservableCollection<Activity> Activities { get; }
+
+    public ObservableCollection<Distortion> Distortion { get; }
 
     #region Activity
 
     public void RefreshActibities(IEnumerable<Activity> activities)
     {
-      if (activities == null)
-      {
-        throw new ArgumentNullException(nameof(activities), "Argument can't be null");
-      }
+      ArgumentNullException.ThrowIfNull(activities);
 
       Activities.Clear();
 
@@ -149,7 +144,6 @@ namespace NAS.Model.Entities
     }
 
     #endregion
-
 
     public override string ToString()
     {

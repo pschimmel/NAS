@@ -10,15 +10,9 @@ namespace NAS.ViewModel.Helpers
   {
     public static bool ShowReport(Schedule schedule, string fileName, CultureInfo language)
     {
-      if (schedule == null)
-      {
-        throw new ArgumentNullException(nameof(schedule));
-      }
+      ArgumentNullException.ThrowIfNull(schedule);
 
-      if (fileName == null)
-      {
-        throw new ArgumentNullException(nameof(fileName));
-      }
+      ArgumentNullException.ThrowIfNull(fileName);
 
       if (!File.Exists(fileName))
       {
@@ -56,15 +50,9 @@ namespace NAS.ViewModel.Helpers
 
     public static bool EditReport(Schedule schedule, string fileName, CultureInfo language)
     {
-      if (schedule == null)
-      {
-        throw new ArgumentNullException(nameof(schedule));
-      }
+      ArgumentNullException.ThrowIfNull(schedule);
 
-      if (fileName == null)
-      {
-        throw new ArgumentNullException(nameof(fileName));
-      }
+      ArgumentNullException.ThrowIfNull(fileName);
 
       if (!File.Exists(fileName))
       {

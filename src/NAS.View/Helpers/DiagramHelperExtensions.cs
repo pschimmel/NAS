@@ -133,10 +133,7 @@ namespace NAS.View.Helpers
     /// </example>
     public static void AppendPoint(this StringBuilder sb, double x, double y)
     {
-      if (sb == null)
-      {
-        throw new ArgumentNullException(nameof(sb));
-      }
+      ArgumentNullException.ThrowIfNull(sb);
 
       if (string.IsNullOrWhiteSpace(sb.ToString()))
       {

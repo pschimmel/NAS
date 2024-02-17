@@ -46,10 +46,7 @@ namespace NAS.ViewModel
 
     public ScheduleViewModel(Schedule schedule)
     {
-      if (schedule == null)
-      {
-        throw new ArgumentNullException(nameof(schedule));
-      }
+      ArgumentNullException.ThrowIfNull(schedule);
 
       Layouts = [];
       foreach (var layout in Schedule.Layouts)

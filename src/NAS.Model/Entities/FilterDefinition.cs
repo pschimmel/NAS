@@ -117,7 +117,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual Layout Layout { get; set; }
+    public Layout Layout { get; }
 
     public bool Compare(Activity activity)
     {

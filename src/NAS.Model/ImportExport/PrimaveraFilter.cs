@@ -213,13 +213,13 @@ namespace NAS.Model.ImportExport
           {
             Model.Entities.Activity a = null;
             string type = taskFragment.GetItem("task_type", i);
-            if (type == "TT_Mile" || type == "TT_FinMile")
+            if (type is "TT_Mile" or "TT_FinMile")
             {
-              a = Model.Entities.Activity.NewMilestone();
+              a = Model.Entities.Activity.NewMilestone(schedule);
             }
             else if (type == "TT_Task")
             {
-              a = Model.Entities.Activity.NewActivity();
+              a = Model.Entities.Activity.NewActivity(schedule);
             }
             else
             {
@@ -231,9 +231,9 @@ namespace NAS.Model.ImportExport
             int? calendarID = taskFragment.GetInt("clndr_id", i);
             if (calendarID.HasValue)
             {
-              if (calendars.ContainsKey(calendarID.Value))
+              if (calendars.TryGetValue(calendarID.Value, out var calendar))
               {
-                a.Calendar = calendars[calendarID.Value];
+                a.Calendar = calendar;
               }
               else
               {
@@ -353,12 +353,12 @@ namespace NAS.Model.ImportExport
       Fragment fragment = null;
       for (int i = 0; i < lines.Length; i++)
       {
-        string[] line = lines[i].Split(new char[] { (char)9 });
+        string[] line = lines[i].Split([(char)9]);
         if (fragment == null)
         {
           if (line.Length >= 2 && line[0] == "%T" && line[1] == type.ToString())
           {
-            string[] line2 = lines[i + 1].Split(new char[] { (char)9 });
+            string[] line2 = lines[i + 1].Split([(char)9]);
             if (line2.Length > 0 && line2[0] == "%F")
             {
               fragment = new Fragment(line2.Skip(1).ToArray(), type);
@@ -368,7 +368,7 @@ namespace NAS.Model.ImportExport
         }
         else
         {
-          string[] lineX = lines[i].Split(new char[] { (char)9 });
+          string[] lineX = lines[i].Split([(char)9]);
           if (lineX.Length > 0 && (lineX[0] == "%E" || lineX[0] == "%T"))
           {
             return fragment;
@@ -439,15 +439,12 @@ namespace NAS.Model.ImportExport
       public bool? GetBoolean(string header, int idx)
       {
         string b = GetItem(header, idx);
-        switch (b)
+        return b switch
         {
-          case "Y":
-            return true;
-          case "N":
-            return false;
-          default:
-            return null;
-        }
+          "Y" => true,
+          "N" => false,
+          _ => null,
+        };
       }
 
       public int? GetInt(string header, int idx)

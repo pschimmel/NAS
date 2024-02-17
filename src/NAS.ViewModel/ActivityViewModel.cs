@@ -19,10 +19,7 @@ namespace NAS.ViewModel
     public ActivityViewModel(Activity activity)
       : base()
     {
-      if (activity == null)
-      {
-        throw new ArgumentNullException(nameof(activity));
-      }
+      ArgumentNullException.ThrowIfNull(activity);
 
       Schedule = activity.Schedule;
       Activity = activity;

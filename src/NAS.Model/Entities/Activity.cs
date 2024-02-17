@@ -36,8 +36,9 @@ namespace NAS.Model.Entities
 
     #region Constructors
 
-    public Activity(bool isFixed = false)
+    public Activity(Schedule schedule, bool isFixed = false)
     {
+      Schedule = schedule;
       IsFixed = isFixed;
       constraint = ConstraintType.None;
       name = NASResources.NewActivity;
@@ -99,24 +100,24 @@ namespace NAS.Model.Entities
 
     #region Public Methods
 
-    public static Activity NewActivity()
+    public static Activity NewActivity(Schedule schedule)
     {
-      return new Activity();
+      return new Activity(schedule);
     }
 
-    public static Activity NewFixedActivity()
+    public static Activity NewFixedActivity(Schedule schedule)
     {
-      return new Activity(true);
+      return new Activity(schedule, true);
     }
 
-    public static Activity NewMilestone()
+    public static Activity NewMilestone(Schedule schedule)
     {
-      return new Milestone();
+      return new Milestone(schedule);
     }
 
-    public static Activity NewFixedMilestone()
+    public static Activity NewFixedMilestone(Schedule schedule)
     {
-      return new Milestone(true);
+      return new Milestone(schedule, true);
     }
 
     public IEnumerable<Activity> GetPredecessors()
@@ -589,7 +590,7 @@ namespace NAS.Model.Entities
         return null;
       }
 
-      var newActivity = new Activity { IsFixed = IsFixed, Schedule = Schedule };
+      var newActivity = new Activity(Schedule, IsFixed);
       newActivity.Name = Name + NASResources.Copy;
       newActivity.OriginalDuration = OriginalDuration / 2;
       newActivity.Calendar = Calendar;
@@ -659,7 +660,7 @@ namespace NAS.Model.Entities
 
     public ICollection<ResourceAssociation> ResourceAssociations { get; set; }
 
-    public Schedule Schedule { get; set; }
+    public Schedule Schedule { get; }
 
     public ICollection<Distortion> Distortions { get; set; }
 

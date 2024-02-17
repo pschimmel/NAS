@@ -322,7 +322,7 @@ namespace NAS.Model.ImportExport
     }
 
     /// <summary>
-    /// Writes unit cost information to filestream
+    /// Writes _unit cost information to filestream
     /// </summary>
     /// <param _name="sw">Filestream</param>
     private void WriteUnitCosts(StreamWriter sw)

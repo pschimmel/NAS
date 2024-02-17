@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -21,11 +20,11 @@ namespace NAS.ViewModel
 
     #region Constructor
 
-    public FragnetViewModel(Fragnet fragnet)
+    public FragnetViewModel(Schedule schedule, Fragnet fragnet)
       : base()
     {
+      _schedule = schedule;
       _fragnet = fragnet;
-      _schedule = fragnet.Schedule;
       FragnetActivities = new ObservableCollection<Activity>(_fragnet.Activities);
       Number = fragnet.Number;
       Name = fragnet.Name;

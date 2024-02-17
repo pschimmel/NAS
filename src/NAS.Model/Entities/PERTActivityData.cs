@@ -2,33 +2,32 @@
 {
   public class PERTActivityData : NASObject
   {
-    private int locationX;
-    private int locationY;
+    private int _locationX;
+    private int _locationY;
 
-    public PERTActivityData()
-    { }
+    public PERTActivityData(Activity activity)
+    {
+      Activity = activity;
+    }
 
     public PERTActivityData(PERTActivityData other)
     {
-      ActivityID = other.ActivityID;
+      Activity = other.Activity;
       ID = other.ID;
       LocationX = other.LocationX;
       LocationY = other.LocationY;
-      Schedule = other.Schedule;
     }
 
-    public virtual Schedule Schedule { get; set; }
-
-    public Guid ActivityID { get; set; } = Guid.Empty;
+    public Activity Activity { get; }
 
     public int LocationX
     {
-      get => locationX;
+      get => _locationX;
       set
       {
-        if (locationX != value)
+        if (_locationX != value)
         {
-          locationX = value;
+          _locationX = value;
           OnPropertyChanged(nameof(LocationX));
         }
       }
@@ -36,20 +35,15 @@
 
     public int LocationY
     {
-      get => locationY;
+      get => _locationY;
       set
       {
-        if (locationY != value)
+        if (_locationY != value)
         {
-          locationY = value;
+          _locationY = value;
           OnPropertyChanged(nameof(LocationY));
         }
       }
-    }
-
-    public Activity GetActivity()
-    {
-      return Schedule.GetActivity(ActivityID);
     }
   }
 }

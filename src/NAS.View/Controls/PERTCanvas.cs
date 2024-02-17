@@ -292,12 +292,12 @@ namespace NAS.View.Controls
         }
       }
       matrix[a.LocationX, a.LocationY] = a;
-      var rect = GetActivityDiagram(VM.Activities.FirstOrDefault(x => x.Activity == a.GetActivity()));
+      var rect = GetActivityDiagram(VM.Activities.FirstOrDefault(x => x.Activity == a.Activity));
       a.PropertyChanged += (sender, args) =>
       {
         var activity = sender as Activity;
         var vm = VM.Activities.FirstOrDefault(x => x.Activity == activity);
-        if (args.PropertyName == "IsStarted" || args.PropertyName == "IsFinished" || args.PropertyName == "IsCritical")
+        if (args.PropertyName is "IsStarted" or "IsFinished" or "IsCritical")
         {
           RefreshActivity(vm);
           foreach (var predecessor in activity.GetPreceedingRelationships())
@@ -314,7 +314,7 @@ namespace NAS.View.Controls
       _ = Children.Add(rect);
       SetZIndex(rect, 3);
 
-      RefreshActivity(VM.Activities.FirstOrDefault(x => x.Activity == a.GetActivity()));
+      RefreshActivity(VM.Activities.FirstOrDefault(x => x.Activity == a.Activity));
     }
 
     private PERTDiagram GetActivityDiagram(ActivityViewModel activity)
@@ -357,7 +357,7 @@ namespace NAS.View.Controls
         {
           for (int y = 0; y < matrix.GetLength(1); y++)
           {
-            if (matrix[x, y].ActivityID == activity.Activity.ID)
+            if (Equals(matrix[x, y].Activity, activity.Activity))
             {
               matrix[x, y] = null;
             }
@@ -661,7 +661,7 @@ namespace NAS.View.Controls
         return;
       }
 
-      if (e.OriginalSource is PERTDiagram || e.OriginalSource is TextBlock)
+      if (e.OriginalSource is PERTDiagram or TextBlock)
       {
         PERTDiagram diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource as PERTDiagram : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
         if (diagramm == null)
@@ -761,7 +761,7 @@ namespace NAS.View.Controls
             tempLine.Stroke = Brushes.Black;
           }
 
-          var activity = dragActivityData.GetActivity();
+          var activity = dragActivityData.Activity;
           var diagram = GetDiagramFromActivity(new ActivityViewModel(activity));
           tempLine.Y1 = GetTop(diagram) + template.Height / 2;
           tempLine.X1 = GetLeft(diagram);
@@ -836,7 +836,7 @@ namespace NAS.View.Controls
             dragActivityData.LocationX = tempX;
             dragActivityData.LocationY = tempY;
 
-            var activity = dragActivityData.GetActivity();
+            var activity = dragActivityData.Activity;
             RefreshActivity(new ActivityViewModel(activity));
 
             foreach (var rel in activity.GetVisiblePreceedingRelationships())
@@ -853,7 +853,7 @@ namespace NAS.View.Controls
       }
       else if (dragActivityData != null && (e.OriginalSource is PERTDiagram || e.OriginalSource is TextBlock))
       {
-        var activity = dragActivityData.GetActivity();
+        var activity = dragActivityData.Activity;
 
         // Draw relationship
         var diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource as PERTDiagram : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();

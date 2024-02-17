@@ -5,25 +5,31 @@ namespace NAS.Model.Entities
   public class PERTDefinition : NASObject
   {
     private string _name;
-    private double _width;
-    private double _height;
-    private double _fontSize;
-    private double _spacingX;
-    private double _spacingY;
+    private double _width = 150;
+    private double _height = 100;
+    private double _fontSize = 12;
+    private double _spacingX = 5;
+    private double _spacingY = 5;
 
-    public PERTDefinition()
+    public PERTDefinition(Schedule schedule = null)
     {
-      Initialize();
+      RowDefinitions = [];
+      ColumnDefinitions = [];
+      Items = [];
+      ActivityData = [];
+      Schedule = schedule;
     }
 
     /// <summary>
     /// Copy constructor
     /// </summary>
     public PERTDefinition(PERTDefinition other)
+      : this()
     {
-      Initialize();
       CreateCopy(other);
     }
+
+    public Schedule Schedule { get; private set; }
 
     public string Name
     {
@@ -128,22 +134,20 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual Schedule Schedule { get; set; }
+    public ObservableCollection<RowDefinition> RowDefinitions { get; }
 
-    public virtual ObservableCollection<RowDefinition> RowDefinitions { get; private set; }
+    public ObservableCollection<ColumnDefinition> ColumnDefinitions { get; }
 
-    public virtual ObservableCollection<ColumnDefinition> ColumnDefinitions { get; private set; }
+    public ObservableCollection<PERTDataItem> Items { get; }
 
-    public virtual ObservableCollection<PERTDataItem> Items { get; private set; }
-
-    public virtual ObservableCollection<PERTActivityData> ActivityData { get; private set; }
+    public ObservableCollection<PERTActivityData> ActivityData { get; }
 
     public PERTActivityData AddActivityData(Activity activity)
     {
       var result = GetActivityData(activity);
       if (result == null)
       {
-        result = new PERTActivityData { ActivityID = activity.ID };
+        result = new PERTActivityData(activity);
         ActivityData.Add(result);
       }
       return result;
@@ -151,34 +155,21 @@ namespace NAS.Model.Entities
 
     public PERTActivityData GetActivityData(Activity activity)
     {
-      return ActivityData.FirstOrDefault(x => x.ActivityID == activity.ID);
+      return ActivityData.FirstOrDefault(x => x.Activity.ID == activity.ID);
     }
 
     public void RemoveActivityData(Activity activity)
     {
-      var items = ActivityData.Where(x => x.ActivityID == activity.ID).ToList();
+      var items = ActivityData.Where(x => x.Activity.ID == activity.ID).ToList();
       foreach (var item in items)
       {
-        _ = ActivityData.Remove(item);
+        ActivityData.Remove(item);
       }
     }
 
     public int Rows => RowDefinitions.Count;
 
     public int Columns => ColumnDefinitions.Count;
-
-    private void Initialize()
-    {
-      _fontSize = 12;
-      _spacingX = 5;
-      _spacingY = 5;
-      _height = 100;
-      _width = 150;
-      RowDefinitions = [];
-      ColumnDefinitions = [];
-      Items = [];
-      ActivityData = [];
-    }
 
     private void CreateCopy(PERTDefinition other)
     {
@@ -188,6 +179,7 @@ namespace NAS.Model.Entities
       FontSize = other.FontSize;
       SpacingX = other.SpacingX;
       SpacingY = other.SpacingY;
+      Schedule = other.Schedule;
 
       foreach (var otherRow in other.RowDefinitions)
       {

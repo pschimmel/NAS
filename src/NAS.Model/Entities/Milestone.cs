@@ -7,8 +7,8 @@ namespace NAS.Model.Entities
   [DebuggerDisplay("{Number} {Name}")]
   public class Milestone : Activity
   {
-    public Milestone(bool isFixed = false)
-      : base(isFixed)
+    public Milestone(Schedule schedule, bool isFixed = false)
+      : base(schedule, isFixed)
     {
       Name = NASResources.NewMilestone;
     }
@@ -48,6 +48,7 @@ namespace NAS.Model.Entities
       newActivity.LateStartDate = LateStartDate;
       newActivity.WBSItem = WBSItem;
       newActivity.Fragnet = Fragnet;
+
       if (PercentComplete == 100)
       {
         newActivity.PercentComplete = 100;
@@ -55,15 +56,14 @@ namespace NAS.Model.Entities
 
       foreach (var r in predecessors)
       {
-        var newRelationship = new Relationship(r.Activity1, newActivity);
-        newRelationship.RelationshipType = r.RelationshipType;
-        newRelationship.Lag = r.Lag;
+        schedule.AddRelationship(r.Activity1, newActivity, r.RelationshipType).Lag = r.Lag;
+        schedule.RemoveRelationship(r);
       }
+
       foreach (var r in successors)
       {
-        var newRelationship = new Relationship(newActivity, r.Activity2);
-        newRelationship.RelationshipType = r.RelationshipType;
-        newRelationship.Lag = r.Lag;
+        schedule.AddRelationship(newActivity, r.Activity2, r.RelationshipType).Lag = r.Lag;
+        schedule.RemoveRelationship(r);
       }
 
       return newActivity;

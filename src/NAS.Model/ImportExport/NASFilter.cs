@@ -537,9 +537,9 @@ namespace NAS.Model.ImportExport
       }
     }
 
-    private static void WriteWBSItems(XmlElement parentElement, ICollection<WBSItem> items)
+    private static void WriteWBSItems(XmlElement parentElement, IEnumerable<WBSItem> items)
     {
-      if (items != null && items.Count > 0)
+      if (items != null && items.Any())
       {
         var xml = parentElement.OwnerDocument;
         var itemsElement = xml.CreateElement("Items");
@@ -811,7 +811,7 @@ namespace NAS.Model.ImportExport
             Activity activity = null;
             if (activityNode.Name is "Activity" or "Milestone")
             {
-              activity = activityNode.Name == "Activity" ? Activity.NewActivity() : Activity.NewMilestone();
+              activity = activityNode.Name == "Activity" ? Activity.NewActivity(schedule) : Activity.NewMilestone(schedule);
               schedule.AddActivity(activity);
               foreach (XmlNode activitySubNode in activityNode.ChildNodes)
               {
@@ -1069,7 +1069,7 @@ namespace NAS.Model.ImportExport
           {
             if (pertNode.Name == "PERTDefinition")
             {
-              var d = new PERTDefinition();
+              var d = new PERTDefinition(schedule);
               schedule.PERTDefinitions.Add(d);
               foreach (XmlNode pertSubNode in pertNode.ChildNodes)
               {

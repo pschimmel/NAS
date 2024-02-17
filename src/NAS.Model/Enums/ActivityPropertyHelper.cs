@@ -69,24 +69,11 @@ namespace NAS.Model.Enums
     /// </returns>
     public static bool IsPropertyReadonly(ActivityProperty property)
     {
-      switch (property)
+      return property switch
       {
-        case ActivityProperty.ActualDuration:
-        case ActivityProperty.RetardedDuration:
-        case ActivityProperty.EarlyFinishDate:
-        case ActivityProperty.EarlyStartDate:
-        case ActivityProperty.FinishDate:
-        case ActivityProperty.FreeFloat:
-        case ActivityProperty.LateFinishDate:
-        case ActivityProperty.LateStartDate:
-        case ActivityProperty.StartDate:
-        case ActivityProperty.TotalActualCosts:
-        case ActivityProperty.TotalFloat:
-        case ActivityProperty.TotalPlannedCosts:
-          return true;
-        default:
-          return false;
-      }
+        ActivityProperty.ActualDuration or ActivityProperty.RetardedDuration or ActivityProperty.EarlyFinishDate or ActivityProperty.EarlyStartDate or ActivityProperty.FinishDate or ActivityProperty.FreeFloat or ActivityProperty.LateFinishDate or ActivityProperty.LateStartDate or ActivityProperty.StartDate or ActivityProperty.TotalActualCosts or ActivityProperty.TotalFloat or ActivityProperty.TotalPlannedCosts => true,
+        _ => false,
+      };
     }
 
     /// <summary>
@@ -107,68 +94,35 @@ namespace NAS.Model.Enums
     /// <returns>Formated text</returns>
     public static string GetTextFromActivity(this Activity a, ActivityProperty property)
     {
-      switch (property)
+      return property switch
       {
-        case ActivityProperty.ActualDuration:
-          return a.ActualDuration.ToString();
-        case ActivityProperty.RetardedDuration:
-          return a.RetardedDuration.ToString();
-        case ActivityProperty.ActualFinishDate:
-          return a.ActualFinishDate.HasValue ? a.ActualFinishDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null;
-
-        case ActivityProperty.ActualStartDate:
-          return a.ActualStartDate.HasValue ? a.ActualStartDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null;
-
-        case ActivityProperty.EarlyFinishDate:
-          return a.EarlyFinishDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.EarlyStartDate:
-          return a.EarlyStartDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.FinishDate:
-          return a.FinishDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.Fragnet:
-          return a.Fragnet?.ToString();
-
-        case ActivityProperty.FreeFloat:
-          return a.FreeFloat.ToString();
-        case ActivityProperty.Number:
-          return a.Number;
-        case ActivityProperty.LateFinishDate:
-          return a.LateFinishDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.LateStartDate:
-          return a.LateStartDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.Name:
-          return a.Name;
-        case ActivityProperty.OriginalDuration:
-          return a.OriginalDuration.ToString();
-        case ActivityProperty.PercentComplete:
-          return a.PercentComplete.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.RemainingDuration:
-          return a.RemainingDuration.ToString();
-        case ActivityProperty.StartDate:
-          return a.StartDate.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.TotalBudget:
-          return a.TotalBudget.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.TotalActualCosts:
-          return a.TotalActualCosts.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.TotalFloat:
-          return a.TotalFloat.ToString();
-        case ActivityProperty.TotalPlannedCosts:
-          return a.TotalPlannedCosts.ToString(GetFormatStringForType(GetPropertyType(property)));
-        case ActivityProperty.WBSItem:
-          return a.WBSItem?.ToString();
-
-        case ActivityProperty.CustomAttribute1:
-          return a.CustomAttribute1?.ToString();
-
-        case ActivityProperty.CustomAttribute2:
-          return a.CustomAttribute2?.ToString();
-
-        case ActivityProperty.CustomAttribute3:
-          return a.CustomAttribute3?.ToString();
-
-        default:
-          return null;
-      }
+        ActivityProperty.ActualDuration => a.ActualDuration.ToString(),
+        ActivityProperty.RetardedDuration => a.RetardedDuration.ToString(),
+        ActivityProperty.ActualFinishDate => a.ActualFinishDate.HasValue ? a.ActualFinishDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null,
+        ActivityProperty.ActualStartDate => a.ActualStartDate.HasValue ? a.ActualStartDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null,
+        ActivityProperty.EarlyFinishDate => a.EarlyFinishDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.EarlyStartDate => a.EarlyStartDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.FinishDate => a.FinishDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.Fragnet => a.Fragnet?.ToString(),
+        ActivityProperty.FreeFloat => a.FreeFloat.ToString(),
+        ActivityProperty.Number => a.Number,
+        ActivityProperty.LateFinishDate => a.LateFinishDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.LateStartDate => a.LateStartDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.Name => a.Name,
+        ActivityProperty.OriginalDuration => a.OriginalDuration.ToString(),
+        ActivityProperty.PercentComplete => a.PercentComplete.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.RemainingDuration => a.RemainingDuration.ToString(),
+        ActivityProperty.StartDate => a.StartDate.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.TotalBudget => a.TotalBudget.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.TotalActualCosts => a.TotalActualCosts.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.TotalFloat => a.TotalFloat.ToString(),
+        ActivityProperty.TotalPlannedCosts => a.TotalPlannedCosts.ToString(GetFormatStringForType(GetPropertyType(property))),
+        ActivityProperty.WBSItem => a.WBSItem?.ToString(),
+        ActivityProperty.CustomAttribute1 => a.CustomAttribute1?.ToString(),
+        ActivityProperty.CustomAttribute2 => a.CustomAttribute2?.ToString(),
+        ActivityProperty.CustomAttribute3 => a.CustomAttribute3?.ToString(),
+        _ => null,
+      };
     }
 
     /// <summary>

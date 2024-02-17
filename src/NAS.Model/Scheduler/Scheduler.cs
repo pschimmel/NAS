@@ -769,21 +769,13 @@ namespace NAS.Model.Scheduler
         return;
       }
 
-      switch (relationship.RelationshipType)
+      relationship.IsDriving = relationship.RelationshipType switch
       {
-        case RelationshipType.FinishStart:
-          relationship.IsDriving = activity1.Calendar.GetWorkDays(activity1.EarlyFinishDate, activity2.EarlyStartDate, false) - relationship.Lag - 1 <= 0;
-          break;
-        case RelationshipType.StartStart:
-          relationship.IsDriving = activity1.Calendar.GetWorkDays(activity1.EarlyStartDate, activity2.EarlyStartDate, false) - relationship.Lag <= 0;
-          break;
-        case RelationshipType.FinishFinish:
-          relationship.IsDriving = activity1.Calendar.GetWorkDays(activity1.EarlyFinishDate, activity2.EarlyFinishDate, false) - relationship.Lag <= 0;
-          break;
-        default:
-          relationship.IsDriving = false;
-          break;
-      }
+        RelationshipType.FinishStart => activity1.Calendar.GetWorkDays(activity1.EarlyFinishDate, activity2.EarlyStartDate, false) - relationship.Lag - 1 <= 0,
+        RelationshipType.StartStart => activity1.Calendar.GetWorkDays(activity1.EarlyStartDate, activity2.EarlyStartDate, false) - relationship.Lag <= 0,
+        RelationshipType.FinishFinish => activity1.Calendar.GetWorkDays(activity1.EarlyFinishDate, activity2.EarlyFinishDate, false) - relationship.Lag <= 0,
+        _ => false,
+      };
 
       // IsCritical
       relationship.IsCritical = activity1.IsCritical && activity2.IsCritical && relationship.IsDriving;

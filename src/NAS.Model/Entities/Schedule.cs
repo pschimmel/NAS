@@ -271,8 +271,6 @@ namespace NAS.Model.Entities
 
     public void AddActivity(Activity activity)
     {
-      activity.Schedule = this;
-
       if (string.IsNullOrWhiteSpace(activity.Number) || _activities.Any(x => x.Number == activity.Number))
       {
         activity.Number = GetNewID();
@@ -286,14 +284,12 @@ namespace NAS.Model.Entities
 
     public Activity AddActivity(bool isFixed = false)
     {
-      var newActivity = new Activity();
+      var newActivity = new Activity(this, isFixed);
       newActivity.Number = GetNewID();
-      newActivity.Schedule = this;
       newActivity.Calendar = StandardCalendar;
       newActivity.EarlyStartDate = DataDate;
       newActivity.LateStartDate = DataDate;
       newActivity.OriginalDuration = 5;
-      newActivity.IsFixed = isFixed;
       _activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
@@ -319,14 +315,12 @@ namespace NAS.Model.Entities
 
     public Milestone AddMilestone(bool isFixed = false)
     {
-      var newActivity = new Milestone();
+      var newActivity = new Milestone(this, isFixed);
       newActivity.Number = GetNewID();
-      newActivity.Schedule = this;
       newActivity.Calendar = StandardCalendar;
       newActivity.EarlyStartDate = DataDate;
       newActivity.LateStartDate = DataDate;
       newActivity.OriginalDuration = 0;
-      newActivity.IsFixed = isFixed;
       _activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
@@ -406,11 +400,11 @@ namespace NAS.Model.Entities
 
     public PERTActivityData GetOrAddActivityData(Activity activity)
     {
-      var data = PERTActivityItems.FirstOrDefault(x => x.ActivityID == activity.ID);
+      var data = PERTActivityItems.FirstOrDefault(x => x.Activity.ID == activity.ID);
 
       if (data == null)
       {
-        data = new PERTActivityData { ActivityID = activity.ID, Schedule = this };
+        data = new PERTActivityData(activity);
         PERTActivityItems.Add(data);
       }
 
@@ -683,13 +677,12 @@ namespace NAS.Model.Entities
         Activity newItem = null;
         if (a.ActivityType == ActivityType.Milestone)
         {
-          newItem = a.IsFixed ? Activity.NewFixedMilestone() : Activity.NewMilestone();
+          newItem = a.IsFixed ? Activity.NewFixedMilestone(newSchedule) : Activity.NewMilestone(newSchedule);
         }
         else // a is activity
         {
-          newItem = a.IsFixed ? Activity.NewFixedActivity() : Activity.NewActivity();
+          newItem = a.IsFixed ? Activity.NewFixedActivity(newSchedule) : Activity.NewActivity(newSchedule);
           newItem.OriginalDuration = a.OriginalDuration;
-          newItem.Schedule = newSchedule;
         }
         newItem.Name = a.Name;
         newSchedule.AddActivity(newItem);

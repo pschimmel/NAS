@@ -73,7 +73,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual TimeAggregateType AggregationType
+    public TimeAggregateType AggregationType
     {
       get => _aggregationType;
       set

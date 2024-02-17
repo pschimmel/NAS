@@ -233,7 +233,7 @@ namespace NAS.Model.ImportExport
       {
         if (node.Name == "Task" && node.FirstChild.Name == "UID")
         {
-          var activity = new Activity(); //controller.AddActivity(schedule);
+          var activity = new Activity(schedule);
           tasks.Add(node.FirstChild.InnerText, activity);
           foreach (XmlNode actNode in node.ChildNodes)
           {
@@ -247,7 +247,7 @@ namespace NAS.Model.ImportExport
                 break;
               case "CalendarUID":
                 int id = Convert.ToInt32(actNode.InnerText);
-                activity.Calendar = !calendars.ContainsKey(id) ? activity.Schedule.StandardCalendar : calendars[id];
+                activity.Calendar = !calendars.TryGetValue(id, out var value) ? activity.Schedule.StandardCalendar : value;
                 break;
               case "EarlyStart":
                 activity.EarlyStartDate = XmlStringToDateTime(actNode.InnerText);

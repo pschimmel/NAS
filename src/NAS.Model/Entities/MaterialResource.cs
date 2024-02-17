@@ -1,18 +1,17 @@
-﻿
-namespace NAS.Model.Entities
+﻿namespace NAS.Model.Entities
 {
   public class MaterialResource : Resource
   {
-    private string unit;
+    private string _unit;
 
     public string Unit
     {
-      get => unit;
+      get => _unit;
       set
       {
-        if (unit != value)
+        if (_unit != value)
         {
-          unit = value;
+          _unit = value;
           OnPropertyChanged(nameof(Unit));
         }
       }
