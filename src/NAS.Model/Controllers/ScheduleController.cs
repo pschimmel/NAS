@@ -10,7 +10,7 @@ namespace NAS.Model.Controllers
     {
       if (schedule.Layouts.Count == 0)
       {
-        var newLayout = new Layout();
+        var newLayout = new GanttLayout();
         newLayout.Name = NASResources.Layout + " 1";
         newLayout.IsCurrent = true;
         schedule.Layouts.Add(newLayout);

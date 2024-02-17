@@ -41,7 +41,7 @@ namespace NAS.ViewModel
 
       _vm.Schedule.PropertyChanged += (sender, e) =>
       {
-        if (e.PropertyName == "StartDate" || e.PropertyName == "LastDay")
+        if (e.PropertyName is "StartDate" or "LastDay")
         {
           RefreshData();
           OnPropertyChanged(nameof(End));

@@ -79,7 +79,7 @@ namespace NAS.Model.Entities
 
     public virtual ActivityType ActivityType => ActivityType.Activity;
 
-    public virtual bool IsFixed { get; set; }
+    public bool IsFixed { get; }
 
     /// <summary>
     /// Is the activity started?
@@ -394,7 +394,7 @@ namespace NAS.Model.Entities
 
     #region Percentages
 
-    public virtual double PercentComplete
+    public double PercentComplete
     {
       get => percentComplete;
       set
@@ -466,7 +466,7 @@ namespace NAS.Model.Entities
 
     #region Constraints
 
-    public virtual ConstraintType Constraint
+    public ConstraintType Constraint
     {
       get => constraint;
       set
@@ -658,11 +658,11 @@ namespace NAS.Model.Entities
 
     #region Navigation Properties
 
-    public ICollection<ResourceAssociation> ResourceAssociations { get; set; }
+    public ICollection<ResourceAssociation> ResourceAssociations { get; }
 
     public Schedule Schedule { get; }
 
-    public ICollection<Distortion> Distortions { get; set; }
+    public ICollection<Distortion> Distortions { get; }
 
     public Calendar Calendar
     {
@@ -677,7 +677,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual CustomAttribute CustomAttribute1
+    public CustomAttribute CustomAttribute1
     {
       get => customAttribute1;
       set
@@ -690,7 +690,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual CustomAttribute CustomAttribute2
+    public CustomAttribute CustomAttribute2
     {
       get => customAttribute2;
       set
@@ -703,7 +703,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual CustomAttribute CustomAttribute3
+    public CustomAttribute CustomAttribute3
     {
       get => customAttribute3;
       set
@@ -716,7 +716,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual Fragnet Fragnet
+    public Fragnet Fragnet
     {
       get => fragnet;
       set
@@ -729,7 +729,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public virtual WBSItem WBSItem
+    public WBSItem WBSItem
     {
       get => wbsItem;
       set

@@ -1,13 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using NAS.Model.Enums;
 using NAS.Resources;
 
 namespace NAS.Model.Entities
 {
-  public class Layout : NASObject, IPrintLayout
+  public abstract class Layout : NASObject, IPrintLayout
   {
     private string _name;
-    private LayoutType _layoutType;
     private string _milestoneCriticalColor;
     private string _milestoneStandardColor;
     private string _milestoneDoneColor;
@@ -30,7 +30,7 @@ namespace NAS.Model.Entities
     private double _marginTop;
     private double _marginBottom;
 
-    public Layout()
+    protected Layout()
     {
       _name = NASResources.NewLayout;
       _activityStandardColor = "Yellow";
@@ -60,7 +60,7 @@ namespace NAS.Model.Entities
     /// <summary>
     /// Copy constructor
     /// </summary>
-    public Layout(Layout other)
+    protected Layout(Layout other)
     {
       CopyData(other);
     }
@@ -78,18 +78,7 @@ namespace NAS.Model.Entities
       }
     }
 
-    public LayoutType LayoutType
-    {
-      get => _layoutType;
-      set
-      {
-        if (_layoutType != value)
-        {
-          _layoutType = value;
-          OnPropertyChanged(nameof(LayoutType));
-        }
-      }
-    }
+    public abstract LayoutType LayoutType { get; }
 
     public bool IsCurrent
     {
@@ -481,6 +470,7 @@ namespace NAS.Model.Entities
 
     private void CopyData(Layout other)
     {
+      Debug.Assert(LayoutType == other.LayoutType);
       foreach (var otherActivityColumn in other.ActivityColumns)
       {
         ActivityColumns.Add(new ActivityColumn(otherActivityColumn));
@@ -509,7 +499,7 @@ namespace NAS.Model.Entities
       {
         HeaderItems.Add(new HeaderItem(otherHeaderItem));
       }
-      LayoutType = other.LayoutType;
+
       LeftText = other.LeftText;
       MarginBottom = other.MarginBottom;
       MarginLeft = other.MarginLeft;

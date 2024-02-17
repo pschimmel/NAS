@@ -145,14 +145,14 @@ namespace NAS.ViewModel
           _schedules = [];
           _schedules.CollectionChanged += (sender, e) =>
           {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
+            if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
             {
               foreach (ScheduleViewModel schedule in e.NewItems)
               {
                 schedule.CalculationProgress += Schedule_CalculationProgress;
               }
             }
-            if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Replace)
+            if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
             {
               foreach (ScheduleViewModel schedule in e.OldItems)
               {
@@ -745,7 +745,7 @@ namespace NAS.ViewModel
               }
               var saveFileDialog = new SaveFileDialog
               {
-                FileName = fileURL.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last()
+                FileName = Path.GetFileName(fileURL)
               };
               if (saveFileDialog.ShowDialog() == true)
               {

@@ -132,7 +132,7 @@ namespace NAS.ViewModel.Printing
     {
       if (SelectedPageSize != null)
       {
-        if (Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReverseLandscape)
+        if (Orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape)
         {
           PageWidth = Math.Round(SelectedPageSize.Height.Value / 96 * 2.54, 1);
           PageHeight = Math.Round(SelectedPageSize.Width.Value / 96 * 2.54, 1);

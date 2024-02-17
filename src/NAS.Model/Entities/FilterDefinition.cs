@@ -297,13 +297,6 @@ namespace NAS.Model.Entities
       };
     }
 
-    private static bool CompareGuids(string id1, string obj, FilterRelation relation)
-    {
-      return Guid.TryParse(id1, out var id)
-        ? CompareGuids(id, obj, relation)
-        : throw new ArgumentException("Cannot parse into Guid.", nameof(id1));
-    }
-
     private static bool CompareGuids(Guid? id1, string obj, FilterRelation relation)
     {
       Guid? id2 = null;

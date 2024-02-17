@@ -6,18 +6,13 @@ namespace NAS.ViewModel
 {
   public class NewScheduleViewModel : DialogContentViewModel
   {
-    #region Fields
-
-    private bool _hasErrors;
-
-    #endregion
-
     #region Constructor
 
     public NewScheduleViewModel()
       : base()
     {
       Schedule = new Schedule();
+      Schedule.Validate();
     }
 
     #endregion
@@ -28,7 +23,7 @@ namespace NAS.ViewModel
 
     public override string Icon => "Gear";
 
-    public override DialogSize DialogSize => DialogSize.Fixed(550, 350);
+    public override DialogSize DialogSize => DialogSize.Fixed(550, 400);
 
     public override IEnumerable<IButtonViewModel> Buttons
     {
@@ -67,13 +62,15 @@ namespace NAS.ViewModel
       }
     }
 
-    public bool CanFinish => !_hasErrors;
+    public bool CanFinish => !HasErrors;
 
     public string LastPageTitle => CanFinish ? NASResources.WizardTitleLastPage : NASResources.WizardTitleLastPageError;
 
     public string LastPageDescription => CanFinish ? NASResources.WizardDescriptionLastPage : NASResources.WizardDescriptionLastPageError;
 
-    public string Error { get; private set; }
+    public string ErrorMessage { get; private set; }
+
+    public bool HasErrors { get; private set; }
 
     #endregion
 
@@ -81,28 +78,28 @@ namespace NAS.ViewModel
 
     private List<(Func<bool> Validate, string Message)> ValidationList()
     {
-      return new List<(Func<bool>, string)>
-      {
+      return
+      [
         (() => !string.IsNullOrWhiteSpace(Schedule.Name), NASResources.PleaseEnterName),
         (() => Schedule.StandardCalendar != null, NASResources.PleaseSelectCalendar),
         (() => Schedule.StartDate != DateTime.MinValue, NASResources.PleaseEnterStartDate),
         (() => !Schedule.EndDate.HasValue || Schedule.StartDate != DateTime.MinValue && Schedule.EndDate.Value > Schedule.StartDate, NASResources.FinishDateNotEarlierThanStartDate),
         (() => Schedule.DataDate >= Schedule.StartDate, NASResources.DataDateNotEarlierThanStartDate)
-      };
+      ];
     }
 
     public void Validate()
     {
-      _hasErrors = false;
-      Error = null;
+      HasErrors = false;
+      ErrorMessage = null;
 
       foreach (var validationItem in ValidationList())
       {
         var result = validationItem.Validate();
         if (result == false)
         {
-          _hasErrors = true;
-          Error = validationItem.Message;
+          HasErrors = true;
+          ErrorMessage = validationItem.Message;
           break;
         }
       }
@@ -110,6 +107,8 @@ namespace NAS.ViewModel
       OnPropertyChanged(nameof(LastPageTitle));
       OnPropertyChanged(nameof(LastPageDescription));
       OnPropertyChanged(nameof(CanFinish));
+      OnPropertyChanged(nameof(HasErrors));
+      OnPropertyChanged(nameof(ErrorMessage));
     }
 
     #endregion

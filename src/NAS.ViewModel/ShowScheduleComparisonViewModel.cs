@@ -16,7 +16,7 @@ namespace NAS.ViewModel
       : base()
     {
       vm = new ScheduleViewModel(schedule);
-      layout = new Layout();
+      layout = new GanttLayout();
       Debug.Assert(baseline != null);
 
       if (baseline != null)

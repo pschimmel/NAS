@@ -10,7 +10,7 @@ namespace NAS.View.Converters
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
       var orientation = (PageOrientation)value;
-      return orientation == PageOrientation.Landscape || orientation == PageOrientation.ReverseLandscape;
+      return orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

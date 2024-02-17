@@ -104,31 +104,31 @@ namespace NAS.Model.Entities
 
     public string ModifiedBy { get; set; }
 
-    public ICollection<Schedule> Baselines { get; set; }
+    public ICollection<Schedule> Baselines { get; }
 
     public Schedule BaselineOf { get; set; }
 
-    public ICollection<VisibleBaseline> VisibleBaselines { get; set; }
+    public ICollection<VisibleBaseline> VisibleBaselines { get; }
 
     public IReadOnlyCollection<Activity> Activities => new ReadOnlyCollection<Activity>(_activities);
 
-    public ICollection<Calendar> Calendars { get; set; }
+    public ICollection<Calendar> Calendars { get; }
 
-    public ICollection<CustomAttribute> CustomAttributes1 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes1 { get; }
 
-    public ICollection<CustomAttribute> CustomAttributes2 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes2 { get; }
 
-    public ICollection<CustomAttribute> CustomAttributes3 { get; set; }
+    public ICollection<CustomAttribute> CustomAttributes3 { get; }
 
-    public ICollection<Fragnet> Fragnets { get; set; }
+    public ICollection<Fragnet> Fragnets => _fragnets;
 
-    public ICollection<Layout> Layouts { get; set; }
+    public ICollection<Layout> Layouts { get; }
 
-    public ICollection<Resource> Resources { get; set; }
+    public ICollection<Resource> Resources { get; }
 
-    public ICollection<PERTDefinition> PERTDefinitions { get; set; }
+    public ICollection<PERTDefinition> PERTDefinitions { get; }
 
-    public ICollection<PERTActivityData> PERTActivityItems { get; set; }
+    public ICollection<PERTActivityData> PERTActivityItems { get; }
 
     public WBSItem WBSItem { get; set; }
 
@@ -142,19 +142,7 @@ namespace NAS.Model.Entities
 
     public Layout CurrentLayout
     {
-      get
-      {
-        if (!Layouts.Any(x => x.IsCurrent == true) && Layouts.Count != 0)
-        {
-          var layout = Layouts.First();
-          layout.IsCurrent = true;
-          return layout;
-        }
-        else
-        {
-          return Layouts.First(x => x.IsCurrent == true);
-        }
-      }
+      get => Layouts.FirstOrDefault(x => x.IsCurrent == true);
       set
       {
         foreach (var l in Layouts)
@@ -171,19 +159,7 @@ namespace NAS.Model.Entities
 
     public Calendar StandardCalendar
     {
-      get
-      {
-        if (!Calendars.Any(x => x.IsStandard == true) && Calendars.Count != 0)
-        {
-          var calendar = Calendars.First();
-          calendar.IsStandard = true;
-          return calendar;
-        }
-        else
-        {
-          return Calendars.First(x => x.IsStandard == true);
-        }
-      }
+      get => Calendars.FirstOrDefault(x => x.IsStandard == true);
       set
       {
         foreach (var c in Calendars)
@@ -539,6 +515,44 @@ namespace NAS.Model.Entities
     #region Public Methods
 
     /// <summary>
+    /// Ensures minimal requirements are set for the schedule.
+    /// </summary>
+    public void Validate()
+    {
+      // Ensure that we have at least one layout.
+      if (Layouts.Count == 0)
+      {
+        var layout = new GanttLayout { IsCurrent = true };
+        Layouts.Add(layout);
+      }
+      else
+      {
+        // Ensure that there is exactly one active layout.
+        if (!Layouts.Any(x => x.IsCurrent))
+        {
+          var layout = Layouts.First();
+          layout.IsCurrent = true;
+        }
+      }
+
+      // Ensure that we have at least one calendar.
+      if (Calendars.Count == 0)
+      {
+        var calendar = new Calendar { IsStandard = true };
+        Calendars.Add(calendar);
+      }
+      else
+      {
+        // Ensure that there is one standard calendar
+        if (!Calendars.Any(x => x.IsStandard))
+        {
+          var calendar = Calendars.First();
+          calendar.IsStandard = true;
+        }
+      }
+    }
+
+    /// <summary>
     /// Adds a schedule as baseline.
     /// </summary>
     public void AddBaseline(Schedule baseline, bool showInCurrentLayout)
@@ -781,7 +795,7 @@ namespace NAS.Model.Entities
       }
       foreach (var layout in oldSchedule.Layouts)
       {
-        var newLayout = new Layout();
+        var newLayout = layout.LayoutType == LayoutType.Gantt ? new GanttLayout() : (Layout)new PERTLayout();
         newSchedule.Layouts.Add(newLayout);
         CopyLayoutData(layout, newLayout);
       }

@@ -483,7 +483,7 @@ namespace NAS.View.Controls
       }
 
       var dep = (DependencyObject)e.OriginalSource;
-      while (dep != null && dep is not DataGridRow)
+      while (dep is not null and not DataGridRow)
       {
         dep = VisualTreeHelper.GetParent(dep);
       }

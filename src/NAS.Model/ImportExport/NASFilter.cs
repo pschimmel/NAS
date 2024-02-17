@@ -1185,8 +1185,21 @@ namespace NAS.Model.ImportExport
           {
             if (layoutNode.Name == "Layout")
             {
-              var l = new Layout();
+              Layout l = null;
+
+              foreach (XmlNode layoutSubNode in layoutNode.ChildNodes)
+              {
+                if (layoutSubNode.Name == "IsPert" && layoutSubNode.GetBoolean().HasValue)
+                {
+                  l = new PERTLayout();
+                  break;
+                }
+              }
+
+              l ??= new GanttLayout();
+
               schedule.Layouts.Add(l);
+
               foreach (XmlNode layoutSubNode in layoutNode.ChildNodes)
               {
                 if (layoutSubNode.Name == "Name")
@@ -1220,10 +1233,6 @@ namespace NAS.Model.ImportExport
                 else if (layoutSubNode.Name == "BaselineColor" && schedule.VisibleBaselines.Count > 0)
                 {
                   schedule.VisibleBaselines.First().Color = layoutSubNode.GetColor();
-                }
-                else if (layoutSubNode.Name == "IsPert" && layoutSubNode.GetBoolean().HasValue)
-                {
-                  l.LayoutType = layoutSubNode.GetBoolean().Value ? LayoutType.PERT : LayoutType.Gantt;
                 }
                 else if (layoutSubNode.Name == "PERTDefinition" && layoutSubNode.GetInteger().HasValue)
                 {

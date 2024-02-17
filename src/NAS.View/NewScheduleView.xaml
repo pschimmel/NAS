@@ -5,7 +5,8 @@
       xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
-      xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel" xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel"
       d:DataContext="{d:DesignInstance Type=viewmodel:NewScheduleViewModel}"
       mc:Ignorable="d">
   <Grid.Resources>
@@ -16,6 +17,7 @@
     </ResourceDictionary>
   </Grid.Resources>
   <extToolkit:Wizard BackButtonContent="{x:Static resx:NASResources.Back}"
+                     CancelButtonClosesWindow="True"
                      CancelButtonContent="{x:Static resx:NASResources.Cancel}"
                      FinishButtonClosesWindow="True"
                      FinishButtonContent="{x:Static resx:NASResources.Close}"
@@ -58,7 +60,9 @@
     <extToolkit:WizardPage x:Name="Page2"
                            Title="{x:Static resx:NASResources.WizardTitlePage2}"
                            Description="{x:Static resx:NASResources.WizardDescriptionPage2}"
-                           PageType="Interior">
+                           NextPage="{Binding ElementName=LastPage}"
+                           PageType="Interior"
+                           PreviousPage="{Binding ElementName=Page1}">
       <Grid>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" />
@@ -139,10 +143,11 @@
       </Grid>
     </extToolkit:WizardPage>
     <extToolkit:WizardPage x:Name="LastPage"
-                           Title="{x:Static resx:NASResources.WizardTitleLastPage}"
+                           Title="{Binding LastPageTitle}"
                            CanFinish="{Binding CanFinish}"
-                           Description="{x:Static resx:NASResources.WizardDescriptionLastPage}"
-                           PageType="Interior">
+                           Description="{Binding LastPageDescription}"
+                           PageType="Interior"
+                           PreviousPage="{Binding ElementName=Page2}">
       <TextBlock Grid.Row="1"
                  Grid.ColumnSpan="4"
                  Margin="5"

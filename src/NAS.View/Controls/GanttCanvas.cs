@@ -185,7 +185,7 @@ namespace NAS.View.Controls
       {
         RefreshDataDate();
       }
-      else if (e.PropertyName == "StartDate" || e.PropertyName == "EndDate")
+      else if (e.PropertyName is "StartDate" or "EndDate")
       {
         RefreshCalendar();
       }
@@ -1016,7 +1016,7 @@ namespace NAS.View.Controls
       {
         DrawTempRelationship();
       }
-      if (e.OriginalSource is MilestoneShape || e.OriginalSource is ActivityShape)
+      if (e.OriginalSource is MilestoneShape or ActivityShape)
       {
         if (dragActivity != null)
         {

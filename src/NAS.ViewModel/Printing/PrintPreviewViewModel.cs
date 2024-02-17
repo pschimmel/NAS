@@ -146,7 +146,7 @@ namespace NAS.ViewModel.Printing
         ticket.PageMediaSize = PageSize;
         PrintableArea = Printer.GetPrintCapabilities(ticket).PageImageableArea;
 
-        var pageSize = Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReverseLandscape
+        var pageSize = Orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape
           ? new Size(PageSize.Height.Value, PageSize.Width.Value)
           : new Size(PageSize.Width.Value, PageSize.Height.Value);
 
@@ -262,7 +262,7 @@ namespace NAS.ViewModel.Printing
 
     private void Preview_PageSizeChanged(object sender, EventArgs e)
     {
-      var pageSize=Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReverseLandscape
+      var pageSize=Orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape
         ?new Size(PageSize.Height.Value, PageSize.Width.Value)
         :new Size(PageSize.Width.Value, PageSize.Height.Value);
       paginator.PageSize = pageSize;
@@ -291,11 +291,11 @@ namespace NAS.ViewModel.Printing
     {
       if (printableArea == null)
       {
-        return orientation == PageOrientation.Landscape || orientation == PageOrientation.ReverseLandscape
+        return orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape
           ? pageSize.Height.Value
           : pageSize.Width.Value;
       }
-      if (orientation == PageOrientation.Landscape || orientation == PageOrientation.ReversePortrait)
+      if (orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
       {
         if (printableArea.ExtentHeight > printableArea.ExtentWidth)
         {
@@ -309,11 +309,11 @@ namespace NAS.ViewModel.Printing
     {
       if (printableArea == null)
       {
-        return orientation == PageOrientation.Landscape || orientation == PageOrientation.ReverseLandscape
+        return orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape
           ? pageSize.Width.Value
           : pageSize.Height.Value;
       }
-      if (orientation == PageOrientation.Landscape || orientation == PageOrientation.ReversePortrait)
+      if (orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
       {
         if (printableArea.ExtentHeight > printableArea.ExtentWidth)
         {

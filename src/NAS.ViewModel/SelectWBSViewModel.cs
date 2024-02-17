@@ -101,7 +101,7 @@ namespace NAS.ViewModel
       }
       (item.Children as ObservableCollection<WBSItem>).CollectionChanged += (sender, e) =>
       {
-        if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
+        if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
         {
           var list = model.Items.ToList();
           model.Items.Clear();
@@ -114,7 +114,7 @@ namespace NAS.ViewModel
             model.Items.Add(listItem);
           }
         }
-        if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Replace)
+        if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
         {
           var list = model.Items.ToList();
           model.Items.Clear();

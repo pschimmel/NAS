@@ -32,7 +32,7 @@ namespace NAS
     private void Update()
     {
       canvas.Children.Clear();
-      var l = new Layout(); // Create layout to get standard colors
+      var l = new GanttLayout(); // Create layout to get standard colors
       var rect = new Rectangle
       {
         Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(l.ActivityStandardColor)),

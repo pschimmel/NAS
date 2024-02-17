@@ -7,7 +7,7 @@ using Xceed.Wpf.Toolkit;
 namespace NAS.View
 {
   /// <summary>
-  /// Interaction logic for WindowNewScheduleWizard.xaml
+  /// Interaction logic for NewScheduleView.xaml
   /// </summary>
   public partial class NewScheduleView : Grid, IDialogContentView
   {

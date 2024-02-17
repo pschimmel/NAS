@@ -25,7 +25,7 @@ namespace NAS.ViewModel
 
       _scheduleVM = new ScheduleViewModel(schedule);
 
-      _layout = new Layout();
+      _layout = new GanttLayout();
       _layout.FilterCombination = FilterCombinationType.Or;
       _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
       foreach (var a in _scheduleVM.Schedule.Activities)

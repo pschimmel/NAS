@@ -105,14 +105,14 @@ namespace NAS.ViewModel
           items = [];
           items.CollectionChanged += (sender, e) =>
           {
-            if (e.Action == NotifyCollectionChangedAction.Add || e.Action == NotifyCollectionChangedAction.Replace)
+            if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
             {
               foreach (WBSItemViewModel item in e.NewItems)
               {
                 item.Parent = this;
               }
             }
-            if (e.Action == NotifyCollectionChangedAction.Remove || e.Action == NotifyCollectionChangedAction.Replace)
+            if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
             {
               foreach (WBSItemViewModel item in e.OldItems)
               {

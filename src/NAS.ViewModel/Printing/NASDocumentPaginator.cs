@@ -36,7 +36,7 @@ namespace NAS.ViewModel.Printing
         Orientation = PageOrientation.Portrait;
       }
 
-      pageSize = orientation == PageOrientation.Landscape || orientation == PageOrientation.ReverseLandscape
+      pageSize = orientation is PageOrientation.Landscape or PageOrientation.ReverseLandscape
           ? new Size(size.Height.Value, size.Width.Value)
           : new Size(size.Width.Value, size.Height.Value);
 
@@ -61,7 +61,7 @@ namespace NAS.ViewModel.Printing
       get => pageSize;
       set
       {
-        var newSize=Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReversePortrait
+        var newSize=Orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait
           ? pageSize.Height > pageSize.Width ? new Size(value.Height, value.Width) : value
           : pageSize.Height > pageSize.Width ? value : new Size(value.Height, value.Width);
 
@@ -161,7 +161,7 @@ namespace NAS.ViewModel.Printing
           return pageSize.Width;
         }
 
-        if (Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReversePortrait)
+        if (Orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
         {
           if (PrintableArea.ExtentHeight > PrintableArea.ExtentWidth)
           {
@@ -181,7 +181,7 @@ namespace NAS.ViewModel.Printing
           return pageSize.Height;
         }
 
-        if (Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReversePortrait)
+        if (Orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
         {
           if (PrintableArea.ExtentHeight > PrintableArea.ExtentWidth)
           {
@@ -196,7 +196,7 @@ namespace NAS.ViewModel.Printing
     {
       get
       {
-        if (Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReversePortrait)
+        if (Orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
         {
           if (PrintableArea.ExtentHeight > PrintableArea.ExtentWidth)
           {
@@ -211,7 +211,7 @@ namespace NAS.ViewModel.Printing
     {
       get
       {
-        if (Orientation == PageOrientation.Landscape || Orientation == PageOrientation.ReversePortrait)
+        if (Orientation is PageOrientation.Landscape or PageOrientation.ReversePortrait)
         {
           if (PrintableArea.ExtentHeight > PrintableArea.ExtentWidth)
           {
