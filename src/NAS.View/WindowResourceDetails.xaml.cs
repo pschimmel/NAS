@@ -4,6 +4,7 @@ using System.Windows.Media.Imaging;
 using ES.Tools.Core.MVVM;
 using NAS.Resources;
 using NAS.ViewModel;
+using NAS.ViewModel.Base;
 
 namespace NAS
 {
@@ -44,7 +45,7 @@ namespace NAS
 
     private void buttonOK_Click(object sender, RoutedEventArgs e)
     {
-      if ((DataContext as ResourceDetailsViewModel).Validate())
+      if ((DataContext as IValidating).Validate().IsOK)
       {
         DialogResult = true;
       }

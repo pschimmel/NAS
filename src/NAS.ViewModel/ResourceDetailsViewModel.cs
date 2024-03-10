@@ -4,7 +4,7 @@ using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class ResourceDetailsViewModel : ViewModelBase, IValidatable, IApplyable
+  public class ResourceDetailsViewModel : ValidatingViewModel, IApplyable
   {
     #region Fields
 
@@ -51,45 +51,22 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatable Implementation
+    #region Validation
 
-    public string ErrorMessage { get; set; } = null;
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    private void AddError(string message)
+    protected override ValidationResult ValidateImpl()
     {
-      if (!string.IsNullOrWhiteSpace(message))
-      {
-        if (!string.IsNullOrWhiteSpace(ErrorMessage))
-        {
-          ErrorMessage += Environment.NewLine;
-        }
-
-        ErrorMessage += message;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool Validate()
-    {
-      ErrorMessage = null;
-      if (string.IsNullOrWhiteSpace(_resource.Name))
-      {
-        AddError(NASResources.PleaseEnterName);
-      }
-
-      return !HasErrors;
+      return string.IsNullOrWhiteSpace(_resource.Name)
+             ? ValidationResult.Error(NASResources.PleaseEnterName)
+             : ValidationResult.OK();
     }
 
     #endregion
 
-    #region IApplyable Implementation
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _resource.Name = Name;
         _resource.CostsPerUnit = CostsPerUnit;

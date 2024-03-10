@@ -4,7 +4,7 @@ using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class ResourceAssociationViewModel : ViewModelBase, IValidatable
+  public class ResourceAssociationViewModel : ValidatingViewModel
   {
     #region Constructor
 
@@ -31,25 +31,9 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    private string errorMessage = null;
-
-    public string ErrorMessage
+    protected override ValidationResult ValidateImpl()
     {
-      get => errorMessage;
-      set
-      {
-        errorMessage = value;
-        OnPropertyChanged(nameof(ErrorMessage));
-        HasErrors = !string.IsNullOrWhiteSpace(value);
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool HasErrors { get; private set; } = false;
-
-    public bool Validate()
-    {
-      return !HasErrors;
+      return ValidationResult.OK();
     }
 
     #endregion

@@ -6,7 +6,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class FilterDefinitionViewModel : ViewModelBase, IValidatable
+  public class FilterDefinitionViewModel : ValidatingViewModel
   {
     #region Fields
 
@@ -195,36 +195,22 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    private string errorMessage = null;
 
-    public string ErrorMessage
+    protected override ValidationResult ValidateImpl()
     {
-      get => errorMessage;
-      set
-      {
-        errorMessage = value;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
+      var result = ValidationResult.OK();
 
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    public bool Validate()
-    {
-      errorMessage = null;
       var relation = Relation;
+
       switch (Property)
       {
         case ActivityProperty.ActualDuration:
         case ActivityProperty.RetardedDuration:
         case ActivityProperty.OriginalDuration:
         case ActivityProperty.RemainingDuration:
-          int i;
-          if (!int.TryParse(ObjectString, out i) || i < 0)
+          if (!int.TryParse(ObjectString, out int i) || i < 0)
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.ActualFinishDate:
@@ -235,120 +221,77 @@ namespace NAS.ViewModel
         case ActivityProperty.LateFinishDate:
         case ActivityProperty.LateStartDate:
         case ActivityProperty.StartDate:
-          DateTime d;
-          if (!DateTime.TryParse(ObjectString, out d))
+          if (!DateTime.TryParse(ObjectString, out _))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.Fragnet:
-          Guid fragnetID;
-          if (!Guid.TryParse(ObjectString, out fragnetID))
+          if (!Guid.TryParse(ObjectString, out Guid fragnetID) || !_schedule.Fragnets.Any(x => x.ID == fragnetID))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
-          }
-          var f = _schedule.Fragnets.FirstOrDefault(x => x.ID == fragnetID);
-          if (f == null)
-          {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.FreeFloat:
         case ActivityProperty.TotalFloat:
-          int intValue;
-          if (!int.TryParse(ObjectString, out intValue))
+          if (!int.TryParse(ObjectString, out _))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.WBSItem:
-          Guid wbsID;
-          if (!Guid.TryParse(ObjectString, out wbsID))
+          if (!Guid.TryParse(ObjectString, out Guid wbsID) || GetWBSItem(_schedule.WBSItem, wbsID) == null)
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
-          }
-          var v = GetWBSItem(_schedule.WBSItem, wbsID);
-          if (v == null)
-          {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.PercentComplete:
-          double doubleValue;
-          if (!double.TryParse(ObjectString, out doubleValue) || doubleValue < 0d || doubleValue > 100d)
+          if (!double.TryParse(ObjectString, out double doubleValue) || doubleValue < 0d || doubleValue > 100d)
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.TotalBudget:
         case ActivityProperty.TotalActualCosts:
         case ActivityProperty.TotalPlannedCosts:
-          decimal decimalValue;
-          if (!decimal.TryParse(ObjectString, out decimalValue) || decimalValue < 0m)
+          if (!decimal.TryParse(ObjectString, out decimal decimalValue) || decimalValue < 0m)
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.CustomAttribute1:
-          Guid customAttributeID;
-          if (!Guid.TryParse(ObjectString, out customAttributeID))
+          if (!Guid.TryParse(ObjectString, out Guid customAttribute1ID) || !_schedule.CustomAttributes1.Any(x => x.ID == customAttribute1ID))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
-          }
-          var customAttribute1 = _schedule.CustomAttributes1.FirstOrDefault(x => x.ID == customAttributeID);
-          if (customAttribute1 == null)
-          {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.CustomAttribute2:
-          Guid customAttribute2ID;
-          if (!Guid.TryParse(ObjectString, out customAttribute2ID))
+          if (!Guid.TryParse(ObjectString, out Guid customAttribute2ID) || !_schedule.CustomAttributes2.Any(x => x.ID == customAttribute2ID))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
-          }
-          var customAttribute2 = _schedule.CustomAttributes2.FirstOrDefault(x => x.ID == customAttribute2ID);
-          if (customAttribute2 == null)
-          {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.CustomAttribute3:
-          Guid customAttribute3ID;
-          if (!Guid.TryParse(ObjectString, out customAttribute3ID))
+          if (!Guid.TryParse(ObjectString, out Guid customAttribute3ID) || !_schedule.CustomAttributes3.Any(x => x.ID == customAttribute3ID))
           {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
-          }
-          var customAttribute3 = _schedule.CustomAttributes3.FirstOrDefault(x => x.ID == customAttribute3ID);
-          if (customAttribute3 == null)
-          {
-            ErrorMessage = NASResources.ValueNotValid;
-            return false;
+            result = ValidationResult.Error(NASResources.ValueNotValid);
           }
           break;
         case ActivityProperty.None:
-          ErrorMessage = NASResources.PleaseSelectProperty;
-          return false;
+          result = ValidationResult.Error(NASResources.PleaseSelectProperty);
+          break;
       }
-      return string.IsNullOrWhiteSpace(ErrorMessage);
+
+      return result;
     }
+
+    #endregion
+
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _definition.Property = Property;
         _definition.Relation = Relation;

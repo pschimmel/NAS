@@ -35,6 +35,7 @@ namespace NAS.ViewModel
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> ShowFastReport;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> EditFastReport;
+    public event EventHandler ActivateRibbonStartTab;
 
     #endregion
 
@@ -176,6 +177,8 @@ namespace NAS.ViewModel
           OnPropertyChanged(nameof(CurrentSchedule));
           OnPropertyChanged(nameof(IsProjectLoaded));
           OnPropertyChanged(nameof(WindowTitle));
+          if (IsProjectLoaded)
+            ActivateRibbonStartTab?.Invoke(this, EventArgs.Empty);
         }
       }
     }

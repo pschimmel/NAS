@@ -8,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class CalendarViewModel : ViewModelBase, IValidatable, IApplyable
+  public class CalendarViewModel : ValidatingViewModel, IApplyable
   {
     #region Fields
 
@@ -102,40 +102,22 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IValidatable implementation
+    #region Validation
 
-    private string errorMessage = null;
-
-    public string ErrorMessage
+    protected override ValidationResult ValidateImpl()
     {
-      get => errorMessage;
-      set
-      {
-        errorMessage = value;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    public bool Validate()
-    {
-      if (string.IsNullOrWhiteSpace(Name))
-      {
-        errorMessage = NASResources.PleaseEnterName;
-      }
-
-      return !HasErrors;
+      return string.IsNullOrWhiteSpace(Name)
+             ? ValidationResult.Error(NASResources.PleaseEnterName)
+             : ValidationResult.OK();
     }
 
     #endregion
 
-    #region IApplyable implementation
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _calendar.Name = Name;
         _calendar.ReplaceHolidays(Holidays);

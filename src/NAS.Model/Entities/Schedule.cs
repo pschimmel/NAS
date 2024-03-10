@@ -21,9 +21,8 @@ namespace NAS.Model.Entities
 
     #region Fields
 
-    private readonly List<Activity> _activities;
-    private readonly List<Relationship> _relationships;
-    private readonly ObservableCollection<Fragnet> _fragnets;
+    private readonly List<Activity> _activities = [];
+    private readonly List<Relationship> _relationships = [];
 
     #endregion
 
@@ -31,18 +30,7 @@ namespace NAS.Model.Entities
 
     public Schedule()
     {
-      _activities = [];
-      _relationships = [];
-      Baselines = new ObservableCollection<Schedule>();
-      VisibleBaselines = new ObservableCollection<VisibleBaseline>();
-      Calendars = new ObservableCollection<Calendar>();
-      CustomAttributes1 = new ObservableCollection<CustomAttribute>();
-      CustomAttributes2 = new ObservableCollection<CustomAttribute>();
-      CustomAttributes3 = new ObservableCollection<CustomAttribute>();
-      _fragnets = [];
-      _fragnets.CollectionChanged += Fragnets_CollectionChanged;
-      Layouts = new ObservableCollection<Layout>();
-      Resources = new ObservableCollection<Resource>();
+      Fragnets.CollectionChanged += Fragnets_CollectionChanged;
       DataDate = DateTime.Today;
       StartDate = DateTime.Today;
       Name = NASResources.NewSchedule;
@@ -104,31 +92,31 @@ namespace NAS.Model.Entities
 
     public string ModifiedBy { get; set; }
 
-    public ICollection<Schedule> Baselines { get; }
+    public ObservableCollection<Schedule> Baselines { get; } = [];
 
     public Schedule BaselineOf { get; set; }
 
-    public ICollection<VisibleBaseline> VisibleBaselines { get; }
+    public ObservableCollection<VisibleBaseline> VisibleBaselines { get; } = [];
 
     public IReadOnlyCollection<Activity> Activities => new ReadOnlyCollection<Activity>(_activities);
 
-    public ICollection<Calendar> Calendars { get; }
+    public ObservableCollection<Calendar> Calendars { get; } = [];
 
-    public ICollection<CustomAttribute> CustomAttributes1 { get; }
+    public ObservableCollection<CustomAttribute> CustomAttributes1 { get; } = [];
 
-    public ICollection<CustomAttribute> CustomAttributes2 { get; }
+    public ObservableCollection<CustomAttribute> CustomAttributes2 { get; } = [];
 
-    public ICollection<CustomAttribute> CustomAttributes3 { get; }
+    public ObservableCollection<CustomAttribute> CustomAttributes3 { get; } = [];
 
-    public ICollection<Fragnet> Fragnets => _fragnets;
+    public ObservableCollection<Fragnet> Fragnets { get; } = [];
 
-    public ICollection<Layout> Layouts { get; }
+    public ObservableCollection<Layout> Layouts { get; } = [];
 
-    public ICollection<Resource> Resources { get; }
+    public ObservableCollection<Resource> Resources { get; } = [];
 
-    public ICollection<PERTDefinition> PERTDefinitions { get; }
+    public ObservableCollection<PERTDefinition> PERTDefinitions { get; } = [];
 
-    public ICollection<PERTActivityData> PERTActivityItems { get; }
+    public ObservableCollection<PERTActivityData> PERTActivityItems { get; } = [];
 
     public WBSItem WBSItem { get; set; }
 

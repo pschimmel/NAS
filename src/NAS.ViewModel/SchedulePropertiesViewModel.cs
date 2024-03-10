@@ -1,12 +1,11 @@
-﻿using System;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel.Base;
 using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class SchedulePropertiesViewModel : ViewModelBase, IValidatable
+  public class SchedulePropertiesViewModel : ValidatingViewModel
   {
     #region Constructor
 
@@ -21,36 +20,17 @@ namespace NAS.ViewModel
 
     public override HelpTopic HelpTopicKey => HelpTopic.Properties;
 
-    public Schedule Schedule { get; private set; }
+    public Schedule Schedule { get; }
 
-    public string ErrorMessage { get; set; } = null;
+    #endregion
 
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
+    #region Validation
 
-    private void addError(string message)
+    protected override ValidationResult ValidateImpl()
     {
-      if (!string.IsNullOrWhiteSpace(message))
-      {
-        if (!string.IsNullOrWhiteSpace(ErrorMessage))
-        {
-          ErrorMessage += Environment.NewLine;
-        }
-
-        ErrorMessage += message;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool Validate()
-    {
-      ErrorMessage = null;
-      if (string.IsNullOrWhiteSpace(Schedule.Name))
-      {
-        addError(NASResources.PleaseEnterName);
-      }
-
-      return !HasErrors;
+      return string.IsNullOrWhiteSpace(Schedule.Name)
+             ? ValidationResult.Error(NASResources.PleaseEnterName)
+             : ValidationResult.OK();
     }
 
     #endregion

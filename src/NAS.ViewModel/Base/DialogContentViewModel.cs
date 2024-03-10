@@ -1,6 +1,6 @@
 ﻿namespace NAS.ViewModel.Base
 {
-  public abstract class DialogContentViewModel : ViewModelBase, IDialogContentViewModel
+  public abstract class DialogContentViewModel : ValidatingViewModel, IDialogContentViewModel
   {
     protected DialogContentViewModel()
       : base()

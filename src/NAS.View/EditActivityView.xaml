@@ -1,26 +1,33 @@
-﻿<Window x:Class="NAS.WindowActivity"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:converters="clr-namespace:NAS.View.Converters"
-        xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
-        xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
-        Title="{x:Static resx:NASResources.EditActivity}"
-        Width="600"
-        Height="450"
-        Icon="pack://application:,,,/NAS.View;component/Images/Activity.png"
-        ShowInTaskbar="False"
-        WindowStartupLocation="CenterScreen">
-  <Window.Resources>
-    <converters:CurrencyConverter x:Key="CurrencyConverter" />
-    <converters:ConstraintTypeConverter x:Key="ConstraintTypeConverter" />
-    <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
-  </Window.Resources>
+﻿<Grid x:Class="NAS.EditActivityView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="clr-namespace:NAS.View.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModel;assembly=NAS.ViewModel"
+      xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:localBehaviors="clr-namespace:NAS.View.Behaviors"
+      d:DataContext="{d:DesignInstance Type=viewmodel:EditActivityViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.View;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <converters:CurrencyConverter x:Key="CurrencyConverter" />
+      <converters:ConstraintTypeConverter x:Key="ConstraintTypeConverter" />
+      <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
+    </ResourceDictionary>
+  </Grid.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="5" />
       <RowDefinition />
-      <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
@@ -249,8 +256,11 @@
                     Margin="2"
                     IsReadOnly="True"
                     ItemsSource="{Binding Schedule.Fragnets}"
-                    KeyDown="comboBox_KeyDown"
-                    SelectedItem="{Binding CurrentActivity.Fragnet}" />
+                    SelectedItem="{Binding CurrentActivity.Fragnet}">
+            <behaviors:Interaction.Behaviors>
+              <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />
+            </behaviors:Interaction.Behaviors>
+          </ComboBox>
           <TextBlock Grid.Row="2"
                      Margin="5"
                      Text="{x:Static resx:NASResources.Constraint}"
@@ -260,9 +270,11 @@
                     Margin="2"
                     IsReadOnly="True"
                     ItemsSource="{Binding ConstraintTypes}"
-                    KeyDown="comboBox_KeyDown"
                     SelectedItem="{Binding CurrentActivity.Constraint}"
                     Visibility="{Binding CurrentActivityIsNotFixed, Converter={StaticResource VisibilityConverter}}">
+            <behaviors:Interaction.Behaviors>
+              <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />
+            </behaviors:Interaction.Behaviors>
             <ComboBox.ItemTemplate>
               <DataTemplate>
                 <TextBlock Height="Auto"
@@ -287,8 +299,11 @@
                     DisplayMemberPath="Name"
                     IsReadOnly="True"
                     ItemsSource="{Binding Schedule.CustomAttributes1}"
-                    KeyDown="comboBox_KeyDown"
-                    SelectedItem="{Binding CurrentActivity.CustomAttribute1}" />
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute1}">
+            <behaviors:Interaction.Behaviors>
+              <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />
+            </behaviors:Interaction.Behaviors>
+          </ComboBox>
           <TextBlock Grid.Row="5"
                      Margin="5"
                      Text="{Binding Schedule.CustomAttribute2Header}" />
@@ -298,8 +313,11 @@
                     DisplayMemberPath="Name"
                     IsReadOnly="True"
                     ItemsSource="{Binding Schedule.CustomAttributes2}"
-                    KeyDown="comboBox_KeyDown"
-                    SelectedItem="{Binding CurrentActivity.CustomAttribute2}" />
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute2}">
+            <behaviors:Interaction.Behaviors>
+              <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />
+            </behaviors:Interaction.Behaviors>
+          </ComboBox>
           <TextBlock Grid.Row="6"
                      Margin="5"
                      Text="{Binding Schedule.CustomAttribute3Header}" />
@@ -309,8 +327,11 @@
                     DisplayMemberPath="Name"
                     IsReadOnly="True"
                     ItemsSource="{Binding Schedule.CustomAttributes3}"
-                    KeyDown="comboBox_KeyDown"
-                    SelectedItem="{Binding CurrentActivity.CustomAttribute3}" />
+                    SelectedItem="{Binding CurrentActivity.CustomAttribute3}">
+            <behaviors:Interaction.Behaviors>
+              <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />
+            </behaviors:Interaction.Behaviors>
+          </ComboBox>
           <WrapPanel Grid.Row="7" Grid.Column="1">
             <Button Margin="2" Command="{Binding EditLogicCommand}">
               <StackPanel Orientation="Horizontal">
@@ -469,20 +490,5 @@
                Text="{Binding ErrorMessage}"
                TextWrapping="Wrap"
                Visibility="{Binding HasErrors, Converter={StaticResource VisibilityConverter}}" />
-    <StackPanel Grid.Row="4"
-                Grid.ColumnSpan="5"
-                Margin="2"
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
-      <Button MinWidth="75"
-              Click="buttonOK_Click"
-              Content="{x:Static resx:NASResources.OK}"
-              IsDefault="True" />
-      <Button MinWidth="75"
-              Margin="2,0,0,0"
-              Click="buttonCancel_Click"
-              Content="{x:Static resx:NASResources.Cancel}"
-              IsCancel="True" />
-    </StackPanel>
   </Grid>
-</Window>
+</Grid>

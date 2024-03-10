@@ -24,7 +24,7 @@ namespace NAS
 
     private void buttonOK_Click(object sender, RoutedEventArgs e)
     {
-      if ((ViewModel as IValidatable).Validate())
+      if ((ViewModel as IValidating).Validate().IsOK)
       {
         DialogResult = true;
       }

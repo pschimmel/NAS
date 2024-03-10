@@ -84,7 +84,7 @@
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <fluent:Ribbon>
+      <fluent:Ribbon x:Name="Ribbon">
         <fluent:Ribbon.Menu>
           <fluent:Backstage IsOpen="{Binding BackstageOpen, Mode=TwoWay}">
             <fluent:Backstage.Resources>
@@ -154,7 +154,7 @@
                                            Header="{x:Static resx:NASResources.Relationships}"
                                            Visibility="Visible" />
         </fluent:Ribbon.ContextualGroups>
-        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Start}"
+        <fluent:RibbonTabItem Header="{x:Static resx:NASResources.Start}" x:Name="StartTab"
                               ReduceOrder="Activities, Activities, Activities, Relationships, Relationships, Relationships, Schedule, Schedule, Schedule"
                               Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
           <fluent:RibbonGroupBox Name="Calculate"

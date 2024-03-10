@@ -502,7 +502,7 @@ namespace NAS.ViewModel
 
     private void EditActivityCommandExecute()
     {
-      var vm = CurrentActivity;
+      var vm = new EditActivityViewModel(CurrentActivity.Activity);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         _ = SortFilterAndGroup(Activities);
@@ -596,9 +596,8 @@ namespace NAS.ViewModel
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        if (vm.Validate())
+        if (vm.Validate().IsOK)
         {
-          //vm.Apply();
           CurrentRelationship.Relationship = relationship;
           OnRelationshipChanged(CurrentRelationship);
         }

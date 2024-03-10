@@ -37,5 +37,14 @@ namespace NAS.ViewModel
     }
 
     #endregion
+
+    #region Validation
+
+    protected override ValidationResult ValidateImpl()
+    {
+      return ValidationResult.OK();
+    }
+
+    #endregion
   }
 }

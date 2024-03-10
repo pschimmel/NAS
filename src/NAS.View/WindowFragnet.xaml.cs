@@ -22,7 +22,7 @@ namespace NAS
 
     private void buttonOK_Click(object sender, RoutedEventArgs e)
     {
-      if (DataContext is IValidatable validatable && validatable.Validate())
+      if ((DataContext as IValidating).Validate().IsOK)
       {
         DialogResult = true;
       }

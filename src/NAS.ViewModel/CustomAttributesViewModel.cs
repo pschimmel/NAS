@@ -8,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class CustomAttributesViewModel : ViewModelBase, IValidatable, IApplyable
+  public class CustomAttributesViewModel : ValidatingViewModel, IApplyable
   {
     #region Fields
 
@@ -16,7 +16,6 @@ namespace NAS.ViewModel
     private CustomAttribute _currentCustomAttribute1;
     private CustomAttribute _currentCustomAttribute2;
     private CustomAttribute _currentCustomAttribute3;
-    private string _errorMessage;
 
     #endregion
 
@@ -269,52 +268,24 @@ namespace NAS.ViewModel
 
     #region IValidatable Implementation
 
-    public string ErrorMessage
+    protected override ValidationResult ValidateImpl()
     {
-      get => _errorMessage;
-      set
-      {
-        _errorMessage = value;
-        HasErrors = !string.IsNullOrWhiteSpace(_errorMessage);
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool HasErrors { get; private set; }
-
-    public bool Validate()
-    {
-      ErrorMessage = null;
-
-      if (string.IsNullOrWhiteSpace(CustomAttribute1Header))
-      {
-        ErrorMessage = NASResources.MessageCustomAttributeHeaderCantBeEmpty;
-        return false;
-      }
-
-      if (string.IsNullOrWhiteSpace(CustomAttribute2Header))
-      {
-        ErrorMessage = NASResources.MessageCustomAttributeHeaderCantBeEmpty;
-        return false;
-      }
-
-      if (string.IsNullOrWhiteSpace(CustomAttribute3Header))
-      {
-        ErrorMessage = NASResources.MessageCustomAttributeHeaderCantBeEmpty;
-        return false;
-      }
-
-      return true;
+      return string.IsNullOrWhiteSpace(CustomAttribute1Header)
+             ? ValidationResult.Error(NASResources.MessageCustomAttributeHeaderCantBeEmpty)
+             : string.IsNullOrWhiteSpace(CustomAttribute2Header)
+             ? ValidationResult.Error(NASResources.MessageCustomAttributeHeaderCantBeEmpty)
+             : string.IsNullOrWhiteSpace(CustomAttribute3Header)
+             ? ValidationResult.Error(NASResources.MessageCustomAttributeHeaderCantBeEmpty)
+             : ValidationResult.OK();
     }
 
     #endregion
 
-    #region IApplyable Implementation
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _schedule.CustomAttribute1Header = CustomAttribute1Header;
         _schedule.CustomAttribute2Header = CustomAttribute2Header;

@@ -6,7 +6,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class EditRelationshipViewModel : ViewModelBase, IValidatable
+  public class EditRelationshipViewModel : ValidatingViewModel
   {
     #region Fields
 
@@ -97,44 +97,26 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    public string ErrorMessage { get; private set; }
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    private void AddError(string error)
+    protected override ValidationResult ValidateImpl()
     {
-      if (error == null)
-      {
-        ErrorMessage = null;
-      }
-      else
-      {
-        if (ErrorMessage != null)
-        {
-          ErrorMessage += Environment.NewLine;
-        }
+      var result = ValidationResult.OK();
 
-        ErrorMessage += error;
-      }
-      OnPropertyChanged(nameof(ErrorMessage));
-      OnPropertyChanged(nameof(HasErrors));
-    }
-
-    public bool Validate()
-    {
-      ErrorMessage = null;
       if (_selectedActivity1 == null || _selectedActivity2 == null)
       {
-        AddError(NASResources.PleaseSelectTwoActivities);
+        result = ValidationResult.Error(NASResources.PleaseSelectTwoActivities);
       }
 
       if (_selectedActivity1 == _selectedActivity2)
       {
-        AddError(NASResources.ActivitiesCannotBeEqual);
+        result = ValidationResult.Error(NASResources.ActivitiesCannotBeEqual);
       }
 
-      return !HasErrors;
+      return result;
     }
+
+    #endregion
+
+    #region Apply
 
     //public void Apply()
     //{

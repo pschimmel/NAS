@@ -25,13 +25,8 @@ namespace NAS.ViewModel
 
     public override DialogSize DialogSize => DialogSize.Fixed(550, 400);
 
-    public override IEnumerable<IButtonViewModel> Buttons
-    {
-      get => new List<ButtonViewModel>
-      {
-        // Buttons are part of the Wizard control
-      };
-    }
+    // All buttons are part of the Wizard control
+    public override IEnumerable<IButtonViewModel> Buttons => null;
 
     public override bool OnClosing(bool? dialogResult)
     {
@@ -88,7 +83,7 @@ namespace NAS.ViewModel
       ];
     }
 
-    public void Validate()
+    public void ValidateScheduleData()
     {
       HasErrors = false;
       ErrorMessage = null;

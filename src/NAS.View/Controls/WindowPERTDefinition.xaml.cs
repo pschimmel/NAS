@@ -106,7 +106,7 @@ namespace NAS.View.Controls
       {
         isManualEditCommit = true;
         var grid = (DataGrid)sender;
-        _ = grid.CommitEdit(DataGridEditingUnit.Row, true);
+        grid.CommitEdit(DataGridEditingUnit.Row, true);
         isManualEditCommit = false;
       }
       RefreshTemplate();
@@ -114,9 +114,13 @@ namespace NAS.View.Controls
 
     private void ButtonOK_Click(object sender, RoutedEventArgs e)
     {
-      if (DataContext is IValidatable validatable && validatable.Validate() == false)
+      if (DataContext is IValidating validating)
       {
-        _ = System.Windows.MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + (DataContext as IValidatable).ErrorMessage, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
+        var result = validating.Validate();
+        if (!result.IsOK)
+        {
+          MessageBox.Show(NASResources.MessageCannotCloseWindow + Environment.NewLine + result.Message, NASResources.Stop, MessageBoxButton.OK, MessageBoxImage.Stop);
+        }
       }
       else
       {

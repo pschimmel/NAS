@@ -9,10 +9,13 @@
   <toolsConverters:IsNotNullConverter x:Key="IsNotNullConverter" />
   <converters:NullToVisibilityConverter x:Key="IsNullToVisibilityConverter" />
   <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+
   <SolidColorBrush x:Key="BudgetColor" Color="#80808080" />
   <SolidColorBrush x:Key="PlannedCostsColor" Color="#800000AA" />
   <SolidColorBrush x:Key="ActualCostsColor" Color="#80AA0000" />
   <SolidColorBrush x:Key="ResourceAllocationColor" Color="#8000AA00" />
+  <SolidColorBrush x:Key="DialogBackgroundBrush" Color="White" />
+  <SolidColorBrush x:Key="DialogCommandBackgroundBrush" Color="LightGray" />
 
   <!--#region ToolBars-->
 

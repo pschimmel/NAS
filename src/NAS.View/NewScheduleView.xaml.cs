@@ -28,7 +28,7 @@ namespace NAS.View
       {
         if (DataContext is NewScheduleViewModel vm)
         {
-          vm.Validate();
+          vm.ValidateScheduleData();
         }
       }
     }

@@ -8,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class FragnetViewModel : ViewModelBase, IValidatable, IApplyable
+  public class FragnetViewModel : ValidatingViewModel, IApplyable
   {
     #region Fields
 
@@ -94,48 +94,30 @@ namespace NAS.ViewModel
 
     #region IValidatable Implementation
 
-    public string ErrorMessage { get; set; } = null;
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    public bool Validate()
+    protected override ValidationResult ValidateImpl()
     {
-      ErrorMessage = null;
+      var result = ValidationResult.OK();
+
       if (string.IsNullOrWhiteSpace(Number))
       {
-        AddError(NASResources.PleaseEnterNumber);
+        result = result.Merge(ValidationResult.Error(NASResources.PleaseEnterNumber));
       }
 
       if (string.IsNullOrWhiteSpace(Name))
       {
-        AddError(NASResources.PleaseEnterName);
+        result = result.Merge(ValidationResult.Error(NASResources.PleaseEnterName));
       }
 
-      return string.IsNullOrWhiteSpace(ErrorMessage);
-    }
-
-    private void AddError(string message)
-    {
-      if (!string.IsNullOrWhiteSpace(message))
-      {
-        if (!string.IsNullOrWhiteSpace(ErrorMessage))
-        {
-          ErrorMessage += Environment.NewLine;
-        }
-
-        ErrorMessage += message;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
+      return result;
     }
 
     #endregion
 
-    #region IApplyable Implementation
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _fragnet.Number = Number;
         _fragnet.Name = Name;

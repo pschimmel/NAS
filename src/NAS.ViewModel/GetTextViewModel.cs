@@ -4,17 +4,27 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class GetTextViewModel : ViewModelBase, IValidatable
+  public class GetTextViewModel : ValidatingViewModel
   {
-    private readonly bool allowEmpty;
+    #region Fields
+
+    private readonly bool _allowEmpty;
+
+    #endregion
+
+    #region Constructor
 
     public GetTextViewModel(string title, string label, string text = null, bool allowEmpty = false)
     {
       Title = title;
       Label = label;
       Text = text;
-      this.allowEmpty = allowEmpty;
+      _allowEmpty = allowEmpty;
     }
+
+    #endregion 
+
+    #region Properties
 
     public string Title { get; }
 
@@ -22,22 +32,21 @@ namespace NAS.ViewModel
 
     public string Text { get; set; }
 
-    public string ErrorMessage { get; private set; }
+    #endregion
 
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
+    #region Validation
 
-    public bool Validate()
+    protected override ValidationResult ValidateImpl()
     {
-      ErrorMessage = null;
-      if (!allowEmpty && string.IsNullOrWhiteSpace(Text))
+      if (!_allowEmpty && string.IsNullOrWhiteSpace(Text))
       {
-        ErrorMessage = NASResources.MessageTextMayNotBeEmpty;
         UserNotificationService.Instance.Error(NASResources.MessageTextMayNotBeEmpty);
+        return ValidationResult.Error(NASResources.MessageTextMayNotBeEmpty);
       }
 
-      OnPropertyChanged(nameof(ErrorMessage));
-      OnPropertyChanged(nameof(HasErrors));
-      return !HasErrors;
+      return ValidationResult.OK();
     }
+
+    #endregion
   }
 }

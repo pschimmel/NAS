@@ -1,24 +1,16 @@
-﻿using System;
-using NAS.Model.Entities;
+﻿using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class DistortionViewModel : ViewModelBase, IValidatable
+  public class DistortionViewModel : ValidatingViewModel
   {
-    #region Fields
-
-    private readonly Schedule schedule;
-
-    #endregion
-
     #region Constructor
 
     public DistortionViewModel(Distortion currentDistortion)
     {
       CurrentDistortion = currentDistortion;
-      schedule = currentDistortion.Activity.Schedule;
       StartVisible = false;
       DaysVisible = false;
       PercentVisible = false;
@@ -71,105 +63,51 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    private string errorMessage = null;
-
-    public string ErrorMessage
+    protected override ValidationResult ValidateImpl()
     {
-      get => errorMessage;
-      set
-      {
-        errorMessage = value;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    public bool Validate()
-    {
-      errorMessage = null;
       if (string.IsNullOrWhiteSpace(CurrentDistortion.Description))
       {
-        errorMessage = NASResources.PleaseEnterDescription;
-        return false;
+        return ValidationResult.Error(NASResources.PleaseEnterDescription);
       }
-      if (CurrentDistortion is Delay)
+
+      switch (CurrentDistortion)
       {
-        if (!(CurrentDistortion as Delay).Days.HasValue)
-        {
-          if (errorMessage != null)
+        case Delay delay:
+          if (!delay.Days.HasValue)
           {
-            errorMessage += Environment.NewLine;
+            return ValidationResult.Error(NASResources.PleaseEnterNumberOfDays);
           }
-
-          errorMessage = NASResources.PleaseEnterNumberOfDays;
-          return false;
-        }
+          break;
+        case Extension extension:
+          if (!extension.Days.HasValue)
+          {
+            return ValidationResult.Error(NASResources.PleaseEnterNumberOfDays);
+          }
+          break;
+        case Inhibition inhibition:
+          if (!inhibition.Percent.HasValue)
+          {
+            return ValidationResult.Error(NASResources.PleaseEnterPercentage);
+          }
+          break;
+        case Interruption interruption:
+          if (!interruption.Days.HasValue)
+          {
+            return ValidationResult.Error(NASResources.PleaseEnterNumberOfDays);
+          }
+          else if (!interruption.Start.HasValue)
+          {
+            return ValidationResult.Error(NASResources.PleaseEnterStartDate);
+          }
+          break;
+        case Reduction reduction:
+          if (!reduction.Days.HasValue)
+          {
+            return ValidationResult.Error(NASResources.PleaseEnterNumberOfDays);
+          }
+          break;
       }
-      else if (CurrentDistortion is Extension)
-      {
-        if (!(CurrentDistortion as Extension).Days.HasValue)
-        {
-          if (errorMessage != null)
-          {
-            errorMessage += Environment.NewLine;
-          }
-
-          errorMessage = NASResources.PleaseEnterNumberOfDays;
-          return false;
-        }
-      }
-      else if (CurrentDistortion is Inhibition)
-      {
-        if (!(CurrentDistortion as Inhibition).Percent.HasValue)
-        {
-          if (errorMessage != null)
-          {
-            errorMessage += Environment.NewLine;
-          }
-
-          errorMessage = NASResources.PleaseEnterPercentage;
-          return false;
-        }
-      }
-      else if (CurrentDistortion is Interruption)
-      {
-        if (!(CurrentDistortion as Interruption).Days.HasValue)
-        {
-          if (errorMessage != null)
-          {
-            errorMessage += Environment.NewLine;
-          }
-
-          errorMessage = NASResources.PleaseEnterNumberOfDays;
-          return false;
-        }
-        if (!(CurrentDistortion as Interruption).Start.HasValue)
-        {
-          if (errorMessage != null)
-          {
-            errorMessage += Environment.NewLine;
-          }
-
-          errorMessage = NASResources.PleaseEnterStartDate;
-          return false;
-        }
-      }
-      else if (CurrentDistortion is Reduction)
-      {
-        if (!(CurrentDistortion as Reduction).Days.HasValue)
-        {
-          if (errorMessage != null)
-          {
-            errorMessage += Environment.NewLine;
-          }
-
-          errorMessage = NASResources.PleaseEnterNumberOfDays;
-          return false;
-        }
-      }
-      return !HasErrors;
+      return ValidationResult.OK();
     }
 
     #endregion

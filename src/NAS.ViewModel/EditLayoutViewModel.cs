@@ -9,7 +9,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class EditLayoutViewModel : ViewModelBase, IValidatable
+  public class EditLayoutViewModel : ValidatingViewModel
   {
     #region Fields
 
@@ -135,7 +135,7 @@ namespace NAS.ViewModel
 
     private void RemoveVisibleBaselineCommandExecute()
     {
-      _ = CurrentLayout.VisibleBaselines.Remove(CurrentVisibleBaseline);
+      CurrentLayout.VisibleBaselines.Remove(CurrentVisibleBaseline);
     }
 
     private bool RemoveVisibleBaselineCommandCanExecute => CurrentVisibleBaseline != null;
@@ -144,39 +144,21 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    public string ErrorMessage { get; set; } = null;
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    private void AddError(string message)
+    protected override ValidationResult ValidateImpl()
     {
-      if (!string.IsNullOrWhiteSpace(message))
-      {
-        if (!string.IsNullOrWhiteSpace(ErrorMessage))
-        {
-          ErrorMessage += Environment.NewLine;
-        }
+      var result = ValidationResult.OK();
 
-        ErrorMessage += message;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    public bool Validate()
-    {
-      ErrorMessage = null;
       if (string.IsNullOrWhiteSpace(CurrentLayout.Name))
       {
-        AddError(NASResources.PleaseEnterName);
+        result = result.Merge(ValidationResult.Error(NASResources.PleaseEnterName));
       }
 
       if (IsPERT && Schedule.CurrentLayout.PERTDefinition == null)
       {
-        AddError(NASResources.PleaseSelectTemplate);
+        result = result.Merge(ValidationResult.Error(NASResources.PleaseSelectTemplate));
       }
 
-      return string.IsNullOrWhiteSpace(ErrorMessage);
+      return result;
     }
 
     #endregion

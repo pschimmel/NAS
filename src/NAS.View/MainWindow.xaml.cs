@@ -68,6 +68,7 @@ namespace NAS.View
         DataContext = viewModel;
         viewModel.DownloadProgress += ViewModel_DownloadProgress;
         viewModel.RequestThemeChange += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
+        viewModel.ActivateRibbonStartTab += (_, __) => Ribbon.SelectedTabItem = StartTab;
 
         viewModel.GetCanvas += (s, args) =>
         {
@@ -142,12 +143,12 @@ namespace NAS.View
 
     #endregion
 
-    #region Avalondock
+    #region Avalon Dock
 
     private void dockManager_DocumentClosed(object sender, DocumentClosedEventArgs e)
     {
       var scheduleViewModel = e.Document.Content as ScheduleViewModel;
-      _ = (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
+      (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
     }
 
     private void dockingManager_DocumentClosing(object sender, DocumentClosingEventArgs e)

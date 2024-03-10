@@ -4,18 +4,29 @@ namespace NAS.ViewModel.Base
 {
   public sealed class DialogViewModel : ViewModelBase, IViewModel
   {
+    #region Events
+
     public event EventHandler RequestOK;
     public event EventHandler RequestCancel;
 
+    #endregion
+
+    #region Fields
+
     private readonly List<IButtonViewModel> _buttons;
+
+    #endregion
+
+    #region Constructor
 
     public DialogViewModel(IDialogContentViewModel contentViewModel)
       : base()
     {
+      HasErrors = false;
       ContentViewModel = contentViewModel;
       _buttons = [];
 
-      foreach (var buttonVM in contentViewModel.Buttons)
+      foreach (var buttonVM in contentViewModel.Buttons ?? Enumerable.Empty<ButtonViewModel>())
       {
         _buttons.Add(buttonVM);
 
@@ -28,7 +39,16 @@ namespace NAS.ViewModel.Base
           buttonVM.CommandExecuted += Button_OK;
         }
       }
+
+      if (contentViewModel is IValidating validatableVM)
+      {
+        validatableVM.Validated += ValidatableVM_Validated;
+      }
     }
+
+    #endregion
+
+    #region Properties
 
     public string Title => ContentViewModel.Title;
 
@@ -38,10 +58,39 @@ namespace NAS.ViewModel.Base
 
     public DialogSize DialogSize => ContentViewModel.DialogSize;
 
-    public IEnumerable<IButtonViewModel> Buttons => _buttons;
+    public bool HasErrors { get; private set; }
+
+    public string ErrorMessages { get; private set; }
+
+    #endregion
+
+    #region Validation
+
+    private void ValidatableVM_Validated(object sender, ValidationEventArgs e)
+    {
+      HasErrors = e.Result.IsOK;
+      ErrorMessages = e.Result.Message;
+      OnPropertyChanged(nameof(HasErrors));
+      OnPropertyChanged(nameof(ErrorMessages));
+    }
+
+    #endregion
+
+    #region Buttons
+
+    public IReadOnlyList<IButtonViewModel> Buttons => _buttons;
 
     private void Button_OK(object sender, EventArgs e)
     {
+      if (ContentViewModel is IValidating validatable)
+      {
+        var result = validatable.Validate();
+        if (!result.IsOK)
+        {
+          return;
+        }
+      }
+
       RequestOK?.Invoke(this, EventArgs.Empty);
     }
 
@@ -49,5 +98,7 @@ namespace NAS.ViewModel.Base
     {
       RequestCancel?.Invoke(this, EventArgs.Empty);
     }
+
+    #endregion
   }
 }

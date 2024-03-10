@@ -8,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class PERTDefinitionViewModel : ViewModelBase, IApplyable, IValidatable
+  public class PERTDefinitionViewModel : ValidatingViewModel, IApplyable
   {
     #region Fields
 
@@ -306,42 +306,20 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    public bool Validate()
+    protected override ValidationResult ValidateImpl()
     {
-      if (string.IsNullOrWhiteSpace(_definition.Name))
-      {
-        SetHasErrors(true);
-        SetErrorMessage(NASResources.PleaseEnterName);
-        return false;
-      }
-      SetHasErrors(false);
-      SetErrorMessage(null);
-      return true;
+      return string.IsNullOrWhiteSpace(_definition.Name)
+             ? ValidationResult.Error(NASResources.PleaseEnterName)
+             : ValidationResult.OK();
     }
-
-    private void SetErrorMessage(string message)
-    {
-      ErrorMessage = message;
-      OnPropertyChanged(nameof(ErrorMessage));
-    }
-
-    public string ErrorMessage { get; private set; } = null;
-
-    private void SetHasErrors(bool value)
-    {
-      HasErrors = value;
-      OnPropertyChanged(nameof(HasErrors));
-    }
-
-    public bool HasErrors { get; private set; } = false;
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
     public void Apply()
     {
-      if (Validate())
+      if (Validate().IsOK)
       {
         _definition.RefreshData(Rows, Columns, Items);
       }

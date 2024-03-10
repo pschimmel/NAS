@@ -9,7 +9,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class EditActivityViewModel : ViewModelBase, IValidatable, IApplyable
+  public class EditActivityViewModel : DialogContentViewModel, IApplyable
   {
     #region Fields
 
@@ -40,6 +40,16 @@ namespace NAS.ViewModel
       RemoveResourceAssociationCommand = new ActionCommand(RemoveResourceAssociationCommandExecute, () => RemoveResourceAssociationCommandCanExecute);
       EditResourceAssociationCommand = new ActionCommand(EditResourceAssociationCommandExecute, () => EditResourceAssociationCommandCanExecute);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.EditActivity;
+
+    public override string Icon => "Activity";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(600, 450);
 
     #endregion
 
@@ -193,73 +203,46 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    public string ErrorMessage { get; private set; } = null;
-
-    public bool HasErrors => !string.IsNullOrWhiteSpace(ErrorMessage);
-
-    private void AddError(string message)
+    protected override ValidationResult ValidateImpl()
     {
-      if (!string.IsNullOrWhiteSpace(message))
-      {
-        if (!string.IsNullOrWhiteSpace(ErrorMessage))
-        {
-          ErrorMessage += Environment.NewLine;
-        }
-
-        ErrorMessage += message;
-        OnPropertyChanged(nameof(ErrorMessage));
-        OnPropertyChanged(nameof(HasErrors));
-      }
-    }
-
-    private void ResetErrors()
-    {
-      ErrorMessage = null;
-      OnPropertyChanged(nameof(ErrorMessage));
-      OnPropertyChanged(nameof(HasErrors));
-    }
-
-    public bool Validate()
-    {
-      ResetErrors();
       if (string.IsNullOrWhiteSpace(_activity.Number))
       {
-        AddError(NASResources.PleaseEnterNumber);
+        return ValidationResult.Error(NASResources.PleaseEnterNumber);
       }
 
       if (string.IsNullOrWhiteSpace(_activity.Name))
       {
-        AddError(NASResources.PleaseEnterName);
+        return ValidationResult.Error(NASResources.PleaseEnterName);
       }
 
       if (_activity.ActivityType == ActivityType.Activity && _activity.OriginalDuration <= 0)
       {
-        AddError(NASResources.PleaseEnterPlannedDuration);
+        return ValidationResult.Error(NASResources.PleaseEnterPlannedDuration);
       }
 
       if (_activity.PercentComplete is < 0d or > 100d)
       {
-        AddError(string.Format(NASResources.PleaseEnterNumbersFromTo, 0, 100));
+        return ValidationResult.Error(string.Format(NASResources.PleaseEnterNumbersFromTo, 0, 100));
       }
 
       if (_activity.Calendar == null)
       {
-        AddError(NASResources.PleaseSelectCalendar);
+        return ValidationResult.Error(NASResources.PleaseSelectCalendar);
       }
 
       if (_activity.Constraint != ConstraintType.None && !_activity.ConstraintDate.HasValue)
       {
-        AddError(NASResources.PleaseEnterConstraintDate);
+        return ValidationResult.Error(NASResources.PleaseEnterConstraintDate);
       }
 
       foreach (var activity in _schedule.Activities)
       {
         if (activity != _activity && activity.Number == _activity.Number)
         {
-          AddError(NASResources.NumberMustBeUnique);
+          return ValidationResult.Error(NASResources.NumberMustBeUnique);
         }
       }
-      return !HasErrors;
+      return ValidationResult.OK();
     }
 
     #endregion
@@ -268,7 +251,7 @@ namespace NAS.ViewModel
 
     public void Apply()
     {
-      if (Validate() == true)
+      if (Validate().IsOK)
       {
         _activity.RefreshResourceAssociations(ResourceAssociations);
       }
