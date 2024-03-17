@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using ES.Tools.Core.Infrastructure;
 using ES.Tools.Core.MVVM;
+using ES.Tools.UI;
 using Microsoft.Win32;
 using NAS.Model;
 using NAS.Model.Base;
@@ -30,6 +31,7 @@ namespace NAS.ViewModel
   {
     #region Events
 
+    public event EventHandler ShutDownRequested;
     public event EventHandler<ProgressEventArgs> DownloadProgress;
     public event EventHandler<ItemEventArgs<Theme>> RequestThemeChange;
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
@@ -43,6 +45,7 @@ namespace NAS.ViewModel
 
     private int _busyCount = 0;
     private bool _backstageOpen = false;
+    private readonly CommandLineSettings _startupSettings;
     private ObservableCollection<ScheduleViewModel> _schedules;
     private ScheduleViewModel _currentSchedule;
     private ReportViewModel _selectedReport;
@@ -65,6 +68,13 @@ namespace NAS.ViewModel
 
     public MainViewModel()
     {
+      _startupSettings = CommandLineParser.GetStartupSettings();
+#if !DEBUG
+        //if (CurrentInfoHolder.Settings.AutoCheckForUpdates)
+        //{
+        //  CheckForUpdatesCommand.Execute(false);
+        //}
+#endif
       _reportsController = new ReportController(SettingsController.Settings.UserReportsFolderPath);
       _reportsController.ReportsChanged += (s, e) => RefreshReports();
 
@@ -89,13 +99,19 @@ namespace NAS.ViewModel
       DeleteReportCommand = new ActionCommand(DeleteReportCommandExecute, () => DeleteReportCommandCanExecute);
       RenameReportCommand = new ActionCommand(RenameReportCommandExecute, () => RenameReportCommandCanExecute);
       RefreshReports();
+
+      if (_startupSettings.Get(CommandLineSettings.CommandLineSettingsType.OpenFile, out string path))
+      {
+        DispatcherWrapper.Default.BeginInvokeIfRequired(() =>
+        {
+          OpenScheduleCommand.Execute(path);
+        });
+      }
     }
 
     #endregion
 
     #region Public Properties
-
-    public static bool ShutdownRequested { get; set; } = false;
 
     public bool IsBusy { get; private set; } = false;
 
@@ -178,7 +194,9 @@ namespace NAS.ViewModel
           OnPropertyChanged(nameof(IsProjectLoaded));
           OnPropertyChanged(nameof(WindowTitle));
           if (IsProjectLoaded)
+          {
             ActivateRibbonStartTab?.Invoke(this, EventArgs.Empty);
+          }
         }
       }
     }
@@ -269,38 +287,38 @@ namespace NAS.ViewModel
         {
           return;
         }
+      }
 
-        if (!File.Exists(fileName))
+      if (!File.Exists(fileName))
+      {
+        UserNotificationService.Instance.Error(string.Format(NASResources.MessageFileNotFound, fileName));
+        return;
+      }
+
+      try
+      {
+        string ext = Path.GetExtension(fileName);
+        var filter = new NASFilter();
+
+        if (string.Equals(filter.FileExtension, ext, StringComparison.InvariantCultureIgnoreCase))
         {
-          UserNotificationService.Instance.Error(string.Format(NASResources.MessageFileNotFound, fileName));
-          return;
-        }
+          var schedule = Persistency.Load(fileName);
 
-        try
-        {
-          string ext = Path.GetExtension(fileName);
-          var filter = new NASFilter();
-
-          if (string.Equals(filter.FileExtension, ext, StringComparison.InvariantCultureIgnoreCase))
+          if (!string.IsNullOrWhiteSpace(filter.Output))
           {
-            var schedule = Persistency.Load(fileName);
-
-            if (!string.IsNullOrWhiteSpace(filter.Output))
-            {
-              UserNotificationService.Instance.Information(filter.Output);
-            }
-
-            ScheduleController.AddMinimumData(schedule);
-            ScheduleController.CheckValues(schedule);
-            var newVM = new ScheduleViewModel(schedule);
-            Schedules.Add(newVM);
-            CurrentSchedule = newVM;
+            UserNotificationService.Instance.Information(filter.Output);
           }
+
+          ScheduleController.AddMinimumData(schedule);
+          ScheduleController.CheckValues(schedule);
+          var newVM = new ScheduleViewModel(schedule);
+          Schedules.Add(newVM);
+          CurrentSchedule = newVM;
         }
-        catch (Exception ex)
-        {
-          UserNotificationService.Instance.Error(ex.Message);
-        }
+      }
+      catch (Exception ex)
+      {
+        UserNotificationService.Instance.Error(ex.Message);
       }
     }
 

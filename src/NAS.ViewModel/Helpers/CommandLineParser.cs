@@ -1,39 +1,42 @@
-﻿using System.IO;
-
-namespace NAS.ViewModel.Helpers
+﻿namespace NAS.ViewModel.Helpers
 {
   public static class CommandLineParser
   {
-    public static StartupSettings GetStartupSettings()
+    public static CommandLineSettings GetStartupSettings()
     {
-      var settings = new StartupSettings();
+      var settings = new CommandLineSettings();
       ParseCommandLineArgs(Environment.GetCommandLineArgs(), settings);
       return settings;
     }
 
-    internal static void ParseCommandLineArgs(string[] args, StartupSettings settings)
+    private static void ParseCommandLineArgs(string[] args, CommandLineSettings settings)
     {
-      if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
+      // First arguement is the startup application path
+      for (int i = 1; i < args.Length; i++)
       {
-        settings.ImportFileName = new FileInfo(args[1]);
-      }
-      else
-      {
-        for (int i = 1; i < args.Length; i += 2)
+        if (args[i] == null)
         {
-          if (!args[i].StartsWith("-"))
-          {
-            i--;
-            continue;
-          }
-          else
-          {
-            settings.ScheduleToOpen = args[i] switch
+          continue;
+        }
+
+        switch (args[i])
+        {
+          case "--open":
+          case "-o":
+            if (i <= args.Length - 2 && !string.IsNullOrWhiteSpace(args[i + 1]))
             {
-              "-o" => args[i + 1]?.Trim()?.Trim(new char[] { '"' }),
-              _ => throw new NotImplementedException("Not recognized command line parameter."),
-            };
-          }
+              settings.Add(CommandLineSettings.CommandLineSettingsType.OpenFile, args[i + 1]);
+              i++; // Skip the following argument
+            }
+            break;
+          default:
+            // As backup use single argument as filename
+            if (i == 1 && args.Length == 2)
+            {
+              settings.Add(CommandLineSettings.CommandLineSettingsType.OpenFile, args[i]);
+            }
+
+            break;
         }
       }
     }

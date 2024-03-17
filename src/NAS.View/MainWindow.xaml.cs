@@ -22,7 +22,6 @@ namespace NAS.View
     #region Fields
 
     private WindowProgress windowProgress;
-    private StartupSettings _startupSettings;
 
     #endregion
 
@@ -43,19 +42,6 @@ namespace NAS.View
       try
       {
         viewModel = new MainViewModel();
-#if !DEBUG
-        //if (CurrentInfoHolder.Settings.AutoCheckForUpdates)
-        //{
-        //  viewModel.CheckForUpdatesCommand.Execute(false);
-        //}
-#endif
-
-        if (MainViewModel.ShutdownRequested)
-        {
-          return;
-        }
-
-        _startupSettings = CommandLineParser.GetStartupSettings();
       }
       catch (Exception ex)
       {
@@ -63,44 +49,28 @@ namespace NAS.View
         Application.Current.Shutdown();
       }
 
-      if (viewModel != null && !MainViewModel.ShutdownRequested)
-      {
-        DataContext = viewModel;
-        viewModel.DownloadProgress += ViewModel_DownloadProgress;
-        viewModel.RequestThemeChange += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
-        viewModel.ActivateRibbonStartTab += (_, __) => Ribbon.SelectedTabItem = StartTab;
+      DataContext = viewModel;
+      viewModel.DownloadProgress += ViewModel_DownloadProgress;
+      viewModel.RequestThemeChange += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
+      viewModel.ActivateRibbonStartTab += (_, __) => Ribbon.SelectedTabItem = StartTab;
 
-        viewModel.GetCanvas += (s, args) =>
+      viewModel.GetCanvas += (s, args) =>
+      {
+        args.ReturnedItem = args.Item switch
         {
-          args.ReturnedItem = args.Item switch
-          {
-            LayoutType.Gantt => new StandaloneGanttCanvas(),
-            LayoutType.PERT => new StandalonePERTCanvas(),
-            _ => throw new ArgumentException($"Unknown layout type {args.Item}"),
-          };
+          LayoutType.Gantt => new StandaloneGanttCanvas(),
+          LayoutType.PERT => new StandalonePERTCanvas(),
+          _ => throw new ArgumentException($"Unknown layout type {args.Item}"),
         };
-        InitializeComponent();
-        Helpers.ThemeManager.SetTheme(SettingsController.Settings.Theme, dockingManager);
+      };
+      InitializeComponent();
+      Helpers.ThemeManager.SetTheme(SettingsController.Settings.Theme, dockingManager);
 
-        Dispatcher.BeginInvoke(new Action(() =>
-        {
-          ActivityContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
-          RelationshipContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
-          //Ribbon.Tabs.First().IsSelected = true;
-        }), DispatcherPriority.Normal);
-
-        if (!string.IsNullOrWhiteSpace(_startupSettings.ScheduleToOpen))
-        {
-          viewModel.OpenScheduleCommand.Execute(_startupSettings.ScheduleToOpen);
-        }
-
-        //Ribbon.AreTabHeadersVisible = true;
-      }
-      else
+      Dispatcher.BeginInvoke(new Action(() =>
       {
-        MainViewModel.ShutdownRequested = true;
-        Application.Current.Shutdown();
-      }
+        ActivityContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
+        RelationshipContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
+      }), DispatcherPriority.Normal);
 
       dummyWindow.Close();
     }

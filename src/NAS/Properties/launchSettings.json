@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "NAS": {
+      "commandName": "Project"
+    },
+    "NAS Example": {
+      "commandName": "Project",
+      "commandLineArgs": "-o C:\\Projects\\NAS\\Files\\Examples\\Beispiel.nas"
+    }
+  }
+}
