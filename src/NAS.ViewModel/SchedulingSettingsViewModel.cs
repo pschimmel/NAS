@@ -40,7 +40,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       return ValidationResult.OK();
     }

@@ -36,6 +36,8 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<SettingsViewModel, SettingsView>();
       ViewFactory.Instance.RegisterDialog<NewScheduleViewModel, NewScheduleView>();
       ViewFactory.Instance.RegisterDialog<EditActivityViewModel, EditActivityView>();
+      ViewFactory.Instance.RegisterDialog<EditCalendarsViewModel, EditCalendarsView>();
+      ViewFactory.Instance.RegisterDialog<EditCalendarViewModel, EditCalendarView>();
     }
 
     private static void RegisterNotificationTargets()

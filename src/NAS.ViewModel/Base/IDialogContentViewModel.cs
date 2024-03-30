@@ -2,7 +2,7 @@
 
 namespace NAS.ViewModel.Base
 {
-  public interface IDialogContentViewModel : IViewModel
+  public interface IDialogContentViewModel : IViewModel, IApplyable
   {
     string Title { get; }
 

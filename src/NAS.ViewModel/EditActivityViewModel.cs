@@ -9,7 +9,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class EditActivityViewModel : DialogContentViewModel, IApplyable
+  public class EditActivityViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -203,7 +203,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       if (string.IsNullOrWhiteSpace(_activity.Number))
       {
@@ -247,14 +247,11 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
-      if (Validate().IsOK)
-      {
-        _activity.RefreshResourceAssociations(ResourceAssociations);
-      }
+      _activity.RefreshResourceAssociations(ResourceAssociations);
     }
 
     #endregion

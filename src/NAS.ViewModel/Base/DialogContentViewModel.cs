@@ -22,5 +22,20 @@
     {
       return true;
     }
+
+    #region IApplyable
+
+    public void Apply()
+    {
+      if (Validate().IsOK)
+      {
+        OnApply();
+      }
+    }
+
+    protected virtual void OnApply() { }
+
+    #endregion
+
   }
 }

@@ -1,6 +1,6 @@
 ﻿namespace NAS.ViewModel.Base
 {
-  public interface IValidating
+  public interface IValidatable
   {
     public event EventHandler<ValidationEventArgs> Validated;
 

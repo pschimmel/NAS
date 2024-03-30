@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Model.Entities;
@@ -9,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class CalendarsViewModel : ViewModelBase, IApplyable
+  public class EditCalendarsViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -21,7 +20,7 @@ namespace NAS.ViewModel
 
     #region Constructor
 
-    public CalendarsViewModel(Schedule schedule)
+    public EditCalendarsViewModel(Schedule schedule)
       : base()
     {
       _schedule = schedule;
@@ -38,6 +37,17 @@ namespace NAS.ViewModel
     }
 
     #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.EditCalendars;
+
+    public override string Icon => "Calendar";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(300, 300);
+
+    #endregion
+
 
     #region Public Members
 
@@ -151,7 +161,7 @@ namespace NAS.ViewModel
     private void AddCalendarCommandExecute()
     {
       var newCalendar = new Calendar();
-      using var vm = new CalendarViewModel(newCalendar);
+      using var vm = new EditCalendarViewModel(newCalendar);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         Calendars.Add(newCalendar);
@@ -223,7 +233,7 @@ namespace NAS.ViewModel
 
     private void EditCalendarCommandExecute()
     {
-      using var vm = new CalendarViewModel(CurrentCalendar);
+      using var vm = new EditCalendarViewModel(CurrentCalendar);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         vm.Apply();
@@ -234,9 +244,9 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region IApplyable implementation
+    #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
       _schedule.RefreshCalendars(Calendars);
     }

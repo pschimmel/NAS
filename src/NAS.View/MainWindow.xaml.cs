@@ -68,8 +68,8 @@ namespace NAS.View
 
       Dispatcher.BeginInvoke(new Action(() =>
       {
-        ActivityContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
-        RelationshipContextMenu.IsVisibleChanged += tabGroup_IsVisibleChanged;
+        ActivityContextMenu.IsVisibleChanged += TabGroup_IsVisibleChanged;
+        RelationshipContextMenu.IsVisibleChanged += TabGroup_IsVisibleChanged;
       }), DispatcherPriority.Normal);
 
       dummyWindow.Close();
@@ -103,7 +103,7 @@ namespace NAS.View
 
     #region Ribbon Menu Tabs
 
-    private void tabGroup_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    private void TabGroup_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       if (sender is RibbonTabItem && (sender as RibbonTabItem).Group != null && (bool)e.NewValue == true)
       {

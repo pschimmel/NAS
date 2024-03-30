@@ -26,7 +26,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       return string.IsNullOrWhiteSpace(Schedule.Name)
              ? ValidationResult.Error(NASResources.PleaseEnterName)

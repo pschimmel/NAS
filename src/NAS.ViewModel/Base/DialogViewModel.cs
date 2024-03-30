@@ -40,7 +40,7 @@ namespace NAS.ViewModel.Base
         }
       }
 
-      if (contentViewModel is IValidating validatableVM)
+      if (contentViewModel is IValidatable validatableVM)
       {
         validatableVM.Validated += ValidatableVM_Validated;
       }
@@ -82,7 +82,7 @@ namespace NAS.ViewModel.Base
 
     private void Button_OK(object sender, EventArgs e)
     {
-      if (ContentViewModel is IValidating validatable)
+      if (ContentViewModel is IValidatable validatable)
       {
         var result = validatable.Validate();
         if (!result.IsOK)

@@ -36,7 +36,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       if (!_allowEmpty && string.IsNullOrWhiteSpace(Text))
       {

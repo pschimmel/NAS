@@ -144,7 +144,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       var result = ValidationResult.OK();
 

@@ -1,6 +1,6 @@
 ﻿namespace NAS.ViewModel.Base
 {
-  public abstract class ValidatingViewModel : ViewModelBase, IValidating
+  public abstract class ValidatingViewModel : ViewModelBase, IValidatable
   {
     public event EventHandler<ValidationEventArgs> Validated;
 
@@ -10,12 +10,12 @@
 
     public ValidationResult Validate()
     {
-      var result = ValidateImpl();
+      var result = OnValidating();
       Validated?.Invoke(this, new ValidationEventArgs(result));
       return result;
     }
 
-    protected virtual ValidationResult ValidateImpl()
+    protected virtual ValidationResult OnValidating()
     {
       return ValidationResult.OK();
     }

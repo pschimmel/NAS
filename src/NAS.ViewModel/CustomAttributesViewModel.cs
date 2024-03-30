@@ -268,7 +268,7 @@ namespace NAS.ViewModel
 
     #region IValidatable Implementation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       return string.IsNullOrWhiteSpace(CustomAttribute1Header)
              ? ValidationResult.Error(NASResources.MessageCustomAttributeHeaderCantBeEmpty)

@@ -668,7 +668,7 @@ namespace NAS.ViewModel
 
     private void EditCalendarsCommandExecute()
     {
-      using var vm = new CalendarsViewModel(Schedule);
+      using var vm = new EditCalendarsViewModel(Schedule);
       _ = ViewFactory.Instance.ShowDialog(vm);
     }
 

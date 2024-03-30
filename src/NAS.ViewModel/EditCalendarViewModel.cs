@@ -8,7 +8,7 @@ using NAS.ViewModel.Helpers;
 
 namespace NAS.ViewModel
 {
-  public class CalendarViewModel : ValidatingViewModel, IApplyable
+  public class EditCalendarViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -19,7 +19,7 @@ namespace NAS.ViewModel
 
     #region Constructor
 
-    public CalendarViewModel(Calendar calendar)
+    public EditCalendarViewModel(Calendar calendar)
       : base()
     {
       _calendar = calendar;
@@ -29,6 +29,16 @@ namespace NAS.ViewModel
       AddHolidayCommand = new ActionCommand(AddHolidayCommandExecute);
       RemoveHolidayCommand = new ActionCommand(RemoveHolidayCommandExecute, () => RemoveHolidayCommandCanExecute);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Calendar;
+
+    public override string Icon => "Calendar";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(450, 325);
 
     #endregion
 
@@ -104,7 +114,7 @@ namespace NAS.ViewModel
 
     #region Validation
 
-    protected override ValidationResult ValidateImpl()
+    protected override ValidationResult OnValidating()
     {
       return string.IsNullOrWhiteSpace(Name)
              ? ValidationResult.Error(NASResources.PleaseEnterName)
@@ -115,7 +125,7 @@ namespace NAS.ViewModel
 
     #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
       if (Validate().IsOK)
       {

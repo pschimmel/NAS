@@ -4,11 +4,11 @@ using NAS.ViewModel.Base;
 namespace NAS.View
 {
   /// <summary>
-  /// Interaction logic for EditActivityView.xaml
+  /// Interaction logic for EditCalendarView.xaml
   /// </summary>
-  public partial class EditActivityView : Grid, IDialogContentView
+  public partial class EditCalendarView : Grid, IDialogContentView
   {
-    public EditActivityView()
+    public EditCalendarView()
     {
       InitializeComponent();
     }

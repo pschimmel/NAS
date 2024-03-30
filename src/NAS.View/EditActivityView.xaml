@@ -1,4 +1,4 @@
-﻿<Grid x:Class="NAS.EditActivityView"
+﻿<Grid x:Class="NAS.View.EditActivityView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:converters="clr-namespace:NAS.View.Converters"

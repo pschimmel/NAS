@@ -114,7 +114,7 @@ namespace NAS.View.Controls
 
     private void ButtonOK_Click(object sender, RoutedEventArgs e)
     {
-      if (DataContext is IValidating validating)
+      if (DataContext is IValidatable validating)
       {
         var result = validating.Validate();
         if (!result.IsOK)
