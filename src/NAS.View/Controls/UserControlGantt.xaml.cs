@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -248,12 +249,12 @@ namespace NAS.View.Controls
         {
           view.Filter = (object obj) =>
           {
-            if (obj is not Activity)
+            if (obj is not Model.Entities.Activity)
             {
               return false;
             }
 
-            var activity = obj as Activity;
+            var activity = obj as Model.Entities.Activity;
             if (activity.Fragnet != null && !activity.Fragnet.IsVisible)
             {
               return false;
@@ -598,68 +599,69 @@ namespace NAS.View.Controls
 
       int idx = 0;
 
-      foreach (var p in Layout.ActivityColumns.OrderBy(x => x.Order))
+      foreach (var activityColumn in Layout.ActivityColumns.OrderBy(x => x.Order))
       {
-        DataGridColumn column;
-
-        if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(Fragnet))
-        {
-          column = new DataGridComboBoxColumn();
-          (column as DataGridComboBoxColumn).ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
-          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-        }
-        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(WBSItem))
-        {
-          column = new DataGridComboBoxColumn();
-          (column as DataGridComboBoxColumn).ItemsSource = VM.WBSItems;
-          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-        }
-        else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(CustomAttribute))
-        {
-          column = new DataGridComboBoxColumn();
-          (column as DataGridComboBoxColumn).ItemsSource = VM.Schedule.CustomAttributes1;
-          (column as DataGridComboBoxColumn).SelectedItemBinding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-        }
-        else
-        {
-          column = new DataGridTextColumn();
-          var binding = new Binding(p.Property.ToString()) { NotifyOnSourceUpdated = true };
-          if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(DateTime))
-          {
-            binding.Converter = new DateConverter();
-            if (column is DataGridTextColumn)
-            {
-              var s = new Style(typeof(TextBlock));
-              s.Setters.Add(new Setter(HorizontalAlignmentProperty, System.Windows.HorizontalAlignment.Center));
-              (column as DataGridTextColumn).ElementStyle = s;
-            }
-          }
-          else if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(int) || ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(decimal) || ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(double))
-          {
-            if (ActivityPropertyHelper.GetPropertyType(p.Property) == typeof(decimal))
-            {
-              binding.StringFormat = "{0:N} €";
-              binding.Mode = BindingMode.OneWay;
-            }
-            if (column is DataGridTextColumn)
-            {
-              var s = new Style(typeof(TextBlock));
-              s.Setters.Add(new Setter(HorizontalAlignmentProperty, System.Windows.HorizontalAlignment.Right));
-              (column as DataGridTextColumn).ElementStyle = s;
-            }
-          }
-          (column as DataGridTextColumn).Binding = binding;
-        }
-        column.Width = p.ColumnWidth.HasValue ? new DataGridLength(p.ColumnWidth.Value) : DataGridLength.Auto;
-
-        column.Header = ActivityPropertyHelper.GetNameOfActivityProperty(p.Property);
-        column.IsReadOnly = ActivityPropertyHelper.IsPropertyReadonly(p.Property);
+        DataGridColumn column= CreateColumn(activityColumn.Property);
+        Debug.Assert(column is ITaggable);
+        column.Width = activityColumn.ColumnWidth.HasValue ? new DataGridLength(activityColumn.ColumnWidth.Value) : DataGridLength.Auto;
+        column.Header = ActivityPropertyHelper.GetNameOfActivityProperty(activityColumn.Property);
+        column.IsReadOnly = ActivityPropertyHelper.IsPropertyReadonly(activityColumn.Property);
         column.DisplayIndex = idx++;
-        (column as ITaggable).Tag = p.Property;
+        (column as ITaggable).Tag = activityColumn.Property;
         result.Add(column);
       }
 
       return result;
+    }
+
+    private DataGridColumn CreateColumn(ActivityProperty property)
+    {
+      if (ActivityPropertyHelper.GetPropertyType(property) == typeof(Fragnet))
+      {
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
+        comboBoxColumn.ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
+        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        return comboBoxColumn;
+      }
+      else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(WBSItem))
+      {
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
+        comboBoxColumn.ItemsSource = VM.WBSItems;
+        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        return comboBoxColumn;
+      }
+      else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(CustomAttribute))
+      {
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
+        comboBoxColumn.ItemsSource = VM.Schedule.CustomAttributes1;
+        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        return comboBoxColumn;
+      }
+      else
+      {
+        var textColumn = new TaggableDataGridTextColumn();
+        var binding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        if (ActivityPropertyHelper.GetPropertyType(property) == typeof(DateTime))
+        {
+          binding.Converter = new DateConverter();
+          var s = new Style(typeof(TextBlock));
+          s.Setters.Add(new Setter(HorizontalAlignmentProperty, System.Windows.HorizontalAlignment.Center));
+          textColumn.ElementStyle = s;
+        }
+        else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(int) || ActivityPropertyHelper.GetPropertyType(property) == typeof(decimal) || ActivityPropertyHelper.GetPropertyType(property) == typeof(double))
+        {
+          if (ActivityPropertyHelper.GetPropertyType(property) == typeof(decimal))
+          {
+            binding.StringFormat = "{0:N} €";
+            binding.Mode = BindingMode.OneWay;
+          }
+          var s = new Style(typeof(TextBlock));
+          s.Setters.Add(new Setter(HorizontalAlignmentProperty, System.Windows.HorizontalAlignment.Right));
+          textColumn.ElementStyle = s;
+        }
+        textColumn.Binding = binding;
+        return textColumn;
+      }
     }
 
     #endregion
