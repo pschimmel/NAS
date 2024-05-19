@@ -569,14 +569,14 @@ namespace NAS.Model.Entities
     public void RemoveBaseline(Schedule baseline)
     {
       baseline.BaselineOf = null;
-      _ = Baselines.Remove(baseline);
+      Baselines.Remove(baseline);
 
       // Also remove the visible baseline defintion from the layouts.
       foreach (var layout in Layouts)
       {
         foreach (var visibleBaseline in layout.VisibleBaselines.Where(x => x.Schedule == baseline).ToList())
         {
-          _ = layout.VisibleBaselines.Remove(visibleBaseline);
+          layout.VisibleBaselines.Remove(visibleBaseline);
         }
       }
     }

@@ -127,7 +127,7 @@ namespace NAS.ViewModel
       var deletedActivity = Activities.FirstOrDefault(x => x.Activity == e.Item);
       if (deletedActivity != null)
       {
-        _ = Activities.Remove(deletedActivity);
+        Activities.Remove(deletedActivity);
       }
     }
 
@@ -479,7 +479,7 @@ namespace NAS.ViewModel
       UserNotificationService.Instance.Question(s, () =>
       {
         Schedule.RemoveActivity(activityVM.Activity);
-        _ = Activities.Remove(activityVM);
+        Activities.Remove(activityVM);
         OnActivityDeleted(activityVM);
         if (CurrentLayout.LayoutType == LayoutType.PERT)
         {
@@ -505,7 +505,7 @@ namespace NAS.ViewModel
       var vm = new EditActivityViewModel(CurrentActivity.Activity);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        _ = SortFilterAndGroup(Activities);
+        SortFilterAndGroup(Activities);
         OnPropertyChanged(nameof(Activities));
         OnActivityChanged(CurrentActivity);
       }
@@ -618,7 +618,7 @@ namespace NAS.ViewModel
     private void EditLogicCommandExecute()
     {
       using var vm = new EditLogicViewModel(CurrentActivity.Activity);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditLogicCommandCanExecute()
@@ -635,7 +635,7 @@ namespace NAS.ViewModel
     private void PropertiesCommandExecute()
     {
       using var vm = new SchedulePropertiesViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool PropertiesCommandCanExecute()
@@ -652,7 +652,7 @@ namespace NAS.ViewModel
     private void EditWBSCommandExecute()
     {
       using var vm = new WBSViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditWBSCommandCanExecute()
@@ -669,7 +669,7 @@ namespace NAS.ViewModel
     private void EditCalendarsCommandExecute()
     {
       using var vm = new EditCalendarsViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditCalendarsCommandCanExecute()
@@ -686,7 +686,7 @@ namespace NAS.ViewModel
     private void EditResourcesCommandExecute()
     {
       using var vm = new ResourcesViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditResourcesCommandCanExecute()
@@ -703,7 +703,7 @@ namespace NAS.ViewModel
     private void EditCustomAttributesCommandExecute()
     {
       using var vm = new CustomAttributesViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditCustomAttributesCommandCanExecute()
@@ -817,7 +817,7 @@ namespace NAS.ViewModel
     {
       if (param is ResourceViewModel resourceVM)
       {
-        _ = Resources.Remove(resourceVM);
+        Resources.Remove(resourceVM);
         OnRefreshLayout(false);
       }
     }
@@ -840,7 +840,7 @@ namespace NAS.ViewModel
       using var vm = new EditLayoutViewModel(item);
       if (!ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        _ = AddLayoutVM(item, true);
+        AddLayoutVM(item, true);
       }
     }
 
@@ -858,7 +858,7 @@ namespace NAS.ViewModel
       using var vm = new EditLayoutViewModel(item);
       if (!ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        _ = AddLayoutVM(item, true);
+        AddLayoutVM(item, true);
       }
     }
 
@@ -876,7 +876,7 @@ namespace NAS.ViewModel
         var layoutToRemove = CurrentLayout;
         int idx = Layouts.IndexOf(CurrentLayout);
         CurrentLayout = idx + 1 < Layouts.Count ? Layouts[idx + 1] : Layouts[idx - 1];
-        _ = Layouts.Remove(layoutToRemove);
+        Layouts.Remove(layoutToRemove);
       });
     }
 
@@ -901,7 +901,7 @@ namespace NAS.ViewModel
                         ? new GanttLayout(CurrentLayout.Layout as GanttLayout)
                         : (Layout)new PERTLayout(CurrentLayout.Layout as PERTLayout);
         newLayout.Name = vm.Text;
-        _ = AddLayoutVM(newLayout, true);
+        AddLayoutVM(newLayout, true);
       }
     }
 
@@ -947,7 +947,7 @@ namespace NAS.ViewModel
     {
       using (var vm = new SortingAndGroupingViewModel(Schedule.CurrentLayout))
       {
-        _ = ViewFactory.Instance.ShowDialog(vm);
+        ViewFactory.Instance.ShowDialog(vm);
       }
 
       OnRefreshLayout(false);
@@ -968,7 +968,7 @@ namespace NAS.ViewModel
     {
       using (var vm = new FilterDefinitionsViewModel(Schedule.CurrentLayout))
       {
-        _ = ViewFactory.Instance.ShowDialog(vm);
+        ViewFactory.Instance.ShowDialog(vm);
       }
 
       OnRefreshLayout(false);
@@ -1009,7 +1009,7 @@ namespace NAS.ViewModel
     private void EditBaselinesCommandExecute()
     {
       using var vm = new BaselinesViewModel(this);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditBaselinesCommandCanExecute()
@@ -1026,7 +1026,7 @@ namespace NAS.ViewModel
     private void EditFragnetsCommandExecute()
     {
       using var vm = new FragnetsViewModel(Schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditFragnetsCommandCanExecute()
@@ -1071,7 +1071,7 @@ namespace NAS.ViewModel
         var p1 = baseline;
         var p2 = Schedule;
         var vm2 = new CompareResultsViewModel(new ComparisonData(p1, p2) { Headline = headline });
-        _ = ViewFactory.Instance.ShowDialog(vm2);
+        ViewFactory.Instance.ShowDialog(vm2);
       }
     }
 
@@ -1105,7 +1105,7 @@ namespace NAS.ViewModel
       var s2 = new Scheduler(p2, SchedulingSettingsHelper.LoadSchedulingSettings(p2.SchedulingSettings));
       s2.Calculate(d);
       using var vm = new CompareResultsViewModel(new ComparisonData(p1, p2) { Headline = headline });
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool CompareWithDistortionsCommandCanExecute()
@@ -1126,7 +1126,7 @@ namespace NAS.ViewModel
       {
         var data = vm.Compare();
         using var vm2 = new CompareResultsViewModel(data);
-        _ = ViewFactory.Instance.ShowDialog(vm2);
+        ViewFactory.Instance.ShowDialog(vm2);
       }
     }
 
@@ -1144,7 +1144,7 @@ namespace NAS.ViewModel
     private void EditDistortionsCommandExecute()
     {
       using var vm = new DistortionsViewModel(CurrentActivity.Activity);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditDistortionsCommandCanExecute()
@@ -1249,7 +1249,7 @@ namespace NAS.ViewModel
         var activity = CurrentActivity.Activity;
         var newMilestone = activity.ChangeToMilestone();
         var newMilestoneVM = new ActivityViewModel(newMilestone);
-        _ = Activities.Remove(activityVM);
+        Activities.Remove(activityVM);
         Activities.Add(newMilestoneVM);
         OnActivityDeleted(activityVM);
         OnActivityAdded(newMilestoneVM);
@@ -1277,7 +1277,7 @@ namespace NAS.ViewModel
         var milestone = CurrentActivity.Activity as Milestone;
         var newActivity = milestone.ChangeToActivity();
         var newActivityVM = new ActivityViewModel(newActivity);
-        _ = Activities.Remove(milestoneVM);
+        Activities.Remove(milestoneVM);
         Activities.Add(newActivityVM);
         OnActivityDeleted(milestoneVM);
         OnActivityAdded(newActivityVM);
@@ -1316,7 +1316,7 @@ namespace NAS.ViewModel
           {
             if (!c.IsVisible && c.Property == column.Property && CurrentLayout is Layout layout)
             {
-              _ = layout.ActivityColumns.Remove(column);
+              layout.ActivityColumns.Remove(column);
             }
           }
         }
@@ -1431,7 +1431,7 @@ namespace NAS.ViewModel
         var newVM = LayoutVMFactory.CreateVM(layout);
         Layouts.Insert(idx, newVM);
         CurrentLayout = newVM;
-        _ = Layouts.Remove(oldVM);
+        Layouts.Remove(oldVM);
       }
     }
 

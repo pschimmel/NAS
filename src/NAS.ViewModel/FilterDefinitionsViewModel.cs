@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
@@ -83,7 +84,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteFilter, () =>
       {
-        _ = FilterDefinitions.Remove(CurrentFilterDefinition);
+        FilterDefinitions.Remove(CurrentFilterDefinition);
         CurrentFilterDefinition = null;
       });
     }

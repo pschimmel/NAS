@@ -128,7 +128,7 @@ namespace NAS.View.Controls
           milestoneCriticalColor = DiagramHelperExtensions.TryParseColor(layout.MilestoneCriticalColor, milestoneCriticalColor);
           milestoneDoneColor = DiagramHelperExtensions.TryParseColor(layout.MilestoneDoneColor, milestoneDoneColor);
           dataDateColor = DiagramHelperExtensions.TryParseColor(layout.DataDateColor, dataDateColor);
-          _ = SortFilterAndGroup();
+          SortFilterAndGroup();
         }
         Refresh();
       }
@@ -276,7 +276,7 @@ namespace NAS.View.Controls
       if (VM.Schedule != null)
       {
         // Filter, sort and group Activities
-        _ = SortFilterAndGroup();
+        SortFilterAndGroup();
 
         // Draw Activities
         var view = (CollectionView)CollectionViewSource.GetDefaultView(VM.Activities);
@@ -324,7 +324,7 @@ namespace NAS.View.Controls
     {
       var shape = CreateActivityShape(activity);
       shape.Tag = activityTag + activity.Activity.ID;
-      _ = Children.Add(shape);
+      Children.Add(shape);
       SetZIndex(shape, 3);
       AddFloat(activity);
       RefreshActivity(activity, shape);
@@ -336,7 +336,7 @@ namespace NAS.View.Controls
       rect.RadiusX = 2;
       rect.RadiusY = 2;
       rect.Tag = floatTag + activity.Activity.ID;
-      _ = Children.Add(rect);
+      Children.Add(rect);
       rect.Stroke = new SolidColorBrush(Color.FromArgb(150, 0, 0, 0));
       SetZIndex(rect, 2);
     }
@@ -372,7 +372,7 @@ namespace NAS.View.Controls
         {
           image = new Image() { Source = new BitmapImage(new Uri("pack://application:,,,/NAS.View;component/Images/Distortion.png")), Height = 16, Width = 16 };
           image.Tag = imageTag + activity.Activity.ID;
-          _ = Children.Add(image);
+          Children.Add(image);
           image.IsHitTestVisible = false;
           string s = string.Empty;
           foreach (var d in activity.Activity.Distortions)
@@ -540,7 +540,7 @@ namespace NAS.View.Controls
       {
         var item = Children.OfType<TextBlock>().Last(x => Equals(x.Tag, blockTag + activity.Activity.ID));
         Children.Remove(item);
-        _ = blocks.Remove(item);
+        blocks.Remove(item);
       }
       while (blocks.Count < requiredBlocks)
       {
@@ -548,7 +548,7 @@ namespace NAS.View.Controls
         tb.IsHitTestVisible = false;
         tb.Height = RowHeight;
         tb.Tag = blockTag + activity.Activity.ID;
-        _ = Children.Add(tb);
+        Children.Add(tb);
         blocks.Add(tb);
         SetZIndex(tb, 4);
         double top = GetTop(shape);
@@ -566,7 +566,7 @@ namespace NAS.View.Controls
         var f = new FormattedText(b.Text, CultureInfo.CurrentCulture, b.FlowDirection, new Typeface(b.FontFamily, b.FontStyle, b.FontWeight, b.FontStretch), b.FontSize, b.Foreground, pixelsPerDip);
         b.Width = f.Width;
         SetLeft(b, GetLeft(shape) + (shape.Width - b.Width) / 2);
-        _ = blocks.Remove(b);
+        blocks.Remove(b);
       }
       if (layout.LeftText != ActivityProperty.None)
       {
@@ -581,7 +581,7 @@ namespace NAS.View.Controls
         }
 
         SetLeft(b, d);
-        _ = blocks.Remove(b);
+        blocks.Remove(b);
       }
       if (layout.RightText != ActivityProperty.None)
       {
@@ -600,7 +600,7 @@ namespace NAS.View.Controls
         }
 
         SetLeft(b, d);
-        _ = blocks.Remove(b);
+        blocks.Remove(b);
         if (Width < d + b.Width + 10)
         {
           Width = d + b.Width + 10;
@@ -719,7 +719,7 @@ namespace NAS.View.Controls
         var shape = CreateActivityShape(new ActivityViewModel(baselineActivity));
         shape.Tag = baselineTag + baseline.Schedule.ID.ToString();
 
-        _ = Children.Add(shape);
+        Children.Add(shape);
 
         if (baselineActivity.ActivityType == ActivityType.Milestone)
         {
@@ -780,7 +780,7 @@ namespace NAS.View.Controls
           line.Tag = dataDateTag;
           line.Stroke = Brushes.Blue;
           line.StrokeThickness = 3;
-          _ = Children.Add(line);
+          Children.Add(line);
           line.IsHitTestVisible = false;
         }
         double x = DateToX(VM.Schedule.DataDate, false);
@@ -817,12 +817,12 @@ namespace NAS.View.Controls
         textBlock.Background = x % 2 == 0 ? Brushes.LightGreen : Brushes.LightGray;
 
         x++;
-        _ = Children.Add(textBlock);
+        Children.Add(textBlock);
         SetLeft(textBlock, x1);
         if (projectEnd != endDate)
         {
           var line = new Line() { Tag = "Calendar1", Stroke = Brushes.DarkGreen, StrokeThickness = 0.5, X1 = x2, X2 = x2, Y1 = 0, Y2 = Height };
-          _ = Children.Add(line);
+          Children.Add(line);
         }
         startDate = endDate.AddDays(1);
         endDate = startDate.AddYears(1).AddDays(-1);
@@ -861,12 +861,12 @@ namespace NAS.View.Controls
         textBlock.Background = x % 2 == 0 ? Brushes.BlanchedAlmond : Brushes.WhiteSmoke;
 
         x++;
-        _ = Children.Add(textBlock);
+        Children.Add(textBlock);
         SetLeft(textBlock, x1);
         if (projectEnd != endDate)
         {
           var line = new Line() { Tag = "Calendar2", Stroke = Brushes.Green, StrokeThickness = 0.1, X1 = x2, X2 = x2, Y1 = 0, Y2 = Height };
-          _ = Children.Add(line);
+          Children.Add(line);
         }
         startDate = endDate.AddDays(1);
         endDate = startDate.AddMonths(1).AddDays(-1);
@@ -1210,7 +1210,7 @@ namespace NAS.View.Controls
         if (tempLine == null)
         {
           tempLine = new Line();
-          _ = Children.Add(tempLine);
+          Children.Add(tempLine);
           tempLine.Stroke = Brushes.Black;
         }
         var shape = GetShapeFromActivity(dragActivity);

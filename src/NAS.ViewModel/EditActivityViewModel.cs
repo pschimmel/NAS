@@ -130,7 +130,7 @@ namespace NAS.ViewModel
     private void EditLogicCommandExecute()
     {
       var vm = new EditLogicViewModel(_activity);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditLogicCommandCanExecute => _activity != null;
@@ -144,7 +144,7 @@ namespace NAS.ViewModel
     private void EditDistortionsCommandExecute()
     {
       using var vm = new DistortionsViewModel(_activity);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditDistortionsCommandCanExecute => _activity.ActivityType == ActivityType.Activity;
@@ -179,7 +179,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteResourceAssociation, () =>
       {
-        _ = ResourceAssociations.Remove(CurrentResourceAssociation);
+        ResourceAssociations.Remove(CurrentResourceAssociation);
       });
     }
 
@@ -194,7 +194,7 @@ namespace NAS.ViewModel
     private void EditResourceAssociationCommandExecute()
     {
       using var vm = new ResourceAssociationViewModel(CurrentResourceAssociation);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditResourceAssociationCommandCanExecute => CurrentResourceAssociation != null;

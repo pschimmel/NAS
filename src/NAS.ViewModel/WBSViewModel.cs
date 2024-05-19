@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using GongSolutions.Wpf.DragDrop;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel.Base;
@@ -113,8 +113,8 @@ namespace NAS.ViewModel
       UserNotificationService.Instance.Question(NASResources.MessageDeleteWBS, () =>
       {
         var parent = CurrentWBSItem.Item.Parent;
-        _ = parent.Children.Remove(CurrentWBSItem.Item);
-        _ = CurrentWBSItem.Items.Remove(CurrentWBSItem);
+        parent.Children.Remove(CurrentWBSItem.Item);
+        CurrentWBSItem.Items.Remove(CurrentWBSItem);
 
         var list = parent.Children.OrderBy(x => x.Order).ToList();
         for (int i = 0; i < parent.Children.Count; i++)
@@ -134,7 +134,7 @@ namespace NAS.ViewModel
 
     private void EditWBSItemCommandExecute()
     {
-      _ = ViewFactory.Instance.ShowDialog(CurrentWBSItem);
+      ViewFactory.Instance.ShowDialog(CurrentWBSItem);
     }
 
     private bool EditWBSItemCommandCanExecute => CurrentWBSItem != null;
@@ -190,7 +190,7 @@ namespace NAS.ViewModel
       var item = CurrentWBSItem.Item;
       var oldParent = item.Parent;
       var newParent = item.Parent.Parent;
-      _ = oldParent.Children.Remove(item);
+      oldParent.Children.Remove(item);
       newParent.Children.Add(item);
       var items = oldParent.Children.ToList();
       for (int i = 0; i < items.Count; i++)
@@ -234,7 +234,7 @@ namespace NAS.ViewModel
       }
 
       var oldParent = item.Parent;
-      _ = item.Parent.Children.Remove(item);
+      item.Parent.Children.Remove(item);
       newParent.Children.Add(item);
       var items = oldParent.Children.ToList();
       for (int i = 0; i < items.Count; i++)
@@ -259,7 +259,7 @@ namespace NAS.ViewModel
     private void ShowWBSSummaryCommandExecute()
     {
       using var vm = new WBSSummaryViewModel(_schedule);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     #endregion
@@ -317,7 +317,7 @@ namespace NAS.ViewModel
         var subModel = GetWBSViewModel(subItem);
         model.Items.Add(subModel);
       }
-      (item.Children as ObservableCollection<WBSItem>).CollectionChanged += (sender, e) =>
+      item.Children.CollectionChanged += (sender, e) =>
       {
         if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
         {
@@ -338,7 +338,7 @@ namespace NAS.ViewModel
           model.Items.Clear();
           foreach (object oldItem in e.OldItems)
           {
-            _ = list.RemoveAll(x => x.Item == (WBSItem)oldItem);
+            list.RemoveAll(x => x.Item == (WBSItem)oldItem);
           }
           foreach (var listItem in list)
           {
@@ -451,7 +451,7 @@ namespace NAS.ViewModel
       var oldParent = sourceItem.Parent;
       var newParent = targetItem.Parent;
 
-      _ = oldParent.Children.Remove(sourceItem);
+      oldParent.Children.Remove(sourceItem);
 
       var newSiblings = newParent.Children.OrderBy(x => x.Order).ToList();
       int newIndex = newSiblings.IndexOf(targetItem);

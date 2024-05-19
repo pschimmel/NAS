@@ -36,83 +36,86 @@
            Grid.Column="1"
            Margin="2"
            VerticalAlignment="Center"
-           Text="{Binding CurrentCalendar.Name}" />
-  <GroupBox Grid.Row="2"
-            Margin="2"
-            Padding="2"
-            HorizontalAlignment="Left"
-            Header="{x:Static resx:NASResources.WorkDays}">
-    <StackPanel Name="stackPanelWorkDays"
-                CanHorizontallyScroll="False"
-                CanVerticallyScroll="True">
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Monday}"
-                IsChecked="{Binding CurrentCalendar.Monday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Tuesday}"
-                IsChecked="{Binding CurrentCalendar.Tuesday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Wednesday}"
-                IsChecked="{Binding CurrentCalendar.Wednesday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Thursday}"
-                IsChecked="{Binding CurrentCalendar.Thursday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Friday}"
-                IsChecked="{Binding CurrentCalendar.Friday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Saturday}"
-                IsChecked="{Binding CurrentCalendar.Saturday}" />
-      <CheckBox Margin="2"
-                Content="{x:Static resx:NASResources.Sunday}"
-                IsChecked="{Binding CurrentCalendar.Sunday}" />
-    </StackPanel>
-  </GroupBox>
-  <GroupBox Grid.Row="2"
-            Grid.Column="1"
-            Margin="2"
-            Padding="2"
-            Header="{x:Static resx:NASResources.Holidays}">
-    <Grid>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition />
-      </Grid.RowDefinitions>
-      <ToolBarPanel>
-        <ToolBar ToolBarTray.IsLocked="True">
-          <Button Command="{Binding AddHolidayCommand}" ToolTip="{x:Static resx:NASResources.AddHoliday}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
-          </Button>
-          <Button Command="{Binding RemoveHolidayCommand}" ToolTip="{x:Static resx:NASResources.RemoveHoliday}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
-          </Button>
-        </ToolBar>
-      </ToolBarPanel>
-      <ListBox Grid.Row="1"
-               IsSynchronizedWithCurrentItem="True"
-               ItemsSource="{Binding CurrentCalendar.Holidays}"
-               SelectedItem="{Binding CurrentHoliday}">
-        <ListBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Margin="2" Text="{Binding Date, Converter={StaticResource DateConverter}}" />
-          </DataTemplate>
-        </ListBox.ItemTemplate>
-      </ListBox>
-    </Grid>
-  </GroupBox>
+           Text="{Binding Name}" />
+  <DockPanel Grid.Row="2" Grid.ColumnSpan="2">
+    <GroupBox Margin="2"
+              Padding="2"
+              Header="{x:Static resx:NASResources.WorkDays}">
+      <StackPanel Name="stackPanelWorkDays"
+                  CanHorizontallyScroll="False"
+                  CanVerticallyScroll="True">
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Monday}"
+                  IsChecked="{Binding Monday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Tuesday}"
+                  IsChecked="{Binding Tuesday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Wednesday}"
+                  IsChecked="{Binding Wednesday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Thursday}"
+                  IsChecked="{Binding Thursday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Friday}"
+                  IsChecked="{Binding Friday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Saturday}"
+                  IsChecked="{Binding Saturday}" />
+        <CheckBox Margin="2"
+                  Content="{x:Static resx:NASResources.Sunday}"
+                  IsChecked="{Binding Sunday}" />
+      </StackPanel>
+    </GroupBox>
+    <GroupBox Margin="2"
+              Padding="2"
+              Header="{x:Static resx:NASResources.Holidays}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddHolidayCommand}" ToolTip="{x:Static resx:NASResources.AddHoliday}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.View;component/Images/Add.png" />
+            </Button>
+            <Button Command="{Binding RemoveHolidayCommand}" ToolTip="{x:Static resx:NASResources.RemoveHoliday}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.View;component/Images/Remove.png" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <ListBox Grid.Row="1"
+                 IsSynchronizedWithCurrentItem="True"
+                 ItemsSource="{Binding Holidays}"
+                 SelectedItem="{Binding CurrentHoliday}">
+          <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="MouseDoubleClick">
+              <behaviors:InvokeCommandAction Command="{Binding EditHolidayCommand}" />
+            </behaviors:EventTrigger>
+          </behaviors:Interaction.Triggers>
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Margin="2" Text="{Binding Date, Converter={StaticResource DateConverter}}" />
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </GroupBox>
+  </DockPanel>
   <TextBlock Grid.Row="3"
              Margin="5"
-             Text="{x:Static resx:NASResources.GlobalCalendar}"
+             Text="{x:Static resx:NASResources.BaseCalendar}"
              Visibility="{Binding IsGlobal, Converter={StaticResource InverseVisibilityConverter}}" />
   <ComboBox Grid.Row="3"
             Grid.Column="1"
             Margin="2"
             ItemsSource="{Binding GlobalCalendars}"
-            SelectedItem="{Binding CurrentCalendar.BaseCalendar}"
+            SelectedItem="{Binding BaseCalendar}"
             Visibility="{Binding IsGlobal, Converter={StaticResource InverseVisibilityConverter}}">
     <behaviors:Interaction.Behaviors>
       <localBehaviors:ResetSelectedItemOnDeleteKeyPressed />

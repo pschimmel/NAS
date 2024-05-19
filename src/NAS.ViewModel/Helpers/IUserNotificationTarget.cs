@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NAS.ViewModel.Helpers
+﻿namespace NAS.ViewModel.Helpers
 {
   public interface IUserNotificationTarget
   {

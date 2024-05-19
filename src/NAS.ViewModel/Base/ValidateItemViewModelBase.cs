@@ -13,7 +13,7 @@ namespace NAS.ViewModel.Base
     public IEnumerable GetErrors(string propertyName)
     {
       ArgumentNullException.ThrowIfNull(propertyName);
-      _ = propertyErrors.TryGetValue(propertyName, out var errors);
+      propertyErrors.TryGetValue(propertyName, out var errors);
       return errors;
     }
 
@@ -59,7 +59,7 @@ namespace NAS.ViewModel.Base
 
     protected void ClearErrors(string propertyName)
     {
-      _ = propertyErrors.Remove(propertyName);
+      propertyErrors.Remove(propertyName);
       OnErrorsChanged(propertyName);
     }
 

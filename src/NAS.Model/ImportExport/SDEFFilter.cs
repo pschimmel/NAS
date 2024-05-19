@@ -61,28 +61,28 @@ namespace NAS.Model.ImportExport
       {
         // PROJ 21OCT04 VILS Barracks Complex Phase I, Vilseck                Bilfinger Berger AG                  P Initia 22JUN04 23DEC05
         var sb = new StringBuilder("PROJ ");
-        _ = sb.Append(DateFormatter(schedule.DataDate)); //project.DataDate));
-        _ = sb.Append(' ');
-        _ = sb.Append(TextFormatter(schedule.Name, 4, TextAlignment.Left));
-        _ = sb.Append(' ');
-        _ = sb.Append(TextFormatter(schedule.Name, 48, TextAlignment.Left));
-        _ = sb.Append(' ');
-        _ = sb.Append(TextFormatter("" /*project.Contractor*/, 36, TextAlignment.Left));
-        _ = sb.Append(' ');
+        sb.Append(DateFormatter(schedule.DataDate)); //project.DataDate));
+        sb.Append(' ');
+        sb.Append(TextFormatter(schedule.Name, 4, TextAlignment.Left));
+        sb.Append(' ');
+        sb.Append(TextFormatter(schedule.Name, 48, TextAlignment.Left));
+        sb.Append(' ');
+        sb.Append(TextFormatter("" /*project.Contractor*/, 36, TextAlignment.Left));
+        sb.Append(' ');
         //switch (project.Logic) {
         //  case Project.LogicType.Arrow:
         //    sb.Append("A");
         //    break;
         //  case Project.LogicType.Precedence:
-        _ = sb.Append('P');
+        sb.Append('P');
         //    break;
         //}
-        _ = sb.Append(' ');
-        _ = sb.Append(TextFormatter(schedule.ID.ToString(), 6, TextAlignment.Left));
-        _ = sb.Append(' ');
-        _ = sb.Append(DateFormatter(schedule.StartDate));
-        _ = sb.Append(' ');
-        _ = sb.Append(DateFormatter(schedule.LastDay));
+        sb.Append(' ');
+        sb.Append(TextFormatter(schedule.ID.ToString(), 6, TextAlignment.Left));
+        sb.Append(' ');
+        sb.Append(DateFormatter(schedule.StartDate));
+        sb.Append(' ');
+        sb.Append(DateFormatter(schedule.LastDay));
         sw.WriteLine(sb.ToString());
       }
     }
@@ -99,8 +99,8 @@ namespace NAS.Model.ImportExport
         foreach (var cal in schedule.Calendars)
         {
           var sb = new StringBuilder("CLDR ");
-          _ = sb.Append(calendarIDs[cal]);
-          _ = sb.Append(' ');
+          sb.Append(calendarIDs[cal]);
+          sb.Append(' ');
           string workdays = "";
           int workdayCount = 0;
           for (int i = 0; i < 7; i++)
@@ -165,10 +165,10 @@ namespace NAS.Model.ImportExport
                 break;
             }
           }
-          _ = sb.Append(workdays);
-          _ = sb.Append(' ');
-          _ = sb.Append(workdayCount);
-          _ = sb.Append(" days");
+          sb.Append(workdays);
+          sb.Append(' ');
+          sb.Append(workdayCount);
+          sb.Append(" days");
           sw.WriteLine(sb.ToString());
         }
         // HOLI 1 06JAN   01NOV   11NOV   10JUN04 05JUL04 06SEP04 11OCT04 25NOV04 24DEC04 25DEC04 26DEC04 27DEC04 28DEC04 29DEC04 30DEC04
@@ -177,8 +177,8 @@ namespace NAS.Model.ImportExport
           if (cal.Holidays.Count > 0)
           {
             var sb = new StringBuilder("HOLI ");
-            _ = sb.Append(calendarIDs[cal]);
-            _ = sb.Append(' ');
+            sb.Append(calendarIDs[cal]);
+            sb.Append(' ');
             // Add repeating holidays
             int count = 0;
             // Add other holidays
@@ -188,16 +188,16 @@ namespace NAS.Model.ImportExport
               {
                 sw.WriteLine(sb.ToString());
                 sb = new StringBuilder("HOLI ");
-                _ = sb.Append(calendarIDs[cal]);
-                _ = sb.Append(' ');
+                sb.Append(calendarIDs[cal]);
+                sb.Append(' ');
                 count = 0;
               }
               if (count > 0)
               {
-                _ = sb.Append(' ');
+                sb.Append(' ');
               }
 
-              _ = sb.Append(DateFormatter(holiday.Date));
+              sb.Append(DateFormatter(holiday.Date));
               count++;
             }
             sw.WriteLine(sb.ToString());
@@ -218,20 +218,20 @@ namespace NAS.Model.ImportExport
         foreach (var act in schedule.Activities)
         {
           var sb = new StringBuilder("ACTV ");
-          _ = sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter(act.Name, 30, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter(act.OriginalDuration.ToString(), 3, TextAlignment.Right));
-          _ = sb.Append(' ');
+          sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter(act.Name, 30, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter(act.OriginalDuration.ToString(), 3, TextAlignment.Right));
+          sb.Append(' ');
           if (act.Constraint == ConstraintType.None)
           {
-            _ = sb.Append("          ");
+            sb.Append("          ");
           }
           else
           {
-            _ = sb.Append(DateFormatter(act.ConstraintDate));
-            _ = sb.Append(' ');
+            sb.Append(DateFormatter(act.ConstraintDate));
+            sb.Append(' ');
             _ = act.Constraint switch
             {
               // EarlyStart
@@ -250,30 +250,30 @@ namespace NAS.Model.ImportExport
               _ => sb.Append("  "),
             };
           }
-          _ = sb.Append(' ');
+          sb.Append(' ');
           _ = act.Calendar == null ? sb.Append(' ') : sb.Append(calendarIDs[act.Calendar]);
 
-          _ = sb.Append(' ');
+          sb.Append(' ');
           //if (act.HammockCode)
           //  sb.Append("Y");
           //else
-          _ = sb.Append(' ');
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.WorkersPerDay.ToString()*/, 3, TextAlignment.Right));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.Responsibility*/, 4, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.Area*/, 4, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.Modification*/, 6, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.BidItem*/, 6, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.Phase*/, 2, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.CategoryOfWork*/, 1, TextAlignment.Left));
-          _ = sb.Append(' ');
-          _ = sb.Append(TextFormatter("" /*act.FeatureOfWork*/, 30, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.WorkersPerDay.ToString()*/, 3, TextAlignment.Right));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.Responsibility*/, 4, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.Area*/, 4, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.Modification*/, 6, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.BidItem*/, 6, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.Phase*/, 2, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.CategoryOfWork*/, 1, TextAlignment.Left));
+          sb.Append(' ');
+          sb.Append(TextFormatter("" /*act.FeatureOfWork*/, 30, TextAlignment.Left));
           sw.WriteLine(sb.ToString());
         }
       }
@@ -293,28 +293,28 @@ namespace NAS.Model.ImportExport
           foreach (var relationship in act.GetPreceedingRelationships())
           {
             var sb = new StringBuilder("PRED ");
-            _ = sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
-            _ = sb.Append(' ');
-            _ = sb.Append(TextFormatter(activityIDs[schedule.GetActivity(relationship.Activity1.ID)].ToString(), 10, TextAlignment.Left));
-            _ = sb.Append(' ');
+            sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
+            sb.Append(' ');
+            sb.Append(TextFormatter(activityIDs[schedule.GetActivity(relationship.Activity1.ID)].ToString(), 10, TextAlignment.Left));
+            sb.Append(' ');
             switch (relationship.RelationshipType)
             {
               // Check this
               case RelationshipType.StartStart:
-                _ = sb.Append("S ");
+                sb.Append("S ");
                 break;
               //case RelationshipType.StartFinish:
               //  sb.Append("SF");
               //  break;
               case RelationshipType.FinishStart:
-                _ = sb.Append("C ");
+                sb.Append("C ");
                 break;
               case RelationshipType.FinishFinish:
-                _ = sb.Append("F ");
+                sb.Append("F ");
                 break;
             }
-            _ = sb.Append(' ');
-            _ = sb.Append(TextFormatter(relationship.Lag.ToString(), 3, TextAlignment.Right));
+            sb.Append(' ');
+            sb.Append(TextFormatter(relationship.Lag.ToString(), 3, TextAlignment.Right));
             sw.WriteLine(sb.ToString());
           }
         }
@@ -337,8 +337,8 @@ namespace NAS.Model.ImportExport
             foreach (var association in act.ResourceAssociations)
             {
               var sb = new StringBuilder("UNIT ");
-              _ = sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
-              _ = sb.Append(' ');
+              sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
+              sb.Append(' ');
               double totalQuantity = 0;
               if (association.Resource is MaterialResource)
               {
@@ -353,10 +353,10 @@ namespace NAS.Model.ImportExport
                 totalQuantity += association.UnitsPerDay * (act.EarlyFinishDate - act.EarlyStartDate).TotalDays;
               }
 
-              _ = sb.Append(CurrencyFormatter(totalQuantity));
-              _ = sb.Append(' ');
-              _ = sb.Append(CurrencyFormatter(Convert.ToDouble(association.Resource.CostsPerUnit)));
-              _ = sb.Append(' ');
+              sb.Append(CurrencyFormatter(totalQuantity));
+              sb.Append(' ');
+              sb.Append(CurrencyFormatter(Convert.ToDouble(association.Resource.CostsPerUnit)));
+              sb.Append(' ');
               double actualQuantity = 0;
               if (association.Resource is MaterialResource)
               {
@@ -371,19 +371,19 @@ namespace NAS.Model.ImportExport
                 actualQuantity += association.UnitsPerDay * (act.FinishDate - act.StartDate).TotalDays;
               }
 
-              _ = sb.Append(CurrencyFormatter(actualQuantity));
-              _ = sb.Append(' ');
+              sb.Append(CurrencyFormatter(actualQuantity));
+              sb.Append(' ');
               if (association.Resource is WorkResource)
               {
-                _ = sb.Append("Work");
+                sb.Append("Work");
               }
               else if (association.Resource is CalendarResource)
               {
-                _ = sb.Append("Days");
+                sb.Append("Days");
               }
               else if (association.Resource is MaterialResource)
               {
-                _ = sb.Append((association.Resource as MaterialResource).Unit);
+                sb.Append((association.Resource as MaterialResource).Unit);
               }
 
               sw.WriteLine(sb.ToString());
@@ -407,31 +407,31 @@ namespace NAS.Model.ImportExport
           if (act.IsStarted)
           {
             var sb = new StringBuilder("PROG ");
-            _ = sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.ActualStartDate));
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.ActualFinishDate));
-            _ = sb.Append(' ');
-            _ = sb.Append(TextFormatter(act.RemainingDuration.ToString(), 3, TextAlignment.Right));
-            _ = sb.Append(' ');
-            _ = sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalPlannedCosts))); // Cost
-            _ = sb.Append(' ');
-            _ = sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalActualCosts))); // Cost to _date
-            _ = sb.Append(' ');
-            _ = sb.Append(CurrencyFormatter(0)); // StoredMaterial
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.EarlyStartDate));
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.EarlyFinishDate));
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.LateStartDate));
-            _ = sb.Append(' ');
-            _ = sb.Append(DateFormatter(act.LateFinishDate));
-            _ = sb.Append(' ');
+            sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.ActualStartDate));
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.ActualFinishDate));
+            sb.Append(' ');
+            sb.Append(TextFormatter(act.RemainingDuration.ToString(), 3, TextAlignment.Right));
+            sb.Append(' ');
+            sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalPlannedCosts))); // Cost
+            sb.Append(' ');
+            sb.Append(CurrencyFormatter(Convert.ToDouble(act.TotalActualCosts))); // Cost to _date
+            sb.Append(' ');
+            sb.Append(CurrencyFormatter(0)); // StoredMaterial
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.EarlyStartDate));
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.EarlyFinishDate));
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.LateStartDate));
+            sb.Append(' ');
+            sb.Append(DateFormatter(act.LateFinishDate));
+            sb.Append(' ');
             _ = act.TotalFloat < 0 ? sb.Append('-') : sb.Append('+');
 
-            _ = sb.Append(TextFormatter(act.TotalFloat.ToString(), 3, TextAlignment.Right));
+            sb.Append(TextFormatter(act.TotalFloat.ToString(), 3, TextAlignment.Right));
             sw.WriteLine(sb.ToString());
           }
         }

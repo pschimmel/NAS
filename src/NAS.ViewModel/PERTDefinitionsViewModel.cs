@@ -153,7 +153,7 @@ namespace NAS.ViewModel
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Pert);
       UserNotificationService.Instance.Question(NASResources.MessageDeleteTemplate, () =>
       {
-        _ = GlobalPERTDefinitions.Remove(CurrentGlobalPERTDefinition);
+        GlobalPERTDefinitions.Remove(CurrentGlobalPERTDefinition);
       });
     }
 
@@ -168,7 +168,7 @@ namespace NAS.ViewModel
     private void EditGlobalPERTDefinitionCommandExecute()
     {
       using var vm = new PERTDefinitionViewModel(CurrentGlobalPERTDefinition);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditGlobalPERTDefinitionCommandCanExecute => CurrentGlobalPERTDefinition != null;
@@ -217,7 +217,7 @@ namespace NAS.ViewModel
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Pert);
       UserNotificationService.Instance.Question(NASResources.MessageDeleteTemplate, () =>
       {
-        _ = ProjectPERTDefinitions.Remove(CurrentProjectPERTDefinition);
+        ProjectPERTDefinitions.Remove(CurrentProjectPERTDefinition);
       });
     }
 
@@ -232,7 +232,7 @@ namespace NAS.ViewModel
     private void EditProjectPERTDefinitionCommandExecute()
     {
       var vm = new PERTDefinitionViewModel(CurrentProjectPERTDefinition);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditProjectPERTDefinitionCommandCanExecute => CurrentProjectPERTDefinition != null;

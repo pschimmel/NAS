@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NAS.ViewModel.Helpers
+﻿namespace NAS.ViewModel.Helpers
 {
   /// <summary>
   /// Handles notifications to the user. Controls that want to show notifications need to implement <see cref="IUserNotificationTarget"/>
@@ -10,11 +7,11 @@ namespace NAS.ViewModel.Helpers
   public class UserNotificationService
   {
     private static readonly Lazy<UserNotificationService> _lazy = new(new UserNotificationService());
-    private readonly ISet<IUserNotificationTarget> _targets;
+    private readonly HashSet<IUserNotificationTarget> _targets;
 
     private UserNotificationService()
     {
-      _targets = new HashSet<IUserNotificationTarget>();
+      _targets = [];
     }
 
     public static UserNotificationService Instance => _lazy.Value;
@@ -24,7 +21,7 @@ namespace NAS.ViewModel.Helpers
     /// </summary>
     public void RegisterTarget(IUserNotificationTarget target)
     {
-      _ = _targets.Add(target);
+      _targets.Add(target);
     }
 
     /// <summary>
@@ -32,7 +29,7 @@ namespace NAS.ViewModel.Helpers
     /// </summary>
     public void UnregisterTarget(IUserNotificationTarget target)
     {
-      _ = _targets.Remove(target);
+      _targets.Remove(target);
     }
 
     /// <summary>

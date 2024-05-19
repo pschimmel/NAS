@@ -85,7 +85,7 @@ namespace NAS.ViewModel
 
     private void RemoveActivityFromFragnetCommandExecute()
     {
-      _ = FragnetActivities.Remove(CurrentFragnetActivity);
+      FragnetActivities.Remove(CurrentFragnetActivity);
     }
 
     private bool RemoveActivityFromFragnetCommandCanExecute => CurrentFragnetActivity != null;

@@ -81,8 +81,8 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteFragnet, () =>
       {
-        _ = Fragnets.Remove(CurrentFragnet);
-        _ = _schedule.Fragnets.Remove(CurrentFragnet);
+        Fragnets.Remove(CurrentFragnet);
+        _schedule.Fragnets.Remove(CurrentFragnet);
 
         foreach (var activity in _schedule.Activities)
         {
@@ -125,7 +125,7 @@ namespace NAS.ViewModel
     private void ShowFragnetCommandExecute()
     {
       using var vm = new ShowFragnetViewModel(_schedule, CurrentFragnet);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool ShowFragnetCommandCanExecute => CurrentFragnet != null;

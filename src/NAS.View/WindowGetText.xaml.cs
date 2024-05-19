@@ -12,7 +12,7 @@ namespace NAS
     public WindowGetText()
     {
       InitializeComponent();
-      _ = textBoxText.Focus();
+      textBoxText.Focus();
     }
 
     public IViewModel ViewModel

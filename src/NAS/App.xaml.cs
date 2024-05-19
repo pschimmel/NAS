@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Windows;
 using ES.Tools.Core.MVVM;
+using NAS.Model.Controllers;
 using NAS.View;
 using NAS.View.Helpers;
 using NAS.ViewModel;
@@ -38,11 +40,18 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditActivityViewModel, EditActivityView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarsViewModel, EditCalendarsView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarViewModel, EditCalendarView>();
+      ViewFactory.Instance.RegisterDialog<GetDateViewModel, GetDateView>();
     }
 
     private static void RegisterNotificationTargets()
     {
       UserNotificationService.Instance.RegisterTarget(new MessageBoxNotificationTarget());
+      GlobalDataController.Instance.Error += GlobalDataController_Error;
+    }
+
+    private static void GlobalDataController_Error(object sender, ErrorEventArgs e)
+    {
+      UserNotificationService.Instance.Error(e.GetException().Message);
     }
   }
 }

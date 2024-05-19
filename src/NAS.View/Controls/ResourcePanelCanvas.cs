@@ -89,7 +89,7 @@ namespace NAS.View.Controls
       line.Stroke = Brushes.Black;
       line.Visibility = Visibility.Hidden;
       line.Tag = "Limit";
-      _ = Children.Add(line);
+      Children.Add(line);
     }
 
     public void Refresh()
@@ -220,7 +220,7 @@ namespace NAS.View.Controls
       rect.Tag = new Tuple<DateTime, DisplayType>(day, display);
       rect.Fill = GetBrush(display);
       rect.Visibility = Visibility.Hidden;
-      _ = Children.Add(rect);
+      Children.Add(rect);
     }
 
     private void UpdateRect(Rectangle rect, double resourceAmount, DateTime date)

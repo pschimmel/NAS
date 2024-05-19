@@ -14,20 +14,27 @@ namespace NAS.ViewModel
 
     private readonly Calendar _calendar;
     private Holiday _currentHoliday;
+    private ActionCommand _addHolidayCommand;
+    private ActionCommand _editHolidayCommand;
+    private ActionCommand _removeHolidayCommand;
 
     #endregion
 
     #region Constructor
 
-    public EditCalendarViewModel(Calendar calendar)
+    public EditCalendarViewModel(Calendar calendar, IEnumerable<Calendar> globalCalendars)
       : base()
     {
       _calendar = calendar;
       Holidays = new ObservableCollection<Holiday>(calendar.Holidays);
       Name = calendar.Name;
-      //GlobalCalendars = Controller.GetGlobalCalendars();
-      AddHolidayCommand = new ActionCommand(AddHolidayCommandExecute);
-      RemoveHolidayCommand = new ActionCommand(RemoveHolidayCommandExecute, () => RemoveHolidayCommandCanExecute);
+      GlobalCalendars = new List<Calendar>(globalCalendars);
+
+      if (calendar.BaseCalendar != null && !GlobalCalendars.Contains(calendar.BaseCalendar))
+      {
+        GlobalCalendars.Add(calendar.BaseCalendar);
+        BaseCalendar = calendar.BaseCalendar;
+      }
     }
 
     #endregion
@@ -42,11 +49,11 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region Public Members
-
-    public ObservableCollection<Holiday> Holidays;
+    #region Public Properties
 
     public bool IsGlobal => _calendar.IsGlobal;
+
+    public ObservableCollection<Holiday> Holidays { get; }
 
     public List<Calendar> GlobalCalendars { get; }
 
@@ -79,11 +86,13 @@ namespace NAS.ViewModel
 
     public bool Sunday { get; set; }
 
+    public Calendar BaseCalendar { get; set; }
+
     #endregion
 
     #region Add Holiday
 
-    public ICommand AddHolidayCommand { get; }
+    public ICommand AddHolidayCommand => _addHolidayCommand ??= new ActionCommand(AddHolidayCommandExecute);
 
     private void AddHolidayCommandExecute()
     {
@@ -99,16 +108,48 @@ namespace NAS.ViewModel
 
     #endregion
 
-    #region Remove Holiday
+    #region Edit Holiday
 
-    public ICommand RemoveHolidayCommand { get; }
+    public ICommand EditHolidayCommand => _editHolidayCommand ??= new ActionCommand(EditHoliday, CanEditHoliday);
 
-    private void RemoveHolidayCommandExecute()
+    private void EditHoliday()
     {
-      _ = Holidays.Remove(CurrentHoliday);
+      using var vm = new GetDateViewModel(NASResources.PleaseEnterDate, CurrentHoliday.Date);
+
+      if (ViewFactory.Instance.ShowDialog(vm) == true)
+      {
+        CurrentHoliday.Date = vm.Date;
+        // To update view remove and re-insert date
+        var idx = Holidays.IndexOf(CurrentHoliday);
+        Holidays.Remove(CurrentHoliday);
+        // Execute on UI thread
+        ES.Tools.UI.DispatcherWrapper.Default.BeginInvokeIfRequired(() =>
+        {
+          Holidays.Insert(idx, CurrentHoliday);
+        });
+      }
     }
 
-    private bool RemoveHolidayCommandCanExecute => CurrentHoliday != null;
+    private bool CanEditHoliday()
+    {
+      return CurrentHoliday != null;
+    }
+
+    #endregion
+
+    #region Remove Holiday
+
+    public ICommand RemoveHolidayCommand => _removeHolidayCommand ??= new ActionCommand(RemoveHoliday, CanRemoveHoliday);
+
+    private void RemoveHoliday()
+    {
+      Holidays.Remove(CurrentHoliday);
+    }
+
+    private bool CanRemoveHoliday()
+    {
+      return CurrentHoliday != null;
+    }
 
     #endregion
 
@@ -138,6 +179,11 @@ namespace NAS.ViewModel
         _calendar.Friday = Friday;
         _calendar.Saturday = Saturday;
         _calendar.Sunday = Sunday;
+
+        if (!IsGlobal)
+        {
+          _calendar.BaseCalendar = BaseCalendar;
+        }
       }
     }
 

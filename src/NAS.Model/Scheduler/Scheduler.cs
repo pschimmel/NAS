@@ -56,7 +56,7 @@ namespace NAS.Model.Scheduler
     public void Calculate(DateTime date)
     {
       _schedule.DataDate = date;
-      _ = Calculate();
+      Calculate();
     }
 
     public bool Calculate()

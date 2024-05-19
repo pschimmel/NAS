@@ -16,7 +16,11 @@ namespace NAS.Model.Entities
     private bool _isStandard;
     private Calendar _baseCalendar;
 
-    public Calendar(bool isBase = false)
+    public Calendar()
+      : this(false)
+    { }
+
+    public Calendar(bool isBase)
     {
       Holidays = [];
       _name = NASResources.NewCalendar;
@@ -159,7 +163,7 @@ namespace NAS.Model.Entities
 
     public ObservableCollection<Holiday> Holidays { get; }
 
-    public bool IsGlobal { get; }
+    public bool IsGlobal { get; internal set; }
 
     public Calendar BaseCalendar
     {

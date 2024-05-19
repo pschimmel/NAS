@@ -22,7 +22,7 @@ namespace NAS.ViewModel.Helpers
     public async Task<Version> GetLatestVersion()
     {
       var request = GetRequest("GetLatestVersion");
-      _ = request.AddQueryParameter("applicationName", appName);
+      request.AddQueryParameter("applicationName", appName);
       var response = await client.ExecuteAsync(request);
       if (response.StatusCode == HttpStatusCode.OK)
       {
@@ -44,7 +44,7 @@ namespace NAS.ViewModel.Helpers
     public async Task<string> GetDownloadURL()
     {
       var request = GetRequest("GetDownloadPath");
-      _ = request.AddQueryParameter("applicationName", appName);
+      request.AddQueryParameter("applicationName", appName);
       var response = await client.ExecuteAsync(request);
       if (response.StatusCode == HttpStatusCode.OK)
       {
@@ -63,8 +63,8 @@ namespace NAS.ViewModel.Helpers
     public async Task<IEnumerable<Change>> GetChanges(Version version)
     {
       var request = GetRequest("GetChanges");
-      _ = request.AddQueryParameter("applicationName", appName);
-      _ = request.AddQueryParameter("version", version.ToString());
+      request.AddQueryParameter("applicationName", appName);
+      request.AddQueryParameter("version", version.ToString());
       var response = await client.ExecuteAsync(request);
 
       if (response.StatusCode == HttpStatusCode.OK)

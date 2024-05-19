@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
+using NAS.Model.Controllers;
 using NAS.Model.Entities;
 using NAS.Resources;
 using NAS.ViewModel.Base;
@@ -14,7 +15,15 @@ namespace NAS.ViewModel
 
     private readonly Schedule _schedule;
     private Calendar _currentCalendar;
-    //private BaseCalendar currentGlobalCalendar;
+    private Calendar _currentGlobalCalendar;
+    private ActionCommand _addGlobalCalendarCommand;
+    private ActionCommand _removeGlobalCalendarCommand;
+    private ActionCommand _editGlobalCalendarCommand;
+    private ActionCommand _addCalendarCommand;
+    private ActionCommand _removeCalendarCommand;
+    private ActionCommand _copyCalendarCommand;
+    private ActionCommand _setStandardCalendarCommand;
+    private ActionCommand _editCalendarCommand;
 
     #endregion
 
@@ -25,15 +34,7 @@ namespace NAS.ViewModel
     {
       _schedule = schedule;
       Calendars = new ObservableCollection<Calendar>(schedule.Calendars);
-      //GlobalCalendars = new ObservableCollection<BaseCalendar>(controller.GetGlobalCalendars());
-      //AddGlobalCalendarCommand = new ActionCommand(AddGlobalCalendarCommandExecute, () => AddGlobalCalendarCommandCanExecute);
-      //RemoveGlobalCalendarCommand = new ActionCommand(RemoveGlobalCalendarCommandExecute, () => RemoveGlobalCalendarCommandCanExecute);
-      //EditGlobalCalendarCommand = new ActionCommand(EditGlobalCalendarCommandExecute, () => EditGlobalCalendarCommandCanExecute);
-      AddCalendarCommand = new ActionCommand(AddCalendarCommandExecute);
-      RemoveCalendarCommand = new ActionCommand(RemoveCalendarCommandExecute, () => RemoveCalendarCommandCanExecute);
-      CopyCalendarCommand = new ActionCommand(CopyCalendarCommandExecute, () => CopyCalendarCommandCanExecute);
-      SetStandardCalendarCommand = new ActionCommand(SetStandardCalendarCommandExecute, () => SetStandardCalendarCommandCanExecute);
-      EditCalendarCommand = new ActionCommand(EditCalendarCommandExecute, () => EditCalendarCommandCanExecute);
+      GlobalCalendars = new ObservableCollection<Calendar>(GlobalDataController.Calendars);
     }
 
     #endregion
@@ -47,7 +48,6 @@ namespace NAS.ViewModel
     public override DialogSize DialogSize => DialogSize.Fixed(300, 300);
 
     #endregion
-
 
     #region Public Members
 
@@ -68,100 +68,97 @@ namespace NAS.ViewModel
       }
     }
 
-    //public ObservableCollection<BaseCalendar> GlobalCalendars { get; }
+    public ObservableCollection<Calendar> GlobalCalendars { get; }
 
-    //public BaseCalendar CurrentGlobalCalendar
-    //{
-    //  get => currentGlobalCalendar;
-    //  set
-    //  {
-    //    if (currentGlobalCalendar != value)
-    //    {
-    //      currentGlobalCalendar = value;
-    //      OnPropertyChanged(nameof(CurrentGlobalCalendar));
-    //    }
-    //  }
-    //}
+    public Calendar CurrentGlobalCalendar
+    {
+      get => _currentGlobalCalendar;
+      set
+      {
+        if (_currentGlobalCalendar != value)
+        {
+          _currentGlobalCalendar = value;
+          OnPropertyChanged(nameof(CurrentGlobalCalendar));
+        }
+      }
+    }
 
     #endregion
 
-    //#region Add Global Calendar
+    #region Add Global Calendar
 
-    //public ICommand AddGlobalCalendarCommand { get; }
+    public ICommand AddGlobalCalendarCommand => _addGlobalCalendarCommand ??= new ActionCommand(AddGlobalCalendar, CanAddGlobalCalendar);
 
-    //private void AddGlobalCalendarCommandExecute()
-    //{
-    //  var item = Controller.AddGlobalCalendar();
-    //  var vm = new BaseCalendarViewModel(item);
-    //  if (ViewFactory.Instance.ShowDialog(vm) != true)
-    //  {
-    //    Controller.DeleteBaseCalendar(item);
-    //  }
-    //  else
-    //  {
-    //    GlobalCalendars.Add(item);
-    //    CurrentGlobalCalendar = item;
-    //    SaveChanges();
-    //  }
-    //}
+    private void AddGlobalCalendar()
+    {
+      var calendar = new Calendar(true);
+      var vm = new EditCalendarViewModel(calendar, GlobalCalendars);
+      if (ViewFactory.Instance.ShowDialog(vm) == true)
+      {
+        Calendars.Add(calendar);
+        GlobalDataController.Calendars.Add(calendar);
+        GlobalDataController.SaveCalendars();
+        CurrentGlobalCalendar = calendar;
+      }
+    }
 
-    //private bool AddGlobalCalendarCommandCanExecute => canEditGlobalCalendars;
+    private bool CanAddGlobalCalendar()
+    {
+      return true;
+    }
 
-    //#endregion
+    #endregion
 
-    //#region Remove Global Calendar
+    #region Remove Global Calendar
 
-    //public ICommand RemoveGlobalCalendarCommand { get; }
+    public ICommand RemoveGlobalCalendarCommand => _removeGlobalCalendarCommand ??= new ActionCommand(RemoveGlobalCalendar, CanRemoveGlobalCalendar);
 
-    //private void RemoveGlobalCalendarCommandExecute()
-    //{
-    //  if (!Controller.CanRemoveBaseCalendar(CurrentGlobalCalendar))
-    //  {
-    //    UserNotificationService.Instance.Error(NASResources.MessageCannotRemoveBaseCalendar);
-    //    return;
-    //  }
+    private void RemoveGlobalCalendar()
+    {
+      UserNotificationService.Instance.Question(NASResources.MessageDeleteCalendar, () =>
+      {
+        GlobalCalendars.Remove(CurrentGlobalCalendar);
+        GlobalDataController.Calendars.Remove(CurrentGlobalCalendar);
+        GlobalDataController.SaveCalendars();
+        CurrentGlobalCalendar = null;
+      });
+    }
 
-    //  UserNotificationService.Instance.Question(NASResources.MessageDeleteCalendar, () =>
-    //  {
-    //    Controller.DeleteBaseCalendar(CurrentGlobalCalendar);
-    //    GlobalCalendars.Remove(CurrentGlobalCalendar);
-    //    Controller.SaveChanges();
-    //  });
-    //}
+    private bool CanRemoveGlobalCalendar()
+    {
+      return CurrentGlobalCalendar != null;
+    }
 
-    //private bool RemoveGlobalCalendarCommandCanExecute => canEditGlobalCalendars && CurrentGlobalCalendar != null;
+    #endregion
 
-    //#endregion
+    #region Edit Global Calendar
 
-    //#region Edit Global Calendar
+    public ICommand EditGlobalCalendarCommand => _editGlobalCalendarCommand ??= new ActionCommand(EditGlobalCalendar, CanEditGlobalCalendar);
 
-    //public ICommand EditGlobalCalendarCommand { get; }
+    private void EditGlobalCalendar()
+    {
+      var vm = new EditCalendarViewModel(CurrentGlobalCalendar, GlobalCalendars);
+      if (ViewFactory.Instance.ShowDialog(vm) == true)
+      {
+        GlobalDataController.SaveCalendars();
+      }
+    }
 
-    //private void EditGlobalCalendarCommandExecute()
-    //{
-    //  var vm = new BaseCalendarViewModel(CurrentGlobalCalendar);
-    //  if (ViewFactory.Instance.ShowDialog(vm) == true)
-    //  {
-    //    SaveChanges();
-    //  }
-    //  else
-    //  {
-    //    Controller.RefreshBaseCalendar(CurrentGlobalCalendar);
-    //  }
-    //}
+    private bool CanEditGlobalCalendar()
+    {
+      return CurrentGlobalCalendar != null;
+    }
 
-    //private bool EditGlobalCalendarCommandCanExecute => canEditGlobalCalendars && CurrentGlobalCalendar != null;
-
-    //#endregion
+    #endregion
 
     #region Add Calendar
 
-    public ICommand AddCalendarCommand { get; }
+    public ICommand AddCalendarCommand => _addCalendarCommand ??= new ActionCommand(AddCalendar);
 
-    private void AddCalendarCommandExecute()
+    private void AddCalendar()
     {
       var newCalendar = new Calendar();
-      using var vm = new EditCalendarViewModel(newCalendar);
+      using var vm = new EditCalendarViewModel(newCalendar, GlobalCalendars);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         Calendars.Add(newCalendar);
@@ -173,9 +170,9 @@ namespace NAS.ViewModel
 
     #region Remove Calendar
 
-    public ICommand RemoveCalendarCommand { get; }
+    public ICommand RemoveCalendarCommand => _removeCalendarCommand ??= new ActionCommand(RemoveCalendar, CanRemoveCalendar);
 
-    private void RemoveCalendarCommandExecute()
+    private void RemoveCalendar()
     {
       if (!_schedule.CanRemoveCalendar(CurrentCalendar))
       {
@@ -187,7 +184,8 @@ namespace NAS.ViewModel
       {
         var calendarToDelete = CurrentCalendar;
         CurrentCalendar = null;
-        _ = Calendars.Remove(calendarToDelete);
+        Calendars.Remove(calendarToDelete);
+        _schedule.Calendars.Remove(calendarToDelete);
         if (!_schedule.Calendars.Any(x => x.IsStandard))
         {
           _schedule.Calendars.First().IsStandard = true;
@@ -195,52 +193,64 @@ namespace NAS.ViewModel
       });
     }
 
-    private bool RemoveCalendarCommandCanExecute => CurrentCalendar != null && Calendars.Count > 1 && !CurrentCalendar.IsStandard;
-
-    #endregion
-
-    #region Copy Calendar
-
-    public ICommand CopyCalendarCommand { get; }
-
-    private void CopyCalendarCommandExecute()
+    private bool CanRemoveCalendar()
     {
-      var newCalendar = new Calendar(CurrentCalendar);
-      _schedule.Calendars.Add(newCalendar);
-      CurrentCalendar = newCalendar;
+      return CurrentCalendar != null && Calendars.Count > 1 && !CurrentCalendar.IsStandard;
     }
-
-    private bool CopyCalendarCommandCanExecute => CurrentCalendar != null;
-
-    #endregion
-
-    #region Set Standard Calendar
-
-    public ICommand SetStandardCalendarCommand { get; }
-
-    private void SetStandardCalendarCommandExecute()
-    {
-      _schedule.StandardCalendar = CurrentCalendar;
-    }
-
-    private bool SetStandardCalendarCommandCanExecute => CurrentCalendar != null && !CurrentCalendar.IsStandard;
 
     #endregion
 
     #region Edit Calendar
 
-    public ICommand EditCalendarCommand { get; }
+    public ICommand EditCalendarCommand => _editCalendarCommand ??= new ActionCommand(EditCalendar, CanEditCalendar);
 
-    private void EditCalendarCommandExecute()
+    private void EditCalendar()
     {
-      using var vm = new EditCalendarViewModel(CurrentCalendar);
+      using var vm = new EditCalendarViewModel(CurrentCalendar, GlobalCalendars);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         vm.Apply();
       }
     }
 
-    private bool EditCalendarCommandCanExecute => CurrentCalendar != null;
+    private bool CanEditCalendar()
+    {
+      return CurrentCalendar != null;
+    }
+
+    #endregion
+
+    #region Copy Calendar
+
+    public ICommand CopyCalendarCommand => _copyCalendarCommand ??= new ActionCommand(CopyCalendar, CanCopyCalendar);
+
+    private void CopyCalendar()
+    {
+      var newCalendar = new Calendar(CurrentCalendar);
+      _schedule.Calendars.Add(newCalendar);
+      CurrentCalendar = newCalendar;
+    }
+
+    private bool CanCopyCalendar()
+    {
+      return CurrentCalendar != null;
+    }
+
+    #endregion
+
+    #region Set Standard Calendar
+
+    public ICommand SetStandardCalendarCommand => _setStandardCalendarCommand ??= new ActionCommand(SetStandardCalendar, CanSetStandardCalendar);
+
+    private void SetStandardCalendar()
+    {
+      _schedule.StandardCalendar = CurrentCalendar;
+    }
+
+    private bool CanSetStandardCalendar()
+    {
+      return CurrentCalendar != null && !CurrentCalendar.IsStandard;
+    }
 
     #endregion
 
@@ -248,6 +258,7 @@ namespace NAS.ViewModel
 
     protected override void OnApply()
     {
+      GlobalDataController.SaveCalendars();
       _schedule.RefreshCalendars(Calendars);
     }
 

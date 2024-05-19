@@ -115,18 +115,10 @@ namespace NAS.View
 
     #region Avalon Dock
 
-    private void dockManager_DocumentClosed(object sender, DocumentClosedEventArgs e)
+    private void DockManager_DocumentClosed(object sender, DocumentClosedEventArgs e)
     {
       var scheduleViewModel = e.Document.Content as ScheduleViewModel;
       (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
-    }
-
-    private void dockingManager_DocumentClosing(object sender, DocumentClosingEventArgs e)
-    {
-      var scheduleViewModel = e.Document.Content as ScheduleViewModel;
-      //scheduleViewModel.UnlockSchedule();
-      //scheduleViewModel.SaveChanges();
-      //??
     }
 
     #endregion

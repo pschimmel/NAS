@@ -137,18 +137,18 @@ namespace NAS.View.Helpers
 
       if (string.IsNullOrWhiteSpace(sb.ToString()))
       {
-        _ = sb.Append("M ");
+        sb.Append("M ");
       }
       else
       {
         if (sb.ToString() != null && !sb.ToString().EndsWith(" "))
         {
-          _ = sb.Append(' ');
+          sb.Append(' ');
         }
 
-        _ = sb.Append("L ");
+        sb.Append("L ");
       }
-      _ = sb.AppendFormat(CultureInfo.GetCultureInfo("en"), "{0} {1}", x, y);
+      sb.AppendFormat(CultureInfo.GetCultureInfo("en"), "{0} {1}", x, y);
     }
 
     public static Color TryParseColor(this string s, Color defaultColor)

@@ -530,7 +530,7 @@ namespace NAS.ViewModel
         canvas.DataContext = viewModel;
 
         using var vm = new PrintPreviewViewModel(CurrentSchedule, canvas);
-        _ = ViewFactory.Instance.ShowDialog(vm);
+        ViewFactory.Instance.ShowDialog(vm);
       }
       catch (Exception ex)
       {
@@ -707,7 +707,7 @@ namespace NAS.ViewModel
 
     private static void AboutCommandExecute()
     {
-      _ = ViewFactory.Instance.ShowDialog(new AboutViewModel());
+      ViewFactory.Instance.ShowDialog(new AboutViewModel());
     }
 
     #endregion
@@ -775,7 +775,7 @@ namespace NAS.ViewModel
                   using var client = new HttpClient();
                   using var stream = await client.GetStreamAsync(fileURL);
                   using var fs = File.Create(saveFileDialog.FileName);
-                  _ = stream.Seek(0, SeekOrigin.Begin);
+                  stream.Seek(0, SeekOrigin.Begin);
                   stream.CopyTo(fs);
                 }));
               }
@@ -814,7 +814,7 @@ namespace NAS.ViewModel
       {
         try
         {
-          _ = Process.Start(e.UserState.ToString(), @"/SILENT");
+          Process.Start(e.UserState.ToString(), @"/SILENT");
           Environment.Exit(0);
         }
         catch (Exception ex)
@@ -1015,7 +1015,7 @@ namespace NAS.ViewModel
     private void RemoveScheduleViewModel(ScheduleViewModel viewModel)
     {
       viewModel.LayoutTypeChanged -= ViewModel_LayoutTypeChanged;
-      _ = Schedules.Remove(viewModel);
+      Schedules.Remove(viewModel);
     }
 
     private void ViewModel_LayoutTypeChanged(object sender, EventArgs e)
@@ -1041,7 +1041,7 @@ namespace NAS.ViewModel
       string fileName = Path.Combine(ApplicationHelper.StartupPath, "NAS.Config.exe");
       if (File.Exists(fileName))
       {
-        _ = Process.Start(fileName);
+        Process.Start(fileName);
       }
       else
       {

@@ -745,6 +745,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Base calendar.
+        /// </summary>
+        public static string BaseCalendar {
+            get {
+                return ResourceManager.GetString("BaseCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Baseline.
         /// </summary>
         public static string Baseline {
@@ -2883,15 +2892,6 @@ namespace NAS.Resources {
         public static string MessageCannotCloseWindow {
             get {
                 return ResourceManager.GetString("MessageCannotCloseWindow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The base calendar is assigned to a project calendar and cannot be removed..
-        /// </summary>
-        public static string MessageCannotRemoveBaseCalendar {
-            get {
-                return ResourceManager.GetString("MessageCannotRemoveBaseCalendar", resourceCulture);
             }
         }
         

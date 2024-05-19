@@ -68,7 +68,7 @@ namespace NAS.ViewModel.Base
 
     private void ValidatableVM_Validated(object sender, ValidationEventArgs e)
     {
-      HasErrors = e.Result.IsOK;
+      HasErrors = !e.Result.IsOK;
       ErrorMessages = e.Result.Message;
       OnPropertyChanged(nameof(HasErrors));
       OnPropertyChanged(nameof(ErrorMessages));
@@ -89,6 +89,11 @@ namespace NAS.ViewModel.Base
         {
           return;
         }
+      }
+
+      if (ContentViewModel is IApplyable applyable)
+      {
+        applyable.Apply();
       }
 
       RequestOK?.Invoke(this, EventArgs.Empty);

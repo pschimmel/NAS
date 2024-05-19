@@ -1,9 +1,8 @@
-﻿using System;
-using NAS.ViewModel.Base;
+﻿using NAS.ViewModel.Base;
 
 namespace NAS.ViewModel
 {
-  public class GetDateViewModel : ViewModelBase
+  public class GetDateViewModel : DialogContentViewModel
   {
     public GetDateViewModel(string title, DateTime? date = null, DateTime? displayDateStart = null, DateTime? displayDateEnd = null)
     {
@@ -13,7 +12,7 @@ namespace NAS.ViewModel
       Date = date ?? DateTime.Now;
     }
 
-    public string Title { get; }
+    public override string Title { get; }
 
     public DateTime? StartDate { get; }
 

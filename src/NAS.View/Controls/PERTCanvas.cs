@@ -311,7 +311,7 @@ namespace NAS.View.Controls
           }
         }
       };
-      _ = Children.Add(rect);
+      Children.Add(rect);
       SetZIndex(rect, 3);
 
       RefreshActivity(VM.Activities.FirstOrDefault(x => x.Activity == a.Activity));
@@ -404,7 +404,7 @@ namespace NAS.View.Controls
         foreach (var item in template.Items)
         {
           var tb = new TextBlock();
-          _ = BindingOperations.SetBinding(tb, TextBlock.TextProperty, a.Activity.GetBindingFromActivity(item.Property));
+          BindingOperations.SetBinding(tb, TextBlock.TextProperty, a.Activity.GetBindingFromActivity(item.Property));
           var b = new Border();
           b.Child = tb;
           b.BorderBrush = Brushes.Gray;
@@ -433,7 +433,7 @@ namespace NAS.View.Controls
           }
 
           b.BorderThickness = new Thickness(left, top, right, bottom);
-          _ = dia.Children.Add(b);
+          dia.Children.Add(b);
           b.SetValue(Grid.RowProperty, item.Row);
           b.SetValue(Grid.ColumnProperty, item.Column);
           b.SetValue(Grid.RowSpanProperty, item.RowSpan);
@@ -478,7 +478,7 @@ namespace NAS.View.Controls
           var line = new Line();
           line.Stroke = Brushes.Black;
           line.StrokeThickness = 1;
-          _ = Children.Add(line);              //     /
+          Children.Add(line);              //     /
           line.X1 = x;                     //    /
           line.Y1 = y + template.Height;   //   /
           line.X2 = x + template.Width;    //  /
@@ -491,7 +491,7 @@ namespace NAS.View.Controls
           var line = new Line();
           line.Stroke = Brushes.Black;
           line.StrokeThickness = 1;
-          _ = Children.Add(line);              //  \
+          Children.Add(line);              //  \
           line.X1 = x;                     //   \
           line.Y1 = y;                     //    \
           line.X2 = x + template.Width;    //     \
@@ -508,7 +508,7 @@ namespace NAS.View.Controls
           {
             image = new Image() { Source = new BitmapImage(new Uri("pack://application:NAS,,,/images/Distortion.png")), Height = 16, Width = 16 };
             image.Tag = a;
-            _ = Children.Add(image);
+            Children.Add(image);
             image.IsHitTestVisible = false;
             string s = "";
             foreach (var d in a.Activity.Distortions)
@@ -757,7 +757,7 @@ namespace NAS.View.Controls
           if (tempLine == null)
           {
             tempLine = new Line();
-            _ = Children.Add(tempLine);
+            Children.Add(tempLine);
             tempLine.Stroke = Brushes.Black;
           }
 

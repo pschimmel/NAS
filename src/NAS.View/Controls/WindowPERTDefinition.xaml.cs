@@ -60,7 +60,7 @@ namespace NAS.View.Controls
       foreach (var item in (DataContext as PERTDefinitionViewModel).Definition.Items)
       {
         var tb = new TextBlock();
-        _ = template.Children.Add(tb);
+        template.Children.Add(tb);
         tb.SetValue(Grid.RowProperty, item.Row);
         tb.SetValue(Grid.ColumnProperty, item.Column);
         tb.SetValue(Grid.RowSpanProperty, item.RowSpan);

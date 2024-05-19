@@ -40,7 +40,7 @@ namespace NAS
         RadiusX = 2,
         RadiusY = 2
       };
-      _ = canvas.Children.Add(rect);
+      canvas.Children.Add(rect);
       rect.Height = canvas.ActualHeight;
       rect.Width = canvas.ActualWidth;
       foreach (Distortion distortion in listBox.Items)
@@ -49,7 +49,7 @@ namespace NAS
         {
           Fill = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0))
         };
-        _ = canvas.Children.Add(r);
+        canvas.Children.Add(r);
         if (distortion is Delay && (distortion as Delay).Days.HasValue)
         {
           int days = (distortion as Delay).Days.Value;

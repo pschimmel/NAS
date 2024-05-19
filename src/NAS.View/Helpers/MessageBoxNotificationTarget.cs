@@ -47,7 +47,7 @@ namespace NAS.View.Helpers
 
     public void Information(string message)
     {
-      _ = MessageBox.Show(message, NASResources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
+      MessageBox.Show(message, NASResources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     public void Question(string message, Action yesAction, Action noAction, Action cancelAction = null)

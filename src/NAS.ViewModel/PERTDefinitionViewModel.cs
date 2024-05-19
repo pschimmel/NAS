@@ -126,7 +126,7 @@ namespace NAS.ViewModel
 
     private void RemovePertItemCommandExecute()
     {
-      _ = Items.Remove(CurrentItem);
+      Items.Remove(CurrentItem);
       CurrentItem = null;
     }
 
@@ -154,7 +154,7 @@ namespace NAS.ViewModel
 
     private void RemoveColumnDefinitionCommandExecute()
     {
-      _ = Columns.Remove(CurrentColumnDefinition);
+      Columns.Remove(CurrentColumnDefinition);
       CurrentColumnDefinition = null;
     }
 
@@ -239,7 +239,7 @@ namespace NAS.ViewModel
 
     private void RemoveRowDefinitionCommandExecute()
     {
-      _ = Rows.Remove(CurrentRowDefinition);
+      Rows.Remove(CurrentRowDefinition);
       CurrentColumnDefinition = null;
     }
 

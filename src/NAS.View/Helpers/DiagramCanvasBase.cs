@@ -18,7 +18,7 @@ namespace NAS.View.Helpers
 
     protected void Select<T, U>(U item) where T : FrameworkElement, IActivityDiagram<U> where U : class
     {
-      _ = Dispatcher.BeginInvoke(new Action(() =>
+      Dispatcher.BeginInvoke(new Action(() =>
       {
         Children.OfType<T>().ToList().ForEach(x => x.Effect = null);
         if (item != null)

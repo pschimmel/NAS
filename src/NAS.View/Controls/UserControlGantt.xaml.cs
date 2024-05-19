@@ -70,7 +70,7 @@ namespace NAS.View.Controls
     {
       Loaded -= UserControlGantt_Loaded;
 
-      _ = Keyboard.Focus(this);
+      Keyboard.Focus(this);
       var sv = GetScrollViewer();
       if (sv != null)
       {
@@ -191,8 +191,8 @@ namespace NAS.View.Controls
         }
 
         VM.CurrentRelationship = null;
-        _ = dataGrid.Focus();
-        _ = dataGrid.BeginEdit();
+        dataGrid.Focus();
+        dataGrid.BeginEdit();
       }
     }
 
@@ -394,7 +394,7 @@ namespace NAS.View.Controls
         if (col != null)
         {
           var columnList = Layout.ActivityColumns.OrderBy(x => x.Order).ToList();
-          _ = columnList.Remove(col);
+          columnList.Remove(col);
           columnList.Insert(idx, col);
 
           for (int i = 0; i < columnList.Count; i++)
@@ -560,7 +560,7 @@ namespace NAS.View.Controls
         var grid = sender as DataGrid;
         if (grid.SelectedItem != null)
         {
-          _ = grid.Dispatcher.BeginInvoke((Action)delegate
+          grid.Dispatcher.BeginInvoke((Action)delegate
           {
             try
             {

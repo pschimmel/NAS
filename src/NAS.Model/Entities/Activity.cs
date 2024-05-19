@@ -607,7 +607,7 @@ namespace NAS.Model.Entities
       }
 
       // Add default relationships between split activitiess
-      _ = Schedule.AddRelationship(this, newActivity);
+      Schedule.AddRelationship(this, newActivity);
       newActivity.EarlyStartDate = Calendar.GetEndDate(EarlyFinishDate, 2);
       return newActivity;
     }
@@ -632,7 +632,7 @@ namespace NAS.Model.Entities
 
       foreach (var successorOfSuccessor in successor.GetSuccessors())
       {
-        _ = schedule.AddRelationship(this, successorOfSuccessor);
+        schedule.AddRelationship(this, successorOfSuccessor);
       }
 
       foreach (var relationship in successor.GetSucceedingRelationships())

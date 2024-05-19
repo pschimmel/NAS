@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
+using NAS.Model.Base;
 using NAS.Model.Entities;
 using NAS.Model.Enums;
 using NAS.Resources;
@@ -96,7 +97,7 @@ namespace NAS.ViewModel
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteDistortion, () =>
       {
-        _ = Distortions.Remove(CurrentDistortion);
+        Distortions.Remove(CurrentDistortion);
         CurrentDistortion = null;
       });
     }
@@ -112,7 +113,7 @@ namespace NAS.ViewModel
     private void EditDistortionCommandExecute()
     {
       using var vm = new DistortionViewModel(CurrentDistortion);
-      _ = ViewFactory.Instance.ShowDialog(vm);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditDistortionCommandCanExecute => CurrentDistortion != null;

@@ -81,7 +81,7 @@ namespace NAS.View.Controls
       double x2 = DateToX(lastDay, true);
       rect.Width = x2 - x1;
       rect.Height = row - columnHeaderHeight;
-      _ = Children.Add(rect);
+      Children.Add(rect);
       SetLeft(rect, tableWidth);
       SetTop(rect, columnHeaderHeight);
     }
@@ -92,7 +92,7 @@ namespace NAS.View.Controls
       var c = new ResourcePanelCanvas() { DataContext = viewModel, Height = 100 };
       c.Refresh();
       Height += 100;
-      _ = Children.Add(c);
+      Children.Add(c);
       SetTop(c, Height - 100);
       SetLeft(c, tableWidth);
     }
@@ -184,7 +184,7 @@ namespace NAS.View.Controls
       SetLeft(border, x);
       SetTop(border, y);
       SetZIndex(border, 6);
-      _ = Children.Add(border);
+      Children.Add(border);
     }
 
     private double GetColumnWidth(ActivityProperty property)
@@ -222,7 +222,7 @@ namespace NAS.View.Controls
       var line = new Line();
       line.Stroke = Brushes.Blue;
       line.StrokeThickness = 3;
-      _ = Children.Add(line);
+      Children.Add(line);
       double x = DateToX(VM.Schedule.DataDate, false);
       line.X1 = x;
       line.X2 = x;

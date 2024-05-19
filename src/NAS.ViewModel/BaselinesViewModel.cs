@@ -4,6 +4,7 @@ using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using Microsoft.Win32;
 using NAS.Model;
+using NAS.Model.Base;
 using NAS.Model.ImportExport;
 using NAS.Resources;
 using NAS.ViewModel.Base;

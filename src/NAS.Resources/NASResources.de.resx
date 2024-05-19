@@ -345,6 +345,9 @@
   <data name="Back" xml:space="preserve">
     <value>Zurück</value>
   </data>
+  <data name="BaseCalendar" xml:space="preserve">
+    <value>Basiskalender</value>
+  </data>
   <data name="Baseline" xml:space="preserve">
     <value>Basisplan</value>
   </data>
@@ -551,6 +554,9 @@
   </data>
   <data name="CurrentDate" xml:space="preserve">
     <value>Aktuelles Berechnungs-Datum</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dunkel</value>
   </data>
   <data name="Data" xml:space="preserve">
     <value>Daten</value>
@@ -1035,6 +1041,9 @@
   <data name="LeftText" xml:space="preserve">
     <value>Linker Text</value>
   </data>
+  <data name="Light" xml:space="preserve">
+    <value>Hell</value>
+  </data>
   <data name="Limit" xml:space="preserve">
     <value>Begrenzung</value>
   </data>
@@ -1052,9 +1061,6 @@
   </data>
   <data name="MessageCannotCloseWindow" xml:space="preserve">
     <value>Es ist ein Fehler aufgetreten. Das Fenster kann nicht geschlossen werden.</value>
-  </data>
-  <data name="MessageCannotRemoveBaseCalendar" xml:space="preserve">
-    <value>Der Basiskalender it einem Projektkalender zugeordnet und kann nicht gelöscht werden.</value>
   </data>
   <data name="MessageCannotRemoveCalendar" xml:space="preserve">
     <value>Kalender die als Standardkalender definiert sind oder Vorgängen zugeordnet sind können nicht entfernt werden.</value>
@@ -1164,11 +1170,11 @@
   <data name="MessageNewVersionFound" xml:space="preserve">
     <value>Es wurde eine neuere Version gefunden ({0}). Zur Zeit ist die Version {1} installiert. Möchten Sie das Update herunterladen?</value>
   </data>
-  <data name="MessageNoNewVersion" xml:space="preserve">
-    <value>Sie verwenden die aktuelle Version ({0}).</value>
-  </data>
   <data name="MessageNoDefaultPrinter" xml:space="preserve">
     <value>Es ist kein Standarddrucker definiert.</value>
+  </data>
+  <data name="MessageNoNewVersion" xml:space="preserve">
+    <value>Sie verwenden die aktuelle Version ({0}).</value>
   </data>
   <data name="Messages" xml:space="preserve">
     <value>Meldungen</value>
@@ -1775,12 +1781,6 @@
   </data>
   <data name="StandardColors" xml:space="preserve">
     <value>Standardfarben</value>
-  </data>
-  <data name="Dark" xml:space="preserve">
-    <value>Dunkel</value>
-  </data>
-  <data name="Light" xml:space="preserve">
-    <value>Hell</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>

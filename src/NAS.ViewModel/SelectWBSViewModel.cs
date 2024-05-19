@@ -99,7 +99,7 @@ namespace NAS.ViewModel
         var subModel = GetWBSModel(subItem);
         model.Items.Add(subModel);
       }
-      (item.Children as ObservableCollection<WBSItem>).CollectionChanged += (sender, e) =>
+      item.Children.CollectionChanged += (sender, e) =>
       {
         if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
         {
@@ -120,7 +120,7 @@ namespace NAS.ViewModel
           model.Items.Clear();
           foreach (object oldItem in e.OldItems)
           {
-            _ = list.RemoveAll(x => x.Item == (WBSItem)oldItem);
+            list.RemoveAll(x => x.Item == (WBSItem)oldItem);
           }
           foreach (var listItem in list)
           {

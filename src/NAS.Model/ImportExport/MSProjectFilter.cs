@@ -484,13 +484,13 @@ namespace NAS.Model.ImportExport
       int idx2;
       int idx = xmlTimeSpan.IndexOf('T');
       idx2 = xmlTimeSpan.IndexOf('H');
-      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int hours);
+      int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int hours);
       idx = idx2;
       idx2 = xmlTimeSpan.IndexOf('M');
-      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int minutes);
+      int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int minutes);
       idx = idx2;
       idx2 = xmlTimeSpan.IndexOf('S');
-      _ = int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int seconds);
+      int.TryParse(xmlTimeSpan.AsSpan(idx, idx2 - idx), out int seconds);
       hours = Math.Max(hours, 0);
       hours = Math.Min(hours, 24);
       minutes = Math.Max(minutes, 0);

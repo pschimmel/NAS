@@ -27,7 +27,7 @@
     {
       foreach (var schedule in Settings.RecentlyOpenedSchedules.Where(x => x.ID == id).ToList())
       {
-        _ = Settings.RecentlyOpenedSchedules.Remove(schedule);
+        Settings.RecentlyOpenedSchedules.Remove(schedule);
       }
     }
 
