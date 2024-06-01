@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Windows;
 using ES.Tools.Core.MVVM;
-using NAS.Model.Controllers;
-using NAS.View;
-using NAS.View.Helpers;
-using NAS.ViewModel;
-using NAS.ViewModel.Base;
-using NAS.ViewModel.Helpers;
+using NAS.Models.Controllers;
+using NAS.ViewModels;
+using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
+using NAS.Views;
+using NAS.Views.Helpers;
 
 namespace NAS
 {
@@ -40,6 +40,7 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditActivityViewModel, EditActivityView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarsViewModel, EditCalendarsView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarViewModel, EditCalendarView>();
+      ViewFactory.Instance.RegisterDialog<EditResourcesViewModel, EditResourcesView>();
       ViewFactory.Instance.RegisterDialog<GetDateViewModel, GetDateView>();
     }
 

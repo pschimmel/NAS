@@ -26,8 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NAS.ViewModel\NAS.ViewModel.csproj" />
-    <ProjectReference Include="..\NAS.View\NAS.View.csproj" />
+    <ProjectReference Include="..\NAS.Models\NAS.Models.csproj" />
+    <ProjectReference Include="..\NAS.ViewModels\NAS.ViewModels.csproj" />
+    <ProjectReference Include="..\NAS.Views\NAS.Views.csproj" />
   </ItemGroup>
 
   <ItemGroup>

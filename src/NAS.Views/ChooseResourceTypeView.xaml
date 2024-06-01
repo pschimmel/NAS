@@ -1,0 +1,48 @@
+﻿<Grid x:Class="NAS.Views.ChooseResourceTypeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:converters="clr-namespace:NAS.Views.Converters"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DataContext="{d:DesignInstance Type=viewmodel:ChooseResourceTypeViewModel}">
+  <Grid.Resources>
+    <converters:ResourceToImageConverter x:Key="ResourceToImageConverter" />
+  </Grid.Resources>
+  <ListBox Margin="2"
+           IsSynchronizedWithCurrentItem="True"
+           ItemsSource="{Binding Resources}"
+           SelectedItem="{Binding SelectedResource}">
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <Image Width="16"
+                 Height="16"
+                 Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+          <TextBlock Grid.Column="1"
+                     Text="{Binding Name}"
+                     TextTrimming="CharacterEllipsis" />
+          <TextBlock Grid.Column="2" Text="(Global)">
+            <TextBlock.Style>
+              <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Visibility" Value="Hidden" />
+                <Style.Triggers>
+                  <DataTrigger Binding="{Binding IsGlobal}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                  </DataTrigger>
+                </Style.Triggers>
+              </Style>
+            </TextBlock.Style>
+          </TextBlock>
+        </Grid>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+  </ListBox>
+</Grid>

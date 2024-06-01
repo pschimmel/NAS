@@ -1,0 +1,114 @@
+﻿<Grid x:Class="NAS.Views.EditResourcesView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="clr-namespace:NAS.Views.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodel:EditResourcesViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <converters:ResourceToImageConverter x:Key="ResourceToImageConverter" />
+  </Grid.Resources>
+
+  <TabControl>
+    <TabItem Header="{x:Static resx:NASResources.GlobalResources}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddGlobalResourceCommand}" ToolTip="{x:Static resx:NASResources.AddResource}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+            </Button>
+            <Button Command="{Binding RemoveGlobalResourceCommand}" ToolTip="{x:Static resx:NASResources.RemoveResource}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <ListBox Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 IsSynchronizedWithCurrentItem="True"
+                 ItemsSource="{Binding GlobalResources}"
+                 SelectedItem="{Binding CurrentGlobalResource}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid Margin="1,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Width="16"
+                       Height="16"
+                       Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+                <TextBlock Grid.Column="1"
+                           Margin="2,0"
+                           Text="{Binding Name}">
+                  <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding DataContext.EditGlobalResourceCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                  </TextBlock.InputBindings>
+                </TextBlock>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resx:NASResources.ProjectResources}">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <ToolBarPanel>
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddResourceCommand}" ToolTip="{x:Static resx:NASResources.AddResource}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+            </Button>
+            <Button Command="{Binding RemoveResourceCommand}" ToolTip="{x:Static resx:NASResources.RemoveResource}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <ListBox Grid.Row="1"
+                 Grid.ColumnSpan="3"
+                 IsSynchronizedWithCurrentItem="True"
+                 ItemsSource="{Binding Resources}"
+                 SelectedItem="{Binding CurrentResource}">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Grid Margin="1,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto" />
+                  <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Width="16"
+                       Height="16"
+                       Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+                <TextBlock Grid.Column="1"
+                           Margin="2,0"
+                           Text="{Binding Name}">
+                  <TextBlock.InputBindings>
+                    <MouseBinding Command="{Binding DataContext.EditResourceCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                  </TextBlock.InputBindings>
+                </TextBlock>
+              </Grid>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
+    </TabItem>
+  </TabControl>
+</Grid>

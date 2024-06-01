@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NAS.Model\NAS.Model.csproj" />
+    <ProjectReference Include="..\NAS.Models\NAS.Models.csproj" />
   </ItemGroup>
 
 </Project>
