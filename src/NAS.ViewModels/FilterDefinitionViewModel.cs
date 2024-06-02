@@ -30,7 +30,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public List<ActivityProperty> ActivityProperties { get; } = Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>().Where(x => x != ActivityProperty.None).ToList();
 

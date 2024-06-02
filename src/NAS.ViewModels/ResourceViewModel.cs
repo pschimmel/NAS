@@ -63,7 +63,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public DateTime Start => _vm.Schedule.StartDate;
 

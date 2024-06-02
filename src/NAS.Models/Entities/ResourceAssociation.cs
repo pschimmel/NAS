@@ -1,12 +1,12 @@
 ﻿namespace NAS.Models.Entities
 {
-  public class ResourceAssociation : NASObject
+  public class ResourceAssignment : NASObject
   {
     private decimal _budget;
     private decimal _fixedCosts;
     private double _unitsPerDay;
 
-    public ResourceAssociation(Activity activity, Resource resource)
+    public ResourceAssignment(Activity activity, Resource resource)
     {
       Activity = activity;
       Resource = resource;

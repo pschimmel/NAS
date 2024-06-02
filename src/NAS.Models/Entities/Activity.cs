@@ -43,13 +43,13 @@ namespace NAS.Models.Entities
       constraint = ConstraintType.None;
       name = NASResources.NewActivity;
       _originalDuration = 5;
-      ResourceAssociations = new ObservableCollection<ResourceAssociation>();
+      ResourceAssignments = new ObservableCollection<ResourceAssignment>();
       Distortions = new ObservableCollection<Distortion>();
     }
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public string Number
     {
@@ -518,17 +518,17 @@ namespace NAS.Models.Entities
     /// <summary>
     /// Gets the total _budget.
     /// </summary>
-    public decimal TotalBudget => ResourceAssociations == null ? 0 : ResourceAssociations.Sum(x => x.Budget);
+    public decimal TotalBudget => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.Budget);
 
     /// <summary>
     /// Gets the total planned costs.
     /// </summary>
-    public decimal TotalPlannedCosts => ResourceAssociations == null ? 0 : ResourceAssociations.Sum(x => x.PlannedCosts);
+    public decimal TotalPlannedCosts => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.PlannedCosts);
 
     /// <summary>
     /// Gets the total actual costs.
     /// </summary>
-    public decimal TotalActualCosts => ResourceAssociations == null ? 0 : ResourceAssociations.Sum(x => x.ActualCosts);
+    public decimal TotalActualCosts => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.ActualCosts);
 
     #endregion
 
@@ -553,18 +553,18 @@ namespace NAS.Models.Entities
 
     #region Resource Associations
 
-    public void RefreshResourceAssociations(IEnumerable<ResourceAssociation> resourceAssociations)
+    public void RefreshResourceAssignments(IEnumerable<ResourceAssignment> resourceAssignments)
     {
-      if (resourceAssociations == null)
+      if (resourceAssignments == null)
       {
-        throw new ArgumentNullException(nameof(resourceAssociations), "Argument can't be null");
+        throw new ArgumentNullException(nameof(resourceAssignments), "Argument can't be null");
       }
 
       Distortions.Clear();
 
-      foreach (var resourceAssociation in resourceAssociations)
+      foreach (var resourceAssignment in resourceAssignments)
       {
-        ResourceAssociations.Add(resourceAssociation);
+        ResourceAssignments.Add(resourceAssignment);
       }
     }
 
@@ -658,7 +658,7 @@ namespace NAS.Models.Entities
 
     #region Navigation Properties
 
-    public ICollection<ResourceAssociation> ResourceAssociations { get; }
+    public ICollection<ResourceAssignment> ResourceAssignments { get; }
 
     public Schedule Schedule { get; }
 

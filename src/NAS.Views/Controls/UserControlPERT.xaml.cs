@@ -28,7 +28,7 @@ namespace NAS.Views.Controls
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Layout Layout
     {

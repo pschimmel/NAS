@@ -1134,7 +1134,7 @@
   <data name="MessageDeleteResource" xml:space="preserve">
     <value>Möchten Sie wirklich die ausgewählte Ressource löschen?</value>
   </data>
-  <data name="MessageDeleteResourceAssociation" xml:space="preserve">
+  <data name="MessageDeleteResourceAssignment" xml:space="preserve">
     <value>Möchten Sie wirklich die ausgewählte Ressourcenzuordnung löschen?</value>
   </data>
   <data name="MessageDeleteSortingDefinition" xml:space="preserve">

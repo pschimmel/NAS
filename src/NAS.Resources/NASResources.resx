@@ -1134,7 +1134,7 @@
   <data name="MessageDeleteResource" xml:space="preserve">
     <value>Would you really like to delete the selected resource?</value>
   </data>
-  <data name="MessageDeleteResourceAssociation" xml:space="preserve">
+  <data name="MessageDeleteResourceAssignment" xml:space="preserve">
     <value>Would you really like to delete the selected resource association?</value>
   </data>
   <data name="MessageDeleteSortingDefinition" xml:space="preserve">

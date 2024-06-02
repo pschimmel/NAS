@@ -42,7 +42,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Layout CurrentLayout { get; private set; }
 

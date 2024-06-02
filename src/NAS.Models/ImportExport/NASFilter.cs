@@ -280,19 +280,19 @@ namespace NAS.Models.ImportExport
           constraintElement.AppendTextChild("ConstraintDate", a.ConstraintDate);
         }
         // Add Resources
-        var resourceAssociations = new List<ResourceAssociation>(a.ResourceAssociations);
-        if (resourceAssociations.Count > 0)
+        var resourceAssignments = new List<ResourceAssignment>(a.ResourceAssignments);
+        if (resourceAssignments.Count > 0)
         {
           var resourcesElement = xml.CreateElement("Resources");
           activityElement.AppendChild(resourcesElement);
-          for (int j = 0; j < resourceAssociations.Count; j++)
+          for (int j = 0; j < resourceAssignments.Count; j++)
           {
             var resourceElement = xml.CreateElement("Resource");
             resourcesElement.AppendChild(resourceElement);
-            resourceElement.AppendTextChild("ResourceID", resources.IndexOf(resourceAssociations[j].Resource));
-            resourceElement.AppendTextChild("Budget", resourceAssociations[j].Budget);
-            resourceElement.AppendTextChild("FixedCosts", resourceAssociations[j].FixedCosts);
-            resourceElement.AppendTextChild("UnitsPerDay", resourceAssociations[j].UnitsPerDay);
+            resourceElement.AppendTextChild("ResourceID", resources.IndexOf(resourceAssignments[j].Resource));
+            resourceElement.AppendTextChild("Budget", resourceAssignments[j].Budget);
+            resourceElement.AppendTextChild("FixedCosts", resourceAssignments[j].FixedCosts);
+            resourceElement.AppendTextChild("UnitsPerDay", resourceAssignments[j].UnitsPerDay);
           }
         }
         // Add Distortions
@@ -909,17 +909,17 @@ namespace NAS.Models.ImportExport
                   {
                     if (resourceNode.Name == "Resource")
                     {
-                      ResourceAssociation ra = null;
+                      ResourceAssignment ra = null;
                       foreach (XmlNode resourceSubNode in resourceNode.ChildNodes)
                       {
                         if (resourceSubNode.Name == "ResourceID" && resourceSubNode.GetInteger().HasValue && resourceSubNode.GetInteger().Value >= 0 && resourceSubNode.GetInteger().Value < schedule.Resources.Count)
                         {
-                          ra = new ResourceAssociation(activity, schedule.Resources.ToList()[resourceSubNode.GetInteger().Value]);
+                          ra = new ResourceAssignment(activity, schedule.Resources.ToList()[resourceSubNode.GetInteger().Value]);
                         }
                       }
                       if (ra != null)
                       {
-                        activity.ResourceAssociations.Add(ra);
+                        activity.ResourceAssignments.Add(ra);
                         foreach (XmlNode resourceSubNode in resourceNode.ChildNodes)
                         {
                           if (resourceSubNode.Name == "FixedCosts" && resourceSubNode.GetDecimal().HasValue)

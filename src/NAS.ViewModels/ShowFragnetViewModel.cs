@@ -45,7 +45,7 @@ namespace NAS.ViewModels
       Title = "Fragnet " + fragnet;
     }
 
-    #region Public Properties
+    #region Properties
 
     public Canvas Canvas { get; set; }
 

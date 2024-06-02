@@ -439,7 +439,7 @@ namespace NAS.Models.Entities
 
     public bool CanRemoveResource(Resource resource)
     {
-      return Activities.Any(x => x.ResourceAssociations.Any(x => x.Resource == resource));
+      return Activities.Any(x => x.ResourceAssignments.Any(x => x.Resource == resource));
     }
 
     #endregion
@@ -715,15 +715,16 @@ namespace NAS.Models.Entities
           newItem.WBSItem = FindWBSItem(newSchedule.WBSItem, a.WBSItem.Number);
         }
 
-        if (a.ResourceAssociations != null)
+        if (a.ResourceAssignments != null)
         {
-          foreach (var ra in a.ResourceAssociations)
+          foreach (var ra in a.ResourceAssignments)
           {
             var r = newSchedule.Resources.ToList()[oldSchedule.Resources.ToList().IndexOf(ra.Resource)];
-            var newResourceAssociation = new ResourceAssociation(newItem, r);
-            newResourceAssociation.Budget = ra.Budget;
-            newResourceAssociation.FixedCosts = ra.FixedCosts;
-            newResourceAssociation.UnitsPerDay = ra.UnitsPerDay;
+            var newResourceAssignment = new ResourceAssignment(newItem, r);
+            newResourceAssignment.Budget = ra.Budget;
+            newResourceAssignment.FixedCosts = ra.FixedCosts;
+            newResourceAssignment.UnitsPerDay = ra.UnitsPerDay;
+            newItem.ResourceAssignments.Add(newResourceAssignment);
           }
         }
         if (a.Distortions != null)

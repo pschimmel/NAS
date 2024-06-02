@@ -89,7 +89,7 @@ namespace NAS.ViewModels
 
     private void AddGlobalResource()
     {
-      using var vm = new ChooseResourceTypeViewModel();
+      using var vm = new SelectResourceTypeViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         Resource newResource;
@@ -110,7 +110,7 @@ namespace NAS.ViewModels
           return;
         }
 
-        using var vm2 = new ResourceDetailsViewModel(newResource);
+        using var vm2 = new EditResourceViewModel(newResource);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
           GlobalResources.Add(newResource);
@@ -153,7 +153,7 @@ namespace NAS.ViewModels
 
     private void EditGlobalResource()
     {
-      using var vm = new ResourceDetailsViewModel(CurrentGlobalResource);
+      using var vm = new EditResourceViewModel(CurrentGlobalResource);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -170,7 +170,7 @@ namespace NAS.ViewModels
 
     private void AddResource()
     {
-      using var vm = new ChooseResourceTypeViewModel();
+      using var vm = new SelectResourceTypeViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         Resource newResource;
@@ -191,7 +191,7 @@ namespace NAS.ViewModels
           return;
         }
 
-        using var vm2 = new ResourceDetailsViewModel(newResource);
+        using var vm2 = new EditResourceViewModel(newResource);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
           Resources.Add(newResource);
@@ -234,7 +234,7 @@ namespace NAS.ViewModels
 
     private void EditResource()
     {
-      using var vm = new ResourceDetailsViewModel(CurrentResource);
+      using var vm = new EditResourceViewModel(CurrentResource);
       ViewFactory.Instance.ShowDialog(vm);
     }
 

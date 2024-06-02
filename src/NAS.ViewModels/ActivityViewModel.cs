@@ -10,7 +10,7 @@ namespace NAS.ViewModels
   {
     #region Fields
 
-    private ResourceAssociation currentResourceAssociation;
+    private ResourceAssignment currentResourceAssignment;
 
     #endregion
 
@@ -32,7 +32,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public override HelpTopic HelpTopicKey => HelpTopic.Activity;
 
@@ -48,15 +48,15 @@ namespace NAS.ViewModels
     public List<ConstraintType> ConstraintTypes => Enum.GetValues(typeof(ConstraintType)).Cast<ConstraintType>().ToList();
 #pragma warning restore CA1822 // Mark members as static
 
-    public ResourceAssociation CurrentResourceAssociation
+    public ResourceAssignment CurrentResourceAssignment
     {
-      get => currentResourceAssociation;
+      get => currentResourceAssignment;
       set
       {
-        if (currentResourceAssociation != value)
+        if (currentResourceAssignment != value)
         {
-          currentResourceAssociation = value;
-          OnPropertyChanged(nameof(CurrentResourceAssociation));
+          currentResourceAssignment = value;
+          OnPropertyChanged(nameof(CurrentResourceAssignment));
         }
       }
     }

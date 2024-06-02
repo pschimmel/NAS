@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
 
@@ -26,7 +24,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
 

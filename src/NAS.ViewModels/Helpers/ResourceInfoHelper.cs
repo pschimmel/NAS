@@ -67,7 +67,7 @@ namespace NAS.ViewModels.Helpers
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Dictionary<DateTime, double> ResourceAllocation { get; private set; }
 

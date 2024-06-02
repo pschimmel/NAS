@@ -133,7 +133,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public override HelpTopic HelpTopicKey => HelpTopic.New;
 
@@ -794,7 +794,7 @@ namespace NAS.ViewModels
 
     private void ShowResourceCommandExecute()
     {
-      using var vm = new SelectResourceViewModel(Schedule);
+      using var vm = new SelectResourceViewModel(Schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
       {
         var vr = new VisibleResource(_currentLayout.Layout, vm.SelectedResource);

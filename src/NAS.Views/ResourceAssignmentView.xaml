@@ -1,0 +1,83 @@
+﻿<Grid x:Class="NAS.Views.ResourceAssignmentView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="clr-namespace:NAS.Views.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:ResourceAssignmentViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <converters:CurrencyConverter x:Key="CurrencyConverter" />
+  </Grid.Resources>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition />
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="Auto" />
+    <ColumnDefinition Width="*" />
+  </Grid.ColumnDefinitions>
+  <TextBlock Margin="5" Text="{x:Static resx:NASResources.Resource}" />
+  <TextBlock Grid.Column="1"
+             Margin="5"
+             Text="{Binding ResourceAssignment.Resource.Name}" />
+  <TextBlock Grid.Row="1"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Unit}" />
+  <TextBlock Grid.Row="1"
+             Grid.Column="1"
+             Margin="2"
+             Text="{Binding Unit}" />
+  <TextBlock Grid.Row="2"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Budget}" />
+  <TextBox Grid.Row="2"
+           Grid.Column="1"
+           Margin="2"
+           Text="{Binding Budget, Converter={StaticResource CurrencyConverter}}"
+           TextAlignment="Right" />
+  <TextBlock Grid.Row="3"
+             Margin="5"
+             Text="{x:Static resx:NASResources.FixedCosts}" />
+  <TextBox Grid.Row="3"
+           Grid.Column="1"
+           Margin="2"
+           Text="{Binding FixedCosts, Converter={StaticResource CurrencyConverter}}"
+           TextAlignment="Right" />
+  <StackPanel Grid.Row="4"
+              Margin="5"
+              Orientation="Horizontal">
+    <TextBlock Text="{x:Static resx:NASResources.Costs}" />
+    <TextBlock Text="/" />
+    <TextBlock Text="{Binding Unit}" />
+    <TextBlock Text=":" />
+  </StackPanel>
+  <TextBlock Grid.Row="4"
+             Grid.Column="1"
+             Margin="5"
+             Text="{Binding CostsPerUnit, StringFormat={}{0:N} €, Mode=OneWay}"
+             TextAlignment="Right" />
+  <StackPanel Grid.Row="5"
+              Margin="5"
+              VerticalAlignment="Center"
+              Orientation="Horizontal">
+    <TextBlock Text="{Binding Unit}" />
+    <TextBlock Text="/" />
+    <TextBlock Text="{x:Static resx:NASResources.Day}" />
+    <TextBlock Text=":" />
+  </StackPanel>
+  <TextBox Grid.Row="5"
+           Grid.Column="1"
+           Width="Auto"
+           Margin="2"
+           VerticalAlignment="Center"
+           Text="{Binding UnitsPerDay}"
+           TextAlignment="Right" />
+</Grid>

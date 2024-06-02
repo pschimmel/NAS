@@ -53,7 +53,7 @@ namespace NAS.Views.Controls
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     private ResourceViewModel VM => DataContext as ResourceViewModel;
 

@@ -15,7 +15,7 @@ namespace NAS.ViewModels
 
     private readonly Schedule _schedule;
     private readonly Activity _activity;
-    private ResourceAssociation _currentResourceAssociation;
+    private ResourceAssignment _currentResourceAssignment;
 
     #endregion
 
@@ -27,7 +27,7 @@ namespace NAS.ViewModels
       ArgumentNullException.ThrowIfNull(activity);
       _schedule = activity.Schedule;
       _activity = activity;
-      ResourceAssociations = [];
+      ResourceAssignments = [];
       Calendars = new ObservableCollection<Calendar>(_schedule.Calendars);
       Fragnets = new ObservableCollection<Fragnet>(_schedule.Fragnets);
       CustomAttributes1 = new List<CustomAttribute>(_schedule.CustomAttributes1);
@@ -36,9 +36,9 @@ namespace NAS.ViewModels
       SelectWBSCommand = new ActionCommand(SelectWBSCommandExecute);
       EditLogicCommand = new ActionCommand(EditLogicCommandExecute, () => EditLogicCommandCanExecute);
       EditDistortionsCommand = new ActionCommand(EditDistortionsCommandExecute, () => EditDistortionsCommandCanExecute);
-      AddResourceAssociationCommand = new ActionCommand(AddResourceAssociationCommandExecute);
-      RemoveResourceAssociationCommand = new ActionCommand(RemoveResourceAssociationCommandExecute, () => RemoveResourceAssociationCommandCanExecute);
-      EditResourceAssociationCommand = new ActionCommand(EditResourceAssociationCommandExecute, () => EditResourceAssociationCommandCanExecute);
+      AddResourceAssignmentCommand = new ActionCommand(AddResourceAssignmentCommandExecute);
+      RemoveResourceAssignmentCommand = new ActionCommand(RemoveResourceAssignmentCommandExecute, () => RemoveResourceAssignmentCommandCanExecute);
+      EditResourceAssignmentCommand = new ActionCommand(EditResourceAssignmentCommandExecute, () => EditResourceAssignmentCommandCanExecute);
     }
 
     #endregion
@@ -53,11 +53,11 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public override HelpTopic HelpTopicKey => HelpTopic.Activity;
 
-    public ObservableCollection<ResourceAssociation> ResourceAssociations { get; }
+    public ObservableCollection<ResourceAssignment> ResourceAssignments { get; }
 
     public ObservableCollection<Calendar> Calendars { get; }
 
@@ -67,15 +67,15 @@ namespace NAS.ViewModels
     public List<ConstraintType> ConstraintTypes => Enum.GetValues(typeof(ConstraintType)).Cast<ConstraintType>().ToList();
 #pragma warning restore CA1822 // Mark members as static
 
-    public ResourceAssociation CurrentResourceAssociation
+    public ResourceAssignment CurrentResourceAssignment
     {
-      get => _currentResourceAssociation;
+      get => _currentResourceAssignment;
       set
       {
-        if (_currentResourceAssociation != value)
+        if (_currentResourceAssignment != value)
         {
-          _currentResourceAssociation = value;
-          OnPropertyChanged(nameof(CurrentResourceAssociation));
+          _currentResourceAssignment = value;
+          OnPropertyChanged(nameof(CurrentResourceAssignment));
         }
       }
     }
@@ -153,18 +153,18 @@ namespace NAS.ViewModels
 
     #region Add Resource Association
 
-    public ICommand AddResourceAssociationCommand { get; }
+    public ICommand AddResourceAssignmentCommand { get; }
 
-    private void AddResourceAssociationCommandExecute()
+    private void AddResourceAssignmentCommandExecute()
     {
-      using var vm = new SelectResourceViewModel(_schedule);
+      using var vm = new SelectResourceViewModel(_schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
       {
-        var resourceAssociation = new ResourceAssociation(_activity, vm.SelectedResource);
-        using var vm2 = new ResourceAssociationViewModel(resourceAssociation);
+        var ResourceAssignment = new ResourceAssignment(_activity, vm.SelectedResource);
+        using var vm2 = new ResourceAssignmentViewModel(ResourceAssignment);
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
-          ResourceAssociations.Add(resourceAssociation);
+          ResourceAssignments.Add(ResourceAssignment);
         }
       }
     }
@@ -173,31 +173,31 @@ namespace NAS.ViewModels
 
     #region Remove Resource Association
 
-    public ICommand RemoveResourceAssociationCommand { get; }
+    public ICommand RemoveResourceAssignmentCommand { get; }
 
-    private void RemoveResourceAssociationCommandExecute()
+    private void RemoveResourceAssignmentCommandExecute()
     {
-      UserNotificationService.Instance.Question(NASResources.MessageDeleteResourceAssociation, () =>
+      UserNotificationService.Instance.Question(NASResources.MessageDeleteResourceAssignment, () =>
       {
-        ResourceAssociations.Remove(CurrentResourceAssociation);
+        ResourceAssignments.Remove(CurrentResourceAssignment);
       });
     }
 
-    private bool RemoveResourceAssociationCommandCanExecute => CurrentResourceAssociation != null;
+    private bool RemoveResourceAssignmentCommandCanExecute => CurrentResourceAssignment != null;
 
     #endregion
 
     #region Edit Resource Association
 
-    public ICommand EditResourceAssociationCommand { get; }
+    public ICommand EditResourceAssignmentCommand { get; }
 
-    private void EditResourceAssociationCommandExecute()
+    private void EditResourceAssignmentCommandExecute()
     {
-      using var vm = new ResourceAssociationViewModel(CurrentResourceAssociation);
+      using var vm = new ResourceAssignmentViewModel(CurrentResourceAssignment);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditResourceAssociationCommandCanExecute => CurrentResourceAssociation != null;
+    private bool EditResourceAssignmentCommandCanExecute => CurrentResourceAssignment != null;
 
     #endregion
 
@@ -251,7 +251,7 @@ namespace NAS.ViewModels
 
     protected override void OnApply()
     {
-      _activity.RefreshResourceAssociations(ResourceAssociations);
+      _activity.RefreshResourceAssignments(ResourceAssignments);
     }
 
     #endregion

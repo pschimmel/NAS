@@ -34,7 +34,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public string Number { get; set; }
 

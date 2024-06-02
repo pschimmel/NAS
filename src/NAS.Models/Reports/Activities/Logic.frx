@@ -81,7 +81,7 @@
             <Column Name="WBSItem" DataType="System.String"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource6" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource7" Alias="Predecessors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Predecessors"/>
-            <BusinessObjectDataSource Name="BusinessObjectDataSource8" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+            <BusinessObjectDataSource Name="BusinessObjectDataSource8" Alias="ResourceAssignments" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssignment, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssignments"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource9" Alias="Successors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Successors"/>
           </Column>
           <Column Name="IsDriving" DataType="System.Boolean" BindableControl="CheckBox"/>
@@ -136,7 +136,7 @@
             <Column Name="WBSItem" DataType="System.String"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource11" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource12" Alias="Predecessors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Predecessors"/>
-            <BusinessObjectDataSource Name="BusinessObjectDataSource13" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+            <BusinessObjectDataSource Name="BusinessObjectDataSource13" Alias="ResourceAssignments" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssignment, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssignments"/>
             <BusinessObjectDataSource Name="BusinessObjectDataSource14" Alias="Successors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Successors"/>
           </Column>
           <Column Name="IsDriving" DataType="System.Boolean" BindableControl="CheckBox"/>
@@ -148,7 +148,7 @@
         <Column Name="TotalPlannedCosts" DataType="System.Decimal"/>
         <Column Name="WBSItem" DataType="System.String"/>
         <BusinessObjectDataSource Name="BusinessObjectDataSource5" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
-        <BusinessObjectDataSource Name="BusinessObjectDataSource10" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource10" Alias="ResourceAssignments" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssignment, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssignments"/>
       </BusinessObjectDataSource>
       <Column Name="CustomAttribute1Header" DataType="System.String"/>
       <Column Name="CustomAttribute2Header" DataType="System.String"/>

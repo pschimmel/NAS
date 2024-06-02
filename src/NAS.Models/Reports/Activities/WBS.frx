@@ -45,7 +45,7 @@
         <Column Name="WBSItem" DataType="System.String"/>
         <BusinessObjectDataSource Name="BusinessObjectDataSource1" Alias="Distortions" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Distortion, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Distortions"/>
         <BusinessObjectDataSource Name="BusinessObjectDataSource2" Alias="Predecessors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Predecessors"/>
-        <BusinessObjectDataSource Name="BusinessObjectDataSource3" Alias="ResourceAssociations" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssociations"/>
+        <BusinessObjectDataSource Name="BusinessObjectDataSource3" Alias="ResourceAssignments" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssignment, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="ResourceAssignments"/>
         <BusinessObjectDataSource Name="BusinessObjectDataSource4" Alias="Successors" Enabled="false" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+Relationship, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" PropName="Successors"/>
       </BusinessObjectDataSource>
       <Column Name="CustomAttribute1Header" DataType="System.String"/>

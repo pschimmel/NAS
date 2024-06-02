@@ -4,11 +4,11 @@ using NAS.ViewModels.Base;
 namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for ChooseResourceTypeView.xaml
+  /// Interaction logic for SelectResourceTypeView.xaml
   /// </summary>
-  public partial class ChooseResourceTypeView : Grid, IDialogContentView
+  public partial class SelectResourceTypeView : Grid, IDialogContentView
   {
-    public ChooseResourceTypeView()
+    public SelectResourceTypeView()
     {
       InitializeComponent();
     }

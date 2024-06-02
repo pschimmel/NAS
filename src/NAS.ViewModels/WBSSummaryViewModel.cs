@@ -16,7 +16,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Schedule Schedule { get; private set; }
 

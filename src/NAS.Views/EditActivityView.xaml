@@ -378,14 +378,14 @@
           </Grid.RowDefinitions>
           <ToolBarPanel Grid.ColumnSpan="6">
             <ToolBar ToolBarTray.IsLocked="True">
-              <Button Command="{Binding AddResourceAssociationCommand}"
+              <Button Command="{Binding AddResourceAssignmentCommand}"
                       Focusable="False"
                       ToolTip="{x:Static resx:NASResources.AddResource}">
                 <tools:AutoGrayableImage Width="16"
                                          Height="16"
                                          Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
               </Button>
-              <Button Command="{Binding RemoveResourceAssociationCommand}"
+              <Button Command="{Binding RemoveResourceAssignmentCommand}"
                       Focusable="False"
                       ToolTip="{x:Static resx:NASResources.RemoveResource}">
                 <tools:AutoGrayableImage Width="16"
@@ -436,10 +436,10 @@
                     GridLinesVisibility="Horizontal"
                     IsReadOnly="True"
                     IsSynchronizedWithCurrentItem="True"
-                    ItemsSource="{Binding CurrentActivity.ResourceAssociations}"
-                    SelectedItem="{Binding CurrentResourceAssociation, UpdateSourceTrigger=PropertyChanged}">
+                    ItemsSource="{Binding CurrentActivity.ResourceAssignments}"
+                    SelectedItem="{Binding CurrentResourceAssignment, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.InputBindings>
-              <MouseBinding Command="{Binding EditResourceAssociationCommand}" Gesture="LeftDoubleClick" />
+              <MouseBinding Command="{Binding EditResourceAssignmentCommand}" Gesture="LeftDoubleClick" />
             </DataGrid.InputBindings>
             <DataGrid.Columns>
               <DataGridTextColumn Width="Auto"

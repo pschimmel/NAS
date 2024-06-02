@@ -1,10 +1,12 @@
-﻿using NAS.Models.Entities;
+﻿using System.Diagnostics;
+using NAS.Models.Entities;
 using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class ResourceDetailsViewModel : ValidatingViewModel, IApplyable
+  public class EditResourceViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -14,7 +16,7 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public ResourceDetailsViewModel(Resource resource)
+    public EditResourceViewModel(Resource resource)
     {
       _resource = resource;
       Name = resource.Name;
@@ -29,7 +31,55 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Overwritten Members
+
+    public override string Title
+    {
+      get
+      {
+        if (IsWorkResource)
+        {
+          return NASResources.WorkResource;
+        }
+        else if (IsCalendarResource)
+        {
+          return NASResources.CalendarResource;
+        }
+        else
+        {
+          Debug.Assert(IsMaterialResource);
+          return NASResources.MaterialResource;
+        }
+      }
+    }
+
+    public override string Icon
+    {
+      get
+      {
+        if (IsWorkResource)
+        {
+          return "Resources";
+        }
+        else if (IsCalendarResource)
+        {
+          return "Calendar";
+        }
+        else
+        {
+          Debug.Assert(IsMaterialResource);
+          return "MaterialResource";
+        }
+      }
+    }
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 200);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Resources;
+
+    #endregion
+
+    #region Properties
 
     public Resource Resource => _resource;
 
@@ -55,7 +105,7 @@ namespace NAS.ViewModels
 
     protected override ValidationResult OnValidating()
     {
-      return string.IsNullOrWhiteSpace(_resource.Name)
+      return string.IsNullOrWhiteSpace(Name)
              ? ValidationResult.Error(NASResources.PleaseEnterName)
              : ValidationResult.OK();
     }
@@ -64,7 +114,7 @@ namespace NAS.ViewModels
 
     #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
       if (Validate().IsOK)
       {

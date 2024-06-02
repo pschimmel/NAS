@@ -57,7 +57,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public ObservableCollection<ColumnViewModel> EditColumns { get; }
 

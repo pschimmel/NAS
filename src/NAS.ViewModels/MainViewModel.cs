@@ -111,7 +111,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public bool IsBusy { get; private set; } = false;
 

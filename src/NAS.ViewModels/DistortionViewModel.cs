@@ -45,7 +45,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Distortion CurrentDistortion { get; private set; }
 

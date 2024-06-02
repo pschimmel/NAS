@@ -37,7 +37,7 @@
         <Column Name="OriginalDuration" DataType="System.Int32"/>
         <Column Name="PercentComplete" DataType="System.Double"/>
         <Column Name="RemainingDuration" DataType="System.Int32"/>
-        <BusinessObjectDataSource Name="ResourceAssociations" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssociation, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" Enabled="true">
+        <BusinessObjectDataSource Name="ResourceAssignments" DataType="System.Collections.Generic.List`1[[CMS2.ViewModels.SchedulesViewModel+ResourceAssignment, CMS2, Version=2.0.110.0, Culture=neutral, PublicKeyToken=null]]" Enabled="true">
           <Column Name="ActualCosts" DataType="System.Decimal"/>
           <Column Name="Budget" DataType="System.Decimal"/>
           <Column Name="FixedCosts" DataType="System.Decimal"/>
@@ -120,12 +120,12 @@
           <TextObject Name="Text28" Left="491.4" Top="37.8" Width="94.5" Height="18.9" Fill="Glass" Fill.Color="LawnGreen" Fill.Blend="0.2" Fill.Hatch="true" Text="Plankosten" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
           <TextObject Name="Text30" Left="585.9" Top="37.8" Width="94.5" Height="18.9" Fill="Glass" Fill.Color="LawnGreen" Fill.Blend="0.2" Fill.Hatch="true" Text="Ist-Kosten" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
         </DataHeaderBand>
-        <DataBand Name="Data3" Top="136.18" Width="680.4" Height="18.9" CanGrow="true" CanShrink="true" DataSource="ResourceAssociations">
-          <TextObject Name="Text23" Left="396.9" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssociations.FixedCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
-          <TextObject Name="Text16" Left="66.15" Width="189" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssociations.Resource.Name]" Font="Arial, 9pt"/>
-          <TextObject Name="Text25" Left="255.15" Width="141.75" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssociations.UnitsPerDay]" Format="Number" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
-          <TextObject Name="Text27" Left="491.4" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssociations.PlannedCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
-          <TextObject Name="Text29" Left="585.9" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssociations.ActualCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <DataBand Name="Data3" Top="136.18" Width="680.4" Height="18.9" CanGrow="true" CanShrink="true" DataSource="ResourceAssignments">
+          <TextObject Name="Text23" Left="396.9" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssignments.FixedCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text16" Left="66.15" Width="189" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssignments.Resource.Name]" Font="Arial, 9pt"/>
+          <TextObject Name="Text25" Left="255.15" Width="141.75" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssignments.UnitsPerDay]" Format="Number" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text27" Left="491.4" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssignments.PlannedCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text29" Left="585.9" Width="94.5" Height="18.9" CanGrow="true" Text="[Schedule.Activities.ResourceAssignments.ActualCosts]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
         </DataBand>
         <DataFooterBand Name="DataFooter1" Top="158.42" Width="680.4" Height="28.35" CanShrink="true">
           <TextObject Name="Text9" Left="396.9" Top="9.45" Width="94.5" Height="18.9" Border.Lines="Top" Text="[Schedule.TotalBudget]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" WordWrap="false" Font="Arial, 10pt, style=Bold" Trimming="EllipsisCharacter"/>

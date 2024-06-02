@@ -3114,9 +3114,9 @@ namespace NAS.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Would you really like to delete the selected resource association?.
         /// </summary>
-        public static string MessageDeleteResourceAssociation {
+        public static string MessageDeleteResourceAssignment {
             get {
-                return ResourceManager.GetString("MessageDeleteResourceAssociation", resourceCulture);
+                return ResourceManager.GetString("MessageDeleteResourceAssignment", resourceCulture);
             }
         }
         

@@ -30,7 +30,7 @@ namespace NAS.ViewModels
       }
     }
 
-    #region Public Properties
+    #region Properties
 
     public Canvas Canvas { get; set; }
 

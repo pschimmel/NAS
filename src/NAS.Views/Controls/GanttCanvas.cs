@@ -70,7 +70,7 @@ namespace NAS.Views.Controls
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     protected bool IsStandalone => this is IPrintableCanvas;
 

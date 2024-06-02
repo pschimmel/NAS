@@ -438,7 +438,7 @@ namespace NAS.Models.ImportExport
             int.TryParse(node.FirstChild.NextSibling.NextSibling.InnerText, out int resourceID) &&
             resources.TryGetValue(resourceID, out var resource))
         {
-          var assignment = new ResourceAssociation(activity, resource);
+          var assignment = new ResourceAssignment(activity, resource);
           foreach (XmlNode resourceNode in node.ChildNodes)
           {
             switch (resourceNode.Name)

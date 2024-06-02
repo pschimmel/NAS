@@ -332,9 +332,9 @@ namespace NAS.Models.ImportExport
         // UNIT       1030       15.0000       22.2000         .0000
         foreach (var act in schedule.Activities)
         {
-          if (act.ResourceAssociations != null)
+          if (act.ResourceAssignments != null)
           {
-            foreach (var association in act.ResourceAssociations)
+            foreach (var association in act.ResourceAssignments)
             {
               var sb = new StringBuilder("UNIT ");
               sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));

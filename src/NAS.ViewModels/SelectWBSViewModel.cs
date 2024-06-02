@@ -26,7 +26,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Properties
+    #region Properties
 
     public Activity CurrentActivity { get; private set; }
 

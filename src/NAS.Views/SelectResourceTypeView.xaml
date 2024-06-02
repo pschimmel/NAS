@@ -1,0 +1,36 @@
+﻿<Grid x:Class="NAS.Views.SelectResourceTypeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodel:SelectResourceTypeViewModel}"
+      mc:Ignorable="d">
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <RadioButton VerticalContentAlignment="Center" IsChecked="{Binding IsMaterialResourceSelected}">
+      <StackPanel Orientation="Horizontal">
+        <Image Margin="2" Source="pack://application:,,,/NAS.Views;component/Images/MaterialResource.png" />
+        <TextBlock Margin="2"
+                   VerticalAlignment="Center"
+                   Text="{x:Static resx:NASResources.MaterialResource}" />
+      </StackPanel>
+    </RadioButton>
+    <RadioButton VerticalContentAlignment="Center" IsChecked="{Binding IsWorkResourceSelected}">
+      <StackPanel Orientation="Horizontal">
+        <Image Margin="2" Source="pack://application:,,,/NAS.Views;component/Images/Resources.png" />
+        <TextBlock Margin="2"
+                   VerticalAlignment="Center"
+                   Text="{x:Static resx:NASResources.WorkResource}" />
+      </StackPanel>
+    </RadioButton>
+    <RadioButton VerticalContentAlignment="Center" IsChecked="{Binding IsCalendarResourceSelected}">
+      <StackPanel Orientation="Horizontal">
+        <Image Margin="2" Source="pack://application:,,,/NAS.Views;component/Images/Calendar.png" />
+        <TextBlock Margin="2"
+                   VerticalAlignment="Center"
+                   Text="{x:Static resx:NASResources.CalendarResource}" />
+      </StackPanel>
+    </RadioButton>
+  </StackPanel>
+</Grid>
