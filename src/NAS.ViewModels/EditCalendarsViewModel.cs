@@ -251,7 +251,17 @@ namespace NAS.ViewModels
       GlobalDataController.Calendars.AddRange(GlobalCalendars);
       GlobalDataController.SaveCalendars();
 
-      _schedule.RefreshCalendars(Calendars);
+      _schedule.Calendars.Clear();
+
+      foreach (var calendar in Calendars)
+      {
+        _schedule.Calendars.Add(calendar);
+      }
+
+      if (!_schedule.Calendars.Any(x => x.IsStandard))
+      {
+        _schedule.Calendars.First().IsStandard = true;
+      }
     }
 
     #endregion

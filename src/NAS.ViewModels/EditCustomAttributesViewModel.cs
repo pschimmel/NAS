@@ -8,7 +8,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class CustomAttributesViewModel : ValidatingViewModel, IApplyable
+  public class EditCustomAttributesViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -16,12 +16,21 @@ namespace NAS.ViewModels
     private CustomAttribute _currentCustomAttribute1;
     private CustomAttribute _currentCustomAttribute2;
     private CustomAttribute _currentCustomAttribute3;
+    private ActionCommand _addCustomAttribute1Command;
+    private ActionCommand _removeCustomAttribute1Command;
+    private ActionCommand _editCustomAttribute1Command;
+    private ActionCommand _addCustomAttribute2Command;
+    private ActionCommand _removeCustomAttribute2Command;
+    private ActionCommand _editCustomAttribute2Command;
+    private ActionCommand _addCustomAttribute3Command;
+    private ActionCommand _removeCustomAttribute3Command;
+    private ActionCommand _editCustomAttribute3Command;
 
     #endregion
 
     #region Constructor
 
-    public CustomAttributesViewModel(Schedule schedule)
+    public EditCustomAttributesViewModel(Schedule schedule)
       : base()
     {
       _schedule = schedule;
@@ -31,22 +40,21 @@ namespace NAS.ViewModels
       CustomAttributes1 = new ObservableCollection<CustomAttribute>(schedule.CustomAttributes1);
       CustomAttributes2 = new ObservableCollection<CustomAttribute>(schedule.CustomAttributes2);
       CustomAttributes3 = new ObservableCollection<CustomAttribute>(schedule.CustomAttributes3);
-      AddCustomAttribute1Command = new ActionCommand(param => AddCustomAttribute1CommandExecute());
-      RemoveCustomAttribute1Command = new ActionCommand(param => RemoveCustomAttribute1CommandExecute(), param => RemoveCustomAttribute1CommandCanExecute);
-      EditCustomAttribute1Command = new ActionCommand(param => EditCustomAttribute1CommandExecute(), param => EditCustomAttribute1CommandCanExecute);
-      AddCustomAttribute2Command = new ActionCommand(param => AddCustomAttribute2CommandExecute());
-      RemoveCustomAttribute2Command = new ActionCommand(param => RemoveCustomAttribute2CommandExecute(), param => RemoveCustomAttribute2CommandCanExecute);
-      EditCustomAttribute2Command = new ActionCommand(param => EditCustomAttribute2CommandExecute(), param => EditCustomAttribute2CommandCanExecute);
-      AddCustomAttribute3Command = new ActionCommand(param => AddCustomAttribute3CommandExecute());
-      RemoveCustomAttribute3Command = new ActionCommand(param => RemoveCustomAttribute3CommandExecute(), param => RemoveCustomAttribute3CommandCanExecute);
-      EditCustomAttribute3Command = new ActionCommand(param => EditCustomAttribute3CommandExecute(), param => EditCustomAttribute3CommandCanExecute);
     }
 
     #endregion
 
-    #region Properties
+    #region Overwritten Members
+
+    public override string Title => NASResources.EditAttributes;
+
+    public override DialogSize DialogSize => DialogSize.Fixed(300, 300);
 
     public override HelpTopic HelpTopicKey => HelpTopic.CustomAttributes;
+
+    #endregion
+
+    #region Properties
 
     public string CustomAttribute1Header { get; set; }
 
@@ -103,9 +111,9 @@ namespace NAS.ViewModels
 
     #region Add Custom Attribute 1
 
-    public ICommand AddCustomAttribute1Command { get; }
+    public ICommand AddCustomAttribute1Command => _addCustomAttribute1Command ??= new ActionCommand(AddCustomAttribute1);
 
-    private void AddCustomAttribute1CommandExecute()
+    private void AddCustomAttribute1()
     {
       using var vm = new GetTextViewModel(NASResources.AddAttribute, NASResources.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -118,9 +126,9 @@ namespace NAS.ViewModels
 
     #region Remove Custom Attribute 1
 
-    public ICommand RemoveCustomAttribute1Command { get; }
+    public ICommand RemoveCustomAttribute1Command => _removeCustomAttribute1Command ??= new ActionCommand(RemoveCustomAttribute1, CanRemoveCustomAttribute1);
 
-    private void RemoveCustomAttribute1CommandExecute()
+    private void RemoveCustomAttribute1()
     {
       if (!_schedule.CanRemoveCustomAttribute1(CurrentCustomAttribute1))
       {
@@ -135,15 +143,18 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveCustomAttribute1CommandCanExecute => CurrentCustomAttribute1 != null;
+    private bool CanRemoveCustomAttribute1()
+    {
+      return CurrentCustomAttribute1 != null;
+    }
 
     #endregion
 
     #region Edit Custom Attribute 1
 
-    public ICommand EditCustomAttribute1Command { get; }
+    public ICommand EditCustomAttribute1Command => _editCustomAttribute1Command ??= new ActionCommand(EditCustomAttribute1, CanEditCustomAttribute1);
 
-    private void EditCustomAttribute1CommandExecute()
+    private void EditCustomAttribute1()
     {
       var vm = new GetTextViewModel(NASResources.EditAttribute, NASResources.Name, CurrentCustomAttribute1.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -152,15 +163,18 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditCustomAttribute1CommandCanExecute => CurrentCustomAttribute1 != null;
+    private bool CanEditCustomAttribute1()
+    {
+      return CurrentCustomAttribute1 != null;
+    }
 
     #endregion
 
     #region Add Custom Attribute 2
 
-    public ICommand AddCustomAttribute2Command { get; }
+    public ICommand AddCustomAttribute2Command => _addCustomAttribute2Command ??= new ActionCommand(AddCustomAttribute2);
 
-    private void AddCustomAttribute2CommandExecute()
+    private void AddCustomAttribute2()
     {
       using var vm = new GetTextViewModel(NASResources.AddAttribute, NASResources.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -173,9 +187,9 @@ namespace NAS.ViewModels
 
     #region Remove Custom Attribute 2
 
-    public ICommand RemoveCustomAttribute2Command { get; }
+    public ICommand RemoveCustomAttribute2Command => _removeCustomAttribute2Command ??= new ActionCommand(RemoveCustomAttribute2, CanRemoveCustomAttribute2);
 
-    private void RemoveCustomAttribute2CommandExecute()
+    private void RemoveCustomAttribute2()
     {
       if (!_schedule.CanRemoveCustomAttribute2(CurrentCustomAttribute2))
       {
@@ -190,15 +204,18 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveCustomAttribute2CommandCanExecute => CurrentCustomAttribute2 != null;
+    private bool CanRemoveCustomAttribute2()
+    {
+      return CurrentCustomAttribute2 != null;
+    }
 
     #endregion
 
     #region Edit Custom Attribute 2
 
-    public ICommand EditCustomAttribute2Command { get; }
+    public ICommand EditCustomAttribute2Command => _editCustomAttribute2Command ??= new ActionCommand(EditCustomAttribute2, CanEditCustomAttribute2);
 
-    private void EditCustomAttribute2CommandExecute()
+    private void EditCustomAttribute2()
     {
       var vm = new GetTextViewModel(NASResources.EditAttribute, NASResources.Name, CurrentCustomAttribute2.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -207,15 +224,18 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditCustomAttribute2CommandCanExecute => CurrentCustomAttribute2 != null;
+    private bool CanEditCustomAttribute2()
+    {
+      return CurrentCustomAttribute2 != null;
+    }
 
     #endregion
 
     #region Add Custom Attribute 3
 
-    public ICommand AddCustomAttribute3Command { get; }
+    public ICommand AddCustomAttribute3Command => _addCustomAttribute3Command ??= new ActionCommand(AddCustomAttribute3);
 
-    private void AddCustomAttribute3CommandExecute()
+    private void AddCustomAttribute3()
     {
       using var vm = new GetTextViewModel(NASResources.AddAttribute, NASResources.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -228,9 +248,9 @@ namespace NAS.ViewModels
 
     #region Remove Custom Attribute 3
 
-    public ICommand RemoveCustomAttribute3Command { get; }
+    public ICommand RemoveCustomAttribute3Command => _removeCustomAttribute3Command ??= new ActionCommand(RemoveCustomAttribute3, CanRemoveCustomAttribute3);
 
-    private void RemoveCustomAttribute3CommandExecute()
+    private void RemoveCustomAttribute3()
     {
       if (!_schedule.CanRemoveCustomAttribute1(CurrentCustomAttribute3))
       {
@@ -245,15 +265,18 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveCustomAttribute3CommandCanExecute => CurrentCustomAttribute3 != null;
+    private bool CanRemoveCustomAttribute3()
+    {
+      return CurrentCustomAttribute3 != null;
+    }
 
     #endregion
 
     #region Edit Custom Attribute 3
 
-    public ICommand EditCustomAttribute3Command { get; }
+    public ICommand EditCustomAttribute3Command => _editCustomAttribute3Command ??= new ActionCommand(EditCustomAttribute3, CanEditCustomAttribute3);
 
-    private void EditCustomAttribute3CommandExecute()
+    private void EditCustomAttribute3()
     {
       var vm = new GetTextViewModel(NASResources.EditAttribute, NASResources.Name, CurrentCustomAttribute3.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -262,11 +285,14 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditCustomAttribute3CommandCanExecute => CurrentCustomAttribute3 != null;
+    private bool CanEditCustomAttribute3()
+    {
+      return CurrentCustomAttribute3 != null;
+    }
 
     #endregion
 
-    #region IValidatable Implementation
+    #region Validation
 
     protected override ValidationResult OnValidating()
     {
@@ -283,14 +309,29 @@ namespace NAS.ViewModels
 
     #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
-      if (Validate().IsOK)
+      base.OnApply();
+      _schedule.CustomAttribute1Header = CustomAttribute1Header;
+      _schedule.CustomAttribute2Header = CustomAttribute2Header;
+      _schedule.CustomAttribute3Header = CustomAttribute3Header;
+      _schedule.CustomAttributes1.Clear();
+      _schedule.CustomAttributes2.Clear();
+      _schedule.CustomAttributes3.Clear();
+
+      foreach (var customAttribute in CustomAttributes1)
       {
-        _schedule.CustomAttribute1Header = CustomAttribute1Header;
-        _schedule.CustomAttribute2Header = CustomAttribute2Header;
-        _schedule.CustomAttribute3Header = CustomAttribute3Header;
-        _schedule.RefreshCustomAttributes(CustomAttributes1, CustomAttributes2, CustomAttributes3);
+        _schedule.CustomAttributes1.Add(customAttribute);
+      }
+
+      foreach (var customAttribute in CustomAttributes2)
+      {
+        _schedule.CustomAttributes2.Add(customAttribute);
+      }
+
+      foreach (var customAttribute in CustomAttributes3)
+      {
+        _schedule.CustomAttributes3.Add(customAttribute);
       }
     }
 

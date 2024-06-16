@@ -36,16 +36,18 @@ namespace NAS
       // Dialogs
       ViewFactory.Instance.RegisterDialog<AboutViewModel, AboutView>();
       ViewFactory.Instance.RegisterDialog<SettingsViewModel, SettingsView>();
+      ViewFactory.Instance.RegisterDialog<GetDateViewModel, GetDateView>();
+      ViewFactory.Instance.RegisterDialog<GetTextViewModel, GetTextView>();
+      ViewFactory.Instance.RegisterDialog<SelectResourceTypeViewModel, SelectResourceTypeView>();
+      ViewFactory.Instance.RegisterDialog<SelectResourceViewModel, SelectResourceView>();
       ViewFactory.Instance.RegisterDialog<NewScheduleViewModel, NewScheduleView>();
       ViewFactory.Instance.RegisterDialog<EditActivityViewModel, EditActivityView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarsViewModel, EditCalendarsView>();
       ViewFactory.Instance.RegisterDialog<EditCalendarViewModel, EditCalendarView>();
       ViewFactory.Instance.RegisterDialog<EditResourcesViewModel, EditResourcesView>();
       ViewFactory.Instance.RegisterDialog<EditResourceViewModel, EditResourceView>();
-      ViewFactory.Instance.RegisterDialog<SelectResourceTypeViewModel, SelectResourceTypeView>();
-      ViewFactory.Instance.RegisterDialog<SelectResourceViewModel, SelectResourceView>();
+      ViewFactory.Instance.RegisterDialog<EditCustomAttributesViewModel, EditCustomAttributesView>();
       ViewFactory.Instance.RegisterDialog<ResourceAssignmentViewModel, ResourceAssignmentView>();
-      ViewFactory.Instance.RegisterDialog<GetDateViewModel, GetDateView>();
     }
 
     private static void RegisterNotificationTargets()

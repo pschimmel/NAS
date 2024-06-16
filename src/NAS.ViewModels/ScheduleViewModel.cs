@@ -702,7 +702,7 @@ namespace NAS.ViewModels
 
     private void EditCustomAttributesCommandExecute()
     {
-      using var vm = new CustomAttributesViewModel(Schedule);
+      using var vm = new EditCustomAttributesViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 

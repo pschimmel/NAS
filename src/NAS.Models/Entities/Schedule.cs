@@ -408,31 +408,6 @@ namespace NAS.Models.Entities
       return !calendar.IsStandard && !Activities.Any(x => x.Schedule.ID == calendar.ID && x.Calendar.ID == calendar.ID);
     }
 
-    public void RefreshCalendars(IEnumerable<Calendar> newCalendars)
-    {
-      if (newCalendars == null)
-      {
-        throw new ArgumentNullException(nameof(newCalendars), "Argument can't be null");
-      }
-
-      if (!newCalendars.Any())
-      {
-        throw new ArgumentException("Argument can't be empty", nameof(newCalendars));
-      }
-
-      Calendars.Clear();
-
-      foreach (var calendar in newCalendars)
-      {
-        Calendars.Add(calendar);
-      }
-
-      if (!Calendars.Any(x => x.IsStandard))
-      {
-        Calendars.First().IsStandard = true;
-      }
-    }
-
     #endregion
 
     #region Resources
@@ -459,43 +434,6 @@ namespace NAS.Models.Entities
     public bool CanRemoveCustomAttribute3(CustomAttribute item)
     {
       return !Activities.Any(x => x.CustomAttribute3.ID == item.ID);
-    }
-
-    public void RefreshCustomAttributes(IEnumerable<CustomAttribute> customAttributes1, IEnumerable<CustomAttribute> customAttributes2, IEnumerable<CustomAttribute> customAttributes3)
-    {
-      if (customAttributes1 == null)
-      {
-        throw new ArgumentNullException(nameof(customAttributes1), "Argument can't be null");
-      }
-
-      if (customAttributes2 == null)
-      {
-        throw new ArgumentNullException(nameof(customAttributes2), "Argument can't be null");
-      }
-
-      if (customAttributes3 == null)
-      {
-        throw new ArgumentNullException(nameof(customAttributes3), "Argument can't be null");
-      }
-
-      CustomAttributes1.Clear();
-      CustomAttributes2.Clear();
-      CustomAttributes3.Clear();
-
-      foreach (var customAttribute in customAttributes1)
-      {
-        CustomAttributes1.Add(customAttribute);
-      }
-
-      foreach (var customAttribute in customAttributes2)
-      {
-        CustomAttributes2.Add(customAttribute);
-      }
-
-      foreach (var customAttribute in customAttributes3)
-      {
-        CustomAttributes3.Add(customAttribute);
-      }
     }
 
     #endregion

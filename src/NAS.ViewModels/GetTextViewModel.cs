@@ -4,7 +4,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class GetTextViewModel : ValidatingViewModel
+  public class GetTextViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -26,7 +26,7 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public string Title { get; }
+    public override string Title { get; }
 
     public string Label { get; }
 
