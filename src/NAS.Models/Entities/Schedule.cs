@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using NAS.Models.Base;
 using NAS.Models.Enums;
+using NAS.Models.Scheduler;
 using NAS.Resources;
 
 namespace NAS.Models.Entities
@@ -122,7 +123,7 @@ namespace NAS.Models.Entities
 
     public IReadOnlyCollection<Relationship> Relationships => new ReadOnlyCollection<Relationship>(_relationships);
 
-    public string SchedulingSettings { get; set; }
+    public SchedulingSettings SchedulingSettings { get; } = new SchedulingSettings();
 
     #endregion
 
@@ -423,17 +424,17 @@ namespace NAS.Models.Entities
 
     public bool CanRemoveCustomAttribute1(CustomAttribute item)
     {
-      return !Activities.Any(x => x.CustomAttribute1.ID == item.ID);
+      return !Activities.Any(x => x.CustomAttribute1?.ID == item.ID);
     }
 
     public bool CanRemoveCustomAttribute2(CustomAttribute item)
     {
-      return !Activities.Any(x => x.CustomAttribute2.ID == item.ID);
+      return !Activities.Any(x => x.CustomAttribute2?.ID == item.ID);
     }
 
     public bool CanRemoveCustomAttribute3(CustomAttribute item)
     {
-      return !Activities.Any(x => x.CustomAttribute3.ID == item.ID);
+      return !Activities.Any(x => x.CustomAttribute3?.ID == item.ID);
     }
 
     #endregion

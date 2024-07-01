@@ -138,7 +138,7 @@ namespace NAS.ViewModels
     public override HelpTopic HelpTopicKey => HelpTopic.New;
 
     /// <summary>
-    /// Gets the schedule.
+    /// Gets the _schedule.
     /// </summary>
     public Schedule Schedule { get; }
 
@@ -358,7 +358,7 @@ namespace NAS.ViewModels
     private void CalculateCommandExecute(DateTime? dataDate)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Calculate);
-      var scheduler = new Scheduler(Schedule, SchedulingSettingsHelper.LoadSchedulingSettings(Schedule.SchedulingSettings), () =>
+      var scheduler = new Scheduler(Schedule, () =>
       {
         _isBusy = true;
         CalculationProgress?.Invoke(this, ProgressEventArgs.Starting);
@@ -405,11 +405,8 @@ namespace NAS.ViewModels
 
     private void SchedulingSettingsCommandExecute()
     {
-      var vm = new SchedulingSettingsViewModel(Schedule.SchedulingSettings);
-      if (ViewFactory.Instance.ShowDialog(vm) == true)
-      {
-        Schedule.SchedulingSettings = vm.GetScheduleSettingsString();
-      }
+      var vm = new EditSchedulingSettingsViewModel(Schedule);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool SchedulingSettingsCommandCanExecute()
@@ -1100,9 +1097,9 @@ namespace NAS.ViewModels
       }
 
       var d = Schedule.DataDate;
-      var s1 = new Scheduler(p1, SchedulingSettingsHelper.LoadSchedulingSettings(p1.SchedulingSettings));
+      var s1 = new Scheduler(p1);
       s1.Calculate(d);
-      var s2 = new Scheduler(p2, SchedulingSettingsHelper.LoadSchedulingSettings(p2.SchedulingSettings));
+      var s2 = new Scheduler(p2);
       s2.Calculate(d);
       using var vm = new CompareResultsViewModel(new ComparisonData(p1, p2) { Headline = headline });
       ViewFactory.Instance.ShowDialog(vm);

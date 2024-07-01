@@ -52,9 +52,25 @@ namespace NAS.Models.ImportExport
             return null;
           }
         }
-        // #FF000000
+        // Format: #FF000000
         return "#" + a.ToString("X") + r.ToString("X") + g.ToString("X") + b.ToString("X");
       }
+    }
+
+    internal static bool TryGetColor(this XmlNode node, out string value)
+    {
+      try
+      {
+        var nullableValue = node.GetColor();
+        value = nullableValue;
+        return true;
+      }
+      catch
+      {
+        value = null;
+      }
+
+      return false;
     }
 
     internal static DateTime? GetDateTime(this XmlNode node)
@@ -62,9 +78,23 @@ namespace NAS.Models.ImportExport
       return DateTime.TryParse(node.InnerText, out var d) ? d : null;
     }
 
+    internal static bool TryGetDateTime(this XmlNode node, out DateTime value)
+    {
+      var nullableValue = node.GetDateTime();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
+    }
+
     internal static bool? GetBoolean(this XmlNode node)
     {
       return bool.TryParse(node.InnerText, out bool d) ? d : null;
+    }
+
+    internal static bool TryGetBoolean(this XmlNode node, out bool value)
+    {
+      var nullableValue = node.GetBoolean();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
     }
 
     internal static int? GetInteger(this XmlNode node)
@@ -72,9 +102,23 @@ namespace NAS.Models.ImportExport
       return int.TryParse(node.InnerText, out int d) ? d : null;
     }
 
+    internal static bool TryGetInteger(this XmlNode node, out int value)
+    {
+      var nullableValue = node.GetInteger();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
+    }
+
     internal static double? GetDouble(this XmlNode node)
     {
       return double.TryParse(node.InnerText, out double d) ? d : null;
+    }
+
+    internal static bool TryGetDouble(this XmlNode node, out double value)
+    {
+      var nullableValue = node.GetDouble();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
     }
 
     internal static T? GetEnum<T>(this XmlNode node) where T : struct
@@ -82,9 +126,23 @@ namespace NAS.Models.ImportExport
       return Enum.TryParse<T>(node.InnerText, out var d) ? d : null;
     }
 
+    internal static bool TryGetEnum<T>(this XmlNode node, out T value) where T : struct
+    {
+      var nullableValue = node.GetEnum<T>();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
+    }
+
     internal static decimal? GetDecimal(this XmlNode node)
     {
       return decimal.TryParse(node.InnerText, out decimal d) ? d : null;
+    }
+
+    internal static bool TryGetDecimal(this XmlNode node, out decimal value)
+    {
+      var nullableValue = node.GetDecimal();
+      value = nullableValue ?? default;
+      return nullableValue.HasValue;
     }
   }
 }

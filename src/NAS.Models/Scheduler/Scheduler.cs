@@ -29,16 +29,16 @@ namespace NAS.Models.Scheduler
 
     #region Constructors
 
-    public Scheduler(Schedule schedule, SchedulingSettings settings)
+    public Scheduler(Schedule schedule)
     {
       _schedule = schedule ?? throw new ArgumentException("Schedule may not be null");
-      _settings = settings ?? throw new ArgumentException("Settings may not be null");
+      _settings = schedule.SchedulingSettings;
       RelationshipCalendar = RelationshipCalendarType.Predecessor;
       scheduledActivities = [];
     }
 
-    public Scheduler(Schedule schedule, SchedulingSettings settings, OnCalculationStarted calculationStarted, OnCalculationEnded calculationEnded, OnCalculationProgress calculationProgress)
-      : this(schedule, settings)
+    public Scheduler(Schedule schedule, OnCalculationStarted calculationStarted, OnCalculationEnded calculationEnded, OnCalculationProgress calculationProgress)
+      : this(schedule)
     {
       this.calculationStarted = calculationStarted;
       this.calculationEnded = calculationEnded;

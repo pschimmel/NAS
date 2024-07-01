@@ -110,9 +110,9 @@ namespace NAS.ViewModels
       }
 
       var d = Schedule.DataDate;
-      var s1 = new Scheduler(p1, SchedulingSettingsHelper.LoadSchedulingSettings(p1.SchedulingSettings));
+      var s1 = new Scheduler(p1);
       s1.Calculate(d);
-      var s2 = new Scheduler(p2, SchedulingSettingsHelper.LoadSchedulingSettings(p1.SchedulingSettings));
+      var s2 = new Scheduler(p2);
       s2.Calculate(d);
       // Prepare headline
       string h1 = NASResources.Schedule1 + " (";

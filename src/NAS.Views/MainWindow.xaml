@@ -155,11 +155,11 @@
         </fluent:Ribbon.ContextualGroups>
         <fluent:RibbonTabItem x:Name="StartTab"
                               Header="{x:Static resx:NASResources.Start}"
-                              ReduceOrder="Activities, Activities, Activities, Relationships, Relationships, Relationships, Schedule, Schedule, Schedule"
+                              ReduceOrder="Schedule, Schedule, Schedule, Activities, Activities, Activities, Relationships, Relationships, Relationships, Schedule, Activities, Relationships"
                               Visibility="{Binding IsProjectLoaded, Converter={StaticResource VisibilityConverter}}">
-          <fluent:RibbonGroupBox Name="Calculate"
-                                 Header="{x:Static resx:NASResources.Calculate}"
-                                 Icon="pack://application:,,,/NAS.Views;component/Images/Calculate.png">
+          <fluent:RibbonGroupBox Name="Schedule"
+                                 Header="{x:Static resx:NASResources.Schedule}"
+                                 Icon="pack://application:,,,/NAS.Views;component/Images/Options.png">
             <fluent:Button Command="{Binding CurrentSchedule.CalculateCommand}"
                            Header="{x:Static resx:NASResources.Calculate}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Calculate.png"
@@ -174,12 +174,66 @@
             <fluent:Button Command="{Binding CurrentSchedule.SchedulingSettingsCommand}"
                            Header="{x:Static resx:NASResources.Settings}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Settings.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Settings.png"
-                           SizeDefinition="Large">
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Settings.png">
               <fluent:Button.ToolTip>
                 <fluent:ScreenTip Title="{x:Static resx:NASResources.SchedulingSettingsToolTipTitle}"
                                   Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
                                   Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
+              </fluent:Button.ToolTip>
+            </fluent:Button>
+            <fluent:Button Command="{Binding CurrentSchedule.PropertiesCommand}"
+                           Header="{x:Static resx:NASResources.ProjectProperties}"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/Options.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Options.png"
+                           SizeDefinition="Large, Middle, Small">
+              <fluent:Button.ToolTip>
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.ProjectPropertiesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.ProjectPropertiesToolTipDescription}" />
+              </fluent:Button.ToolTip>
+            </fluent:Button>
+            <fluent:Button Command="{Binding CurrentSchedule.EditWBSCommand}"
+                           Header="{x:Static resx:NASResources.EditWBS}"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/WBS.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/WBS.png"
+                           SizeDefinition="Large, Middle, Small">
+              <fluent:Button.ToolTip>
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditWBSToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditWBSToolTipDescription}" />
+              </fluent:Button.ToolTip>
+            </fluent:Button>
+            <fluent:Button Command="{Binding CurrentSchedule.EditCalendarsCommand}"
+                           Header="{x:Static resx:NASResources.EditCalendars}"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/Calendar.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Calendar.png"
+                           SizeDefinition="Large, Middle, Small">
+              <fluent:Button.ToolTip>
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditCalendarsToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditCalendarsToolTipDescription}" />
+              </fluent:Button.ToolTip>
+            </fluent:Button>
+            <fluent:Button Command="{Binding CurrentSchedule.EditResourcesCommand}"
+                           Header="{x:Static resx:NASResources.EditResources}"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/Resources.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Resources.png"
+                           SizeDefinition="Large, Middle, Small">
+              <fluent:Button.ToolTip>
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditResourcesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditResourcesToolTipDescription}" />
+              </fluent:Button.ToolTip>
+            </fluent:Button>
+            <fluent:Button Command="{Binding CurrentSchedule.EditCustomAttributesCommand}"
+                           Header="{x:Static resx:NASResources.EditAttributes}"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/EditAttributes.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/EditAttributes.png"
+                           SizeDefinition="Large, Middle, Small">
+              <fluent:Button.ToolTip>
+                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditAttributesToolTipTitle}"
+                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                  Text="{x:Static resx:NASResources.EditAttributesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
@@ -278,65 +332,6 @@
                 <fluent:ScreenTip Title="{x:Static resx:NASResources.EditLogicToolTipTitle}"
                                   Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
                                   Text="{x:Static resx:NASResources.EditLogicToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-          </fluent:RibbonGroupBox>
-          <fluent:RibbonGroupBox Name="Schedule"
-                                 Header="{x:Static resx:NASResources.Schedule}"
-                                 Icon="pack://application:,,,/NAS.Views;component/Images/Options.png">
-            <fluent:Button Command="{Binding CurrentSchedule.PropertiesCommand}"
-                           Header="{x:Static resx:NASResources.ProjectProperties}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Options.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Options.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ProjectPropertiesToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.ProjectPropertiesToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.EditCalendarsCommand}"
-                           Header="{x:Static resx:NASResources.EditCalendars}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Calendar.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Calendar.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditCalendarsToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.EditCalendarsToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.EditWBSCommand}"
-                           Header="{x:Static resx:NASResources.EditWBS}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/WBS.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/WBS.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditWBSToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.EditWBSToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.EditResourcesCommand}"
-                           Header="{x:Static resx:NASResources.EditResources}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Resources.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Resources.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditResourcesToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.EditResourcesToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.EditCustomAttributesCommand}"
-                           Header="{x:Static resx:NASResources.EditAttributes}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/EditAttributes.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/EditAttributes.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.EditAttributesToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.EditAttributesToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
           </fluent:RibbonGroupBox>
