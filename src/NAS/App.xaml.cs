@@ -36,6 +36,7 @@ namespace NAS
       // Dialogs
       ViewFactory.Instance.RegisterDialog<AboutViewModel, AboutView>();
       ViewFactory.Instance.RegisterDialog<SettingsViewModel, SettingsView>();
+      ViewFactory.Instance.RegisterDialog<EditPropertiesViewModel, EditPropertiesView>();
       ViewFactory.Instance.RegisterDialog<GetDateViewModel, GetDateView>();
       ViewFactory.Instance.RegisterDialog<GetTextViewModel, GetTextView>();
       ViewFactory.Instance.RegisterDialog<SelectResourceTypeViewModel, SelectResourceTypeView>();

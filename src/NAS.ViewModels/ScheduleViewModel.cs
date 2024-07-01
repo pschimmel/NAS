@@ -631,7 +631,7 @@ namespace NAS.ViewModels
 
     private void PropertiesCommandExecute()
     {
-      using var vm = new SchedulePropertiesViewModel(Schedule);
+      using var vm = new EditPropertiesViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
