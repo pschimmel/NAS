@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using GongSolutions.Wpf.DragDrop;
-using NAS.Models.Base;
 using NAS.Models.Entities;
 using NAS.Resources;
 using NAS.ViewModels.Base;
@@ -10,50 +9,60 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class WBSViewModel : ViewModelBase, IDropTarget, IApplyable
+  public class EditWBSViewModel : DialogContentViewModel, IDropTarget
   {
     #region Fields
 
     private readonly Schedule _schedule;
-    private WBSItemViewModel _root;
+    private WBSItemViewModel _wbsHierarchy;
     private Activity _currentWBSActivity;
+    private ActionCommand _addWBSItemCommand;
+    private ActionCommand _removeWBSItemCommand;
+    private ActionCommand _editWBSItemCommand;
+    private ActionCommand _moveWBSItemUpCommand;
+    private ActionCommand _moveWBSItemDownCommand;
+    private ActionCommand _moveWBSItemLeftCommand;
+    private ActionCommand _moveWBSItemRightCommand;
+    private ActionCommand _showWBSSummaryCommand;
+    private ActionCommand _assignWBSCommand;
+    private ActionCommand _unassignWBSCommand;
 
     #endregion
 
     #region Constructor
 
-    public WBSViewModel(Schedule schedule)
+    public EditWBSViewModel(Schedule schedule)
       : base()
     {
+      schedule.EnsureWBS();
       _schedule = schedule;
-      EnsureWBS(schedule);
       RefreshWBS();
-      AddWBSItemCommand = new ActionCommand(param => AddWBSItemCommandExecute(), param => AddWBSItemCommandCanExecute);
-      RemoveWBSItemCommand = new ActionCommand(param => RemoveWBSItemCommandExecute(), param => RemoveWBSItemCommandCanExecute);
-      EditWBSItemCommand = new ActionCommand(param => EditWBSItemCommandExecute(), param => EditWBSItemCommandCanExecute);
-      MoveWBSItemUpCommand = new ActionCommand(param => MoveWBSItemUpCommandExecute(), param => MoveWBSItemUpCommandCanExecute);
-      MoveWBSItemDownCommand = new ActionCommand(param => MoveWBSItemDownCommandExecute(), param => MoveWBSItemDownCommandCanExecute);
-      MoveWBSItemLeftCommand = new ActionCommand(param => MoveWBSItemLeftCommandExecute(), param => MoveWBSItemLeftCommandCanExecute);
-      MoveWBSItemRightCommand = new ActionCommand(param => MoveWBSItemRightCommandExecute(), param => MoveWBSItemRightCommandCanExecute);
-      ShowWBSSummaryCommand = new ActionCommand(param => ShowWBSSummaryCommandExecute());
-      AssignWBSCommand = new ActionCommand(param => AssignWBSCommandExecute(), param => AssignWBSCommandCanExecute);
-      UnassignWBSCommand = new ActionCommand(param => UnassignWBSCommandExecute(), param => UnassignWBSCommandCanExecute);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.ProjectProperties;
+
+    public override string Icon => "WBS";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(650, 400);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.WBS;
 
     #endregion
 
     #region Properties
 
-    public override HelpTopic HelpTopicKey => HelpTopic.WBS;
-
-    public List<WBSItemViewModel> WBS { get; }
+    public List<WBSItemViewModel> WBS => new List<WBSItemViewModel> { _wbsHierarchy };
 
     public WBSItemViewModel CurrentWBSItem
     {
-      get => FindSelectedItem(_root);
+      get => FindSelectedItem(_wbsHierarchy);
       private set
       {
-        SelectWBSItem(_root, value);
+        SelectWBSItem(_wbsHierarchy, value);
         OnPropertyChanged(nameof(CurrentWBSItem));
       }
     }
@@ -77,9 +86,9 @@ namespace NAS.ViewModels
 
     #region Add WBS Item
 
-    public ICommand AddWBSItemCommand { get; }
+    public ICommand AddWBSItemCommand => _addWBSItemCommand ??= new ActionCommand(AddWBSItem, CanAddWBSItem);
 
-    private void AddWBSItemCommandExecute()
+    private void AddWBSItem()
     {
       int newOrder = 0;
       if (CurrentWBSItem.Items.Count > 0)
@@ -92,23 +101,27 @@ namespace NAS.ViewModels
         Order = newOrder
       };
 
-      using var vm = new WBSItemViewModel(newWBSItem);
+      var wbsItemVM = new WBSItemViewModel(newWBSItem);
+      using var vm = new EditWBSItemViewModel(wbsItemVM);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        CurrentWBSItem.Items.Add(vm);
-        CurrentWBSItem = vm;
+        CurrentWBSItem.Items.Add(wbsItemVM);
+        CurrentWBSItem = wbsItemVM;
       }
     }
 
-    private bool AddWBSItemCommandCanExecute => CurrentWBSItem != null;
+    private bool CanAddWBSItem()
+    {
+      return CurrentWBSItem != null;
+    }
 
     #endregion
 
     #region Remove WBS Item
 
-    public ICommand RemoveWBSItemCommand { get; }
+    public ICommand RemoveWBSItemCommand => _removeWBSItemCommand ??= new ActionCommand(RemoveWBSItem, CanRemoveWBSItem);
 
-    private void RemoveWBSItemCommandExecute()
+    private void RemoveWBSItem()
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteWBS, () =>
       {
@@ -124,28 +137,35 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveWBSItemCommandCanExecute => CurrentWBSItem != null && CurrentWBSItem.Parent != null;
+    private bool CanRemoveWBSItem()
+    {
+      return CurrentWBSItem != null && CurrentWBSItem.Parent != null;
+    }
 
     #endregion
 
     #region Edit WBS Item
 
-    public ICommand EditWBSItemCommand { get; }
+    public ICommand EditWBSItemCommand => _editWBSItemCommand ??= new ActionCommand(EditWBSItem, CanEditWBSItem);
 
-    private void EditWBSItemCommandExecute()
+    private void EditWBSItem()
     {
-      ViewFactory.Instance.ShowDialog(CurrentWBSItem);
+      var vm = new EditWBSItemViewModel(CurrentWBSItem);
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditWBSItemCommandCanExecute => CurrentWBSItem != null;
+    private bool CanEditWBSItem()
+    {
+      return CurrentWBSItem != null;
+    }
 
     #endregion
 
     #region Move WBS Item Up
 
-    public ICommand MoveWBSItemUpCommand { get; }
+    public ICommand MoveWBSItemUpCommand => _moveWBSItemUpCommand ??= new ActionCommand(MoveWBSItemUp, CanMoveWBSItemUp);
 
-    private void MoveWBSItemUpCommandExecute()
+    private void MoveWBSItemUp()
     {
       var item = CurrentWBSItem.Item;
       var parent = item.Parent;
@@ -154,18 +174,23 @@ namespace NAS.ViewModels
       item.Order--;
       var buffer = item;
       RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_root, buffer);
+      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 
-    private bool MoveWBSItemUpCommandCanExecute => CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order - 1) != null;
+    private bool CanMoveWBSItemUp()
+    {
+      return CurrentWBSItem != null &&
+             CurrentWBSItem.Parent != null &&
+             CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order - 1) != null;
+    }
 
     #endregion
 
     #region Move WBS Item Down
 
-    public ICommand MoveWBSItemDownCommand { get; }
+    public ICommand MoveWBSItemDownCommand => _moveWBSItemDownCommand ??= new ActionCommand(MoveWBSItemDown, CanMoveWBSItemDown);
 
-    private void MoveWBSItemDownCommandExecute()
+    private void MoveWBSItemDown()
     {
       var item = CurrentWBSItem.Item;
       var parent = item.Parent;
@@ -174,18 +199,21 @@ namespace NAS.ViewModels
       CurrentWBSItem.Order++;
       var buffer = item;
       RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_root, buffer);
+      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 
-    private bool MoveWBSItemDownCommandCanExecute => CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order + 1) != null;
+    private bool CanMoveWBSItemDown()
+    {
+      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order + 1) != null;
+    }
 
     #endregion
 
     #region Move WBS Item Left
 
-    public ICommand MoveWBSItemLeftCommand { get; }
+    public ICommand MoveWBSItemLeftCommand => _moveWBSItemLeftCommand ??= new ActionCommand(MoveWBSItemLeft, CanMoveWBSItemLeft);
 
-    private void MoveWBSItemLeftCommandExecute()
+    private void MoveWBSItemLeft()
     {
       var item = CurrentWBSItem.Item;
       var oldParent = item.Parent;
@@ -207,18 +235,21 @@ namespace NAS.ViewModels
 
       var buffer = item;
       RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_root, buffer);
+      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 
-    private bool MoveWBSItemLeftCommandCanExecute => CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Parent != null;
+    private bool CanMoveWBSItemLeft()
+    {
+      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Parent != null;
+    }
 
     #endregion
 
     #region Move WBS Item Right
 
-    public ICommand MoveWBSItemRightCommand { get; }
+    public ICommand MoveWBSItemRightCommand => _moveWBSItemRightCommand ??= new ActionCommand(MoveWBSItemRight, CanMoveWBSItemRight);
 
-    private void MoveWBSItemRightCommandExecute()
+    private void MoveWBSItemRight()
     {
       var item = CurrentWBSItem.Item;
       var newParent = item.Parent.Children.FirstOrDefault(x => x.Order == CurrentWBSItem.Order - 1) ?? item.Parent.Children.FirstOrDefault(x => x.Order == CurrentWBSItem.Order + 1);
@@ -245,20 +276,23 @@ namespace NAS.ViewModels
       item.Order = newOrder;
       var buffer = item;
       RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_root, buffer);
+      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 
-    private bool MoveWBSItemRightCommandCanExecute => CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.Count > 1;
+    private bool CanMoveWBSItemRight()
+    {
+      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.Count > 1;
+    }
 
     #endregion
 
     #region Show WBS Summary
 
-    public ICommand ShowWBSSummaryCommand { get; }
+    public ICommand ShowWBSSummaryCommand => _showWBSSummaryCommand ??= new ActionCommand(ShowWBSSummary);
 
-    private void ShowWBSSummaryCommandExecute()
+    private void ShowWBSSummary()
     {
-      using var vm = new WBSSummaryViewModel(_schedule);
+      using var vm = new ShowWBSSummaryViewModel(_schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -266,31 +300,37 @@ namespace NAS.ViewModels
 
     #region Assign WBS
 
-    public ICommand AssignWBSCommand { get; }
+    public ICommand AssignWBSCommand => _assignWBSCommand ??= new ActionCommand(AssignWBS, CanAssignWBS);
 
-    private void AssignWBSCommandExecute()
+    private void AssignWBS()
     {
       var buffer = CurrentWBSActivity;
       CurrentWBSActivity.WBSItem = CurrentWBSItem.Item;
       CurrentWBSActivity = buffer;
     }
 
-    private bool AssignWBSCommandCanExecute => CurrentWBSActivity != null && CurrentWBSItem != null;
+    private bool CanAssignWBS()
+    {
+      return CurrentWBSActivity != null && CurrentWBSItem != null;
+    }
 
     #endregion
 
     #region Unassign WBS
 
-    public ICommand UnassignWBSCommand { get; }
+    public ICommand UnassignWBSCommand => _unassignWBSCommand ??= new ActionCommand(UnassignWBS, CanUnassignWBS);
 
-    private void UnassignWBSCommandExecute()
+    private void UnassignWBS()
     {
       var buffer = CurrentWBSActivity;
       CurrentWBSActivity.WBSItem = null;
       CurrentWBSActivity = buffer;
     }
 
-    private bool UnassignWBSCommandCanExecute => CurrentWBSActivity != null && CurrentWBSActivity.WBSItem != null;
+    private bool CanUnassignWBS()
+    {
+      return CurrentWBSActivity != null && CurrentWBSActivity.WBSItem != null;
+    }
 
     #endregion
 
@@ -298,7 +338,7 @@ namespace NAS.ViewModels
 
     private void RefreshWBS()
     {
-      _root = GetWBSViewModel(_schedule.WBSItem);
+      _wbsHierarchy = GetWBSViewModel(_schedule.WBSItem);
       OnPropertyChanged(nameof(WBS));
     }
 
@@ -349,7 +389,7 @@ namespace NAS.ViewModels
       return model;
     }
 
-    private WBSItemViewModel FindWBSItemModel(WBSItemViewModel parent, WBSItem item)
+    private static WBSItemViewModel FindWBSItemModel(WBSItemViewModel parent, WBSItem item)
     {
       if (parent.Item == item)
       {
@@ -367,7 +407,7 @@ namespace NAS.ViewModels
       return null;
     }
 
-    private void SelectWBSItem(WBSItemViewModel wbs, WBSItemViewModel selectedItem)
+    private static void SelectWBSItem(WBSItemViewModel wbs, WBSItemViewModel selectedItem)
     {
       foreach (var subItem in wbs.Items)
       {
@@ -377,7 +417,7 @@ namespace NAS.ViewModels
       wbs.IsSelected = wbs == selectedItem;
     }
 
-    private WBSItemViewModel FindSelectedItem(WBSItemViewModel wbs)
+    private static WBSItemViewModel FindSelectedItem(WBSItemViewModel wbs)
     {
       if (wbs == null)
       {
@@ -438,7 +478,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool IsChild(WBSItemViewModel parent, WBSItemViewModel child)
+    private static bool IsChild(WBSItemViewModel parent, WBSItemViewModel child)
     {
       return parent.Items.Contains(child) || parent.Items.Any(x => IsChild(parent, x));
     }
@@ -478,27 +518,17 @@ namespace NAS.ViewModels
 
       var buffer = sourceItem;
       RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_root, buffer);
-    }
-
-    private static void EnsureWBS(Schedule schedule)
-    {
-      if (schedule.WBSItem == null)
-      {
-        var item = new WBSItem();
-        item.Name = schedule.Name;
-        item.Number = "1";
-        schedule.WBSItem = item;
-      }
+      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 
     #endregion
 
-    #region IApplyable Implementation
+    #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
-      _schedule.WBSItem = AssignWBS(_root);
+      base.OnApply();
+      _schedule.WBSItem = AssignWBS(_wbsHierarchy);
     }
 
     private static WBSItem AssignWBS(WBSItemViewModel vm)
@@ -522,7 +552,7 @@ namespace NAS.ViewModels
       base.Dispose(disposing);
       if (disposing)
       {
-        _root.Dispose();
+        _wbsHierarchy.Dispose();
       }
     }
 

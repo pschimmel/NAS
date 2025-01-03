@@ -1,14 +1,13 @@
-﻿using System.Windows.Controls;
-using NAS.ViewModels.Base;
+﻿using NAS.ViewModels.Base;
 
 namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for EditPropertiesView.xaml
+  /// Interaction logic for ShowWBSSummaryView.xaml
   /// </summary>
-  public partial class EditPropertiesView : Grid, IDialogContentView
+  public partial class ShowWBSSummaryView : IDialogContentView
   {
-    public EditPropertiesView()
+    public ShowWBSSummaryView()
     {
       InitializeComponent();
     }

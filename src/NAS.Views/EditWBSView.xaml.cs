@@ -4,11 +4,11 @@ using NAS.ViewModels.Base;
 namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for EditPropertiesView.xaml
+  /// Interaction logic for EditWBSView.xaml
   /// </summary>
-  public partial class EditPropertiesView : Grid, IDialogContentView
+  public partial class EditWBSView : Grid, IDialogContentView
   {
-    public EditPropertiesView()
+    public EditWBSView()
     {
       InitializeComponent();
     }

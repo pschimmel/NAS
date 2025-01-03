@@ -648,7 +648,7 @@ namespace NAS.ViewModels
 
     private void EditWBSCommandExecute()
     {
-      using var vm = new WBSViewModel(Schedule);
+      using var vm = new EditWBSViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 

@@ -520,6 +520,18 @@ namespace NAS.Models.Entities
       }
     }
 
+    public void EnsureWBS()
+    {
+      if (WBSItem == null)
+      {
+        WBSItem = new WBSItem
+        {
+          Name = Name,
+          Number = "1"
+        };
+      }
+    }
+
     #endregion
 
     #region Protected Methods

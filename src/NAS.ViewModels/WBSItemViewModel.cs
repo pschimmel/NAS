@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using NAS.Models.Entities;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
@@ -34,7 +30,7 @@ namespace NAS.ViewModels
       };
     }
 
-    private void RaiseChildPropertyChanged(IEnumerable<WBSItemViewModel> items, string propertyName)
+    private static void RaiseChildPropertyChanged(IEnumerable<WBSItemViewModel> items, string propertyName)
     {
       if (items == null || !items.Any())
       {
