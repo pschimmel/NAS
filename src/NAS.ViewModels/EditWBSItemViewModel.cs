@@ -15,12 +15,12 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public EditWBSItemViewModel(WBSItemViewModel item)
+    public EditWBSItemViewModel(WBSItem item)
       : base()
     {
-      _item = item.Item;
-      Number = item.Item.Number;
-      Name = item.Item.Name;
+      _item = item;
+      Number = item.Number;
+      Name = item.Name;
     }
 
     #endregion

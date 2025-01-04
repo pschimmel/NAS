@@ -14,6 +14,23 @@ namespace NAS.Models.Entities
       _order = 0;
       _parent = parent;
       Children = [];
+      Children.CollectionChanged += (s, e) =>
+      {
+        if (e.NewItems != null)
+        {
+          foreach (var child in e.NewItems.Cast<WBSItem>())
+          {
+            child.Parent = this;
+          }
+        }
+        if (e.OldItems != null)
+        {
+          foreach (var child in e.OldItems.Cast<WBSItem>())
+          {
+            child.Parent = null;
+          }
+        }
+      };
     }
 
     public string Number
@@ -72,6 +89,7 @@ namespace NAS.Models.Entities
         {
           _parent = value;
           OnPropertyChanged(nameof(Parent));
+          OnPropertyChanged(nameof(FullName));
         }
       }
     }

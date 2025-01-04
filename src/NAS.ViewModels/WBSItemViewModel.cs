@@ -8,7 +8,6 @@ namespace NAS.ViewModels
   public class WBSItemViewModel : ViewModelBase
   {
     public event EventHandler SelectionChanged;
-    private ObservableCollection<WBSItemViewModel> items;
     private bool isExpanded;
     private bool isSelected;
 
@@ -16,6 +15,7 @@ namespace NAS.ViewModels
     {
       isExpanded = true;
       Item = item;
+      Items = new ObservableCollection<WBSItemViewModel>();
       Item.PropertyChanged += (sender, e) =>
       {
         if (e.PropertyName == nameof(WBSItem.FullName))
@@ -48,7 +48,7 @@ namespace NAS.ViewModels
 
     public WBSItem Item { get; }
 
-    public WBSItemViewModel Parent { get; private set; }
+    //  public WBSItemViewModel Parent { get; set; }
 
     public bool IsExpanded
     {
@@ -92,37 +92,39 @@ namespace NAS.ViewModels
       }
     }
 
-    public ObservableCollection<WBSItemViewModel> Items
-    {
-      get
-      {
-        if (items == null)
-        {
-          items = [];
-          items.CollectionChanged += (sender, e) =>
-          {
-            if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
-            {
-              foreach (WBSItemViewModel item in e.NewItems)
-              {
-                item.Parent = this;
-              }
-            }
-            if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
-            {
-              foreach (WBSItemViewModel item in e.OldItems)
-              {
-                if (item.Parent == this)
-                {
-                  item.Parent = null;
-                }
-              }
-            }
-          };
-        }
-        return items;
-      }
-    }
+    public ObservableCollection<WBSItemViewModel> Items { get; }
+
+    //public ObservableCollection<WBSItemViewModel> Items
+    //{
+    //  get
+    //  {
+    //    if (items == null)
+    //    {
+    //      items = [];
+    //      items.CollectionChanged += (sender, e) =>
+    //      {
+    //        if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
+    //        {
+    //          foreach (WBSItemViewModel item in e.NewItems)
+    //          {
+    //            item.Parent = this;
+    //          }
+    //        }
+    //        if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
+    //        {
+    //          foreach (WBSItemViewModel item in e.OldItems)
+    //          {
+    //            if (item.Parent == this)
+    //            {
+    //              item.Parent = null;
+    //            }
+    //          }
+    //        }
+    //      };
+    //    }
+    //    return items;
+    //  }
+    //}
 
     public override string ToString()
     {

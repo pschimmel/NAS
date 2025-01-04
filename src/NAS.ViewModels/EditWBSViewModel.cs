@@ -14,7 +14,7 @@ namespace NAS.ViewModels
     #region Fields
 
     private readonly Schedule _schedule;
-    private WBSItemViewModel _wbsHierarchy;
+    private readonly WBSItemViewModel _wbsHierarchy;
     private Activity _currentWBSActivity;
     private ActionCommand _addWBSItemCommand;
     private ActionCommand _removeWBSItemCommand;
@@ -36,7 +36,8 @@ namespace NAS.ViewModels
     {
       schedule.EnsureWBS();
       _schedule = schedule;
-      RefreshWBS();
+      _wbsHierarchy = CreateWBSViewModel(_schedule.WBSItem);
+      RefreshChildren(_wbsHierarchy);
     }
 
     #endregion
@@ -101,12 +102,14 @@ namespace NAS.ViewModels
         Order = newOrder
       };
 
-      var wbsItemVM = new WBSItemViewModel(newWBSItem);
-      using var vm = new EditWBSItemViewModel(wbsItemVM);
-      if (ViewFactory.Instance.ShowDialog(vm) == true)
+      using var vm = new EditWBSItemViewModel(newWBSItem);
+      if (ViewFactory.Instance.ShowDialog(vm) == true && !string.IsNullOrWhiteSpace(vm.Name) && !string.IsNullOrWhiteSpace(vm.Number))
       {
-        CurrentWBSItem.Items.Add(wbsItemVM);
-        CurrentWBSItem = wbsItemVM;
+        CurrentWBSItem.Item.Children.Add(newWBSItem);
+        RefreshChildren(CurrentWBSItem);
+        // The VM is recreated in this dialog. Search it and select it.
+        var newItemVM = FindWBSItemModel(CurrentWBSItem, newWBSItem);
+        CurrentWBSItem = newItemVM;
       }
     }
 
@@ -126,8 +129,9 @@ namespace NAS.ViewModels
       UserNotificationService.Instance.Question(NASResources.MessageDeleteWBS, () =>
       {
         var parent = CurrentWBSItem.Item.Parent;
+        var parentVM = FindWBSItemModel(_wbsHierarchy, parent);
         parent.Children.Remove(CurrentWBSItem.Item);
-        CurrentWBSItem.Items.Remove(CurrentWBSItem);
+        parentVM.Items.Remove(CurrentWBSItem);
 
         var list = parent.Children.OrderBy(x => x.Order).ToList();
         for (int i = 0; i < parent.Children.Count; i++)
@@ -139,7 +143,7 @@ namespace NAS.ViewModels
 
     private bool CanRemoveWBSItem()
     {
-      return CurrentWBSItem != null && CurrentWBSItem.Parent != null;
+      return CurrentWBSItem != null && CurrentWBSItem.Item.Parent != null;
     }
 
     #endregion
@@ -150,7 +154,7 @@ namespace NAS.ViewModels
 
     private void EditWBSItem()
     {
-      var vm = new EditWBSItemViewModel(CurrentWBSItem);
+      var vm = new EditWBSItemViewModel(CurrentWBSItem.Item);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -173,15 +177,16 @@ namespace NAS.ViewModels
       previousItem.Order++;
       item.Order--;
       var buffer = item;
-      RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
+      var parentVM = FindWBSItemModel(_wbsHierarchy, parent);
+      RefreshChildren(parentVM);
+      CurrentWBSItem = FindWBSItemModel(parentVM, buffer);
     }
 
     private bool CanMoveWBSItemUp()
     {
       return CurrentWBSItem != null &&
-             CurrentWBSItem.Parent != null &&
-             CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order - 1) != null;
+             CurrentWBSItem.Item.Parent != null &&
+             CurrentWBSItem.Item.Parent.Children.FirstOrDefault(x => x.Order == CurrentWBSItem.Order - 1) != null;
     }
 
     #endregion
@@ -198,13 +203,14 @@ namespace NAS.ViewModels
       nextItem.Order--;
       CurrentWBSItem.Order++;
       var buffer = item;
-      RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
+      var parentVM = FindWBSItemModel(_wbsHierarchy, parent);
+      RefreshChildren(parentVM);
+      CurrentWBSItem = FindWBSItemModel(parentVM, buffer);
     }
 
     private bool CanMoveWBSItemDown()
     {
-      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.FirstOrDefault(x => x.Order == CurrentWBSItem.Order + 1) != null;
+      return CurrentWBSItem != null && CurrentWBSItem.Item.Parent != null && CurrentWBSItem.Item.Parent.Children.FirstOrDefault(x => x.Order == CurrentWBSItem.Order + 1) != null;
     }
 
     #endregion
@@ -220,13 +226,18 @@ namespace NAS.ViewModels
       var newParent = item.Parent.Parent;
       oldParent.Children.Remove(item);
       newParent.Children.Add(item);
+
+      // Refresh order of remaining children
       var items = oldParent.Children.ToList();
       for (int i = 0; i < items.Count; i++)
       {
         items[i].Order = i;
       }
 
+      // Item should be inserted below the old parent
       item.Order = oldParent.Order + 1;
+
+      // Increase the order of all items below the old parent
       items = newParent.Children.Where(x => x.Order >= item.Order && x != item).OrderBy(x => x.Order).ToList();
       for (int i = 0; i < items.Count; i++)
       {
@@ -234,13 +245,14 @@ namespace NAS.ViewModels
       }
 
       var buffer = item;
-      RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
+      var parentVM = FindWBSItemModel(_wbsHierarchy, newParent);
+      RefreshChildren(parentVM);
+      CurrentWBSItem = FindWBSItemModel(parentVM, buffer);
     }
 
     private bool CanMoveWBSItemLeft()
     {
-      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Parent != null;
+      return CurrentWBSItem != null && CurrentWBSItem.Item.Parent != null && CurrentWBSItem.Item.Parent.Parent != null;
     }
 
     #endregion
@@ -265,7 +277,7 @@ namespace NAS.ViewModels
       }
 
       var oldParent = item.Parent;
-      item.Parent.Children.Remove(item);
+      oldParent.Children.Remove(item);
       newParent.Children.Add(item);
       var items = oldParent.Children.ToList();
       for (int i = 0; i < items.Count; i++)
@@ -275,13 +287,14 @@ namespace NAS.ViewModels
 
       item.Order = newOrder;
       var buffer = item;
-      RefreshWBS();
-      CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
+      var parentVM = FindWBSItemModel(WBS.First(), oldParent);
+      RefreshChildren(parentVM);
+      CurrentWBSItem = FindWBSItemModel(parentVM, buffer);
     }
 
     private bool CanMoveWBSItemRight()
     {
-      return CurrentWBSItem != null && CurrentWBSItem.Parent != null && CurrentWBSItem.Parent.Items.Count > 1;
+      return CurrentWBSItem != null && CurrentWBSItem.Item.Parent != null && CurrentWBSItem.Item.Parent.Children.Count > 1;
     }
 
     #endregion
@@ -336,57 +349,28 @@ namespace NAS.ViewModels
 
     #region Private Members
 
-    private void RefreshWBS()
+    private void RefreshChildren(WBSItemViewModel parent)
     {
-      _wbsHierarchy = GetWBSViewModel(_schedule.WBSItem);
-      OnPropertyChanged(nameof(WBS));
+      parent.Items.Clear();
+      foreach (var childItem in parent.Item.Children.OrderBy(x => x.Order))
+      {
+        var childVM = CreateWBSViewModel(childItem);
+        parent.Items.Add(childVM);
+        RefreshChildren(childVM);
+      }
     }
 
-    private WBSItemViewModel GetWBSViewModel(WBSItem item)
+    private WBSItemViewModel CreateWBSViewModel(WBSItem item)
     {
-      var model = new WBSItemViewModel(item);
-      model.SelectionChanged += (sender, args) =>
+      var itemViewModel = new WBSItemViewModel(item);
+      itemViewModel.SelectionChanged += (sender, args) =>
       {
         if ((sender as WBSItemViewModel).IsSelected)
         {
           CurrentWBSItem = sender as WBSItemViewModel;
         }
       };
-      foreach (var subItem in item.Children.OrderBy(x => x.Order))
-      {
-        var subModel = GetWBSViewModel(subItem);
-        model.Items.Add(subModel);
-      }
-      item.Children.CollectionChanged += (sender, e) =>
-      {
-        if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
-        {
-          var list = model.Items.ToList();
-          model.Items.Clear();
-          foreach (object newItem in e.NewItems)
-          {
-            list.Add(GetWBSViewModel(newItem as WBSItem));
-          }
-          foreach (var listItem in list.OrderBy(x => x.Order))
-          {
-            model.Items.Add(listItem);
-          }
-        }
-        if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
-        {
-          var list = model.Items.ToList();
-          model.Items.Clear();
-          foreach (object oldItem in e.OldItems)
-          {
-            list.RemoveAll(x => x.Item == (WBSItem)oldItem);
-          }
-          foreach (var listItem in list)
-          {
-            model.Items.Add(listItem);
-          }
-        }
-      };
-      return model;
+      return itemViewModel;
     }
 
     private static WBSItemViewModel FindWBSItemModel(WBSItemViewModel parent, WBSItem item)
@@ -450,8 +434,8 @@ namespace NAS.ViewModels
         && dropInfo.TargetItem is WBSItemViewModel targetItem
         && sourceItem != targetItem)
       {
-        var sourceParent = sourceItem.Parent;
-        var targetParent = targetItem.Parent;
+        var sourceParent = sourceItem.Item.Parent;
+        var targetParent = targetItem.Item.Parent;
 
         // Cannot drop to topmost item
         if (targetParent == null)
@@ -517,7 +501,7 @@ namespace NAS.ViewModels
       }
 
       var buffer = sourceItem;
-      RefreshWBS();
+      // RefreshWBS();
       CurrentWBSItem = FindWBSItemModel(_wbsHierarchy, buffer);
     }
 

@@ -25,7 +25,7 @@
            Margin="2"
            HorizontalAlignment="Stretch"
            VerticalAlignment="Top"
-           Text="{Binding Number}" />
+           Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" />
   <TextBox Name="textBoxName"
            Grid.Row="1"
            Grid.Column="1"
@@ -33,5 +33,5 @@
            Margin="2"
            HorizontalAlignment="Stretch"
            VerticalAlignment="Top"
-           Text="{Binding Name}" />
+           Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
 </Grid>
