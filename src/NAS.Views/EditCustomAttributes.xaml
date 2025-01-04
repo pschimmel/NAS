@@ -7,6 +7,7 @@
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      x:Name="EditCustomAttributesGrid"
       d:DataContext="{d:DesignInstance Type=viewmodels:EditCustomAttributesViewModel}"
       mc:Ignorable="d">
   <Grid.Resources>
@@ -49,7 +50,7 @@
             <DataTemplate>
               <TextBlock Text="{Binding Name}">
                 <TextBlock.InputBindings>
-                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute1Command, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute1Command, ElementName=EditCustomAttributesGrid}" Gesture="LeftDoubleClick" />
                 </TextBlock.InputBindings>
               </TextBlock>
             </DataTemplate>
@@ -90,7 +91,7 @@
             <DataTemplate>
               <TextBlock Text="{Binding Name}">
                 <TextBlock.InputBindings>
-                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute2Command, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute2Command, ElementName=EditCustomAttributesGrid}" Gesture="LeftDoubleClick" />
                 </TextBlock.InputBindings>
               </TextBlock>
             </DataTemplate>
@@ -131,7 +132,7 @@
             <DataTemplate>
               <TextBlock Text="{Binding Name}">
                 <TextBlock.InputBindings>
-                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute3Command, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                  <MouseBinding Command="{Binding DataContext.EditCustomAttribute3Command, ElementName=EditCustomAttributesGrid}" Gesture="LeftDoubleClick" />
                 </TextBlock.InputBindings>
               </TextBlock>
             </DataTemplate>
