@@ -151,8 +151,6 @@ namespace NAS.ViewModels
 
     public ObservableCollection<RelationshipViewModel> Relationships { get; } = [];
 
-#pragma warning disable CA1822 // Mark members as static
-
     /// <summary>
     /// Gets the constraint types.
     /// </summary>
@@ -167,8 +165,6 @@ namespace NAS.ViewModels
     /// Gets the filter relations.
     /// </summary>
     public List<FilterRelation> FilterRelations => Enum.GetValues(typeof(FilterRelation)).Cast<FilterRelation>().ToList();
-
-#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets the WBS items.
@@ -530,13 +526,13 @@ namespace NAS.ViewModels
       }
       else
       {
-        var vm = new RelationshipViewModel(null);
+        var vm = new EditRelationshipViewModel(Schedule);
         if (ViewFactory.Instance.ShowDialog(vm) != true)
         {
           return;
         }
 
-        relationship = Schedule.AddRelationship(vm.Activity1, vm.Activity2, vm.SelectedRelationshipType);
+        relationship = Schedule.AddRelationship(vm.SelectedActivity1, vm.SelectedActivity2, vm.SelectedRelationshipType);
         relationship.Lag = vm.Lag;
       }
 
@@ -589,7 +585,7 @@ namespace NAS.ViewModels
     private void EditRelationshipCommandExecute()
     {
       var relationship = CurrentRelationship.Relationship;
-      using var vm = new EditRelationshipViewModel(relationship, Schedule);
+      using var vm = new EditRelationshipViewModel(Schedule, relationship);
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {

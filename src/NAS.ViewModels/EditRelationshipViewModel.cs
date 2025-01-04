@@ -6,12 +6,11 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class EditRelationshipViewModel : ValidatingViewModel
+  public class EditRelationshipViewModel : DialogContentViewModel
   {
     #region Fields
 
     private readonly Schedule _schedule;
-    private readonly Relationship _relationship;
     private Activity _selectedActivity1;
     private Activity _selectedActivity2;
     private RelationshipType _selectedRelationshipType;
@@ -21,15 +20,29 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public EditRelationshipViewModel(Relationship relationShip, Schedule schedule)
+    public EditRelationshipViewModel(Schedule schedule)
     {
       _schedule = schedule ?? throw new ArgumentNullException(nameof(schedule));
-      _relationship = relationShip ?? throw new ArgumentNullException(nameof(relationShip));
-      _selectedActivity1 = relationShip.Activity1;
-      _selectedActivity2 = relationShip.Activity2;
-      _selectedRelationshipType = relationShip.RelationshipType;
-      _lag = relationShip.Lag;
     }
+
+    public EditRelationshipViewModel(Schedule schedule, Relationship relationShip = null)
+      : this(schedule)
+    {
+      _selectedActivity1 = relationShip?.Activity1;
+      _selectedActivity2 = relationShip?.Activity2;
+      _selectedRelationshipType = relationShip?.RelationshipType ?? RelationshipType.FinishStart;
+      _lag = relationShip?.Lag ?? 0;
+    }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Relationship;
+
+    public override string Icon => "Relationship";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(400, 225);
 
     #endregion
 
@@ -113,18 +126,6 @@ namespace NAS.ViewModels
 
       return result;
     }
-
-    #endregion
-
-    #region Apply
-
-    //public void Apply()
-    //{
-    //  _relationship.Activity1 = _selectedActivity1; // Todo: Make Activity Readonly!
-    //  _relationship.Activity2 = _selectedActivity2;
-    //  _relationship.RelationshipType = _selectedRelationshipType;
-    //  _relationship.Lag = _lag;
-    //}
 
     #endregion
   }

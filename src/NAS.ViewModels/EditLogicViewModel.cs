@@ -149,8 +149,7 @@ namespace NAS.ViewModels
 
     private void EditPredecessorCommandExecute()
     {
-      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1 == CurrentPredecessor.Activity && x.Activity2 == CurrentActivity);
-      using var vm = new EditRelationshipViewModel(relationship, CurrentActivity.Schedule)
+      using var vm = new EditRelationshipViewModel(CurrentActivity.Schedule)
       {
         SelectedActivity1 = CurrentPredecessor.Activity,
         SelectedActivity2 = CurrentActivity,
@@ -230,8 +229,7 @@ namespace NAS.ViewModels
 
     private void EditSuccessorCommandExecute()
     {
-      var relationship = _schedule.Relationships.FirstOrDefault(x => x.Activity1 == CurrentActivity && x.Activity2 == CurrentSuccessor.Activity);
-      using var vm = new EditRelationshipViewModel(relationship, CurrentActivity.Schedule)
+      using var vm = new EditRelationshipViewModel(CurrentActivity.Schedule)
       {
         SelectedActivity1 = CurrentActivity,
         SelectedActivity2 = CurrentSuccessor.Activity,
