@@ -394,10 +394,10 @@
     <value>Kalender</value>
   </data>
   <data name="CalendarDay" xml:space="preserve">
-    <value>Kalender Tag</value>
+    <value>Kalendertag</value>
   </data>
   <data name="CalendarResource" xml:space="preserve">
-    <value>Kalender Ressource</value>
+    <value>Kalender-Ressource</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -971,6 +971,9 @@
   </data>
   <data name="HorizontalAlignment" xml:space="preserve">
     <value>Horizontale Ausrichtung</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Stunde</value>
   </data>
   <data name="Hours" xml:space="preserve">
     <value>Stunden</value>

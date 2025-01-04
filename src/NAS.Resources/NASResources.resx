@@ -972,6 +972,9 @@
   <data name="HorizontalAlignment" xml:space="preserve">
     <value>Horizontal Alignment</value>
   </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
   <data name="Hours" xml:space="preserve">
     <value>Hours</value>
   </data>

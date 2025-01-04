@@ -45,6 +45,19 @@ namespace NAS.ViewModels
 
     #endregion
 
+    #region Validation
+
+    protected override ValidationResult OnValidating()
+    {
+      return string.IsNullOrWhiteSpace(Name)
+        ? ValidationResult.Error(NASResources.PleaseEnterName)
+        : string.IsNullOrWhiteSpace(Number)
+        ? ValidationResult.Error(NASResources.PleaseEnterNumber)
+        : ValidationResult.OK();
+    }
+
+    #endregion
+
     #region Apply
 
     protected override void OnApply()

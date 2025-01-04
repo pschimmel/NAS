@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      x:Name="EditResourcesViewGrid"
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
       xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodel:EditResourcesViewModel}"
@@ -53,7 +54,7 @@
                            Margin="2,0"
                            Text="{Binding Name}">
                   <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding DataContext.EditGlobalResourceCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                    <MouseBinding Command="{Binding DataContext.EditGlobalResourceCommand, ElementName=EditResourcesViewGrid}" Gesture="LeftDoubleClick" />
                   </TextBlock.InputBindings>
                 </TextBlock>
               </Grid>
@@ -101,7 +102,7 @@
                            Margin="2,0"
                            Text="{Binding Name}">
                   <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding DataContext.EditResourceCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+                    <MouseBinding Command="{Binding DataContext.EditResourceCommand, ElementName=EditResourcesViewGrid}" Gesture="LeftDoubleClick" />
                   </TextBlock.InputBindings>
                 </TextBlock>
               </Grid>

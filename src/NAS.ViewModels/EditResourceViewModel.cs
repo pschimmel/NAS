@@ -11,6 +11,7 @@ namespace NAS.ViewModels
     #region Fields
 
     public Resource _resource;
+    private string _unit;
 
     #endregion
 
@@ -23,9 +24,17 @@ namespace NAS.ViewModels
       CostsPerUnit = resource.CostsPerUnit;
       Limit = resource.Limit;
 
-      if (_resource is MaterialResource materialResource)
+      switch (_resource)
       {
-        Unit = materialResource.Unit;
+        case MaterialResource materialResource:
+          _unit = materialResource.Unit;
+          break;
+        case WorkResource:
+          _unit = NASResources.Hours;
+          break;
+        case CalendarResource:
+          _unit = NASResources.CalendarDay;
+          break;
       }
     }
 
@@ -93,7 +102,18 @@ namespace NAS.ViewModels
 
     public string Name { get; set; }
 
-    public string Unit { get; set; }
+    public string Unit
+    {
+      get => _unit;
+      set
+      {
+        if (_unit != value)
+        {
+          _unit = value;
+          OnPropertyChanged(nameof(Unit));
+        }
+      }
+    }
 
     public decimal CostsPerUnit { get; set; }
 
