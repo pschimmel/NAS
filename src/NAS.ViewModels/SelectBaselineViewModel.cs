@@ -1,45 +1,39 @@
 ﻿using NAS.Models.Entities;
+using NAS.Resources;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class SelectBaselineViewModel : ViewModelBase
+  public class SelectBaselineViewModel : DialogContentViewModel
   {
-    #region Fields
-
-    private Schedule selectedBaseline;
-
-    #endregion
-
     #region Constructor
 
     public SelectBaselineViewModel(IEnumerable<Schedule> schedules)
       : base()
     {
-      Schedules = new List<Schedule>(schedules);
+      Baselines = new List<Schedule>(schedules);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Baseline;
+
+    public override string Icon => "Baseline";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(400, 350);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Baseline;
 
     #endregion
 
     #region Properties
 
-    public override HelpTopic HelpTopicKey => HelpTopic.Compare;
+    public List<Schedule> Baselines { get; }
 
-    public List<Schedule> Schedules { get; private set; }
-
-    public Schedule SelectedBaseline
-    {
-      get => selectedBaseline;
-      set
-      {
-        if (selectedBaseline != value)
-        {
-          selectedBaseline = value;
-          OnPropertyChanged(nameof(SelectedBaseline));
-        }
-      }
-    }
+    public Schedule SelectedBaseline { get; set; }
 
     #endregion
   }

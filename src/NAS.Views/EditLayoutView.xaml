@@ -1,0 +1,312 @@
+﻿<Grid x:Class="NAS.Views.EditLayoutView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:converters="clr-namespace:NAS.Views.Converters"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:toolConverters="clr-namespace:ES.Tools.Converters;assembly=ES.Tools"
+      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      Width="400"
+      Height="450"
+      d:DataContext="{d:DesignInstance Type=viewmodels:EditLayoutViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <BoolToVisibilityConverter x:Key="VisibilityConverter" />
+      <InverseBoolToVisibilityConverter x:Key="InverseVisibilityConverter" />
+      <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
+      <toolConverters:ColorToStringConverter x:Key="ColorConverter" />
+    </ResourceDictionary>
+  </Grid.Resources>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="Auto" />
+    <ColumnDefinition />
+  </Grid.ColumnDefinitions>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition />
+  </Grid.RowDefinitions>
+  <TextBlock Margin="5"
+             VerticalAlignment="Center"
+             Text="{x:Static resx:NASResources.Name}" />
+  <TextBox Grid.Column="1"
+           Margin="2"
+           Text="{Binding Name}" />
+  <TextBlock Grid.Row="1"
+             Margin="5"
+             VerticalAlignment="Center"
+             Text="{x:Static resx:NASResources.ChartType}" />
+  <TextBlock Grid.Row="1"
+             Grid.Column="1"
+             Margin="5"
+             VerticalAlignment="Center"
+             Text="{Binding LayoutType}" />
+  <TabControl Grid.Row="2" Grid.ColumnSpan="2">
+    <TabItem Header="{x:Static resx:NASResources.View}">
+      <Grid Margin="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="28*" />
+          <ColumnDefinition Width="11*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2"
+                    Margin="2,2,2,2"
+                    Orientation="Vertical">
+          <CheckBox Margin="5"
+                    Content="{x:Static resx:NASResources.ShowRelationships}"
+                    IsChecked="{Binding ShowRelationships}" />
+          <CheckBox Margin="5"
+                    Content="{x:Static resx:NASResources.ShowFloat}"
+                    IsChecked="{Binding ShowFloat}" />
+          <Button Margin="5"
+                  Command="{Binding EditPrintLayoutCommand}"
+                  Content="{x:Static resx:NASResources.EditPrintLayout}" />
+        </StackPanel>
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resx:NASResources.Colors}">
+      <Grid Margin="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Margin="5" Text="{x:Static resx:NASResources.Activities}" />
+        <toolkit:ColorPicker Grid.Column="1"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding ActivityStandardColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="1"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.CriticalActivities}" />
+        <toolkit:ColorPicker Grid.Row="1"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding ActivityCriticalColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="2"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.FinishedActivities}" />
+        <toolkit:ColorPicker Grid.Row="2"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding ActivityDoneColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="3"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.Milestones}" />
+        <toolkit:ColorPicker Grid.Row="3"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding MilestoneStandardColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="4"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.CriticalMilestones}" />
+        <toolkit:ColorPicker Grid.Row="4"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding MilestoneCriticalColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="5"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.FinishedMilestones}" />
+        <toolkit:ColorPicker Grid.Row="5"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding MilestoneDoneColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+        <TextBlock Grid.Row="6"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.DataDate}" />
+        <toolkit:ColorPicker Grid.Row="6"
+                             Grid.Column="1"
+                             Width="120"
+                             Margin="2"
+                             AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                             RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                             SelectedColor="{Binding DataDateColor, Converter={StaticResource ColorConverter}}"
+                             StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resx:NASResources.GanttChart}" Visibility="{Binding IsPERT, Converter={StaticResource InverseVisibilityConverter}}">
+      <Grid Margin="2">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBlock Margin="5" Text="{x:Static resx:NASResources.LeftText}" />
+        <ComboBox Grid.Column="1"
+                  Height="25"
+                  Margin="2"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding ActivityProperties}"
+                  SelectedItem="{Binding LeftText}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Height="Auto"
+                         Margin="0"
+                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Grid.Row="1"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.CenterText}" />
+        <ComboBox Grid.Row="1"
+                  Grid.Column="1"
+                  Height="25"
+                  Margin="2"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding ActivityProperties}"
+                  SelectedItem="{Binding CenterText}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Height="Auto"
+                         Margin="0"
+                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock Grid.Row="2"
+                   Margin="5"
+                   Text="{x:Static resx:NASResources.RightText}" />
+        <ComboBox Grid.Row="2"
+                  Grid.Column="1"
+                  Height="25"
+                  Margin="2"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding ActivityProperties}"
+                  SelectedItem="{Binding RightText}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Height="Auto"
+                         Margin="0"
+                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resx:NASResources.PertChart}" Visibility="{Binding IsPERT, Converter={StaticResource VisibilityConverter}}">
+      <Grid Margin="2">
+        <StackPanel Margin="2" Orientation="Vertical">
+          <GroupBox Margin="2" Header="{x:Static resx:NASResources.PertTemplate}">
+            <StackPanel Orientation="Vertical">
+              <Border Margin="2"
+                      BorderBrush="Black"
+                      BorderThickness="1">
+                <TextBlock Margin="2" Text="{Binding PERTTemplate.Name}" />
+              </Border>
+              <Button Margin="2"
+                      Command="{Binding SelectPertTemplateCommand}"
+                      Content="{x:Static resx:NASResources.SelectTemplate}" />
+            </StackPanel>
+          </GroupBox>
+        </StackPanel>
+      </Grid>
+    </TabItem>
+    <TabItem Header="{x:Static resx:NASResources.VisibleBaselines}">
+      <Grid Margin="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <ToolBarPanel Grid.ColumnSpan="2">
+          <ToolBar ToolBarTray.IsLocked="True">
+            <Button Command="{Binding AddVisibleBaselineCommand}" ToolTip="{x:Static resx:NASResources.AddBaseline}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+            </Button>
+            <Button Command="{Binding RemoveVisibleBaselineCommand}" ToolTip="{x:Static resx:NASResources.RemoveBaseline}">
+              <tools:AutoGrayableImage Width="16"
+                                       Height="16"
+                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+            </Button>
+          </ToolBar>
+        </ToolBarPanel>
+        <DataGrid Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsSynchronizedWithCurrentItem="True"
+                  ItemsSource="{Binding VisibleBaselines}"
+                  SelectedItem="{Binding SelectedVisibleBaseline}"
+                  SelectionMode="Single">
+          <DataGrid.Columns>
+            <DataGridTextColumn Binding="{Binding Schedule.Name}"
+                                Header="{x:Static resx:NASResources.Name}"
+                                IsReadOnly="True" />
+            <DataGridTextColumn Binding="{Binding Schedule.Date, Converter={StaticResource DateConverter}}"
+                                Header="{x:Static resx:NASResources.Date}"
+                                IsReadOnly="True" />
+            <DataGridTemplateColumn Width="120" Header="{x:Static resx:NASResources.Color}">
+              <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                  <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Rectangle.Fill>
+                      <SolidColorBrush Color="{Binding Color, Converter={StaticResource ColorConverter}}" />
+                    </Rectangle.Fill>
+                  </Rectangle>
+                </DataTemplate>
+              </DataGridTemplateColumn.CellTemplate>
+              <DataGridTemplateColumn.CellEditingTemplate>
+                <DataTemplate>
+                  <toolkit:ColorPicker AvailableColorsHeader="{x:Static resx:NASResources.AvailableColors}"
+                                       RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
+                                       SelectedColor="{Binding Color, Converter={StaticResource ColorConverter}}"
+                                       StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
+                </DataTemplate>
+              </DataGridTemplateColumn.CellEditingTemplate>
+            </DataGridTemplateColumn>
+          </DataGrid.Columns>
+        </DataGrid>
+      </Grid>
+    </TabItem>
+  </TabControl>
+</Grid>

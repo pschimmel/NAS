@@ -44,11 +44,11 @@ namespace NAS.ViewModels
 
     public override DialogSize DialogSize => DialogSize.Fixed(400, 225);
 
+    public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
+
     #endregion
 
     #region Properties
-
-    public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
 
     public List<Activity> Activities => _schedule.Activities.ToList();
 

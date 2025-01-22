@@ -4,17 +4,20 @@ namespace NAS.Models.Entities
 {
   public class FilterDefinition : NASObject
   {
+    internal readonly Schedule _schedule;
     private ActivityProperty _property;
     private FilterRelation _relation;
     private string _objectString;
 
-    public FilterDefinition(ActivityProperty property)
+    public FilterDefinition(Schedule schedule, ActivityProperty property)
     {
+      _schedule = schedule;
       _property = property;
     }
 
     public FilterDefinition(FilterDefinition other)
     {
+      _schedule = other._schedule;
       _property = other.Property;
       _relation = other.Relation;
       _objectString = other.ObjectString;
@@ -67,9 +70,9 @@ namespace NAS.Models.Entities
       get
       {
         string s = ObjectString;
-        if (Layout != null && Layout.Schedule != null)
+        if (Layout != null && _schedule != null)
         {
-          var schedule = Layout.Schedule;
+          var schedule = _schedule;
           if (Guid.TryParse(ObjectString, out var id))
           {
             switch (Property)
@@ -315,7 +318,7 @@ namespace NAS.Models.Entities
 
     private WBSItem FindWBSItem(Guid id)
     {
-      return Layout == null || Layout.Schedule == null ? null : FindWBSItem(Layout.Schedule.WBSItem, id);
+      return Layout == null || _schedule == null ? null : FindWBSItem(_schedule.WBSItem, id);
     }
 
     private static WBSItem FindWBSItem(WBSItem parent, Guid id)

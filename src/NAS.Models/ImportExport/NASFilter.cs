@@ -700,6 +700,9 @@ namespace NAS.Models.ImportExport
 
               schedule.Layouts.Add(l);
 
+              GanttLayout ganttLayout = l as GanttLayout;
+              PERTLayout pertLayout = l as PERTLayout;
+
               foreach (XmlNode layoutSubNode in layoutNode.ChildNodes)
               {
                 if (layoutSubNode.Name == "Name")
@@ -734,14 +737,12 @@ namespace NAS.Models.ImportExport
                 {
                   schedule.VisibleBaselines.First().Color = layoutSubNode.GetColor();
                 }
-                else if (layoutSubNode.Name == "PERTDefinition" && layoutSubNode.GetInteger().HasValue)
+                else if (layoutSubNode.Name == "PERTDefinition" && layoutSubNode.GetInteger().HasValue && pertLayout != null)
                 {
-                  l.PERTDefinition = schedule.PERTDefinitions.ToList()[layoutSubNode.GetInteger().Value];
+                  pertLayout.PERTDefinition = schedule.PERTDefinitions.ToList()[layoutSubNode.GetInteger().Value];
                 }
                 else if (layoutSubNode.Name == "VisibleBaselines")
                 {
-                  //ScheduleController.CheckValues(schedule);
-                  //controller.SaveChanges();
                   foreach (XmlNode baselineNode in layoutSubNode.ChildNodes)
                   {
                     if (baselineNode.Name == "VisibleBaseline")
@@ -761,7 +762,7 @@ namespace NAS.Models.ImportExport
                       }
                       if (baseline != null)
                       {
-                        var v = new VisibleBaseline(l, schedule);
+                        var v = new VisibleBaseline(schedule);
                         v.Color = color;
                         l.VisibleBaselines.Add(v);
                       }
@@ -770,7 +771,7 @@ namespace NAS.Models.ImportExport
                 }
                 else if (layoutSubNode.Name == "ShowBaseline" && layoutSubNode.GetBoolean().HasValue && schedule.Baselines.Count > 0)
                 {
-                  var v = new VisibleBaseline(l, schedule.Baselines.First());
+                  var v = new VisibleBaseline(schedule.Baselines.First());
                   l.VisibleBaselines.Add(v);
                 }
                 else if (layoutSubNode.Name == "ShowRelationships" && layoutSubNode.GetBoolean().HasValue)
@@ -866,28 +867,28 @@ namespace NAS.Models.ImportExport
                     }
                   }
                 }
-                else if (layoutSubNode.Name == "LeftText")
+                else if (layoutSubNode.Name == "LeftText" && ganttLayout != null)
                 {
                   var property = ActivityProperty.None;
                   if (Enum.TryParse(layoutSubNode.InnerText, out property))
                   {
-                    l.LeftText = property;
+                    ganttLayout.LeftText = property;
                   }
                 }
-                else if (layoutSubNode.Name == "CenterText")
+                else if (layoutSubNode.Name == "CenterText" && ganttLayout != null)
                 {
                   var property = ActivityProperty.None;
                   if (Enum.TryParse(layoutSubNode.InnerText, out property))
                   {
-                    l.CenterText = property;
+                    ganttLayout.CenterText = property;
                   }
                 }
-                else if (layoutSubNode.Name == "RightText")
+                else if (layoutSubNode.Name == "RightText" && ganttLayout != null)
                 {
                   var property = ActivityProperty.None;
                   if (Enum.TryParse(layoutSubNode.InnerText, out property))
                   {
-                    l.RightText = property;
+                    ganttLayout.RightText = property;
                   }
                 }
                 else if (layoutSubNode.Name == "FilterCombination")
@@ -922,7 +923,7 @@ namespace NAS.Models.ImportExport
                           obj = filterSubNode.InnerText;
                         }
                       }
-                      var f = new FilterDefinition(property);
+                      var f = new FilterDefinition(schedule, property);
                       f.Relation = relation;
                       f.ObjectString = obj;
                       l.FilterDefinitions.Add(f);
@@ -931,8 +932,6 @@ namespace NAS.Models.ImportExport
                 }
                 else if (layoutSubNode.Name == "VisibleResources")
                 {
-                  //ScheduleController.CheckValues(schedule);
-                  //controller.SaveChanges();
                   foreach (XmlNode resourceNode in layoutSubNode.ChildNodes)
                   {
                     if (resourceNode.Name == "VisibleResource")
@@ -1423,27 +1422,30 @@ namespace NAS.Models.ImportExport
         {
           if (layouts[i] != null)
           {
+            var layout = layouts[i];
+            var ganttLayout = layout as GanttLayout;
+            var pertLayout = layout as PERTLayout;
             var layoutElement = xml.CreateElement("Layout");
             layoutsElement.AppendChild(layoutElement);
             layoutElement.AppendTextChild("ID", i);
-            layoutElement.AppendTextChild("Name", layouts[i].Name);
-            layoutElement.AppendTextChild("ActivityStandardColor", layouts[i].ActivityStandardColor);
-            layoutElement.AppendTextChild("ActivityCriticalColor", layouts[i].ActivityCriticalColor);
-            layoutElement.AppendTextChild("ActivityDoneColor", layouts[i].ActivityDoneColor);
-            layoutElement.AppendTextChild("MilestoneStandardColor", layouts[i].MilestoneStandardColor);
-            layoutElement.AppendTextChild("MilestoneCriticalColor", layouts[i].MilestoneCriticalColor);
-            layoutElement.AppendTextChild("MilestoneDoneColor", layouts[i].MilestoneDoneColor);
-            layoutElement.AppendTextChild("DataDateColor", layouts[i].DataDateColor);
-            if (layouts[i].VisibleBaselines.Count > 0)
+            layoutElement.AppendTextChild("Name", layout.Name);
+            layoutElement.AppendTextChild("ActivityStandardColor", layout.ActivityStandardColor);
+            layoutElement.AppendTextChild("ActivityCriticalColor", layout.ActivityCriticalColor);
+            layoutElement.AppendTextChild("ActivityDoneColor", layout.ActivityDoneColor);
+            layoutElement.AppendTextChild("MilestoneStandardColor", layout.MilestoneStandardColor);
+            layoutElement.AppendTextChild("MilestoneCriticalColor", layout.MilestoneCriticalColor);
+            layoutElement.AppendTextChild("MilestoneDoneColor", layout.MilestoneDoneColor);
+            layoutElement.AppendTextChild("DataDateColor", layout.DataDateColor);
+            if (layout.VisibleBaselines.Count > 0)
             {
-              layoutElement.AppendTextChild("BaselineColor", layouts[i].VisibleBaselines.First().Color);
+              layoutElement.AppendTextChild("BaselineColor", layout.VisibleBaselines.First().Color);
               layoutElement.AppendTextChild("ShowBaseline", true);
             }
-            layoutElement.AppendTextChild("ShowRelationships", layouts[i].ShowRelationships);
-            layoutElement.AppendTextChild("ShowFloat", layouts[i].ShowFloat);
+            layoutElement.AppendTextChild("ShowRelationships", layout.ShowRelationships);
+            layoutElement.AppendTextChild("ShowFloat", layout.ShowFloat);
             var visibleColumnsElement = xml.CreateElement("VisibleColumns");
             layoutElement.AppendChild(visibleColumnsElement);
-            foreach (var activityColumn in layouts[i].ActivityColumns)
+            foreach (var activityColumn in layout.ActivityColumns)
             {
               var activityColumnElement = xml.CreateElement("ActivityColumn");
               visibleColumnsElement.AppendChild(activityColumnElement);
@@ -1455,7 +1457,7 @@ namespace NAS.Models.ImportExport
             }
             var sortingDefinitionsElement = xml.CreateElement("SortingDefinitions");
             layoutElement.AppendChild(sortingDefinitionsElement);
-            foreach (var sortingDefinition in layouts[i].SortingDefinitions)
+            foreach (var sortingDefinition in layout.SortingDefinitions)
             {
               var sortingDefinitionElement = xml.CreateElement("SortingDefinition");
               sortingDefinitionsElement.AppendChild(sortingDefinitionElement);
@@ -1464,22 +1466,28 @@ namespace NAS.Models.ImportExport
             }
             var groupingDefinitionsElement = xml.CreateElement("GroupingDefinitions");
             layoutElement.AppendChild(groupingDefinitionsElement);
-            foreach (var groupingDefinition in layouts[i].GroupingDefinitions)
+            foreach (var groupingDefinition in layout.GroupingDefinitions)
             {
               var groupingDefinitionElement = xml.CreateElement("GroupingDefinition");
               groupingDefinitionsElement.AppendChild(groupingDefinitionElement);
               groupingDefinitionElement.AppendTextChild("Property", groupingDefinition.Property);
               groupingDefinitionElement.AppendTextChild("Color", groupingDefinition.Color);
             }
-            layoutElement.AppendTextChild("LeftText", layouts[i].LeftText);
-            layoutElement.AppendTextChild("CenterText", layouts[i].CenterText);
-            layoutElement.AppendTextChild("RightText", layouts[i].RightText);
-            layoutElement.AppendTextChild("FilterCombination", layouts[i].FilterCombination);
-            layoutElement.AppendTextChild("IsPert", layouts[i].LayoutType == LayoutType.PERT);
-            layoutElement.AppendTextChild("PERTDefinition", perts.IndexOf(layouts[i].PERTDefinition));
+            if (ganttLayout != null)
+            {
+              layoutElement.AppendTextChild("LeftText", ganttLayout.LeftText);
+              layoutElement.AppendTextChild("CenterText", ganttLayout.CenterText);
+              layoutElement.AppendTextChild("RightText", ganttLayout.RightText);
+            }
+            layoutElement.AppendTextChild("FilterCombination", layout.FilterCombination);
+            layoutElement.AppendTextChild("IsPert", layout.LayoutType == LayoutType.PERT);
+            if (pertLayout != null)
+            {
+              layoutElement.AppendTextChild("PERTDefinition", perts.IndexOf(pertLayout.PERTDefinition));
+            }
             var filtersElement = xml.CreateElement("Filters");
             layoutElement.AppendChild(filtersElement);
-            foreach (var filter in layouts[i].FilterDefinitions)
+            foreach (var filter in layout.FilterDefinitions)
             {
               var filterElement = xml.CreateElement("FilterDefinition");
               filtersElement.AppendChild(filterElement);
@@ -1489,7 +1497,7 @@ namespace NAS.Models.ImportExport
             }
             var resourcesElement = xml.CreateElement("VisibleResources");
             layoutElement.AppendChild(resourcesElement);
-            foreach (var resource in layouts[i].VisibleResources)
+            foreach (var resource in layout.VisibleResources)
             {
               var resourceElement = xml.CreateElement("VisibleResource");
               resourcesElement.AppendChild(resourceElement);
@@ -1501,7 +1509,7 @@ namespace NAS.Models.ImportExport
             }
             var baselinesElement = xml.CreateElement("VisibleBaselines");
             layoutElement.AppendChild(baselinesElement);
-            foreach (var baseline in layouts[i].VisibleBaselines)
+            foreach (var baseline in layout.VisibleBaselines)
             {
               var baselineElement = xml.CreateElement("VisibleBaseline");
               resourcesElement.AppendChild(baselineElement);

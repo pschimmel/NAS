@@ -35,19 +35,19 @@ namespace NAS.Models.Controllers
         {
           layout.FooterItems.Add(new FooterItem());
         }
-        if (layout.LayoutType == LayoutType.PERT)
+        if (layout is PERTLayout pertLayout)
         {
-          if (layout.PERTDefinition == null)
+          if (pertLayout.PERTDefinition == null)
           {
-            if (layout.Schedule.PERTDefinitions.Count != 0)
+            if (schedule.PERTDefinitions.Count != 0)
             {
-              layout.PERTDefinition = layout.Schedule.PERTDefinitions.First();
+              pertLayout.PERTDefinition = schedule.PERTDefinitions.First();
             }
             else
             {
               var newDefinition = GetStandardPert();
-              layout.Schedule.PERTDefinitions.Add(newDefinition);
-              layout.PERTDefinition = newDefinition;
+              schedule.PERTDefinitions.Add(newDefinition);
+              pertLayout.PERTDefinition = newDefinition;
             }
           }
         }

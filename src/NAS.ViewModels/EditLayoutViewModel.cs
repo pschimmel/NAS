@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
@@ -9,136 +9,183 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class EditLayoutViewModel : ValidatingViewModel
+  public class EditLayoutViewModel : DialogContentViewModel
   {
     #region Fields
 
-    private VisibleBaseline currentVisibleBaseline;
-    private List<ActivityProperty> activityProperties = null;
+    private readonly Schedule _schedule;
+    private List<ActivityProperty> _activityProperties = null;
+    private ActionCommand _editPrintLayoutCommand;
+    private ActionCommand _selectPertTemplateCommand;
+    private ActionCommand _addVisibleBaselineCommand;
+    private ActionCommand _removeVisibleBaselineCommand;
 
     #endregion
 
     #region Constructor
 
-    public EditLayoutViewModel(Layout layout)
-      : base()
+    public EditLayoutViewModel(Schedule schedule, Layout layout)
     {
-      CurrentLayout = layout;
-      Schedule = layout.Schedule;
-      layout.PropertyChanged += Layout_PropertyChanged;
-      EditPrintLayoutCommand = new ActionCommand(EditPrintLayoutCommandExecute, () => EditPrintLayoutCommandCanExecute);
-      SelectPertTemplateCommand = new ActionCommand(SelectPertTemplateCommandExecute, () => SelectPertTemplateCommandCanExecute);
-      AddVisibleBaselineCommand = new ActionCommand(AddVisibleBaselineCommandExecute, () => AddVisibleBaselineCommandCanExecute);
-      RemoveVisibleBaselineCommand = new ActionCommand(RemoveVisibleBaselineCommandExecute, () => RemoveVisibleBaselineCommandCanExecute);
-    }
+      _schedule = schedule;
+      Layout = layout;
 
-    private void Layout_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      if (e.PropertyName == nameof(Layout.LayoutType))
+      Name = layout.Name;
+      ShowRelationships = layout.ShowRelationships;
+      ShowFloat = layout.ShowFloat;
+
+      ActivityStandardColor = layout.ActivityStandardColor;
+      ActivityCriticalColor = layout.ActivityCriticalColor;
+      ActivityDoneColor = layout.ActivityDoneColor;
+      MilestoneStandardColor = layout.MilestoneStandardColor;
+      MilestoneCriticalColor = layout.MilestoneCriticalColor;
+      MilestoneDoneColor = layout.MilestoneDoneColor;
+      DataDateColor = layout.DataDateColor;
+
+      if (layout is PERTLayout pertLayout)
       {
-        OnPropertyChanged(nameof(IsPERT));
+        PERTTemplate = pertLayout.PERTDefinition?.Clone();
+      }
+      else if (layout is GanttLayout ganttLayout)
+      {
+        LeftText = ganttLayout.LeftText;
+        CenterText = ganttLayout.CenterText;
+        RightText = ganttLayout.RightText;
+      }
+      else
+      {
+        throw new NotImplementedException("Unknown layout type.");
+      }
+
+      VisibleBaselines = new ObservableCollection<VisibleBaseline>();
+      foreach (var baseline in layout.VisibleBaselines)
+      {
+        VisibleBaselines.Add(baseline.Clone());
       }
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Layout;
+
+    public override string Icon => "Layout";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(400, 450);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
 
     #endregion
 
     #region Properties
 
-    public Layout CurrentLayout { get; private set; }
+    internal Layout Layout { get; }
 
-    public Schedule Schedule { get; private set; }
+    public LayoutType LayoutType => Layout.LayoutType;
 
-    public bool IsPERT => CurrentLayout.LayoutType == LayoutType.PERT;
+    public bool IsPERT => LayoutType == LayoutType.PERT;
 
-    public List<LayoutType> LayoutTypes => Enum.GetValues(typeof(LayoutType)).OfType<LayoutType>().ToList();
+    public string Name { get; set; }
 
-    public List<ActivityProperty> ActivityProperties
-    {
-      get
-      {
-        activityProperties ??= new List<ActivityProperty>(Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>());
-        return activityProperties;
-      }
-    }
+    public bool ShowRelationships { get; set; }
 
-    public VisibleBaseline CurrentVisibleBaseline
-    {
-      get => currentVisibleBaseline;
-      set
-      {
-        if (currentVisibleBaseline != value)
-        {
-          currentVisibleBaseline = value;
-          OnPropertyChanged(nameof(CurrentVisibleBaseline));
-        }
-      }
-    }
+    public bool ShowFloat { get; set; }
+
+    public PERTDefinition PERTTemplate { get; private set; }
+
+    public string ActivityStandardColor { get; set; }
+
+    public string ActivityCriticalColor { get; set; }
+
+    public string ActivityDoneColor { get; set; }
+
+    public string MilestoneStandardColor { get; set; }
+
+    public string MilestoneCriticalColor { get; set; }
+
+    public string MilestoneDoneColor { get; set; }
+
+    public string DataDateColor { get; set; }
+
+    public ActivityProperty LeftText { get; set; }
+
+    public ActivityProperty CenterText { get; set; }
+
+    public ActivityProperty RightText { get; set; }
+
+    public List<ActivityProperty> ActivityProperties => _activityProperties ??= new List<ActivityProperty>(Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>());
+
+    public ObservableCollection<VisibleBaseline> VisibleBaselines { get; }
+
+    public VisibleBaseline SelectedVisibleBaseline { get; set; }
 
     #endregion
 
     #region Edit Print Layout
 
-    public ICommand EditPrintLayoutCommand { get; }
+    public ICommand EditPrintLayoutCommand => _editPrintLayoutCommand ??= new ActionCommand(EditPrintLayout);
 
-    private void EditPrintLayoutCommandExecute()
+    private void EditPrintLayout()
     {
-      using var vm = new PrintLayoutViewModel(CurrentLayout);
+      using var vm = new PrintLayoutViewModel(Layout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         vm.Apply();
       }
     }
 
-    private bool EditPrintLayoutCommandCanExecute => true;
-
     #endregion
 
     #region Select PERT Template
 
-    public ICommand SelectPertTemplateCommand { get; }
+    public ICommand SelectPertTemplateCommand => _selectPertTemplateCommand ??= new ActionCommand(SelectPertTemplate, CanSelectPertTemplate);
 
-    private void SelectPertTemplateCommandExecute()
+    private void SelectPertTemplate()
     {
-      var vm = new PERTDefinitionsViewModel(Schedule);
+      var vm = new PERTDefinitionsViewModel(_schedule);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedPERTDefinition != null)
       {
-        Schedule.CurrentLayout.PERTDefinition = vm.SelectedPERTDefinition;
+        PERTTemplate = vm.SelectedPERTDefinition;
       }
     }
 
-    private bool SelectPertTemplateCommandCanExecute => CurrentLayout != null;
+    private bool CanSelectPertTemplate()
+    {
+      return IsPERT;
+    }
 
     #endregion
 
     #region Add Visible Baseline
 
-    public ICommand AddVisibleBaselineCommand { get; }
+    public ICommand AddVisibleBaselineCommand => _addVisibleBaselineCommand ??= new ActionCommand(AddVisibleBaseline);
 
-    private void AddVisibleBaselineCommandExecute()
+    private void AddVisibleBaseline()
     {
-      using var vm = new SelectBaselineViewModel(Schedule.Baselines);
-      if (ViewFactory.Instance.ShowDialog(vm) == true)
+      using var vm = new SelectBaselineViewModel(_schedule.Baselines);
+      if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedBaseline != null)
       {
-        var newBaseline = new VisibleBaseline(CurrentLayout, vm.SelectedBaseline);
-        CurrentLayout.VisibleBaselines.Add(newBaseline);
-        CurrentVisibleBaseline = newBaseline;
+        var newBaseline = new VisibleBaseline(vm.SelectedBaseline);
+        VisibleBaselines.Add(newBaseline);
+        SelectedVisibleBaseline = newBaseline;
       }
     }
-
-    private bool AddVisibleBaselineCommandCanExecute => true;
 
     #endregion
 
     #region Remove Visible Baseline
 
-    public ICommand RemoveVisibleBaselineCommand { get; }
+    public ICommand RemoveVisibleBaselineCommand => _removeVisibleBaselineCommand ??= new ActionCommand(RemoveVisibleBaseline, CanRemoveVisibleBaseline);
 
-    private void RemoveVisibleBaselineCommandExecute()
+    private void RemoveVisibleBaseline()
     {
-      CurrentLayout.VisibleBaselines.Remove(CurrentVisibleBaseline);
+      VisibleBaselines.Remove(SelectedVisibleBaseline);
     }
 
-    private bool RemoveVisibleBaselineCommandCanExecute => CurrentVisibleBaseline != null;
+    private bool CanRemoveVisibleBaseline()
+    {
+      return SelectedVisibleBaseline != null;
+    }
 
     #endregion
 
@@ -148,12 +195,12 @@ namespace NAS.ViewModels
     {
       var result = ValidationResult.OK();
 
-      if (string.IsNullOrWhiteSpace(CurrentLayout.Name))
+      if (string.IsNullOrWhiteSpace(Name))
       {
         result = result.Merge(ValidationResult.Error(NASResources.PleaseEnterName));
       }
 
-      if (IsPERT && Schedule.CurrentLayout.PERTDefinition == null)
+      if (IsPERT && PERTTemplate == null)
       {
         result = result.Merge(ValidationResult.Error(NASResources.PleaseSelectTemplate));
       }
@@ -163,12 +210,44 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IDisposable
+    #region Apply
 
-    protected override void Dispose(bool disposing)
+    protected override void OnApply()
     {
-      base.Dispose(disposing);
-      CurrentLayout.PropertyChanged -= Layout_PropertyChanged;
+      base.OnApply();
+      Layout.Name = Name;
+      Layout.ShowRelationships = ShowRelationships;
+      Layout.ShowFloat = ShowFloat;
+
+      Layout.ActivityStandardColor = ActivityStandardColor;
+      Layout.ActivityCriticalColor = ActivityCriticalColor;
+      Layout.ActivityDoneColor = ActivityDoneColor;
+      Layout.MilestoneStandardColor = MilestoneStandardColor;
+      Layout.MilestoneCriticalColor = MilestoneCriticalColor;
+      Layout.MilestoneDoneColor = MilestoneDoneColor;
+      Layout.DataDateColor = DataDateColor;
+
+      if (Layout is PERTLayout pertLayout)
+      {
+        pertLayout.PERTDefinition = PERTTemplate;
+      }
+      else if (Layout is GanttLayout ganttLayout)
+      {
+        ganttLayout.LeftText = LeftText;
+        ganttLayout.CenterText = CenterText;
+        ganttLayout.RightText = RightText;
+      }
+      else
+      {
+        throw new NotImplementedException("Unknown layout type.");
+      }
+
+      Layout.VisibleBaselines.Clear();
+
+      foreach (var baseline in VisibleBaselines)
+      {
+        Layout.VisibleBaselines.Add(baseline);
+      }
     }
 
     #endregion

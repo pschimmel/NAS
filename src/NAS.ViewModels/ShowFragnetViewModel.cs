@@ -27,14 +27,14 @@ namespace NAS.ViewModels
 
       _layout = new GanttLayout();
       _layout.FilterCombination = FilterCombinationType.Or;
-      _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
+      _layout.FilterDefinitions.Add(new FilterDefinition(schedule, ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
       foreach (var a in _scheduleVM.Schedule.Activities)
       {
         if (a.Distortions != null)
         {
           foreach (var d in a.Distortions.Where(x => x.Fragnet == fragnet))
           {
-            _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Number) { Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
+            _layout.FilterDefinitions.Add(new FilterDefinition(schedule, ActivityProperty.Number) { Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
           }
         }
       }

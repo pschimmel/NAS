@@ -249,20 +249,20 @@
   <data name="AddFragnet" xml:space="preserve">
     <value>Add Fragnet</value>
   </data>
+  <data name="AddGanttLayout" xml:space="preserve">
+    <value>Add Gantt Layout</value>
+  </data>
+  <data name="AddGanttLayoutToolTipDescription" xml:space="preserve">
+    <value>Adds a new Gantt layout.</value>
+  </data>
+  <data name="AddGanttLayoutToolTipTitle" xml:space="preserve">
+    <value>Add Gantt Layout</value>
+  </data>
   <data name="AddGroupingDefinition" xml:space="preserve">
-    <value>Add Grouping Definition</value>
+    <value>Adds Grouping Definition</value>
   </data>
   <data name="AddHoliday" xml:space="preserve">
     <value>Add Holiday</value>
-  </data>
-  <data name="AddLayout" xml:space="preserve">
-    <value>Add Layout</value>
-  </data>
-  <data name="AddLayoutToolTipDescription" xml:space="preserve">
-    <value>Add a new layout.</value>
-  </data>
-  <data name="AddLayoutToolTipTitle" xml:space="preserve">
-    <value>Add Layout</value>
   </data>
   <data name="AddMilestone" xml:space="preserve">
     <value>Add Milestone</value>
@@ -272,6 +272,15 @@
   </data>
   <data name="AddMilestoneToolTipTitle" xml:space="preserve">
     <value>Add Milestone (Alt-Ins)</value>
+  </data>
+  <data name="AddPERTLayout" xml:space="preserve">
+    <value>Add PERT layout</value>
+  </data>
+  <data name="AddPERTLayoutToolTipDescription" xml:space="preserve">
+    <value>Adds a new PERT layout.</value>
+  </data>
+  <data name="AddPERTLayoutToolTipTitle" xml:space="preserve">
+    <value>Add PERT layout</value>
   </data>
   <data name="AddPertTemplate" xml:space="preserve">
     <value>Add PERT Template</value>
@@ -1543,7 +1552,7 @@
     <value>Remove Layout</value>
   </data>
   <data name="RemoveLayoutToolTipDescription" xml:space="preserve">
-    <value>Remove the current layout.</value>
+    <value>Removes the current layout.</value>
   </data>
   <data name="RemoveLayoutToolTipTitle" xml:space="preserve">
     <value>Remove Layout</value>
@@ -1623,6 +1632,9 @@
   <data name="Right" xml:space="preserve">
     <value>Right</value>
   </data>
+  <data name="RightText" xml:space="preserve">
+    <value>Right text</value>
+  </data>
   <data name="Row" xml:space="preserve">
     <value>Row</value>
   </data>
@@ -1688,24 +1700,6 @@
   </data>
   <data name="ShowActualCost" xml:space="preserve">
     <value>Show Actual Cost</value>
-  </data>
-  <data name="ShowAsGantt" xml:space="preserve">
-    <value>Show as Gantt Chart</value>
-  </data>
-  <data name="ShowAsGanttToolTipDescription" xml:space="preserve">
-    <value>Displays the current Schedule as Gantt Chart.</value>
-  </data>
-  <data name="ShowAsGanttToolTipTitle" xml:space="preserve">
-    <value>Show as Gantt Chart</value>
-  </data>
-  <data name="ShowAsPert" xml:space="preserve">
-    <value>Show as PERT Chart</value>
-  </data>
-  <data name="ShowAsPertToolTipDescription" xml:space="preserve">
-    <value>Displays the current schedule as PERT chart.</value>
-  </data>
-  <data name="ShowAsPertToolTipTitle" xml:space="preserve">
-    <value>Show as PERT chart</value>
   </data>
   <data name="ShowBudget" xml:space="preserve">
     <value>Show Budget</value>

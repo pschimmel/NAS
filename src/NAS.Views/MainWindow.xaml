@@ -84,7 +84,7 @@
         <RowDefinition Height="*" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <fluent:Ribbon x:Name="Ribbon">
+      <fluent:Ribbon x:Name="Ribbon" CanUseSimplified="True">
         <fluent:Ribbon.Menu>
           <fluent:Backstage IsOpen="{Binding BackstageOpen, Mode=TwoWay}">
             <fluent:Backstage.Resources>
@@ -430,14 +430,24 @@
                                     SelectedItem="{Binding CurrentSchedule.CurrentLayout}">
               <fluent:InRibbonGallery.Menu>
                 <fluent:RibbonMenu>
-                  <MenuItem Command="{Binding CurrentSchedule.AddLayoutCommand}" Header="{x:Static resx:NASResources.AddLayout}">
+                  <MenuItem Command="{Binding CurrentSchedule.AddGanttLayoutCommand}" Header="{x:Static resx:NASResources.AddGanttLayout}">
                     <MenuItem.Icon>
-                      <tools:AutoGrayableImage Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+                      <tools:AutoGrayableImage Source="pack://application:,,,/NAS.Views;component/Images/AddGantt.png" />
                     </MenuItem.Icon>
                     <MenuItem.ToolTip>
-                      <fluent:ScreenTip Title="{x:Static resx:NASResources.AddLayoutToolTipTitle}"
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.AddGanttLayoutToolTipTitle}"
                                         Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                        Text="{x:Static resx:NASResources.AddLayoutToolTipDescription}" />
+                                        Text="{x:Static resx:NASResources.AddGanttLayoutToolTipDescription}" />
+                    </MenuItem.ToolTip>
+                  </MenuItem>
+                  <MenuItem Command="{Binding CurrentSchedule.AddPERTLayoutCommand}" Header="{x:Static resx:NASResources.AddPERTLayout}">
+                    <MenuItem.Icon>
+                      <tools:AutoGrayableImage Source="pack://application:,,,/NAS.Views;component/Images/AddPERT.png" />
+                    </MenuItem.Icon>
+                    <MenuItem.ToolTip>
+                      <fluent:ScreenTip Title="{x:Static resx:NASResources.AddPERTLayoutToolTipTitle}"
+                                        Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                        Text="{x:Static resx:NASResources.AddPERTLayoutToolTipDescription}" />
                     </MenuItem.ToolTip>
                   </MenuItem>
                   <MenuItem Command="{Binding CurrentSchedule.RemoveLayoutCommand}" Header="{x:Static resx:NASResources.RemoveLayout}">
@@ -477,30 +487,6 @@
           <fluent:RibbonGroupBox Name="View"
                                  Header="{x:Static resx:NASResources.Show}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/Show.png">
-            <fluent:Button Command="{Binding CurrentSchedule.ShowAsGanttCommand}"
-                           Header="{x:Static resx:NASResources.ShowAsGantt}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Gantt.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Gantt.png"
-                           SizeDefinition="Large, Middle, Small"
-                           Visibility="{Binding CurrentSchedule.ShowPERTControls, Converter={StaticResource VisibilityConverter}}">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsGanttToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.ShowAsGanttToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.ShowAsPertCommand}"
-                           Header="{x:Static resx:NASResources.ShowAsPert}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Activity.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Activity.png"
-                           SizeDefinition="Large, Middle, Small"
-                           Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.ShowAsPertToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.ShowAsPertToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
             <fluent:ToggleButton Command="{Binding CurrentSchedule.ShowRelationshipsCommand}"
                                  Header="{x:Static resx:NASResources.ShowRelationships}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/ShowRelationships.png"

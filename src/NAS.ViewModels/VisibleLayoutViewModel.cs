@@ -9,14 +9,17 @@ namespace NAS.ViewModels
   {
     #region Fields
 
-    private bool isVisible = false;
+    protected Schedule _schedule;
+    private bool _isVisible = false;
+
 
     #endregion
 
     #region Constructor
 
-    protected VisibleLayoutViewModel(Layout layout)
+    protected VisibleLayoutViewModel(Schedule schedule, Layout layout)
     {
+      _schedule = schedule;
       Layout = layout;
       Layout.PropertyChanged += (s, e) =>
       {
@@ -25,7 +28,7 @@ namespace NAS.ViewModels
           OnPropertyChanged(nameof(Name));
         }
       };
-      Schedule = layout.Schedule;
+
       Initialize();
       AttachEventHandlers();
     }
@@ -40,18 +43,16 @@ namespace NAS.ViewModels
 
     public string Name => Layout.Name;
 
-    protected Schedule Schedule { get; }
-
     public abstract LayoutType LayoutType { get; }
 
     public bool IsVisible
     {
-      get => isVisible;
+      get => _isVisible;
       set
       {
-        if (isVisible != value)
+        if (_isVisible != value)
         {
-          isVisible = value;
+          _isVisible = value;
           OnPropertyChanged(nameof(IsVisible));
         }
       }

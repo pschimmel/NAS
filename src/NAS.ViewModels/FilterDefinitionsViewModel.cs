@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
-using NAS.Models.Base;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
 using NAS.Resources;
@@ -14,6 +13,7 @@ namespace NAS.ViewModels
   {
     #region Fields
 
+    private readonly Schedule _schedule;
     private FilterDefinition _currentFilterDefinition;
     public Layout _layout;
 
@@ -21,9 +21,10 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public FilterDefinitionsViewModel(Layout layout)
+    public FilterDefinitionsViewModel(Schedule schedule, Layout layout)
       : base()
     {
+      _schedule = schedule;
       _layout = layout;
       FilterDefinitions = new ObservableCollection<FilterDefinition>(_layout.FilterDefinitions);
       AddFilterDefinitionCommand = new ActionCommand(AddFilterDefinitionCommandExecute);
@@ -63,9 +64,9 @@ namespace NAS.ViewModels
 
     private void AddFilterDefinitionCommandExecute()
     {
-      var newFilterDefinition = new FilterDefinition(ActivityProperty.None);
+      var newFilterDefinition = new FilterDefinition(_schedule, ActivityProperty.None);
 
-      using var vm = new FilterDefinitionViewModel(newFilterDefinition);
+      using var vm = new FilterDefinitionViewModel(_schedule, newFilterDefinition);
       if (ViewFactory.Instance.ShowDialog(vm) == true && newFilterDefinition.Property != ActivityProperty.None)
       {
         vm.Apply();
@@ -115,7 +116,7 @@ namespace NAS.ViewModels
 
     private void EditFilterDefinitionCommandExecute()
     {
-      using var vm = new FilterDefinitionViewModel(CurrentFilterDefinition);
+      using var vm = new FilterDefinitionViewModel(_schedule, CurrentFilterDefinition);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         vm.Apply();

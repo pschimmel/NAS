@@ -17,43 +17,41 @@ namespace NAS.Models.ImportExport
 
     internal static string GetColor(this XmlNode node)
     {
+      if (string.IsNullOrWhiteSpace(node.InnerText))
+      {
+        return null;
+      }
+
       try
       {
+        // Input has format {255|}23|131|255
+        short a = 255, r = 0, g = 0, b = 0;
+        string[] array = node.InnerText.Split(new char[] { '|' }, 4, StringSplitOptions.RemoveEmptyEntries);
+
+        if (array.Length is 3 or 4)
+        {
+          var idx = array.Length is 3 ? 0 : 1;
+          if (short.TryParse(array[idx], out short x1) && short.TryParse(array[idx + 1], out short x2) && short.TryParse(array[idx + 2], out short x3))
+          {
+            r = x1;
+            g = x2;
+            b = x3;
+          }
+
+          if (array.Length == 4 && short.TryParse(array[0], out short x0))
+          {
+            a = x0;
+          }
+
+          // Format: #FF000000
+          return "#" + a.ToString("X2") + r.ToString("X2") + g.ToString("X2") + b.ToString("X2");
+        }
+
         return ColorConverter.ConvertFromString(node.InnerText).ToString();
       }
       catch
       {
-        short a = 0, r = 0, g = 0, b = 0;
-        if (node.InnerText != null)
-        {
-          string[] array = node.InnerText.Split(new char[] { '|' }, 4, StringSplitOptions.RemoveEmptyEntries);
-          if (array.Length != 4)
-          {
-            return null;
-          }
-
-          if (!short.TryParse(array[0], out a))
-          {
-            return null;
-          }
-
-          if (!short.TryParse(array[1], out r))
-          {
-            return null;
-          }
-
-          if (!short.TryParse(array[2], out g))
-          {
-            return null;
-          }
-
-          if (!short.TryParse(array[3], out b))
-          {
-            return null;
-          }
-        }
-        // Format: #FF000000
-        return "#" + a.ToString("X") + r.ToString("X") + g.ToString("X") + b.ToString("X");
+        return null;
       }
     }
 

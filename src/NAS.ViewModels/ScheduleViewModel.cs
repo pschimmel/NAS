@@ -830,7 +830,7 @@ namespace NAS.ViewModels
     {
       var item = new GanttLayout();
 
-      using var vm = new EditLayoutViewModel(item);
+      using var vm = new EditLayoutViewModel(Schedule, item);
       if (!ViewFactory.Instance.ShowDialog(vm) == true)
       {
         AddLayoutVM(item, true);
@@ -838,7 +838,6 @@ namespace NAS.ViewModels
     }
 
     #endregion
-
 
     #region Add PERT Layout
 
@@ -848,7 +847,7 @@ namespace NAS.ViewModels
     {
       var item = new PERTLayout();
 
-      using var vm = new EditLayoutViewModel(item);
+      using var vm = new EditLayoutViewModel(Schedule, item);
       if (!ViewFactory.Instance.ShowDialog(vm) == true)
       {
         AddLayoutVM(item, true);
@@ -915,10 +914,10 @@ namespace NAS.ViewModels
       var layout = layoutVM.Layout;
       var oldLayoutType = layout.LayoutType;
 
-      using var vm = new EditLayoutViewModel(layout);
+      using var vm = new EditLayoutViewModel(Schedule, layout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        if (oldLayoutType != vm.CurrentLayout.LayoutType)
+        if (oldLayoutType != vm.LayoutType)
         {
           ChangeLayout(layout);
         }
@@ -959,7 +958,7 @@ namespace NAS.ViewModels
 
     private void EditFiltersCommandExecute()
     {
-      using (var vm = new FilterDefinitionsViewModel(Schedule.CurrentLayout))
+      using (var vm = new FilterDefinitionsViewModel(Schedule, Schedule.CurrentLayout))
       {
         ViewFactory.Instance.ShowDialog(vm);
       }
@@ -1403,7 +1402,7 @@ namespace NAS.ViewModels
 
     private IVisibleLayoutViewModel AddLayoutVM(Layout layout, bool makeCurrent)
     {
-      var vm = LayoutVMFactory.CreateVM(layout);
+      var vm = LayoutVMFactory.CreateVM(Schedule, layout);
 
       Layouts.Add(vm);
 
@@ -1421,7 +1420,7 @@ namespace NAS.ViewModels
       if (oldVM != null)
       {
         int idx = Layouts.IndexOf(oldVM);
-        var newVM = LayoutVMFactory.CreateVM(layout);
+        var newVM = LayoutVMFactory.CreateVM(Schedule, layout);
         Layouts.Insert(idx, newVM);
         CurrentLayout = newVM;
         Layouts.Remove(oldVM);

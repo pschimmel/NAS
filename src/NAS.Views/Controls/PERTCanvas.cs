@@ -43,7 +43,7 @@ namespace NAS.Views.Controls
     private PERTActivityData[,] matrix;
     private PERTDefinition template;
     private bool suspendRefreshing = false;
-    private Layout layout;
+    private PERTLayout layout;
 
     #endregion
 
@@ -65,7 +65,7 @@ namespace NAS.Views.Controls
       get => layout;
       set
       {
-        layout = value;
+        layout = value as PERTLayout;
         if (layout != null)
         {
           activityStandardColor = DiagramHelperExtensions.TryParseColor(layout.ActivityStandardColor, activityStandardColor);
@@ -174,9 +174,9 @@ namespace NAS.Views.Controls
       if (VM.Schedule != null)
       {
         // Load Template
-        if (Layout.LayoutType == Models.Enums.LayoutType.PERT)
+        if (Layout.LayoutType == LayoutType.PERT)
         {
-          template = Layout.PERTDefinition;
+          template = layout.PERTDefinition;
         }
         // Draw Activities
         var view = VM.Activities.GetView();

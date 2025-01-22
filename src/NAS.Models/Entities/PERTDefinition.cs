@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using NAS.Models.Base;
 
 namespace NAS.Models.Entities
 {
-  public class PERTDefinition : NASObject
+  public class PERTDefinition : NASObject, IClonable<PERTDefinition>
   {
     private string _name;
     private double _width = 150;
@@ -26,7 +27,33 @@ namespace NAS.Models.Entities
     public PERTDefinition(PERTDefinition other)
       : this()
     {
-      CreateCopy(other);
+      Name = other.Name;
+      Width = other.Width;
+      Height = other.Height;
+      FontSize = other.FontSize;
+      SpacingX = other.SpacingX;
+      SpacingY = other.SpacingY;
+      Schedule = other.Schedule;
+
+      foreach (var otherRow in other.RowDefinitions)
+      {
+        RowDefinitions.Add(new RowDefinition(otherRow));
+      }
+
+      foreach (var otherColumn in other.ColumnDefinitions)
+      {
+        ColumnDefinitions.Add(new ColumnDefinition(otherColumn));
+      }
+
+      foreach (var otherItem in other.Items)
+      {
+        Items.Add(new PERTDataItem(otherItem));
+      }
+
+      foreach (var otherData in other.ActivityData)
+      {
+        ActivityData.Add(new PERTActivityData(otherData));
+      }
     }
 
     public Schedule Schedule { get; private set; }
@@ -171,37 +198,6 @@ namespace NAS.Models.Entities
 
     public int Columns => ColumnDefinitions.Count;
 
-    private void CreateCopy(PERTDefinition other)
-    {
-      Name = other.Name;
-      Width = other.Width;
-      Height = other.Height;
-      FontSize = other.FontSize;
-      SpacingX = other.SpacingX;
-      SpacingY = other.SpacingY;
-      Schedule = other.Schedule;
-
-      foreach (var otherRow in other.RowDefinitions)
-      {
-        RowDefinitions.Add(new RowDefinition(otherRow));
-      }
-
-      foreach (var otherColumn in other.ColumnDefinitions)
-      {
-        ColumnDefinitions.Add(new ColumnDefinition(otherColumn));
-      }
-
-      foreach (var otherItem in other.Items)
-      {
-        Items.Add(new PERTDataItem(otherItem));
-      }
-
-      foreach (var otherData in other.ActivityData)
-      {
-        ActivityData.Add(new PERTActivityData(otherData));
-      }
-    }
-
     public void RefreshData(IEnumerable<RowDefinition> rowDefinitions, IEnumerable<ColumnDefinition> columnDefinitions, IEnumerable<PERTDataItem> items)
     {
       if (rowDefinitions == null)
@@ -237,6 +233,11 @@ namespace NAS.Models.Entities
       {
         Items.Add(new PERTDataItem(otherItem));
       }
+    }
+
+    public PERTDefinition Clone()
+    {
+      return new PERTDefinition(this);
     }
   }
 }

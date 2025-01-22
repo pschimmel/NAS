@@ -13,10 +13,10 @@ using ES.Tools.Core.MVVM;
 using NAS.Models.Base;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
-using NAS.Views.Helpers;
-using NAS.Views.Shapes;
 using NAS.ViewModels;
 using NAS.ViewModels.Base;
+using NAS.Views.Helpers;
+using NAS.Views.Shapes;
 using Activity = NAS.Models.Entities.Activity;
 
 namespace NAS.Views.Controls
@@ -50,7 +50,7 @@ namespace NAS.Views.Controls
     protected double columnHeaderHeight = GanttHelpers.ColumnHeaderHeight;
     protected double groupHeaderHeight = GanttHelpers.GroupHeaderHeight;
     protected double tableWidth;
-    protected Layout layout;
+    protected GanttLayout layout;
     private bool suspendRefreshing = false;
     private Activity dragActivity;
     private ActivityMousePosition dragActivityPosition = ActivityMousePosition.Middle;
@@ -118,7 +118,13 @@ namespace NAS.Views.Controls
       get => layout;
       set
       {
-        layout = value;
+        if (value is not GanttLayout ganttLayout)
+        {
+          throw new ArgumentException("Wrong layout type.");
+        }
+
+        layout = ganttLayout;
+
         if (layout != null)
         {
           activityStandardColor = DiagramHelperExtensions.TryParseColor(layout.ActivityStandardColor, activityStandardColor);
@@ -520,6 +526,7 @@ namespace NAS.Views.Controls
     private void RefreshActivityText(ActivityViewModel activity, Shape shape)
     {
       int requiredBlocks = 0;
+
       if (layout.LeftText != ActivityProperty.None)
       {
         requiredBlocks++;

@@ -488,7 +488,7 @@ namespace NAS.Models.Entities
 
       if (showInCurrentLayout)
       {
-        CurrentLayout.VisibleBaselines.Add(new VisibleBaseline(CurrentLayout, baseline));
+        CurrentLayout.VisibleBaselines.Add(new VisibleBaseline(baseline));
       }
     }
 
@@ -775,21 +775,27 @@ namespace NAS.Models.Entities
 
     private static void CopyLayoutData(Layout oldLayout, Layout newLayout)
     {
+      Debug.Assert(oldLayout.LayoutType == newLayout.LayoutType);
       newLayout.ActivityCriticalColor = oldLayout.ActivityCriticalColor;
       newLayout.ActivityDoneColor = oldLayout.ActivityDoneColor;
       newLayout.ActivityStandardColor = oldLayout.ActivityStandardColor;
-      newLayout.CenterText = oldLayout.CenterText;
       newLayout.IsCurrent = oldLayout.IsCurrent;
       newLayout.DataDateColor = oldLayout.DataDateColor;
       newLayout.FilterCombination = oldLayout.FilterCombination;
-      newLayout.LeftText = oldLayout.LeftText;
       newLayout.MilestoneCriticalColor = oldLayout.MilestoneCriticalColor;
       newLayout.MilestoneDoneColor = oldLayout.MilestoneDoneColor;
       newLayout.MilestoneStandardColor = oldLayout.MilestoneStandardColor;
       newLayout.Name = $"{oldLayout.Name} ({NASResources.Copy})";
-      newLayout.RightText = oldLayout.RightText;
       newLayout.ShowRelationships = oldLayout.ShowRelationships;
       newLayout.ShowFloat = oldLayout.ShowFloat;
+
+      if (oldLayout is GanttLayout oldGanttLayout && newLayout is GanttLayout newGanttLayout)
+      {
+        newGanttLayout.LeftText = oldGanttLayout.LeftText;
+        newGanttLayout.CenterText = oldGanttLayout.CenterText;
+        newGanttLayout.RightText = oldGanttLayout.RightText;
+      }
+
       foreach (var g in oldLayout.GroupingDefinitions)
       {
         var definition = new GroupingDefinition(g.Property);
@@ -808,14 +814,14 @@ namespace NAS.Models.Entities
       }
       foreach (var f in oldLayout.FilterDefinitions)
       {
-        var filter = new FilterDefinition(f.Property);
+        var filter = new FilterDefinition(f._schedule, f.Property);
         filter.ObjectString = f.ObjectString;
         filter.Relation = f.Relation;
         newLayout.FilterDefinitions.Add(filter);
       }
       foreach (var b in oldLayout.VisibleBaselines)
       {
-        var baseline = new VisibleBaseline(newLayout, b.Schedule);
+        var baseline = new VisibleBaseline(b.Schedule);
         baseline.Color = b.Color;
         newLayout.VisibleBaselines.Add(baseline);
       }

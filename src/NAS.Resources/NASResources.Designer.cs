@@ -457,7 +457,34 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add Grouping Definition.
+        ///   Looks up a localized string similar to Add Gantt Layout.
+        /// </summary>
+        public static string AddGanttLayout {
+            get {
+                return ResourceManager.GetString("AddGanttLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a new Gantt layout..
+        /// </summary>
+        public static string AddGanttLayoutToolTipDescription {
+            get {
+                return ResourceManager.GetString("AddGanttLayoutToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Gantt Layout.
+        /// </summary>
+        public static string AddGanttLayoutToolTipTitle {
+            get {
+                return ResourceManager.GetString("AddGanttLayoutToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds Grouping Definition.
         /// </summary>
         public static string AddGroupingDefinition {
             get {
@@ -471,33 +498,6 @@ namespace NAS.Resources {
         public static string AddHoliday {
             get {
                 return ResourceManager.GetString("AddHoliday", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Layout.
-        /// </summary>
-        public static string AddLayout {
-            get {
-                return ResourceManager.GetString("AddLayout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a new layout..
-        /// </summary>
-        public static string AddLayoutToolTipDescription {
-            get {
-                return ResourceManager.GetString("AddLayoutToolTipDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add Layout.
-        /// </summary>
-        public static string AddLayoutToolTipTitle {
-            get {
-                return ResourceManager.GetString("AddLayoutToolTipTitle", resourceCulture);
             }
         }
         
@@ -525,6 +525,33 @@ namespace NAS.Resources {
         public static string AddMilestoneToolTipTitle {
             get {
                 return ResourceManager.GetString("AddMilestoneToolTipTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add PERT layout.
+        /// </summary>
+        public static string AddPERTLayout {
+            get {
+                return ResourceManager.GetString("AddPERTLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a new PERT layout..
+        /// </summary>
+        public static string AddPERTLayoutToolTipDescription {
+            get {
+                return ResourceManager.GetString("AddPERTLayoutToolTipDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add PERT layout.
+        /// </summary>
+        public static string AddPERTLayoutToolTipTitle {
+            get {
+                return ResourceManager.GetString("AddPERTLayoutToolTipTitle", resourceCulture);
             }
         }
         
@@ -4336,7 +4363,7 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove the current layout..
+        ///   Looks up a localized string similar to Removes the current layout..
         /// </summary>
         public static string RemoveLayoutToolTipDescription {
             get {
@@ -4579,6 +4606,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Right text.
+        /// </summary>
+        public static string RightText {
+            get {
+                return ResourceManager.GetString("RightText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Row.
         /// </summary>
         public static string Row {
@@ -4773,60 +4809,6 @@ namespace NAS.Resources {
         public static string ShowActualCost {
             get {
                 return ResourceManager.GetString("ShowActualCost", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show as Gantt Chart.
-        /// </summary>
-        public static string ShowAsGantt {
-            get {
-                return ResourceManager.GetString("ShowAsGantt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Displays the current Schedule as Gantt Chart..
-        /// </summary>
-        public static string ShowAsGanttToolTipDescription {
-            get {
-                return ResourceManager.GetString("ShowAsGanttToolTipDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show as Gantt Chart.
-        /// </summary>
-        public static string ShowAsGanttToolTipTitle {
-            get {
-                return ResourceManager.GetString("ShowAsGanttToolTipTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show as PERT Chart.
-        /// </summary>
-        public static string ShowAsPert {
-            get {
-                return ResourceManager.GetString("ShowAsPert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Displays the current schedule as PERT chart..
-        /// </summary>
-        public static string ShowAsPertToolTipDescription {
-            get {
-                return ResourceManager.GetString("ShowAsPertToolTipDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show as PERT chart.
-        /// </summary>
-        public static string ShowAsPertToolTipTitle {
-            get {
-                return ResourceManager.GetString("ShowAsPertToolTipTitle", resourceCulture);
             }
         }
         

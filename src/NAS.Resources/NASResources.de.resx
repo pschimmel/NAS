@@ -249,20 +249,20 @@
   <data name="AddFragnet" xml:space="preserve">
     <value>Fragnet hinzufügen</value>
   </data>
+  <data name="AddGanttLayout" xml:space="preserve">
+    <value>Gantt Layout hinzufügen</value>
+  </data>
+  <data name="AddGanttLayoutToolTipDescription" xml:space="preserve">
+    <value>Ein neues Gantt Layout hinzufügen.</value>
+  </data>
+  <data name="AddGanttLayoutToolTipTitle" xml:space="preserve">
+    <value>Gantt Layout hinzufügen</value>
+  </data>
   <data name="AddGroupingDefinition" xml:space="preserve">
     <value>Gruppierung hinzufügen</value>
   </data>
   <data name="AddHoliday" xml:space="preserve">
     <value>Feiertag hinzufügen</value>
-  </data>
-  <data name="AddLayout" xml:space="preserve">
-    <value>Layout hinzufügen</value>
-  </data>
-  <data name="AddLayoutToolTipDescription" xml:space="preserve">
-    <value>Ein neues Layout hinzufügen.</value>
-  </data>
-  <data name="AddLayoutToolTipTitle" xml:space="preserve">
-    <value>Layout hinzufügen</value>
   </data>
   <data name="AddMilestone" xml:space="preserve">
     <value>Meilenstein hinzufügen</value>
@@ -272,6 +272,15 @@
   </data>
   <data name="AddMilestoneToolTipTitle" xml:space="preserve">
     <value>Meilenstein hinzufügen (Alt-Ins)</value>
+  </data>
+  <data name="AddPERTLayout" xml:space="preserve">
+    <value>PERT-Layout hinzufügen</value>
+  </data>
+  <data name="AddPERTLayoutToolTipDescription" xml:space="preserve">
+    <value>Fügt ein neues PERT-Layout hinzu.</value>
+  </data>
+  <data name="AddPERTLayoutToolTipTitle" xml:space="preserve">
+    <value>PERT-Layout hinzufügen</value>
   </data>
   <data name="AddPertTemplate" xml:space="preserve">
     <value>PERT-Vorlage hinzufügen</value>
@@ -1623,6 +1632,9 @@
   <data name="Right" xml:space="preserve">
     <value>Rechts</value>
   </data>
+  <data name="RightText" xml:space="preserve">
+    <value>Rechter Text</value>
+  </data>
   <data name="Row" xml:space="preserve">
     <value>Zeile</value>
   </data>
@@ -1688,24 +1700,6 @@
   </data>
   <data name="ShowActualCost" xml:space="preserve">
     <value>Tatsächliche Kosten anzeigen</value>
-  </data>
-  <data name="ShowAsGantt" xml:space="preserve">
-    <value>Zeige als Gantt-Diagramm</value>
-  </data>
-  <data name="ShowAsGanttToolTipDescription" xml:space="preserve">
-    <value>Zeigt den aktuellen Terminplan als Gantt-Diagramm.</value>
-  </data>
-  <data name="ShowAsGanttToolTipTitle" xml:space="preserve">
-    <value>Zeige als Gantt-Diagramm</value>
-  </data>
-  <data name="ShowAsPert" xml:space="preserve">
-    <value>Zeige als PERT-Diagramm</value>
-  </data>
-  <data name="ShowAsPertToolTipDescription" xml:space="preserve">
-    <value>Zeigt den aktuellen Terminplan als PERT-Diagramm.</value>
-  </data>
-  <data name="ShowAsPertToolTipTitle" xml:space="preserve">
-    <value>Zeige als PERT-Diagramm</value>
   </data>
   <data name="ShowBudget" xml:space="preserve">
     <value>Zeige Budget</value>

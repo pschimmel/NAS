@@ -25,7 +25,7 @@ namespace NAS.ViewModels
         layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
         layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
         layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
-        layout.VisibleBaselines.Add(new VisibleBaseline(layout, baseline));
+        layout.VisibleBaselines.Add(new VisibleBaseline(baseline));
         Title = NASResources.ProjectComparison;
       }
     }

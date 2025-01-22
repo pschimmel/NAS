@@ -54,6 +54,8 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditResourceViewModel, EditResourceView>();
       ViewFactory.Instance.RegisterDialog<EditCustomAttributesViewModel, EditCustomAttributesView>();
       ViewFactory.Instance.RegisterDialog<ResourceAssignmentViewModel, ResourceAssignmentView>();
+      ViewFactory.Instance.RegisterDialog<EditLayoutViewModel, EditLayoutView>();
+      ViewFactory.Instance.RegisterDialog<SelectBaselineViewModel, SelectBaselineView>();
     }
 
     private static void RegisterNotificationTargets()

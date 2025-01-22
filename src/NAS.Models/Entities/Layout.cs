@@ -18,11 +18,7 @@ namespace NAS.Models.Entities
     private bool _showRelationships;
     private bool _showFloat;
     private FilterCombinationType _filterCombination;
-    private ActivityProperty _leftText;
-    private ActivityProperty _centerText;
-    private ActivityProperty _rightText;
     private bool _isCurrent;
-    private PERTDefinition _pertDefinition;
     private double _headerHeight;
     private double _footerHeight;
     private double _marginLeft;
@@ -42,9 +38,6 @@ namespace NAS.Models.Entities
       _dataDateColor = "Blue";
       _showRelationships = true;
       _showFloat = false;
-      _leftText = ActivityProperty.None;
-      _centerText = ActivityProperty.None;
-      _rightText = ActivityProperty.None;
       _headerHeight = 1;
       _footerHeight = 1;
       ActivityColumns = [];
@@ -62,7 +55,58 @@ namespace NAS.Models.Entities
     /// </summary>
     protected Layout(Layout other)
     {
-      CopyData(other);
+      Debug.Assert(LayoutType == other.LayoutType);
+      foreach (var otherActivityColumn in other.ActivityColumns)
+      {
+        ActivityColumns.Add(new ActivityColumn(otherActivityColumn));
+      }
+      ActivityCriticalColor = other.ActivityCriticalColor;
+      ActivityDoneColor = other.ActivityDoneColor;
+      ActivityStandardColor = other.ActivityDoneColor;
+      DataDateColor = other.DataDateColor;
+      FilterCombination = other.FilterCombination;
+      foreach (var otherFilterDefinition in other.FilterDefinitions)
+      {
+        FilterDefinitions.Add(new FilterDefinition(otherFilterDefinition));
+      }
+      FooterHeight = other.FooterHeight;
+      foreach (var otherFooterItem in other.FooterItems)
+      {
+        FooterItems.Add(new FooterItem(otherFooterItem));
+      }
+      foreach (var otherGroupingDefinition in other.GroupingDefinitions)
+      {
+        GroupingDefinitions.Add(new GroupingDefinition(otherGroupingDefinition));
+      }
+      HeaderHeight = other.HeaderHeight;
+      foreach (var otherHeaderItem in other.HeaderItems)
+      {
+        HeaderItems.Add(new HeaderItem(otherHeaderItem));
+      }
+
+      MarginBottom = other.MarginBottom;
+      MarginLeft = other.MarginLeft;
+      MarginRight = other.MarginRight;
+      MarginTop = other.MarginTop;
+      MilestoneCriticalColor = other.MilestoneCriticalColor;
+      MilestoneStandardColor = other.MilestoneStandardColor;
+      MilestoneDoneColor = other.MilestoneDoneColor;
+      MilestoneStandardColor = other.MilestoneStandardColor;
+      Name = other.Name;
+      ShowFloat = other.ShowFloat;
+      ShowRelationships = other.ShowRelationships;
+      foreach (var otherSortingDefinition in other.SortingDefinitions)
+      {
+        SortingDefinitions.Add(new SortingDefinition(otherSortingDefinition));
+      }
+      foreach (var otherVisibleBaseline in other.VisibleBaselines)
+      {
+        VisibleBaselines.Add(new VisibleBaseline(otherVisibleBaseline));
+      }
+      foreach (var otherVisibleResource in other.VisibleResources)
+      {
+        VisibleResources.Add(new VisibleResource(otherVisibleResource));
+      }
     }
 
     public string Name
@@ -89,7 +133,6 @@ namespace NAS.Models.Entities
         {
           _isCurrent = value;
           OnPropertyChanged(nameof(IsCurrent));
-          Schedule?.UpdateCurrentLayout();
         }
       }
     }
@@ -224,58 +267,6 @@ namespace NAS.Models.Entities
       }
     }
 
-    public ActivityProperty LeftText
-    {
-      get => _leftText;
-      set
-      {
-        if (_leftText != value)
-        {
-          _leftText = value;
-          OnPropertyChanged(nameof(LeftText));
-        }
-      }
-    }
-
-    public ActivityProperty CenterText
-    {
-      get => _centerText;
-      set
-      {
-        if (_centerText != value)
-        {
-          _centerText = value;
-          OnPropertyChanged(nameof(CenterText));
-        }
-      }
-    }
-
-    public ActivityProperty RightText
-    {
-      get => _rightText;
-      set
-      {
-        if (_rightText != value)
-        {
-          _rightText = value;
-          OnPropertyChanged(nameof(RightText));
-        }
-      }
-    }
-
-    public PERTDefinition PERTDefinition
-    {
-      get => _pertDefinition;
-      set
-      {
-        if (_pertDefinition != value)
-        {
-          _pertDefinition = value;
-          OnPropertyChanged(nameof(PERTDefinition));
-        }
-      }
-    }
-
     public double HeaderHeight
     {
       get => _headerHeight;
@@ -369,8 +360,6 @@ namespace NAS.Models.Entities
     public ObservableCollection<VisibleBaseline> VisibleBaselines { get; }
 
     public ObservableCollection<VisibleResource> VisibleResources { get; }
-
-    public Schedule Schedule { get; }
 
     #region Filters
 
@@ -467,66 +456,6 @@ namespace NAS.Models.Entities
     #endregion
 
     #region Private Methods
-
-    private void CopyData(Layout other)
-    {
-      Debug.Assert(LayoutType == other.LayoutType);
-      foreach (var otherActivityColumn in other.ActivityColumns)
-      {
-        ActivityColumns.Add(new ActivityColumn(otherActivityColumn));
-      }
-      ActivityCriticalColor = other.ActivityCriticalColor;
-      ActivityDoneColor = other.ActivityDoneColor;
-      ActivityStandardColor = other.ActivityDoneColor;
-      CenterText = other.CenterText;
-      DataDateColor = other.DataDateColor;
-      FilterCombination = other.FilterCombination;
-      foreach (var otherFilterDefinition in other.FilterDefinitions)
-      {
-        FilterDefinitions.Add(new FilterDefinition(otherFilterDefinition));
-      }
-      FooterHeight = other.FooterHeight;
-      foreach (var otherFooterItem in other.FooterItems)
-      {
-        FooterItems.Add(new FooterItem(otherFooterItem));
-      }
-      foreach (var otherGroupingDefinition in other.GroupingDefinitions)
-      {
-        GroupingDefinitions.Add(new GroupingDefinition(otherGroupingDefinition));
-      }
-      HeaderHeight = other.HeaderHeight;
-      foreach (var otherHeaderItem in other.HeaderItems)
-      {
-        HeaderItems.Add(new HeaderItem(otherHeaderItem));
-      }
-
-      LeftText = other.LeftText;
-      MarginBottom = other.MarginBottom;
-      MarginLeft = other.MarginLeft;
-      MarginRight = other.MarginRight;
-      MarginTop = other.MarginTop;
-      MilestoneCriticalColor = other.MilestoneCriticalColor;
-      MilestoneStandardColor = other.MilestoneStandardColor;
-      MilestoneDoneColor = other.MilestoneDoneColor;
-      MilestoneStandardColor = other.MilestoneStandardColor;
-      Name = other.Name;
-      PERTDefinition = new PERTDefinition(other.PERTDefinition);
-      RightText = other.RightText;
-      ShowFloat = other.ShowFloat;
-      ShowRelationships = other.ShowRelationships;
-      foreach (var otherSortingDefinition in other.SortingDefinitions)
-      {
-        SortingDefinitions.Add(new SortingDefinition(otherSortingDefinition));
-      }
-      foreach (var otherVisibleBaseline in other.VisibleBaselines)
-      {
-        VisibleBaselines.Add(new VisibleBaseline(otherVisibleBaseline));
-      }
-      foreach (var otherVisibleResource in other.VisibleResources)
-      {
-        VisibleResources.Add(new VisibleResource(otherVisibleResource));
-      }
-    }
 
     #endregion
   }

@@ -1,5 +1,4 @@
-﻿using System;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 using NAS.Models.Enums;
 
 namespace NAS.ViewModels
@@ -8,8 +7,8 @@ namespace NAS.ViewModels
   {
     #region Constructor
 
-    public PERTLayoutViewModel(Layout layout)
-      : base(layout)
+    public PERTLayoutViewModel(Schedule schedule, PERTLayout layout)
+      : base(schedule, layout)
     {
       if (layout.LayoutType != LayoutType.PERT)
       {
@@ -26,7 +25,7 @@ namespace NAS.ViewModels
 
     public override LayoutType LayoutType => LayoutType.PERT;
 
-    public PERTDefinition PertDefinition => Layout.PERTDefinition;
+    public PERTDefinition PertDefinition => (Layout as PERTLayout).PERTDefinition;
 
     #endregion
   }

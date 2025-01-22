@@ -17,8 +17,8 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public GanttLayoutViewModel(Layout layout)
-      : base(layout)
+    public GanttLayoutViewModel(Schedule schedule, GanttLayout layout)
+      : base(schedule, layout)
     {
       if (layout.LayoutType != LayoutType.Gantt)
       {
@@ -87,11 +87,11 @@ namespace NAS.ViewModels
       }
     }
 
-    public ActivityProperty LeftText => Layout.LeftText;
+    public ActivityProperty LeftText => (Layout as GanttLayout).LeftText;
 
-    public ActivityProperty CenterText => Layout.CenterText;
+    public ActivityProperty CenterText => (Layout as GanttLayout).CenterText;
 
-    public ActivityProperty RightText => Layout.RightText;
+    public ActivityProperty RightText => (Layout as GanttLayout).RightText;
 
     #endregion
 
@@ -150,11 +150,11 @@ namespace NAS.ViewModels
     {
       var vm = column.Property switch
       {
-        ActivityProperty.Fragnet => new ColumnViewModel(column.Property, Schedule.Fragnets),
-        ActivityProperty.WBSItem => new ColumnViewModel(column.Property, Schedule.GetWBSItems()),
-        ActivityProperty.CustomAttribute1 => new ColumnViewModel(column.Property, Schedule.CustomAttributes1),
-        ActivityProperty.CustomAttribute2 => new ColumnViewModel(column.Property, Schedule.CustomAttributes2),
-        ActivityProperty.CustomAttribute3 => new ColumnViewModel(column.Property, Schedule.CustomAttributes3),
+        ActivityProperty.Fragnet => new ColumnViewModel(column.Property, _schedule.Fragnets),
+        ActivityProperty.WBSItem => new ColumnViewModel(column.Property, _schedule.GetWBSItems()),
+        ActivityProperty.CustomAttribute1 => new ColumnViewModel(column.Property, _schedule.CustomAttributes1),
+        ActivityProperty.CustomAttribute2 => new ColumnViewModel(column.Property, _schedule.CustomAttributes2),
+        ActivityProperty.CustomAttribute3 => new ColumnViewModel(column.Property, _schedule.CustomAttributes3),
         _ => new ColumnViewModel(column.Property),
       };
       vm.Width = column.ColumnWidth;

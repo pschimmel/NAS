@@ -19,9 +19,9 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public FilterDefinitionViewModel(FilterDefinition definition)
+    public FilterDefinitionViewModel(Schedule schedule, FilterDefinition definition)
     {
-      _schedule = definition.Layout.Schedule;
+      _schedule = schedule;
       _definition = definition;
       Property = definition.Property;
       Relation = definition.Relation;

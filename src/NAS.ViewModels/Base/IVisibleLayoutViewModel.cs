@@ -1,5 +1,4 @@
-﻿using System;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 using NAS.Models.Enums;
 
 namespace NAS.ViewModels.Base
