@@ -9,7 +9,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class FilterDefinitionsViewModel : ViewModelBase, IApplyable
+  public class FilterDefinitionsViewModel : ViewModelBase
   {
     #region Fields
 
@@ -127,7 +127,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
     public void Apply()
     {

@@ -101,19 +101,19 @@ namespace NAS.ReportViewer
     //private Canvas addFrame(Canvas canvas)
     //{
     //  var layout = schedule.CurrentLayout;
-    //  var c = canvas.Clone(layout.MarginLeft * 96 / 2.54, layout.MarginTop * 96 / 2.54, layout.HeaderHeight * 96 / 2.54);
+    //  var c = canvas.Clone(layout.LeftMargin * 96 / 2.54, layout.TopMargin * 96 / 2.54, layout.HeaderHeight * 96 / 2.54);
     //  var gridHeader = new Grid();
     //  var gridFooter = new Grid();
     //  c.Children.Add(gridHeader);
     //  c.Children.Add(gridFooter);
     //  gridHeader.Height = layout.HeaderHeight * 96 / 2.54;
-    //  gridHeader.Width = c.Width - (layout.MarginLeft + layout.MarginRight) * 96 / 2.54;
-    //  Canvas.SetTop(gridHeader, layout.MarginTop * 96 / 2.54);
-    //  Canvas.SetLeft(gridHeader, layout.MarginLeft * 96 / 2.54);
+    //  gridHeader.Width = c.Width - (layout.LeftMargin + layout.RightMargin) * 96 / 2.54;
+    //  Canvas.SetTop(gridHeader, layout.TopMargin * 96 / 2.54);
+    //  Canvas.SetLeft(gridHeader, layout.LeftMargin * 96 / 2.54);
     //  gridFooter.Height = layout.FooterHeight * 96 / 2.54;
-    //  gridFooter.Width = c.Width - (layout.MarginLeft + layout.MarginRight) * 96 / 2.54;
-    //  Canvas.SetTop(gridFooter, c.Height - gridFooter.Height - layout.MarginBottom * 96 / 2.54);
-    //  Canvas.SetLeft(gridFooter, layout.MarginLeft * 96 / 2.54);
+    //  gridFooter.Width = c.Width - (layout.LeftMargin + layout.RightMargin) * 96 / 2.54;
+    //  Canvas.SetTop(gridFooter, c.Height - gridFooter.Height - layout.BottomMargin * 96 / 2.54);
+    //  Canvas.SetLeft(gridFooter, layout.LeftMargin * 96 / 2.54);
     //  foreach (var definition in layout.HeaderDefinitions.OrderBy(x => x.Column)) {
     //    if (definition.IsHeader)
     //      gridHeader.ColumnDefinitions.Add(new System.Windows.Controls.ColumnDefinition());

@@ -1,6 +1,8 @@
-﻿namespace NAS.Models.Entities
+﻿using NAS.Models.Base;
+
+namespace NAS.Models.Entities
 {
-  public class HeaderItem : NASObject, IPrintLayoutItem
+  public class HeaderItem : NASObject, IPrintLayoutItem, IClonable<HeaderItem>
   {
     private string _definition;
     private int _column;
@@ -40,6 +42,11 @@
           OnPropertyChanged(nameof(Column));
         }
       }
+    }
+
+    public HeaderItem Clone()
+    {
+      return new HeaderItem(this);
     }
   }
 }

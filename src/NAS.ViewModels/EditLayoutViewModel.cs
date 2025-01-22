@@ -127,7 +127,7 @@ namespace NAS.ViewModels
 
     private void EditPrintLayout()
     {
-      using var vm = new PrintLayoutViewModel(Layout);
+      using var vm = new EditPrintLayoutViewModel(Layout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         vm.Apply();

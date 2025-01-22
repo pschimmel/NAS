@@ -10,8 +10,8 @@
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
       xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
-      Width="400"
-      Height="450"
+      d:DesignWidth="400"
+      d:DesignHeight="450"
       d:DataContext="{d:DesignInstance Type=viewmodels:EditLayoutViewModel}"
       mc:Ignorable="d">
   <Grid.Resources>

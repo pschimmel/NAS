@@ -8,7 +8,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class PERTDefinitionViewModel : ValidatingViewModel, IApplyable
+  public class PERTDefinitionViewModel : ValidatingViewModel
   {
     #region Fields
 

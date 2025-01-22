@@ -196,7 +196,7 @@ namespace NAS.ViewModels.Printing
 
     private void LayoutSettingsCommandExecute()
     {
-      using var vm = new PrintLayoutViewModel(viewModel.Schedule.CurrentLayout);
+      using var vm = new EditPrintLayoutViewModel(viewModel.Schedule.CurrentLayout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         UpdatePreview();
@@ -275,15 +275,15 @@ namespace NAS.ViewModels.Printing
     {
       var size = new Size(GetActualWidth(pageSize, printableArea, orientation), GetActualHeight(pageSize, printableArea, orientation));
       var layout = Project.CurrentLayout;
-      double marginLeft = layout.MarginLeft * 96 / 2.54;
-      double marginRight = layout.MarginRight * 96 / 2.54;
-      double marginTop = layout.MarginTop * 96 / 2.54;
-      double marginBottom = layout.MarginBottom * 96 / 2.54;
+      double leftMargin = layout.LeftMargin * 96 / 2.54;
+      double rightMargin = layout.RightMargin * 96 / 2.54;
+      double topMargin = layout.TopMargin * 96 / 2.54;
+      double bottomMargin = layout.BottomMargin * 96 / 2.54;
       double headerHeight = layout.HeaderHeight * 96 / 2.54;
       double footerHeight = layout.FooterHeight * 96 / 2.54;
-      var newCanvas = AddFrame((Canvas)Canvas, size, marginLeft, marginTop, marginRight, marginBottom, headerHeight, footerHeight);
-      AddHeader(newCanvas, layout, newCanvas.Width - marginLeft - marginRight, headerHeight, marginLeft, marginTop);
-      AddFooter(newCanvas, layout, newCanvas.Width - marginLeft - marginRight, footerHeight, marginLeft, newCanvas.Height - marginBottom - footerHeight);
+      var newCanvas = AddFrame((Canvas)Canvas, size, leftMargin, topMargin, rightMargin, bottomMargin, headerHeight, footerHeight);
+      AddHeader(newCanvas, layout, newCanvas.Width - leftMargin - rightMargin, headerHeight, leftMargin, topMargin);
+      AddFooter(newCanvas, layout, newCanvas.Width - leftMargin - rightMargin, footerHeight, leftMargin, newCanvas.Height - bottomMargin - footerHeight);
       return newCanvas;
     }
 

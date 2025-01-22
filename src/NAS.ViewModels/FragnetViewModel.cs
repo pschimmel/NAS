@@ -8,7 +8,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class FragnetViewModel : ValidatingViewModel, IApplyable
+  public class FragnetViewModel : ValidatingViewModel
   {
     #region Fields
 

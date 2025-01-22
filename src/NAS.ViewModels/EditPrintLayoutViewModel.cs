@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using NAS.Models.Entities;
+using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class PrintLayoutViewModel : ViewModelBase, IApplyable
+  public class EditPrintLayoutViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -18,17 +18,60 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public PrintLayoutViewModel(Layout layout)
+    public EditPrintLayoutViewModel(Layout layout)
       : base()
     {
       _layout = layout;
+      LayoutName = layout.Name;
+      LeftMargin = layout.LeftMargin;
+      RightMargin = layout.RightMargin;
+      TopMargin = layout.TopMargin;
+      BottomMargin = layout.BottomMargin;
       _headerColumnCount = layout.HeaderItems.Count;
       _footerColumnCount = layout.FooterItems.Count;
+      foreach (var headerItem in layout.HeaderItems)
+      {
+        HeaderItems.Add(headerItem.Clone());
+      }
+
+      foreach (var footerItem in layout.FooterItems)
+      {
+        FooterItems.Add(footerItem.Clone());
+      }
+
+      HeaderHeight = layout.HeaderHeight;
+      FooterHeight = layout.FooterHeight;
     }
 
     #endregion
 
+    #region Overwritten Members
+
+    public override string Title => NASResources.PrintLayout;
+
+    public override string Icon => "Layout";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(700, 550);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Layout;
+
+    #endregion
+
     #region Properties
+
+    public string LayoutName { get; }
+
+    public double LeftMargin { get; set; }
+
+    public double RightMargin { get; set; }
+
+    public double TopMargin { get; set; }
+
+    public double BottomMargin { get; set; }
+
+    public double HeaderHeight { get; set; }
+
+    public double FooterHeight { get; set; }
 
     public int HeaderColumnCount
     {
@@ -122,11 +165,52 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
-    public void Apply()
+    protected override void OnApply()
     {
-      _layout.RefreshPrintLayout(HeaderItems, FooterItems);
+      if (LeftMargin >= 0)
+      {
+        _layout.LeftMargin = LeftMargin;
+      }
+
+      if (RightMargin >= 0)
+      {
+        _layout.RightMargin = RightMargin;
+      }
+
+      if (TopMargin >= 0)
+      {
+        _layout.TopMargin = TopMargin;
+      }
+
+      if (BottomMargin >= 0)
+      {
+        _layout.BottomMargin = BottomMargin;
+      }
+
+      if (HeaderHeight >= 0)
+      {
+        _layout.HeaderHeight = HeaderHeight;
+      }
+
+      if (FooterHeight >= 0)
+      {
+        _layout.FooterHeight = FooterHeight;
+      }
+
+      _layout.HeaderItems.Clear();
+      _layout.FooterItems.Clear();
+
+      foreach (var headerItem in HeaderItems)
+      {
+        _layout.HeaderItems.Add(headerItem);
+      }
+
+      foreach (var footerItem in FooterItems)
+      {
+        _layout.FooterItems.Add(footerItem);
+      }
     }
 
     #endregion

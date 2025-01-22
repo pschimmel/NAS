@@ -9,7 +9,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class PERTDefinitionsViewModel : ViewModelBase, IApplyable
+  public class PERTDefinitionsViewModel : ViewModelBase
   {
     #region Fields
 
@@ -254,7 +254,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
     public void Apply()
     {

@@ -1,28 +1,23 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using ES.Tools.Core.MVVM;
+using NAS.ViewModels.Base;
 
-namespace NAS
+namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for WindowLayoutTemplate.xaml
+  /// Interaction logic for EditPrintLayoutView.xaml
   /// </summary>
-  public partial class WindowPrintLayout : IView
+  public partial class EditPrintLayoutView : Grid, IDialogContentView
   {
-    public WindowPrintLayout()
+    public EditPrintLayoutView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
-    }
-
-    private void buttonOK_Click(object sender, RoutedEventArgs e)
-    {
-      DialogResult = true;
     }
 
     private void MenuItem_Click(object sender, RoutedEventArgs e)

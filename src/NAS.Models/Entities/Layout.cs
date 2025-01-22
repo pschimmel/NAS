@@ -21,10 +21,10 @@ namespace NAS.Models.Entities
     private bool _isCurrent;
     private double _headerHeight;
     private double _footerHeight;
-    private double _marginLeft;
-    private double _marginRight;
-    private double _marginTop;
-    private double _marginBottom;
+    private double _leftMargin;
+    private double _rightMargin;
+    private double _topMargin;
+    private double _bottomMargin;
 
     protected Layout()
     {
@@ -84,10 +84,10 @@ namespace NAS.Models.Entities
         HeaderItems.Add(new HeaderItem(otherHeaderItem));
       }
 
-      MarginBottom = other.MarginBottom;
-      MarginLeft = other.MarginLeft;
-      MarginRight = other.MarginRight;
-      MarginTop = other.MarginTop;
+      BottomMargin = other.BottomMargin;
+      LeftMargin = other.LeftMargin;
+      RightMargin = other.RightMargin;
+      TopMargin = other.TopMargin;
       MilestoneCriticalColor = other.MilestoneCriticalColor;
       MilestoneStandardColor = other.MilestoneStandardColor;
       MilestoneDoneColor = other.MilestoneDoneColor;
@@ -293,54 +293,54 @@ namespace NAS.Models.Entities
       }
     }
 
-    public double MarginLeft
+    public double LeftMargin
     {
-      get => _marginLeft;
+      get => _leftMargin;
       set
       {
-        if (_marginLeft != value)
+        if (_leftMargin != value)
         {
-          _marginLeft = value;
-          OnPropertyChanged(nameof(MarginLeft));
+          _leftMargin = value;
+          OnPropertyChanged(nameof(LeftMargin));
         }
       }
     }
 
-    public double MarginRight
+    public double RightMargin
     {
-      get => _marginRight;
+      get => _rightMargin;
       set
       {
-        if (_marginRight != value)
+        if (_rightMargin != value)
         {
-          _marginRight = value;
-          OnPropertyChanged(nameof(MarginRight));
+          _rightMargin = value;
+          OnPropertyChanged(nameof(RightMargin));
         }
       }
     }
 
-    public double MarginTop
+    public double TopMargin
     {
-      get => _marginTop;
+      get => _topMargin;
       set
       {
-        if (_marginTop != value)
+        if (_topMargin != value)
         {
-          _marginTop = value;
-          OnPropertyChanged(nameof(MarginTop));
+          _topMargin = value;
+          OnPropertyChanged(nameof(TopMargin));
         }
       }
     }
 
-    public double MarginBottom
+    public double BottomMargin
     {
-      get => _marginBottom;
+      get => _bottomMargin;
       set
       {
-        if (_marginBottom != value)
+        if (_bottomMargin != value)
         {
-          _marginBottom = value;
-          OnPropertyChanged(nameof(MarginBottom));
+          _bottomMargin = value;
+          OnPropertyChanged(nameof(BottomMargin));
         }
       }
     }
@@ -375,66 +375,6 @@ namespace NAS.Models.Entities
       foreach (var filterDefinition in filterDefinitions)
       {
         FilterDefinitions.Add(filterDefinition);
-      }
-    }
-
-    #endregion
-
-    #region Sorting/Grouping
-
-    public void RefreshSortingAndGrouping(IEnumerable<SortingDefinition> sortingDefinitions, IEnumerable<GroupingDefinition> groupingDefinitions)
-    {
-      if (sortingDefinitions == null)
-      {
-        throw new ArgumentNullException(nameof(sortingDefinitions), "Argument can't be null");
-      }
-
-      if (groupingDefinitions == null)
-      {
-        throw new ArgumentNullException(nameof(sortingDefinitions), "Argument can't be null");
-      }
-
-      SortingDefinitions.Clear();
-      GroupingDefinitions.Clear();
-
-      foreach (var sortingDefinition in sortingDefinitions)
-      {
-        SortingDefinitions.Add(sortingDefinition);
-      }
-
-      foreach (var groupingDefinition in groupingDefinitions)
-      {
-        GroupingDefinitions.Add(groupingDefinition);
-      }
-    }
-
-    #endregion
-
-    #region Print Layout
-
-    public void RefreshPrintLayout(IEnumerable<HeaderItem> headerItems, IEnumerable<FooterItem> footerItems)
-    {
-      if (headerItems == null)
-      {
-        throw new ArgumentNullException(nameof(headerItems), "Argument mustn't be null");
-      }
-
-      if (footerItems == null)
-      {
-        throw new ArgumentNullException(nameof(footerItems), "Argument mustn't be null");
-      }
-
-      SortingDefinitions.Clear();
-      GroupingDefinitions.Clear();
-
-      foreach (var headerItem in headerItems)
-      {
-        HeaderItems.Add(headerItem);
-      }
-
-      foreach (var footerItem in footerItems)
-      {
-        FooterItems.Add(footerItem);
       }
     }
 

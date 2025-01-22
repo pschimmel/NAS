@@ -1,6 +1,8 @@
-﻿namespace NAS.Models.Entities
+﻿using NAS.Models.Base;
+
+namespace NAS.Models.Entities
 {
-  public class FooterItem : NASObject, IPrintLayoutItem
+  public class FooterItem : NASObject, IPrintLayoutItem, IClonable<FooterItem>
   {
     private string _definition;
     private int _column;
@@ -40,6 +42,11 @@
           OnPropertyChanged(nameof(Column));
         }
       }
+    }
+
+    public FooterItem Clone()
+    {
+      return new FooterItem(this);
     }
   }
 }

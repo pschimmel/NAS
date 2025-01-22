@@ -12,12 +12,12 @@ namespace NAS.Models.Entities
 
     ObservableCollection<HeaderItem> HeaderItems { get; }
 
-    double MarginBottom { get; set; }
+    double BottomMargin { get; set; }
 
-    double MarginLeft { get; set; }
+    double LeftMargin { get; set; }
 
-    double MarginRight { get; set; }
+    double RightMargin { get; set; }
 
-    double MarginTop { get; set; }
+    double TopMargin { get; set; }
   }
 }

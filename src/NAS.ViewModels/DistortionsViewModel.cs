@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
-using NAS.Models.Base;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
 using NAS.Resources;
@@ -10,7 +9,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class DistortionsViewModel : ViewModelBase, IApplyable
+  public class DistortionsViewModel : ViewModelBase
   {
     #region Fields
 
@@ -121,7 +120,7 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IApplyable Implementation
+    #region Apply
 
     public void Apply()
     {

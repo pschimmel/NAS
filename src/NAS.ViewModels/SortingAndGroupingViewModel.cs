@@ -10,7 +10,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class SortingAndGroupingViewModel : ViewModelBase, IApplyable
+  public class SortingAndGroupingViewModel : ViewModelBase
   {
     #region Fields
 
@@ -263,11 +263,22 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region IApplyable
+    #region Apply
 
     public void Apply()
     {
-      _layout.RefreshSortingAndGrouping(SortingDefinitions, GroupingDefinitions);
+      _layout.SortingDefinitions.Clear();
+      _layout.GroupingDefinitions.Clear();
+
+      foreach (var sortingDefinition in SortingDefinitions)
+      {
+        _layout.SortingDefinitions.Add(sortingDefinition);
+      }
+
+      foreach (var groupingDefinition in GroupingDefinitions)
+      {
+        _layout.GroupingDefinitions.Add(groupingDefinition);
+      }
     }
 
     #endregion
