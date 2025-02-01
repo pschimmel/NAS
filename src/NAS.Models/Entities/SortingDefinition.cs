@@ -1,16 +1,13 @@
-﻿using NAS.Models.Enums;
+﻿using NAS.Models.Base;
+using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class SortingDefinition : NASObject
+  public class SortingDefinition : NASObject, IClonable<SortingDefinition>
   {
-    private ActivityProperty _property;
-    private SortDirection _direction;
-    private int _order;
-
     public SortingDefinition(ActivityProperty property)
     {
-      _property = property;
+      Property = property;
     }
 
     /// <summary>
@@ -23,48 +20,18 @@ namespace NAS.Models.Entities
       Order = other.Order;
     }
 
-    public ActivityProperty Property
-    {
-      get => _property;
-      set
-      {
-        if (_property != value)
-        {
-          _property = value;
-          OnPropertyChanged(nameof(Property));
-          OnPropertyChanged(nameof(Name));
-        }
-      }
-    }
+    public ActivityProperty Property { get; set; }
 
-    public SortDirection Direction
-    {
-      get => _direction;
-      set
-      {
-        if (_direction != value)
-        {
-          _direction = value;
-          OnPropertyChanged(nameof(Direction));
-          OnPropertyChanged(nameof(Name));
-        }
-      }
-    }
+    public SortDirection Direction { get; set; }
 
-    public int Order
-    {
-      get => _order;
-      set
-      {
-        if (_order != value)
-        {
-          _order = value;
-          OnPropertyChanged(nameof(Order));
-        }
-      }
-    }
+    public int Order { get; set; }
 
     public string Name => ActivityPropertyHelper.GetNameOfActivityProperty(Property) + " (" + SortDirectionHelper.GetNameOfSortDirection(Direction) + ")";
+
+    public SortingDefinition Clone()
+    {
+      return new SortingDefinition(this);
+    }
 
     public override string ToString()
     {

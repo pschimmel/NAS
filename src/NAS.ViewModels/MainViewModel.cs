@@ -524,7 +524,7 @@ namespace NAS.ViewModels
       {
         var viewModel = CurrentSchedule;
 
-        var args = new RequestItemEventArgs<LayoutType, IPrintableCanvas>(viewModel.CurrentLayout.LayoutType);
+        var args = new RequestItemEventArgs<LayoutType, IPrintableCanvas>(viewModel.ActiveLayout.LayoutType);
         GetCanvas?.Invoke(this, args);
         var canvas = args.ReturnedItem ?? throw new ApplicationException("Canvas not defined");
         canvas.DataContext = viewModel;

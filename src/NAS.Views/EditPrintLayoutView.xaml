@@ -144,6 +144,7 @@
                                  HorizontalAlignment="Stretch"
                                  VerticalAlignment="Stretch"
                                  BorderThickness="0"
+                                 ContextMenu="{StaticResource ContextMenuDataItems}"
                                  Text="{Binding Definition, UpdateSourceTrigger=PropertyChanged}">
               <toolkit:RichTextBoxFormatBarManager.FormatBar>
                 <toolkit:RichTextBoxFormatBar />
@@ -206,6 +207,7 @@
           <DataTemplate>
             <toolkit:RichTextBox Margin="2"
                                  BorderThickness="0"
+                                 ContextMenu="{StaticResource ContextMenuDataItems}"
                                  Text="{Binding Definition, UpdateSourceTrigger=PropertyChanged}">
               <toolkit:RichTextBoxFormatBarManager.FormatBar>
                 <toolkit:RichTextBoxFormatBar />

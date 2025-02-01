@@ -18,7 +18,7 @@ namespace NAS.Models.Entities
     private bool _showRelationships;
     private bool _showFloat;
     private FilterCombinationType _filterCombination;
-    private bool _isCurrent;
+    private bool _IsActive;
     private double _headerHeight;
     private double _footerHeight;
     private double _leftMargin;
@@ -124,15 +124,15 @@ namespace NAS.Models.Entities
 
     public abstract LayoutType LayoutType { get; }
 
-    public bool IsCurrent
+    public bool IsActive
     {
-      get => _isCurrent;
+      get => _IsActive;
       set
       {
-        if (_isCurrent != value)
+        if (_IsActive != value)
         {
-          _isCurrent = value;
-          OnPropertyChanged(nameof(IsCurrent));
+          _IsActive = value;
+          OnPropertyChanged(nameof(IsActive));
         }
       }
     }

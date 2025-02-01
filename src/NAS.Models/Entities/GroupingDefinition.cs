@@ -1,67 +1,35 @@
-﻿using NAS.Models.Enums;
+﻿using NAS.Models.Base;
+using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class GroupingDefinition : NASObject
+  public class GroupingDefinition : NASObject, IClonable<GroupingDefinition>
   {
-    private ActivityProperty _property;
-    private int _order;
-    private string _color;
-
     public GroupingDefinition(ActivityProperty property)
     {
-      _property = property;
-      _order = 0;
+      Property = property;
+      Order = 0;
     }
 
     public GroupingDefinition(GroupingDefinition other)
     {
-      _order = other.Order;
-      _color = other.Color;
-      _property = other.Property;
+      Order = other.Order;
+      Color = other.Color;
+      Property = other.Property;
     }
 
-    public ActivityProperty Property
-    {
-      get => _property;
-      set
-      {
-        if (_property != value)
-        {
-          _property = value;
-          OnPropertyChanged(nameof(Property));
-          OnPropertyChanged(nameof(Name));
-        }
-      }
-    }
+    public ActivityProperty Property { get; set; }
 
-    public int Order
-    {
-      get => _order;
-      set
-      {
-        if (_order != value)
-        {
-          _order = value;
-          OnPropertyChanged(nameof(Order));
-        }
-      }
-    }
+    public int Order { get; set; }
 
-    public string Color
-    {
-      get => _color;
-      set
-      {
-        if (_color != value)
-        {
-          _color = value;
-          OnPropertyChanged(nameof(Color));
-        }
-      }
-    }
+    public string Color { get; set; }
 
     public string Name => ActivityPropertyHelper.GetNameOfActivityProperty(Property);
+
+    public GroupingDefinition Clone()
+    {
+      return new GroupingDefinition(this);
+    }
 
     public override string ToString()
     {

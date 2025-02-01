@@ -64,7 +64,7 @@ namespace NAS.Views.Controls
         AddCalendar();
         AddDataDate();
         AddFrame();
-        foreach (var resource in VM.Schedule.CurrentLayout.VisibleResources)
+        foreach (var resource in VM.Schedule.ActiveLayout.VisibleResources)
         {
           RefreshResources(resource);
         }

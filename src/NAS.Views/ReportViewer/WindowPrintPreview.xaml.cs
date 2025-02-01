@@ -100,7 +100,7 @@ namespace NAS.ReportViewer
 
     //private Canvas addFrame(Canvas canvas)
     //{
-    //  var layout = schedule.CurrentLayout;
+    //  var layout = schedule.ActiveLayout;
     //  var c = canvas.Clone(layout.LeftMargin * 96 / 2.54, layout.TopMargin * 96 / 2.54, layout.HeaderHeight * 96 / 2.54);
     //  var gridHeader = new Grid();
     //  var gridFooter = new Grid();

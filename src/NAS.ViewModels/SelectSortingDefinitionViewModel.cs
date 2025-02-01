@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Models.Enums;
+﻿using NAS.Models.Enums;
+using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class SortingDefinitionViewModel : ViewModelBase
+  public class SelectSortingDefinitionViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -17,14 +16,14 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public SortingDefinitionViewModel(ActivityProperty property, SortDirection direction)
+    public SelectSortingDefinitionViewModel(ActivityProperty property, SortDirection direction)
       : base()
     {
       selectedActivityProperty = property;
       selectedSortDirection = direction;
     }
 
-    public SortingDefinitionViewModel()
+    public SelectSortingDefinitionViewModel()
       : base()
     {
       if (ActivityProperties.Count != 0)
@@ -37,6 +36,18 @@ namespace NAS.ViewModels
         selectedSortDirection = SortDirections.First();
       }
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Sorting;
+
+    public override string Icon => "GroupAndSort";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 150);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.GroupAndSort;
 
     #endregion
 

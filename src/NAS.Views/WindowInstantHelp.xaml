@@ -124,7 +124,7 @@
         Die Einstellungen in diesem Menü außer dem Zoom-Faktor beziehen sich immer auf das aktuell ausgewählte Layout.
       </Paragraph>
     </FlowDocument>
-    <FlowDocument x:Key="sortandgroup"
+    <FlowDocument x:Key="GroupAndSort"
                   FontFamily="Microsoft Sans Serif"
                   FontSize="12"
                   IsColumnWidthFlexible="False">

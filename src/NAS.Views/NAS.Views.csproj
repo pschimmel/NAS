@@ -299,7 +299,7 @@
     <Resource Include="Images\ShowResources.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\SortAndGroup.png">
+    <Resource Include="Images\GroupAndSort.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Split.png">

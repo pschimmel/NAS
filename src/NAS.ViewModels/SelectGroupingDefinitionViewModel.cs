@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using NAS.Models.Enums;
+using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class GroupingDefinitionViewModel : ViewModelBase
+  public class SelectGroupingDefinitionViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -18,14 +17,14 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public GroupingDefinitionViewModel(ActivityProperty property, Color color)
+    public SelectGroupingDefinitionViewModel(ActivityProperty property, Color color)
       : base()
     {
       selectedActivityProperty = property;
       SelectedColor = color;
     }
 
-    public GroupingDefinitionViewModel()
+    public SelectGroupingDefinitionViewModel()
       : base()
     {
       if (ActivityProperties.Count != 0)
@@ -33,6 +32,18 @@ namespace NAS.ViewModels
         selectedActivityProperty = ActivityProperties.First();
       }
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Grouping;
+
+    public override string Icon => "GroupAndSort";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 150);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.GroupAndSort;
 
     #endregion
 

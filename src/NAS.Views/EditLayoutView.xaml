@@ -10,9 +10,9 @@
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
       xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
-      d:DesignWidth="400"
-      d:DesignHeight="450"
       d:DataContext="{d:DesignInstance Type=viewmodels:EditLayoutViewModel}"
+      d:DesignHeight="450"
+      d:DesignWidth="400"
       mc:Ignorable="d">
   <Grid.Resources>
     <ResourceDictionary>
@@ -282,7 +282,7 @@
             <DataGridTextColumn Binding="{Binding Schedule.Name}"
                                 Header="{x:Static resx:NASResources.Name}"
                                 IsReadOnly="True" />
-            <DataGridTextColumn Binding="{Binding Schedule.Date, Converter={StaticResource DateConverter}}"
+            <DataGridTextColumn Binding="{Binding Schedule.DataDate, Converter={StaticResource DateConverter}}"
                                 Header="{x:Static resx:NASResources.Date}"
                                 IsReadOnly="True" />
             <DataGridTemplateColumn Width="120" Header="{x:Static resx:NASResources.Color}">

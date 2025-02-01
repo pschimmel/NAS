@@ -108,7 +108,7 @@ namespace NAS.Views.Controls
         vm.RelationshipAdded += ViewModel_RelationshipAdded;
         vm.RelationshipDeleted += ViewModel_RelationshipDeleted;
         vm.RefreshLayout += ViewModel_LayoutChanged;
-        Layout = vm.Schedule.CurrentLayout;
+        Layout = vm.Schedule.ActiveLayout;
       }
       suspendRefreshing = false;
       Refresh();
@@ -139,7 +139,7 @@ namespace NAS.Views.Controls
 
     private void ViewModel_LayoutChanged(object sender, ItemEventArgs<Layout> e)
     {
-      Layout = VM.Schedule.CurrentLayout;
+      Layout = VM.Schedule.ActiveLayout;
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

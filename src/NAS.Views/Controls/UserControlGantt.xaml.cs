@@ -143,7 +143,7 @@ namespace NAS.Views.Controls
 
     #region Properties
 
-    public Layout Layout => VM.CurrentLayout.Layout;
+    public Layout Layout => VM.ActiveLayout.Layout;
 
     #endregion
 

@@ -24,9 +24,9 @@ namespace NAS.Views
       var itemAsLayoutContent = item as LayoutContent; // ContentPresenter
       var vm = (item as ScheduleViewModel) ?? itemAsLayoutContent?.Content as ScheduleViewModel;
 
-      if (vm != null && vm.CurrentLayout != null)
+      if (vm != null && vm.ActiveLayout != null)
       {
-        return vm.CurrentLayout.LayoutType == LayoutType.Gantt ? GanttTemplate : PertTemplate;
+        return vm.ActiveLayout.LayoutType == LayoutType.Gantt ? GanttTemplate : PertTemplate;
       }
 
       return base.SelectTemplate(item, container);

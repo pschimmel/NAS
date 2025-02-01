@@ -16,7 +16,7 @@
     Filters,
     Baseline,
     Resources,
-    SortAndGroup,
+    GroupAndSort,
     CustomAttributes,
     Distortions,
     WBS,

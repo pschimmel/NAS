@@ -4,45 +4,20 @@ namespace NAS.Models.Entities
 {
   public class FooterItem : NASObject, IPrintLayoutItem, IClonable<FooterItem>
   {
-    private string _definition;
-    private int _column;
-
     public FooterItem()
     {
-      _column = 0;
+      Column = 0;
     }
 
     public FooterItem(FooterItem other)
     {
-      _column = other._column;
-      _definition = other._definition;
+      Column = other.Column;
+      Definition = other.Definition;
     }
 
-    public string Definition
-    {
-      get => _definition;
-      set
-      {
-        if (_definition != value)
-        {
-          _definition = value;
-          OnPropertyChanged(nameof(Definition));
-        }
-      }
-    }
+    public string Definition { get; set; }
 
-    public int Column
-    {
-      get => _column;
-      set
-      {
-        if (_column != value)
-        {
-          _column = value;
-          OnPropertyChanged(nameof(Column));
-        }
-      }
-    }
+    public int Column { get; set; }
 
     public FooterItem Clone()
     {

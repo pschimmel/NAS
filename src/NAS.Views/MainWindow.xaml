@@ -405,8 +405,8 @@
             </fluent:Button>
             <fluent:Button Command="{Binding CurrentSchedule.EditSortingAndGroupingCommand}"
                            Header="{x:Static resx:NASResources.GroupAndSort}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/SortAndGroup.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/SortAndGroup.png"
+                           Icon="pack://application:,,,/NAS.Views;component/Images/GroupAndSort.png"
+                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/GroupAndSort.png"
                            SizeDefinition="Large, Middle, Small"
                            Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
               <fluent:Button.ToolTip>
@@ -427,7 +427,7 @@
                                     MaxItemsInRow="5"
                                     MinItemsInDropDownRow="1"
                                     MinItemsInRow="1"
-                                    SelectedItem="{Binding CurrentSchedule.CurrentLayout}">
+                                    SelectedItem="{Binding CurrentSchedule.ActiveLayout}">
               <fluent:InRibbonGallery.Menu>
                 <fluent:RibbonMenu>
                   <MenuItem Command="{Binding CurrentSchedule.AddGanttLayoutCommand}" Header="{x:Static resx:NASResources.AddGanttLayout}">
@@ -490,7 +490,7 @@
             <fluent:ToggleButton Command="{Binding CurrentSchedule.ShowRelationshipsCommand}"
                                  Header="{x:Static resx:NASResources.ShowRelationships}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/ShowRelationships.png"
-                                 IsChecked="{Binding CurrentSchedule.CurrentLayout.Layout.ShowRelationships}"
+                                 IsChecked="{Binding CurrentSchedule.ActiveLayout.Layout.ShowRelationships}"
                                  LargeIcon="pack://application:,,,/NAS.Views;component/Images/ShowRelationships.png"
                                  SizeDefinition="Large, Middle, Small">
               <fluent:ToggleButton.ToolTip>
@@ -502,7 +502,7 @@
             <fluent:ToggleButton Command="{Binding CurrentSchedule.ShowFloatCommand}"
                                  Header="{x:Static resx:NASResources.ShowFloat}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/ShowFloat.png"
-                                 IsChecked="{Binding CurrentSchedule.CurrentLayout.Layout.ShowFloat}"
+                                 IsChecked="{Binding CurrentSchedule.ActiveLayout.Layout.ShowFloat}"
                                  LargeIcon="pack://application:,,,/NAS.Views;component/Images/ShowFloat.png"
                                  SizeDefinition="Large, Middle, Small"
                                  Visibility="{Binding CurrentSchedule.ShowGanttControls, Converter={StaticResource VisibilityConverter}}">
@@ -1121,7 +1121,7 @@
         <fluent:StatusBarItem Title="{x:Static resx:NASResources.ActiveLayout}"
                               HorizontalAlignment="Right"
                               ToolTip="{x:Static resx:NASResources.ActiveLayout}">
-          <TextBlock Text="{Binding CurrentSchedule.CurrentLayout.Layout.Name, IsAsync=True}" />
+          <TextBlock Text="{Binding CurrentSchedule.ActiveLayout.Layout.Name, IsAsync=True}" />
         </fluent:StatusBarItem>
         <Separator HorizontalAlignment="Left" />
         <fluent:StatusBarItem Title="{x:Static resx:NASResources.Version}"

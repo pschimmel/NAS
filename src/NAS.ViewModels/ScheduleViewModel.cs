@@ -38,7 +38,7 @@ namespace NAS.ViewModels
     private double _zoom = 1.0;
     private RelationshipViewModel _currentRelationship;
     private ActivityViewModel _currentActivity;
-    private IVisibleLayoutViewModel _currentLayout;
+    private IVisibleLayoutViewModel _ActiveLayout;
 
     #endregion
 
@@ -55,7 +55,7 @@ namespace NAS.ViewModels
 
       foreach (var layout in Schedule.Layouts)
       {
-        AddLayoutVM(layout, layout == Schedule.CurrentLayout);
+        AddLayoutVM(layout, layout == Schedule.ActiveLayout);
       }
 
       foreach (var activity in schedule.Activities)
@@ -313,17 +313,17 @@ namespace NAS.ViewModels
     /// </summary>
     public bool CurrentActivityIsNotFixed => CurrentActivity != null && !CurrentActivityIsFixed;
 
-    public IVisibleLayoutViewModel CurrentLayout
+    public IVisibleLayoutViewModel ActiveLayout
     {
-      get => _currentLayout;
+      get => _ActiveLayout;
       set
       {
-        if (_currentLayout != value)
+        if (_ActiveLayout != value)
         {
-          bool typeChanged = !Equals(_currentLayout?.LayoutType, value?.LayoutType);
-          _currentLayout = value;
-          Schedule.CurrentLayout = value?.Layout;
-          OnPropertyChanged(nameof(CurrentLayout));
+          bool typeChanged = !Equals(_ActiveLayout?.LayoutType, value?.LayoutType);
+          _ActiveLayout = value;
+          Schedule.ActiveLayout = value?.Layout;
+          OnPropertyChanged(nameof(ActiveLayout));
           OnRefreshLayout(typeChanged);
         }
         foreach (var l in Layouts)
@@ -333,9 +333,9 @@ namespace NAS.ViewModels
       }
     }
 
-    public bool ShowPERTControls => Schedule.CurrentLayout.LayoutType == LayoutType.PERT;
+    public bool ShowPERTControls => Schedule.ActiveLayout.LayoutType == LayoutType.PERT;
 
-    public bool ShowGanttControls => Schedule.CurrentLayout.LayoutType == LayoutType.Gantt;
+    public bool ShowGanttControls => Schedule.ActiveLayout.LayoutType == LayoutType.Gantt;
 
     #endregion
 
@@ -474,7 +474,7 @@ namespace NAS.ViewModels
         Schedule.RemoveActivity(activityVM.Activity);
         Activities.Remove(activityVM);
         OnActivityDeleted(activityVM);
-        if (CurrentLayout.LayoutType == LayoutType.PERT)
+        if (ActiveLayout.LayoutType == LayoutType.PERT)
         {
           var view = ES.Tools.Core.MVVM.ViewModelExtensions.GetView(Activities);
           CurrentActivity = view.CurrentItem as ActivityViewModel;
@@ -717,7 +717,7 @@ namespace NAS.ViewModels
     private void SelectLayoutCommandExecute(IVisibleLayoutViewModel layout)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.View);
-      CurrentLayout = layout;
+      ActiveLayout = layout;
     }
 
     private bool SelectLayoutCommandCanExecute(IVisibleLayoutViewModel layout)
@@ -790,7 +790,7 @@ namespace NAS.ViewModels
       using var vm = new SelectResourceViewModel(Schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
       {
-        var vr = new VisibleResource(_currentLayout.Layout, vm.SelectedResource);
+        var vr = new VisibleResource(_ActiveLayout.Layout, vm.SelectedResource);
         Resources.Add(new ResourceViewModel(vr, this, CloseResourceCommand));
       }
     }
@@ -831,7 +831,7 @@ namespace NAS.ViewModels
       var item = new GanttLayout();
 
       using var vm = new EditLayoutViewModel(Schedule, item);
-      if (!ViewFactory.Instance.ShowDialog(vm) == true)
+      if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         AddLayoutVM(item, true);
       }
@@ -848,7 +848,7 @@ namespace NAS.ViewModels
       var item = new PERTLayout();
 
       using var vm = new EditLayoutViewModel(Schedule, item);
-      if (!ViewFactory.Instance.ShowDialog(vm) == true)
+      if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         AddLayoutVM(item, true);
       }
@@ -865,16 +865,16 @@ namespace NAS.ViewModels
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Layout);
       UserNotificationService.Instance.Question(NASResources.MessageDeleteLayout, () =>
       {
-        var layoutToRemove = CurrentLayout;
-        int idx = Layouts.IndexOf(CurrentLayout);
-        CurrentLayout = idx + 1 < Layouts.Count ? Layouts[idx + 1] : Layouts[idx - 1];
+        var layoutToRemove = ActiveLayout;
+        int idx = Layouts.IndexOf(ActiveLayout);
+        ActiveLayout = idx + 1 < Layouts.Count ? Layouts[idx + 1] : Layouts[idx - 1];
         Layouts.Remove(layoutToRemove);
       });
     }
 
     private bool RemoveLayoutCommandCanExecute()
     {
-      return CurrentLayout != null && Schedule.Layouts.Count > 1;
+      return ActiveLayout != null && Schedule.Layouts.Count > 1;
     }
 
     #endregion
@@ -886,12 +886,12 @@ namespace NAS.ViewModels
     private void CopyLayoutCommandExecute()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Layout);
-      var vm = new GetTextViewModel(NASResources.CopyLayout, NASResources.Name, CurrentLayout.Name + " (" + NASResources.Copy + ")");
+      var vm = new GetTextViewModel(NASResources.CopyLayout, NASResources.Name, ActiveLayout.Name + " (" + NASResources.Copy + ")");
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        var newLayout = CurrentLayout.LayoutType == LayoutType.Gantt
-                        ? new GanttLayout(CurrentLayout.Layout as GanttLayout)
-                        : (Layout)new PERTLayout(CurrentLayout.Layout as PERTLayout);
+        var newLayout = ActiveLayout.LayoutType == LayoutType.Gantt
+                        ? new GanttLayout(ActiveLayout.Layout as GanttLayout)
+                        : (Layout)new PERTLayout(ActiveLayout.Layout as PERTLayout);
         newLayout.Name = vm.Text;
         AddLayoutVM(newLayout, true);
       }
@@ -899,7 +899,7 @@ namespace NAS.ViewModels
 
     private bool CopyLayoutCommandCanExecute()
     {
-      return CurrentLayout != null;
+      return ActiveLayout != null;
     }
 
     #endregion
@@ -910,23 +910,17 @@ namespace NAS.ViewModels
 
     private void EditLayoutCommandExecute()
     {
-      var layoutVM = CurrentLayout;
+      var layoutVM = ActiveLayout;
       var layout = layoutVM.Layout;
       var oldLayoutType = layout.LayoutType;
 
       using var vm = new EditLayoutViewModel(Schedule, layout);
-      if (ViewFactory.Instance.ShowDialog(vm) == true)
-      {
-        if (oldLayoutType != vm.LayoutType)
-        {
-          ChangeLayout(layout);
-        }
-      }
+      ViewFactory.Instance.ShowDialog(vm);
     }
 
     private bool EditLayoutCommandCanExecute()
     {
-      return CurrentLayout != null;
+      return ActiveLayout != null;
     }
 
     #endregion
@@ -937,7 +931,7 @@ namespace NAS.ViewModels
 
     private void EditSortingAndGroupingCommandExecute()
     {
-      using (var vm = new SortingAndGroupingViewModel(Schedule.CurrentLayout))
+      using (var vm = new EditSortingAndGroupingViewModel(Schedule.ActiveLayout))
       {
         ViewFactory.Instance.ShowDialog(vm);
       }
@@ -947,7 +941,7 @@ namespace NAS.ViewModels
 
     private bool EditSortingAndGroupingCommandCanExecute()
     {
-      return !_isBusy && Schedule.CurrentLayout != null;
+      return !_isBusy && Schedule.ActiveLayout != null;
     }
 
     #endregion
@@ -958,7 +952,7 @@ namespace NAS.ViewModels
 
     private void EditFiltersCommandExecute()
     {
-      using (var vm = new FilterDefinitionsViewModel(Schedule, Schedule.CurrentLayout))
+      using (var vm = new FilterDefinitionsViewModel(Schedule, Schedule.ActiveLayout))
       {
         ViewFactory.Instance.ShowDialog(vm);
       }
@@ -968,7 +962,7 @@ namespace NAS.ViewModels
 
     private bool EditFiltersCommandCanExecute()
     {
-      return !_isBusy && Schedule.CurrentLayout != null;
+      return !_isBusy && Schedule.ActiveLayout != null;
     }
 
     #endregion
@@ -985,7 +979,7 @@ namespace NAS.ViewModels
 
     private bool AutoArrangePERTCommandCanExecute()
     {
-      return !_isBusy && CurrentLayout.LayoutType == LayoutType.PERT;
+      return !_isBusy && ActiveLayout.LayoutType == LayoutType.PERT;
     }
 
     #endregion
@@ -1296,17 +1290,17 @@ namespace NAS.ViewModels
 
     private void EditColumnsCommandExecute()
     {
-      using var vm = new EditColumnsViewModel(CurrentLayout.Layout);
+      using var vm = new EditColumnsViewModel(ActiveLayout.Layout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        var visibleColumns = new List<ActivityColumn>(CurrentLayout.Layout.ActivityColumns);
+        var visibleColumns = new List<ActivityColumn>(ActiveLayout.Layout.ActivityColumns);
 
         // First remove all columns that are not checked anymore
         foreach (var column in visibleColumns)
         {
           foreach (var c in vm.EditColumns)
           {
-            if (!c.IsVisible && c.Property == column.Property && CurrentLayout is Layout layout)
+            if (!c.IsVisible && c.Property == column.Property && ActiveLayout is Layout layout)
             {
               layout.ActivityColumns.Remove(column);
             }
@@ -1329,7 +1323,7 @@ namespace NAS.ViewModels
 
     private bool EditColumnsCommandCanExecute()
     {
-      return !_isBusy && Schedule.CurrentLayout != null;
+      return !_isBusy && Schedule.ActiveLayout != null;
     }
 
     #endregion
@@ -1341,9 +1335,9 @@ namespace NAS.ViewModels
     private void RefreshResources()
     {
       Resources.Clear();
-      if (CurrentLayout != null)
+      if (ActiveLayout != null)
       {
-        foreach (var resource in CurrentLayout.Layout.VisibleResources)
+        foreach (var resource in ActiveLayout.Layout.VisibleResources)
         {
           Resources.Add(new ResourceViewModel(resource, this, CloseResourceCommand));
         }
@@ -1396,7 +1390,7 @@ namespace NAS.ViewModels
       }
       else
       {
-        RefreshLayout?.Invoke(this, new ItemEventArgs<Layout>(CurrentLayout.Layout));
+        RefreshLayout?.Invoke(this, new ItemEventArgs<Layout>(ActiveLayout.Layout));
       }
     }
 
@@ -1408,23 +1402,10 @@ namespace NAS.ViewModels
 
       if (makeCurrent)
       {
-        CurrentLayout = vm;
+        ActiveLayout = vm;
       }
 
       return vm;
-    }
-
-    private void ChangeLayout(Layout layout)
-    {
-      var oldVM = Layouts.FirstOrDefault(x => x.Layout == layout);
-      if (oldVM != null)
-      {
-        int idx = Layouts.IndexOf(oldVM);
-        var newVM = LayoutVMFactory.CreateVM(Schedule, layout);
-        Layouts.Insert(idx, newVM);
-        CurrentLayout = newVM;
-        Layouts.Remove(oldVM);
-      }
     }
 
     private CollectionView SortFilterAndGroup(ObservableCollection<ActivityViewModel> activities)
@@ -1440,7 +1421,7 @@ namespace NAS.ViewModels
         myView.Filter = new Predicate<object>(Contains);
         // Sorting
         myView.SortDescriptions.Clear();
-        foreach (var sortDefinition in Schedule.CurrentLayout.SortingDefinitions)
+        foreach (var sortDefinition in Schedule.ActiveLayout.SortingDefinitions)
         {
           if (sortDefinition.Direction == SortDirection.Descending)
           {
@@ -1453,7 +1434,7 @@ namespace NAS.ViewModels
         }
         // Grouping
         myView.GroupDescriptions.Clear();
-        foreach (var groupDefinition in Schedule.CurrentLayout.GroupingDefinitions)
+        foreach (var groupDefinition in Schedule.ActiveLayout.GroupingDefinitions)
         {
           myView.GroupDescriptions.Add(new PropertyGroupDescription(groupDefinition.Property.ToString()));
         }
@@ -1473,25 +1454,25 @@ namespace NAS.ViewModels
         return false;
       }
 
-      if (Schedule.CurrentLayout.FilterDefinitions.Count == 0)
+      if (Schedule.ActiveLayout.FilterDefinitions.Count == 0)
       {
         return true;
       }
 
-      foreach (var filter in Schedule.CurrentLayout.FilterDefinitions)
+      foreach (var filter in Schedule.ActiveLayout.FilterDefinitions)
       {
         bool isTrue = filter.Compare(activity);
-        if (Schedule.CurrentLayout.FilterCombination == FilterCombinationType.Or && isTrue)
+        if (Schedule.ActiveLayout.FilterCombination == FilterCombinationType.Or && isTrue)
         {
           return true;
         }
 
-        if (Schedule.CurrentLayout.FilterCombination == FilterCombinationType.And && !isTrue)
+        if (Schedule.ActiveLayout.FilterCombination == FilterCombinationType.And && !isTrue)
         {
           return false;
         }
       }
-      return Schedule.CurrentLayout.FilterCombination == FilterCombinationType.And;
+      return Schedule.ActiveLayout.FilterCombination == FilterCombinationType.And;
     }
 
     #endregion
@@ -1507,10 +1488,10 @@ namespace NAS.ViewModels
         Schedule.ActivityAdded -= Schedule_ActivityAdded;
         Schedule.ActivityRemoved -= Schedule_ActivityRemoved;
 
-        if (_currentLayout != null)
+        if (_ActiveLayout != null)
         {
-          _currentLayout.Dispose();
-          _currentLayout = null;
+          _ActiveLayout.Dispose();
+          _ActiveLayout = null;
         }
       }
     }

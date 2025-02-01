@@ -977,9 +977,9 @@ namespace NAS.Models.ImportExport
             }
           }
         }
-        else if (node.Name == "CurrentLayout" && node.GetInteger().HasValue)
+        else if (node.Name == "ActiveLayout" && node.GetInteger().HasValue)
         { // Read Current Layout
-          schedule.CurrentLayout = schedule.Layouts.ToList()[node.GetInteger().Value];
+          schedule.ActiveLayout = schedule.Layouts.ToList()[node.GetInteger().Value];
         }
       }
     }
@@ -1520,9 +1520,9 @@ namespace NAS.Models.ImportExport
         }
       }
       // Add Current Layout
-      if (schedule.CurrentLayout != null)
+      if (schedule.ActiveLayout != null)
       {
-        projectElement.AppendTextChild("CurrentLayout", layouts.IndexOf(schedule.CurrentLayout));
+        projectElement.AppendTextChild("ActiveLayout", layouts.IndexOf(schedule.ActiveLayout));
       }
     }
 

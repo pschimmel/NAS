@@ -129,21 +129,37 @@ namespace NAS.Models.Entities
 
     #region Standards
 
-    public Layout CurrentLayout
+    public Layout ActiveLayout
     {
-      get => Layouts.FirstOrDefault(x => x.IsCurrent == true);
+      get
+      {
+        // There has to be always one active layout
+        var layout = Layouts.FirstOrDefault(x => x.IsActive == true);
+        if (layout == null)
+        {
+          if (Layouts.Count == 0)
+          {
+            Layouts.Add(new GanttLayout());
+          }
+
+          layout = Layouts.First();
+          layout.IsActive = true;
+        }
+
+        return layout;
+      }
       set
       {
         foreach (var l in Layouts)
         {
-          l.IsCurrent = l == value;
+          l.IsActive = l == value;
         }
       }
     }
 
-    internal void UpdateCurrentLayout()
+    internal void UpdateActiveLayout()
     {
-      OnPropertyChanged(nameof(CurrentLayout));
+      OnPropertyChanged(nameof(ActiveLayout));
     }
 
     public Calendar StandardCalendar
@@ -160,7 +176,7 @@ namespace NAS.Models.Entities
 
     internal void UpdateStandardCalendar()
     {
-      OnPropertyChanged(nameof(CurrentLayout));
+      OnPropertyChanged(nameof(ActiveLayout));
     }
 
     public int OriginalDurationDefault { get; } = 5;
@@ -449,16 +465,16 @@ namespace NAS.Models.Entities
       // Ensure that we have at least one layout.
       if (Layouts.Count == 0)
       {
-        var layout = new GanttLayout { IsCurrent = true };
+        var layout = new GanttLayout { IsActive = true };
         Layouts.Add(layout);
       }
       else
       {
         // Ensure that there is exactly one active layout.
-        if (!Layouts.Any(x => x.IsCurrent))
+        if (!Layouts.Any(x => x.IsActive))
         {
           var layout = Layouts.First();
-          layout.IsCurrent = true;
+          layout.IsActive = true;
         }
       }
 
@@ -482,23 +498,23 @@ namespace NAS.Models.Entities
     /// <summary>
     /// Adds a schedule as baseline.
     /// </summary>
-    public void AddBaseline(Schedule baseline, bool showInCurrentLayout)
+    public void AddBaseline(Schedule baseline, bool showInActiveLayout)
     {
       Baselines.Add(baseline);
 
-      if (showInCurrentLayout)
+      if (showInActiveLayout)
       {
-        CurrentLayout.VisibleBaselines.Add(new VisibleBaseline(baseline));
+        ActiveLayout.VisibleBaselines.Add(new VisibleBaseline(baseline));
       }
     }
 
     /// <summary>
     /// Adds a copy of the current schedule as baseline to itself.
     /// </summary>
-    public Schedule AddBaseline(bool showInCurrentLayout)
+    public Schedule AddBaseline(bool showInActiveLayout)
     {
       var baseline = new Schedule(this);
-      AddBaseline(baseline, showInCurrentLayout);
+      AddBaseline(baseline, showInActiveLayout);
       return baseline;
     }
 
@@ -779,7 +795,7 @@ namespace NAS.Models.Entities
       newLayout.ActivityCriticalColor = oldLayout.ActivityCriticalColor;
       newLayout.ActivityDoneColor = oldLayout.ActivityDoneColor;
       newLayout.ActivityStandardColor = oldLayout.ActivityStandardColor;
-      newLayout.IsCurrent = oldLayout.IsCurrent;
+      newLayout.IsActive = oldLayout.IsActive;
       newLayout.DataDateColor = oldLayout.DataDateColor;
       newLayout.FilterCombination = oldLayout.FilterCombination;
       newLayout.MilestoneCriticalColor = oldLayout.MilestoneCriticalColor;

@@ -196,14 +196,14 @@ namespace NAS.ViewModels.Printing
 
     private void LayoutSettingsCommandExecute()
     {
-      using var vm = new EditPrintLayoutViewModel(viewModel.Schedule.CurrentLayout);
+      using var vm = new EditPrintLayoutViewModel(viewModel.Schedule.ActiveLayout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         UpdatePreview();
       }
     }
 
-    private bool LayoutSettingsCommandCanExecute => viewModel.Schedule.CurrentLayout != null;
+    private bool LayoutSettingsCommandCanExecute => viewModel.Schedule.ActiveLayout != null;
 
     #endregion
 
@@ -274,7 +274,7 @@ namespace NAS.ViewModels.Printing
     private Canvas PrepareCanvas(PageMediaSize pageSize, PageImageableArea printableArea, PageOrientation orientation)
     {
       var size = new Size(GetActualWidth(pageSize, printableArea, orientation), GetActualHeight(pageSize, printableArea, orientation));
-      var layout = Project.CurrentLayout;
+      var layout = Project.ActiveLayout;
       double leftMargin = layout.LeftMargin * 96 / 2.54;
       double rightMargin = layout.RightMargin * 96 / 2.54;
       double topMargin = layout.TopMargin * 96 / 2.54;

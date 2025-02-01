@@ -29,11 +29,14 @@ namespace NAS.ViewModels
       BottomMargin = layout.BottomMargin;
       _headerColumnCount = layout.HeaderItems.Count;
       _footerColumnCount = layout.FooterItems.Count;
+
+      HeaderItems = new ObservableCollection<HeaderItem>();
       foreach (var headerItem in layout.HeaderItems)
       {
         HeaderItems.Add(headerItem.Clone());
       }
 
+      FooterItems = new ObservableCollection<FooterItem>();
       foreach (var footerItem in layout.FooterItems)
       {
         FooterItems.Add(footerItem.Clone());
