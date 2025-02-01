@@ -6,8 +6,8 @@ namespace NAS.Models.Enums
   /// </summary>
   public enum FilterRelation
   {
-    EqualTo, 
-    GreaterThan, 
+    EqualTo,
+    GreaterThan,
     GreaterThanOrEqualTo,
     LessThan,
     LessThanOrEqualTo,

@@ -3,10 +3,10 @@ using System.Linq;
 using System.Windows.Documents;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
-using NAS.ViewModels.Helpers;
 using NAS.Models.Entities;
 using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {

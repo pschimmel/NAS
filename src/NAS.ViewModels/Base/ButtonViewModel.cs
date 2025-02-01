@@ -9,6 +9,7 @@ namespace NAS.ViewModels.Base
   {
     public event EventHandler<CancelEventArgs> CommandExecuting;
     public event EventHandler CommandExecuted;
+
     private readonly ActionCommand<object> _command;
 
     public ButtonViewModel(string text, Action executeDelegate = null, Func<bool> canExecuteDelegate = null)

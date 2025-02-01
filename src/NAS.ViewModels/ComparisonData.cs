@@ -5,7 +5,8 @@ namespace NAS.ViewModels
 {
   public class ComparisonData
   {
-    public ComparisonData(Schedule p1, Schedule p2) {
+    public ComparisonData(Schedule p1, Schedule p2)
+    {
       Schedule1 = p1;
       Schedule2 = p2;
     }

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using ES.Tools.Core.MVVM;
-using NAS.Views.Controls;
 using NAS.ViewModels;
+using NAS.Views.Controls;
 
 namespace NAS
 {

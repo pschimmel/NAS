@@ -5,7 +5,7 @@ namespace NAS.ViewModels.Helpers
   internal static class Extentions
   {
     public static void Replace<T>(this ICollection<T> collection, IEnumerable<T> items)
-{
+    {
       collection.Clear();
       collection.AddRange(items);
     }

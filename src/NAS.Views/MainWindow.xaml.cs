@@ -8,9 +8,9 @@ using Fluent;
 using NAS.Models.Enums;
 using NAS.Models.Settings;
 using NAS.Resources;
-using NAS.Views.Controls;
 using NAS.ViewModels;
 using NAS.ViewModels.Helpers;
+using NAS.Views.Controls;
 
 namespace NAS.Views
 {

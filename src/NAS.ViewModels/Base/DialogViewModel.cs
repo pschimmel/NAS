@@ -105,5 +105,27 @@ namespace NAS.ViewModels.Base
     }
 
     #endregion
+
+    #region IDisposable
+
+    protected override void Dispose(bool disposing)
+    {
+      base.Dispose(disposing);
+      if (disposing)
+      {
+        foreach (var buttonVM in _buttons)
+        {
+          buttonVM.CommandExecuting -= Button_Cancel;
+          buttonVM.CommandExecuted -= Button_OK;
+        }
+
+        if (ContentViewModel is IValidatable validatableVM)
+        {
+          validatableVM.Validated += ValidatableVM_Validated;
+        }
+      }
+    }
+
+    #endregion
   }
 }

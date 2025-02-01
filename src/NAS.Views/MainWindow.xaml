@@ -171,7 +171,7 @@
                                   Text="{x:Static resx:NASResources.CalculateToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.SchedulingSettingsCommand}"
+            <fluent:Button Command="{Binding CurrentSchedule.EditSchedulingSettingsCommand}"
                            Header="{x:Static resx:NASResources.Settings}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Settings.png"
                            LargeIcon="pack://application:,,,/NAS.Views;component/Images/Settings.png">
@@ -181,7 +181,7 @@
                                   Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
               </fluent:Button.ToolTip>
             </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.PropertiesCommand}"
+            <fluent:Button Command="{Binding CurrentSchedule.EditPropertiesCommand}"
                            Header="{x:Static resx:NASResources.ProjectProperties}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Options.png"
                            LargeIcon="pack://application:,,,/NAS.Views;component/Images/Options.png"
@@ -352,37 +352,37 @@
                                   Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
                                   Text="{x:Static resx:NASResources.ZoomToolTipDescription}" />
               </fluent:DropDownButton.ToolTip>
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="0.1"
                                Header="10 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='0.1'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="0.25"
                                Header="25 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='0.25'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="0.5"
                                Header="50 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='0.5'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="1.0"
                                Header="100 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='1'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="2.0"
                                Header="200 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='2'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="3.0"
                                Header="300 %"
                                IsCheckable="True"
                                IsChecked="{Binding CurrentSchedule.Zoom, Converter={StaticResource ZoomToBoolConverter}, ConverterParameter='3'}" />
-              <fluent:MenuItem Command="{Binding CurrentSchedule.ZoomCommand}"
+              <fluent:MenuItem Command="{Binding CurrentSchedule.ChangeZoomCommand}"
                                CommandParameter="5.0"
                                Header="500 %"
                                IsCheckable="True"

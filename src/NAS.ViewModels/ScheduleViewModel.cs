@@ -39,6 +39,49 @@ namespace NAS.ViewModels
     private RelationshipViewModel _currentRelationship;
     private ActivityViewModel _currentActivity;
     private IVisibleLayoutViewModel _ActiveLayout;
+    private ActionCommand<DateTime?> _calculateCommand;
+    private ActionCommand _editSchedulingSettingsCommand;
+    private ActionCommand<string> _addActivityCommand;
+    private ActionCommand<string> _addMilestoneCommand;
+    private ActionCommand _removeActivityCommand;
+    private ActionCommand _editActivityCommand;
+    private ActionCommand<AddRelationshipInfo> _addRelationshipCommand;
+    private ActionCommand _removeRelationshipCommand;
+    private ActionCommand _editRelationshipCommand;
+    private ActionCommand _editLogicCommand;
+    private ActionCommand _editPropertiesCommand;
+    private ActionCommand _editWBSCommand;
+    private ActionCommand _editResourcesCommand;
+    private ActionCommand _editCustomAttributesCommand;
+    private ActionCommand _editCalendarsCommand;
+    private ActionCommand<IVisibleLayoutViewModel> _selectLayoutCommand;
+    private ActionCommand<string> _changeZoomCommand;
+    private ActionCommand _showRelationshipsCommand;
+    private ActionCommand _showFloatCommand;
+    private ActionCommand _showResourceCommand;
+    private ActionCommand _closeResourceCommand;
+    private ActionCommand _addGanttLayoutCommand;
+    private ActionCommand _addPERTLayoutCommand;
+    private ActionCommand _removeLayoutCommand;
+    private ActionCommand _editLayoutCommand;
+    private ActionCommand _copyLayoutCommand;
+    private ActionCommand _editSortingAndGroupingCommand;
+    private ActionCommand _editFiltersCommand;
+    private ActionCommand _autoArrangePERTCommand;
+    private ActionCommand _editBaselinesCommand;
+    private ActionCommand _editFragnetsCommand;
+    private ActionCommand _setFragnetVisibleCommand;
+    private ActionCommand _compareWithBaselineCommand;
+    private ActionCommand _compareWithDistortionsCommand;
+    private ActionCommand _compareCommand;
+    private ActionCommand _editDistortionsCommand;
+    private ActionCommand _increaseDurationCommand;
+    private ActionCommand _decreaseDurationCommand;
+    private ActionCommand _splitActivityCommand;
+    private ActionCommand _combineActivitiesCommand;
+    private ActionCommand _changeIntoMilestoneCommand;
+    private ActionCommand _changeIntoActivityCommand;
+    private ActionCommand _editColumnsCommand;
 
     #endregion
 
@@ -68,49 +111,6 @@ namespace NAS.ViewModels
         Relationships.Add(new RelationshipViewModel(relationship));
       }
 
-      CalculateCommand = new ActionCommand<DateTime?>(CalculateCommandExecute, CalculateCommandCanExecute);
-      SchedulingSettingsCommand = new ActionCommand(SchedulingSettingsCommandExecute, SchedulingSettingsCommandCanExecute);
-      AddActivityCommand = new ActionCommand<string>(AddActivityCommandExecute, AddActivityCommandCanExecute);
-      AddMilestoneCommand = new ActionCommand<string>(AddMilestoneCommandExecute, AddMilestoneCommandCanExecute);
-      RemoveActivityCommand = new ActionCommand(RemoveActivityCommandExecute, RemoveActivityCommandCanExecute);
-      EditActivityCommand = new ActionCommand(EditActivityCommandExecute, EditActivityCommandCanExecute);
-      AddRelationshipCommand = new ActionCommand<AddRelationshipInfo>(AddRelationshipCommandExecute, AddRelationshipCommandCanExecute);
-      RemoveRelationshipCommand = new ActionCommand(RemoveRelationshipCommandExecute, RemoveRelationshipCommandCanExecute);
-      EditRelationshipCommand = new ActionCommand(EditRelationshipCommandExecute, EditRelationshipCommandCanExecute);
-      EditLogicCommand = new ActionCommand(EditLogicCommandExecute, EditLogicCommandCanExecute);
-      PropertiesCommand = new ActionCommand(PropertiesCommandExecute, PropertiesCommandCanExecute);
-      EditWBSCommand = new ActionCommand(EditWBSCommandExecute, EditWBSCommandCanExecute);
-      EditResourcesCommand = new ActionCommand(EditResourcesCommandExecute, EditResourcesCommandCanExecute);
-      EditCustomAttributesCommand = new ActionCommand(EditCustomAttributesCommandExecute, EditCustomAttributesCommandCanExecute);
-      EditCalendarsCommand = new ActionCommand(EditCalendarsCommandExecute, EditCalendarsCommandCanExecute);
-      SelectLayoutCommand = new ActionCommand<IVisibleLayoutViewModel>(SelectLayoutCommandExecute, SelectLayoutCommandCanExecute);
-      ZoomCommand = new ActionCommand<string>(ZoomCommandExecute, ZoomCommandCanExecute);
-      ShowRelationshipsCommand = new ActionCommand(ShowRelationshipsCommandExecute, ShowRelationshipsCommandCanExecute);
-      ShowFloatCommand = new ActionCommand(ShowFloatCommandExecute, ShowFloatCommandCanExecute);
-      ShowResourceCommand = new ActionCommand(ShowResourceCommandExecute, ShowResourceCommandCanExecute);
-      CloseResourceCommand = new ActionCommand(CloseResourceCommandExecute, CloseResourceCommandCanExecute);
-      AddGanttLayoutCommand = new ActionCommand(AddGanttLayoutCommandExecute);
-      AddPERTLayoutCommand = new ActionCommand(AddPERTLayoutCommandExecute);
-      RemoveLayoutCommand = new ActionCommand(RemoveLayoutCommandExecute, RemoveLayoutCommandCanExecute);
-      EditLayoutCommand = new ActionCommand(EditLayoutCommandExecute, EditLayoutCommandCanExecute);
-      CopyLayoutCommand = new ActionCommand(CopyLayoutCommandExecute, CopyLayoutCommandCanExecute);
-      EditSortingAndGroupingCommand = new ActionCommand(EditSortingAndGroupingCommandExecute, EditSortingAndGroupingCommandCanExecute);
-      EditFiltersCommand = new ActionCommand(EditFiltersCommandExecute, EditFiltersCommandCanExecute);
-      AutoArrangePERTCommand = new ActionCommand(AutoArrangePERTCommandExecute, AutoArrangePERTCommandCanExecute);
-      EditBaselinesCommand = new ActionCommand(EditBaselinesCommandExecute, EditBaselinesCommandCanExecute);
-      EditFragnetsCommand = new ActionCommand(EditFragnetsCommandExecute, EditFragnetsCommandCanExecute);
-      SetFragnetVisibleCommand = new ActionCommand(SetFragnetVisibleCommandExecute, SetFragnetVisibleCommandCanExecute);
-      CompareWithBaselineCommand = new ActionCommand(CompareWithBaselineCommandExecute, CompareWithBaselineCommandCanExecute);
-      CompareWithDistortionsCommand = new ActionCommand(CompareWithDistortionsCommandExecute, CompareWithDistortionsCommandCanExecute);
-      CompareCommand = new ActionCommand(CompareCommandExecute, CompareCommandCanExecute);
-      EditDistortionsCommand = new ActionCommand(EditDistortionsCommandExecute, EditDistortionsCommandCanExecute);
-      IncreaseDurationCommand = new ActionCommand(IncreaseDurationCommandExecute, IncreaseDurationCommandCanExecute);
-      DecreaseDurationCommand = new ActionCommand(DecreaseDurationCommandExecute, DecreaseDurationCommandCanExecute);
-      SplitActivityCommand = new ActionCommand(SplitActivityCommandExecute, SplitActivityCommandCanExecute);
-      CombineActivitiesCommand = new ActionCommand(CombineActivitiesCommandExecute, CombineActivitiesCommandCanExecute);
-      ChangeIntoMilestoneCommand = new ActionCommand(ChangeIntoMilestoneCommandExecute, ChangeIntoMilestoneCommandCanExecute);
-      ChangeIntoActivityCommand = new ActionCommand(ChangeIntoActivityCommandExecute, ChangeIntoActivityCommandCanExecute);
-      EditColumnsCommand = new ActionCommand(EditColumnsCommandExecute, EditColumnsCommandCanExecute);
 
       Schedule.ActivityAdded += Schedule_ActivityAdded;
       Schedule.ActivityRemoved += Schedule_ActivityRemoved;
@@ -175,7 +175,7 @@ namespace NAS.ViewModels
     /// Gets a value indicating whether this instance is loading.
     /// </summary>
     /// <value>
-    /// 	<c>true</c> if this instance is loading; otherwise, <c>false</c>.
+    /// 	<column>true</column> if this instance is loading; otherwise, <column>false</column>.
     /// </value>
     public bool IsLoading
     {
@@ -194,7 +194,7 @@ namespace NAS.ViewModels
     /// Gets a value indicating whether this instance is saving.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if this instance is saving; otherwise, <c>false</c>.
+    ///   <column>true</column> if this instance is saving; otherwise, <column>false</column>.
     /// </value>
     public bool IsSaving
     {
@@ -339,19 +339,15 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Public Methods
-
-    #endregion
-
     #region Commands
 
     #region Start
 
     #region Calculate
 
-    public ICommand CalculateCommand { get; }
+    public ICommand CalculateCommand => _calculateCommand ??= new ActionCommand<DateTime?>(Calculate, CanCalculate);
 
-    private void CalculateCommandExecute(DateTime? dataDate)
+    private void Calculate(DateTime? dataDate)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Calculate);
       var scheduler = new Scheduler(Schedule, () =>
@@ -388,7 +384,7 @@ namespace NAS.ViewModels
       scheduler.Calculate(dataDate.Value);
     }
 
-    private bool CalculateCommandCanExecute(DateTime? _)
+    private bool CanCalculate(DateTime? _)
     {
       return !_isBusy;
     }
@@ -397,15 +393,15 @@ namespace NAS.ViewModels
 
     #region Scheduling Settings
 
-    public ICommand SchedulingSettingsCommand { get; }
+    public ICommand EditSchedulingSettingsCommand => _editSchedulingSettingsCommand ??= new ActionCommand(EditSchedulingSettings, CanEditSchedulingSettings);
 
-    private void SchedulingSettingsCommandExecute()
+    private void EditSchedulingSettings()
     {
       var vm = new EditSchedulingSettingsViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool SchedulingSettingsCommandCanExecute()
+    private bool CanEditSchedulingSettings()
     {
       return Schedule != null && !_isBusy;
     }
@@ -414,9 +410,9 @@ namespace NAS.ViewModels
 
     #region Add Activity
 
-    public ICommand AddActivityCommand { get; }
+    public ICommand AddActivityCommand => _addActivityCommand ??= new ActionCommand<string>(AddActivity, CanAddActivity);
 
-    private void AddActivityCommandExecute(string param)
+    private void AddActivity(string param)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       var activity = Schedule.AddActivity(param?.ToString() == "Fixed");
@@ -426,7 +422,7 @@ namespace NAS.ViewModels
       CurrentActivity = newActivityVM;
     }
 
-    private bool AddActivityCommandCanExecute(string _)
+    private bool CanAddActivity(string _)
     {
       return !_isBusy;
     }
@@ -435,9 +431,9 @@ namespace NAS.ViewModels
 
     #region Add Milestone
 
-    public ICommand AddMilestoneCommand { get; }
+    public ICommand AddMilestoneCommand => _addMilestoneCommand ??= new ActionCommand<string>(AddMilestone, CanAddMilestone);
 
-    private void AddMilestoneCommandExecute(string param)
+    private void AddMilestone(string param)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       var milestone = Schedule.AddMilestone(param?.ToString() == "Fixed");
@@ -447,7 +443,7 @@ namespace NAS.ViewModels
       OnActivityAdded(newActivityVM);
     }
 
-    private bool AddMilestoneCommandCanExecute(string _)
+    private bool CanAddMilestone(string _)
     {
       return !_isBusy;
     }
@@ -456,9 +452,9 @@ namespace NAS.ViewModels
 
     #region Remove Activity
 
-    public ICommand RemoveActivityCommand { get; }
+    public ICommand RemoveActivityCommand => _removeActivityCommand ??= new ActionCommand(RemoveActivity, CanRemoveActivity);
 
-    private void RemoveActivityCommandExecute()
+    private void RemoveActivity()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       string s = NASResources.MessageDeleteActivity;
@@ -482,7 +478,7 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveActivityCommandCanExecute()
+    private bool CanRemoveActivity()
     {
       return !_isBusy && CurrentActivity != null;
     }
@@ -491,9 +487,9 @@ namespace NAS.ViewModels
 
     #region Edit Activity
 
-    public ICommand EditActivityCommand { get; }
+    public ICommand EditActivityCommand => _editActivityCommand ??= new ActionCommand(EditActivity, CanEditActivity);
 
-    private void EditActivityCommandExecute()
+    private void EditActivity()
     {
       var vm = new EditActivityViewModel(CurrentActivity.Activity);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -504,7 +500,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditActivityCommandCanExecute()
+    private bool CanEditActivity()
     {
       return !_isBusy && CurrentActivity != null;
     }
@@ -513,9 +509,9 @@ namespace NAS.ViewModels
 
     #region Add Relationship
 
-    public ICommand AddRelationshipCommand { get; }
+    public ICommand AddRelationshipCommand => _addRelationshipCommand ??= new ActionCommand<AddRelationshipInfo>(AddRelationship, CanAddRelationship);
 
-    private void AddRelationshipCommandExecute(AddRelationshipInfo relationshipInfo)
+    private void AddRelationship(AddRelationshipInfo relationshipInfo)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Relationship);
       Relationship relationship;
@@ -548,7 +544,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool AddRelationshipCommandCanExecute(AddRelationshipInfo _)
+    private bool CanAddRelationship(AddRelationshipInfo _)
     {
       return !_isBusy;
     }
@@ -557,9 +553,9 @@ namespace NAS.ViewModels
 
     #region Remove Relationship
 
-    public ICommand RemoveRelationshipCommand { get; }
+    public ICommand RemoveRelationshipCommand => _removeRelationshipCommand ??= new ActionCommand(RemoveRelationship, CanRemoveRelationship);
 
-    private void RemoveRelationshipCommandExecute()
+    private void RemoveRelationship()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Relationship);
       UserNotificationService.Instance.Question(string.Format(NASResources.MessageDeleteRelationship, CurrentRelationship.DisplayName), () =>
@@ -571,7 +567,7 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveRelationshipCommandCanExecute()
+    private bool CanRemoveRelationship()
     {
       return !_isBusy && CurrentRelationship != null;
     }
@@ -580,9 +576,9 @@ namespace NAS.ViewModels
 
     #region Edit Relationship
 
-    public ICommand EditRelationshipCommand { get; }
+    public ICommand EditRelationshipCommand => _editRelationshipCommand ??= new ActionCommand(EditRelationship, CanEditRelationship);
 
-    private void EditRelationshipCommandExecute()
+    private void EditRelationship()
     {
       var relationship = CurrentRelationship.Relationship;
       using var vm = new EditRelationshipViewModel(Schedule, relationship);
@@ -597,7 +593,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditRelationshipCommandCanExecute()
+    private bool CanEditRelationship()
     {
       return CurrentRelationship != null && !_isBusy;
     }
@@ -606,15 +602,15 @@ namespace NAS.ViewModels
 
     #region Edit Logic
 
-    public ICommand EditLogicCommand { get; }
+    public ICommand EditLogicCommand => _editLogicCommand ??= new ActionCommand(EditLogic, CanEditLogic);
 
-    private void EditLogicCommandExecute()
+    private void EditLogic()
     {
       using var vm = new EditLogicViewModel(CurrentActivity.Activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditLogicCommandCanExecute()
+    private bool CanEditLogic()
     {
       return CurrentActivity != null;
     }
@@ -623,15 +619,15 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public ICommand PropertiesCommand { get; }
+    public ICommand EditPropertiesCommand => _editPropertiesCommand ??= new ActionCommand(EditProperties, CanEditProperties);
 
-    private void PropertiesCommandExecute()
+    private void EditProperties()
     {
       using var vm = new EditPropertiesViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool PropertiesCommandCanExecute()
+    private bool CanEditProperties()
     {
       return !_isBusy;
     }
@@ -640,15 +636,15 @@ namespace NAS.ViewModels
 
     #region Edit WBS
 
-    public ICommand EditWBSCommand { get; }
+    public ICommand EditWBSCommand => _editWBSCommand ??= new ActionCommand(EditWBS, CanEditWBS);
 
-    private void EditWBSCommandExecute()
+    private void EditWBS()
     {
       using var vm = new EditWBSViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditWBSCommandCanExecute()
+    private bool CanEditWBS()
     {
       return !_isBusy;
     }
@@ -657,15 +653,15 @@ namespace NAS.ViewModels
 
     #region Edit Calendars
 
-    public ICommand EditCalendarsCommand { get; }
+    public ICommand EditCalendarsCommand => _editCalendarsCommand ??= new ActionCommand(EditCalendars, CanEditCalendars);
 
-    private void EditCalendarsCommandExecute()
+    private void EditCalendars()
     {
       using var vm = new EditCalendarsViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditCalendarsCommandCanExecute()
+    private bool CanEditCalendars()
     {
       return !_isBusy;
     }
@@ -674,15 +670,15 @@ namespace NAS.ViewModels
 
     #region Edit Resources
 
-    public ICommand EditResourcesCommand { get; }
+    public ICommand EditResourcesCommand => _editResourcesCommand ??= new ActionCommand(EditResources, CanEditResources);
 
-    private void EditResourcesCommandExecute()
+    private void EditResources()
     {
       using var vm = new EditResourcesViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditResourcesCommandCanExecute()
+    private bool CanEditResources()
     {
       return !_isBusy;
     }
@@ -691,15 +687,15 @@ namespace NAS.ViewModels
 
     #region Edit Custom Attributes
 
-    public ICommand EditCustomAttributesCommand { get; }
+    public ICommand EditCustomAttributesCommand => _editCustomAttributesCommand ??= new ActionCommand(EditCustomAttributes, CanEditCustomAttributes);
 
-    private void EditCustomAttributesCommandExecute()
+    private void EditCustomAttributes()
     {
       using var vm = new EditCustomAttributesViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditCustomAttributesCommandCanExecute()
+    private bool CanEditCustomAttributes()
     {
       return !_isBusy;
     }
@@ -710,34 +706,34 @@ namespace NAS.ViewModels
 
     #region View
 
-    #region Show as Gantt
+    #region Select Layout
 
-    public ICommand SelectLayoutCommand { get; }
+    public ICommand SelectLayoutCommand => _selectLayoutCommand ??= new ActionCommand<IVisibleLayoutViewModel>(SelectLayout, CanSelectLayout);
 
-    private void SelectLayoutCommandExecute(IVisibleLayoutViewModel layout)
+    private void SelectLayout(IVisibleLayoutViewModel layout)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.View);
       ActiveLayout = layout;
     }
 
-    private bool SelectLayoutCommandCanExecute(IVisibleLayoutViewModel layout)
+    private bool CanSelectLayout(IVisibleLayoutViewModel layout)
     {
       return layout != null && !_isBusy;
     }
 
     #endregion
 
-    #region Zoom
+    #region Change Zoom
 
-    public ICommand ZoomCommand { get; }
+    public ICommand ChangeZoomCommand => _changeZoomCommand ??= new ActionCommand<string>(ChangeZoom, CanChangeZoom);
 
-    private void ZoomCommandExecute(string zoom)
+    private void ChangeZoom(string zoom)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Relationship);
       Zoom = double.Parse(zoom);
     }
 
-    private bool ZoomCommandCanExecute(string zoom)
+    private bool CanChangeZoom(string zoom)
     {
       return !_isBusy
              && double.TryParse(zoom, out double zoomAsDouble)
@@ -749,15 +745,15 @@ namespace NAS.ViewModels
 
     #region Show Relationships
 
-    public ICommand ShowRelationshipsCommand { get; }
+    public ICommand ShowRelationshipsCommand => _showRelationshipsCommand ??= new ActionCommand(ShowRelationships, CanShowRelationships);
 
-    private void ShowRelationshipsCommandExecute()
+    private void ShowRelationships()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.View);
       OnRefreshLayout(false);
     }
 
-    private bool ShowRelationshipsCommandCanExecute()
+    private bool CanShowRelationships()
     {
       return !_isBusy;
     }
@@ -766,15 +762,15 @@ namespace NAS.ViewModels
 
     #region Show Float
 
-    public ICommand ShowFloatCommand { get; }
+    public ICommand ShowFloatCommand => _showFloatCommand ??= new ActionCommand(ShowFloat, CanShowFloat);
 
-    private void ShowFloatCommandExecute()
+    private void ShowFloat()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.View);
       OnRefreshLayout(false);
     }
 
-    private bool ShowFloatCommandCanExecute()
+    private bool CanShowFloat()
     {
       return !_isBusy;
     }
@@ -783,9 +779,9 @@ namespace NAS.ViewModels
 
     #region Show Resource
 
-    public ICommand ShowResourceCommand { get; }
+    public ICommand ShowResourceCommand => _showResourceCommand ??= new ActionCommand(ShowResource, CanShowResource);
 
-    private void ShowResourceCommandExecute()
+    private void ShowResource()
     {
       using var vm = new SelectResourceViewModel(Schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
@@ -795,7 +791,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool ShowResourceCommandCanExecute()
+    private bool CanShowResource()
     {
       return !_isBusy && Schedule.Resources.Count > 0;
     }
@@ -804,9 +800,9 @@ namespace NAS.ViewModels
 
     #region Close Resource
 
-    public ICommand CloseResourceCommand { get; }
+    public ICommand CloseResourceCommand => _closeResourceCommand ??= new ActionCommand(CloseResource, CanCloseResource);
 
-    private void CloseResourceCommandExecute(object param)
+    private void CloseResource(object param)
     {
       if (param is ResourceViewModel resourceVM)
       {
@@ -815,7 +811,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool CloseResourceCommandCanExecute(object param)
+    private bool CanCloseResource(object param)
     {
       return !_isBusy && Resources.Contains(param as ResourceViewModel);
     }
@@ -824,9 +820,9 @@ namespace NAS.ViewModels
 
     #region Add Gantt Layout
 
-    public ICommand AddGanttLayoutCommand { get; }
+    public ICommand AddGanttLayoutCommand => _addGanttLayoutCommand ??= new ActionCommand(AddGanttLayout, CanAddGanttLayout);
 
-    private void AddGanttLayoutCommandExecute()
+    private void AddGanttLayout()
     {
       var item = new GanttLayout();
 
@@ -837,13 +833,18 @@ namespace NAS.ViewModels
       }
     }
 
+    private bool CanAddGanttLayout()
+    {
+      return !_isBusy;
+    }
+
     #endregion
 
     #region Add PERT Layout
 
-    public ICommand AddPERTLayoutCommand { get; }
+    public ICommand AddPERTLayoutCommand => _addPERTLayoutCommand ??= new ActionCommand(AddPERTLayout, CanAddPERTLayout);
 
-    private void AddPERTLayoutCommandExecute()
+    private void AddPERTLayout()
     {
       var item = new PERTLayout();
 
@@ -854,13 +855,18 @@ namespace NAS.ViewModels
       }
     }
 
+    private bool CanAddPERTLayout()
+    {
+      return !_isBusy;
+    }
+
     #endregion
 
     #region Remove Layout
 
-    public ICommand RemoveLayoutCommand { get; }
+    public ICommand RemoveLayoutCommand => _removeLayoutCommand ??= new ActionCommand(RemoveLayout, CanRemoveLayout);
 
-    private void RemoveLayoutCommandExecute()
+    private void RemoveLayout()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Layout);
       UserNotificationService.Instance.Question(NASResources.MessageDeleteLayout, () =>
@@ -872,7 +878,7 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool RemoveLayoutCommandCanExecute()
+    private bool CanRemoveLayout()
     {
       return ActiveLayout != null && Schedule.Layouts.Count > 1;
     }
@@ -881,9 +887,9 @@ namespace NAS.ViewModels
 
     #region Copy Layout
 
-    public ICommand CopyLayoutCommand { get; }
+    public ICommand CopyLayoutCommand => _copyLayoutCommand ??= new ActionCommand(CopyLayout, CanCopyLayout);
 
-    private void CopyLayoutCommandExecute()
+    private void CopyLayout()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Layout);
       var vm = new GetTextViewModel(NASResources.CopyLayout, NASResources.Name, ActiveLayout.Name + " (" + NASResources.Copy + ")");
@@ -897,28 +903,25 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool CopyLayoutCommandCanExecute()
+    private bool CanCopyLayout()
     {
-      return ActiveLayout != null;
+      return !_isBusy && ActiveLayout != null;
     }
 
     #endregion
 
     #region Edit Layout
 
-    public ICommand EditLayoutCommand { get; }
+    public ICommand EditLayoutCommand => _editLayoutCommand ??= new ActionCommand(EditLayout, CanEditLayout);
 
-    private void EditLayoutCommandExecute()
+    private void EditLayout()
     {
-      var layoutVM = ActiveLayout;
-      var layout = layoutVM.Layout;
-      var oldLayoutType = layout.LayoutType;
-
+      var layout = ActiveLayout.Layout;
       using var vm = new EditLayoutViewModel(Schedule, layout);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditLayoutCommandCanExecute()
+    private bool CanEditLayout()
     {
       return ActiveLayout != null;
     }
@@ -927,9 +930,9 @@ namespace NAS.ViewModels
 
     #region Edit Sorting and Grouping
 
-    public ICommand EditSortingAndGroupingCommand { get; }
+    public ICommand EditSortingAndGroupingCommand => _editSortingAndGroupingCommand ??= new ActionCommand(EditSortingAndGrouping, CanEditSortingAndGrouping);
 
-    private void EditSortingAndGroupingCommandExecute()
+    private void EditSortingAndGrouping()
     {
       using (var vm = new EditSortingAndGroupingViewModel(Schedule.ActiveLayout))
       {
@@ -939,7 +942,7 @@ namespace NAS.ViewModels
       OnRefreshLayout(false);
     }
 
-    private bool EditSortingAndGroupingCommandCanExecute()
+    private bool CanEditSortingAndGrouping()
     {
       return !_isBusy && Schedule.ActiveLayout != null;
     }
@@ -948,9 +951,9 @@ namespace NAS.ViewModels
 
     #region Edit Filters
 
-    public ICommand EditFiltersCommand { get; }
+    public ICommand EditFiltersCommand => _editFiltersCommand ??= new ActionCommand(EditFilters, CanEditFilters);
 
-    private void EditFiltersCommandExecute()
+    private void EditFilters()
     {
       using (var vm = new FilterDefinitionsViewModel(Schedule, Schedule.ActiveLayout))
       {
@@ -960,7 +963,7 @@ namespace NAS.ViewModels
       OnRefreshLayout(false);
     }
 
-    private bool EditFiltersCommandCanExecute()
+    private bool CanEditFilters()
     {
       return !_isBusy && Schedule.ActiveLayout != null;
     }
@@ -969,15 +972,15 @@ namespace NAS.ViewModels
 
     #region Auto Arrange PERT
 
-    public ICommand AutoArrangePERTCommand { get; }
+    public ICommand AutoArrangePERTCommand => _autoArrangePERTCommand ??= new ActionCommand(AutoArrangePERT, CanAutoArrangePERT);
 
-    private void AutoArrangePERTCommandExecute()
+    private void AutoArrangePERT()
     {
       PERTCanvasHelper.ResetActivityPositions(Schedule);
       OnRefreshLayout(false);
     }
 
-    private bool AutoArrangePERTCommandCanExecute()
+    private bool CanAutoArrangePERT()
     {
       return !_isBusy && ActiveLayout.LayoutType == LayoutType.PERT;
     }
@@ -990,15 +993,15 @@ namespace NAS.ViewModels
 
     #region Edit Baselines
 
-    public ICommand EditBaselinesCommand { get; }
+    public ICommand EditBaselinesCommand => _editBaselinesCommand ??= new ActionCommand(EditBaselines, CanEditBaselines);
 
-    private void EditBaselinesCommandExecute()
+    private void EditBaselines()
     {
       using var vm = new BaselinesViewModel(this);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditBaselinesCommandCanExecute()
+    private bool CanEditBaselines()
     {
       return !_isBusy;
     }
@@ -1007,15 +1010,15 @@ namespace NAS.ViewModels
 
     #region Edit Fragnets
 
-    public ICommand EditFragnetsCommand { get; }
+    public ICommand EditFragnetsCommand => _editFragnetsCommand ??= new ActionCommand(EditFragnets, CanEditFragnets);
 
-    private void EditFragnetsCommandExecute()
+    private void EditFragnets()
     {
       using var vm = new FragnetsViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditFragnetsCommandCanExecute()
+    private bool CanEditFragnets()
     {
       return !_isBusy;
     }
@@ -1024,19 +1027,19 @@ namespace NAS.ViewModels
 
     #region Set Fragnets Visible
 
-    public ICommand SetFragnetVisibleCommand { get; }
+    public ICommand SetFragnetVisibleCommand => _setFragnetVisibleCommand ??= new ActionCommand(SetFragnetVisible, CanSetFragnetVisible);
 
-    private void SetFragnetVisibleCommandExecute()
+    private void SetFragnetVisible()
     {
       UserNotificationService.Instance.Question(NASResources.MessageChangingFragnetVisibilityWarning, () =>
       {
-        CalculateCommandExecute(Schedule.DataDate);
+        Calculate(Schedule.DataDate);
       });
 
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Fragnets);
     }
 
-    private bool SetFragnetVisibleCommandCanExecute()
+    private bool CanSetFragnetVisible()
     {
       return !_isBusy;
     }
@@ -1045,9 +1048,9 @@ namespace NAS.ViewModels
 
     #region Compare with Baseline
 
-    public ICommand CompareWithBaselineCommand { get; }
+    public ICommand CompareWithBaselineCommand => _compareWithBaselineCommand ??= new ActionCommand(CompareWithBaseline, CanCompareWithBaseline);
 
-    private void CompareWithBaselineCommandExecute()
+    private void CompareWithBaseline()
     {
       using var vm = new SelectBaselineViewModel(Schedule.Baselines);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedBaseline != null)
@@ -1061,7 +1064,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool CompareWithBaselineCommandCanExecute()
+    private bool CanCompareWithBaseline()
     {
       return !_isBusy;
     }
@@ -1070,9 +1073,9 @@ namespace NAS.ViewModels
 
     #region Compare with Distortions
 
-    public ICommand CompareWithDistortionsCommand { get; }
+    public ICommand CompareWithDistortionsCommand => _compareWithDistortionsCommand ??= new ActionCommand(CompareWithDistortions, CanCompareWithDistortions);
 
-    private void CompareWithDistortionsCommandExecute()
+    private void CompareWithDistortions()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Compare);
       string headline = NASResources.DistortionsCompared;
@@ -1094,18 +1097,18 @@ namespace NAS.ViewModels
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool CompareWithDistortionsCommandCanExecute()
+    private bool CanCompareWithDistortions()
     {
       return !_isBusy;
     }
 
     #endregion
 
-    #region Compare Controlling
+    #region Compare
 
-    public ICommand CompareCommand { get; }
+    public ICommand CompareCommand => _compareCommand ??= new ActionCommand(Compare, CanCompare);
 
-    private void CompareCommandExecute()
+    private void Compare()
     {
       using var vm = new CompareSchedulesViewModel(Schedule);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -1116,7 +1119,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool CompareCommandCanExecute()
+    private bool CanCompare()
     {
       return !_isBusy && Schedule.Fragnets.Count > 0;
     }
@@ -1125,15 +1128,15 @@ namespace NAS.ViewModels
 
     #region Edit Distortions
 
-    public ICommand EditDistortionsCommand { get; }
+    public ICommand EditDistortionsCommand => _editDistortionsCommand ??= new ActionCommand(EditDistortions, CanEditDistortions);
 
-    private void EditDistortionsCommandExecute()
+    private void EditDistortions()
     {
       using var vm = new DistortionsViewModel(CurrentActivity.Activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditDistortionsCommandCanExecute()
+    private bool CanEditDistortions()
     {
       return CurrentActivity != null && CurrentActivity.Activity.ActivityType == ActivityType.Activity;
     }
@@ -1146,59 +1149,57 @@ namespace NAS.ViewModels
 
     #region Increase Duration
 
-    public ICommand IncreaseDurationCommand { get; }
+    public ICommand IncreaseDurationCommand => _increaseDurationCommand ??= new ActionCommand(IncreaseDuration, CanIncreaseDuration);
 
-    private void IncreaseDurationCommandExecute()
+    private void IncreaseDuration()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       CurrentActivity.Activity.OriginalDuration++;
     }
 
-    private bool IncreaseDurationCommandCanExecute()
+    private bool CanIncreaseDuration()
     {
       return !_isBusy
-
-                                                      && CurrentActivity != null
-                                                      && CurrentActivity.Activity.ActivityType == ActivityType.Activity
-                                                      && !CurrentActivity.Activity.IsFinished;
+             && CurrentActivity != null
+             && CurrentActivity.Activity.ActivityType == ActivityType.Activity
+             && !CurrentActivity.Activity.IsFinished;
     }
 
     #endregion
 
     #region Decrease Duration
 
-    public ICommand DecreaseDurationCommand { get; }
+    public ICommand DecreaseDurationCommand => _decreaseDurationCommand ??= new ActionCommand(DecreaseDuration, CanDecreaseDuration);
 
-    private void DecreaseDurationCommandExecute()
+    private void DecreaseDuration()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       CurrentActivity.Activity.OriginalDuration--;
     }
 
-    private bool DecreaseDurationCommandCanExecute()
+    private bool CanDecreaseDuration()
     {
       return !_isBusy
-
-                                                      && CurrentActivity != null
-                                                      && CurrentActivity.Activity.ActivityType == ActivityType.Activity
-                                                      && !CurrentActivity.Activity.IsFinished
-                                                      && CurrentActivity.Activity.OriginalDuration > 1;
+             && CurrentActivity != null
+             && CurrentActivity.Activity.ActivityType == ActivityType.Activity
+             && !CurrentActivity.Activity.IsFinished
+             && CurrentActivity.Activity.OriginalDuration > 1;
     }
 
     #endregion
 
     #region Split Activity
 
-    public ICommand SplitActivityCommand { get; }
+    public ICommand SplitActivityCommand => _splitActivityCommand ??= new ActionCommand(SplitActivity, CanSplitActivity);
 
-    private void SplitActivityCommandExecute()
+    private void SplitActivity()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Start);
       var newActivity = CurrentActivity.Activity.SplitActivity();
       Activities.Add(new ActivityViewModel(newActivity));
     }
 
-    private bool SplitActivityCommandCanExecute()
+    private bool CanSplitActivity()
     {
       return !_isBusy && CurrentActivity != null && CurrentActivity.Activity.CanSplit();
     }
@@ -1207,15 +1208,15 @@ namespace NAS.ViewModels
 
     #region Combine Activities
 
-    public ICommand CombineActivitiesCommand { get; }
+    public ICommand CombineActivitiesCommand => _combineActivitiesCommand ??= new ActionCommand(CombineActivities, CanCombineActivities);
 
-    private void CombineActivitiesCommandExecute()
+    private void CombineActivities()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       CurrentActivity.Activity.CombineActivities();
     }
 
-    private bool CombineActivitiesCommandCanExecute()
+    private bool CanCombineActivities()
     {
       return !_isBusy && CurrentActivity != null && CurrentActivity.Activity.CanCombineActivity();
     }
@@ -1224,9 +1225,9 @@ namespace NAS.ViewModels
 
     #region Change Into Milestone
 
-    public ICommand ChangeIntoMilestoneCommand { get; }
+    public ICommand ChangeIntoMilestoneCommand => _changeIntoMilestoneCommand ??= new ActionCommand(ChangeIntoMilestone, CanChangeIntoMilestone);
 
-    private void ChangeIntoMilestoneCommandExecute()
+    private void ChangeIntoMilestone()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       UserNotificationService.Instance.Question(NASResources.MessageChangeIntoMilestone, () =>
@@ -1243,7 +1244,7 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool ChangeIntoMilestoneCommandCanExecute()
+    private bool CanChangeIntoMilestone()
     {
       return !_isBusy && _currentActivity != null && _currentActivity.Activity.ActivityType == ActivityType.Activity;
     }
@@ -1252,9 +1253,9 @@ namespace NAS.ViewModels
 
     #region Change Into Activity
 
-    public ICommand ChangeIntoActivityCommand { get; }
+    public ICommand ChangeIntoActivityCommand => _changeIntoActivityCommand ??= new ActionCommand(ChangeIntoActivity, CanChangeIntoActivity);
 
-    private void ChangeIntoActivityCommandExecute()
+    private void ChangeIntoActivity()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       UserNotificationService.Instance.Question(NASResources.MessageChangeIntoActivity, () =>
@@ -1271,7 +1272,7 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool ChangeIntoActivityCommandCanExecute()
+    private bool CanChangeIntoActivity()
     {
       return !_isBusy && CurrentActivity != null && CurrentActivity.IsMilestone;
     }
@@ -1286,9 +1287,9 @@ namespace NAS.ViewModels
 
     #region Edit Columns
 
-    public ICommand EditColumnsCommand { get; }
+    public ICommand EditColumnsCommand => _editColumnsCommand ??= new ActionCommand(EditColumns, CanEditColumns);
 
-    private void EditColumnsCommandExecute()
+    private void EditColumns()
     {
       using var vm = new EditColumnsViewModel(ActiveLayout.Layout);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -1307,13 +1308,13 @@ namespace NAS.ViewModels
           }
         }
 
-        foreach (var c in vm.EditColumns)
+        foreach (var column in vm.EditColumns)
         {
-          if (c.IsVisible)
+          if (column.IsVisible)
           {
-            var activityColumn = visibleColumns.FirstOrDefault(x => x.Property == c.Property);
-            activityColumn ??= new ActivityColumn(c.Property);
-            activityColumn.Order = vm.EditColumns.IndexOf(c);
+            var activityColumn = visibleColumns.FirstOrDefault(x => x.Property == column.Property);
+            activityColumn ??= new ActivityColumn(column.Property);
+            activityColumn.Order = vm.EditColumns.IndexOf(column);
           }
         }
 
@@ -1321,7 +1322,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool EditColumnsCommandCanExecute()
+    private bool CanEditColumns()
     {
       return !_isBusy && Schedule.ActiveLayout != null;
     }
