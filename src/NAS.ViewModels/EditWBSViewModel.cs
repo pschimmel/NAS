@@ -56,7 +56,7 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public List<WBSItemViewModel> WBS => new List<WBSItemViewModel> { _wbsHierarchy };
+    public List<WBSItemViewModel> WBS => [_wbsHierarchy];
 
     public WBSItemViewModel CurrentWBSItem
     {

@@ -19,7 +19,7 @@ namespace NAS.Views.Controls
 
     protected override void RefreshInternal()
     {
-      columnWidths = new Dictionary<ActivityProperty, double>();
+      columnWidths = [];
       if (layout != null)
       {
         foreach (var col in layout.ActivityColumns)

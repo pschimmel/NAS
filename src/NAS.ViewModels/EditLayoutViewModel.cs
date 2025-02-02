@@ -56,7 +56,7 @@ namespace NAS.ViewModels
         throw new NotImplementedException("Unknown layout type.");
       }
 
-      VisibleBaselines = new ObservableCollection<VisibleBaseline>();
+      VisibleBaselines = [];
       foreach (var baseline in layout.VisibleBaselines)
       {
         VisibleBaselines.Add(baseline.Clone());

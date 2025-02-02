@@ -762,8 +762,10 @@ namespace NAS.Models.ImportExport
                       }
                       if (baseline != null)
                       {
-                        var v = new VisibleBaseline(schedule);
-                        v.Color = color;
+                        var v = new VisibleBaseline(schedule)
+                        {
+                          Color = color
+                        };
                         l.VisibleBaselines.Add(v);
                       }
                     }
@@ -803,8 +805,10 @@ namespace NAS.Models.ImportExport
 
                         if (a != ActivityProperty.None)
                         {
-                          var col = new ActivityColumn(a);
-                          col.ColumnWidth = width;
+                          var col = new ActivityColumn(a)
+                          {
+                            ColumnWidth = width
+                          };
                           l.ActivityColumns.Add(col);
                         }
                       }
@@ -832,8 +836,10 @@ namespace NAS.Models.ImportExport
                       }
                       if (a != ActivityProperty.None)
                       {
-                        var def = new SortingDefinition(a);
-                        def.Direction = s;
+                        var def = new SortingDefinition(a)
+                        {
+                          Direction = s
+                        };
                         l.SortingDefinitions.Add(def);
                       }
                     }
@@ -860,8 +866,10 @@ namespace NAS.Models.ImportExport
                       }
                       if (a != ActivityProperty.None)
                       {
-                        var def = new GroupingDefinition(a);
-                        def.Color = c;
+                        var def = new GroupingDefinition(a)
+                        {
+                          Color = c
+                        };
                         l.GroupingDefinitions.Add(def);
                       }
                     }
@@ -923,9 +931,11 @@ namespace NAS.Models.ImportExport
                           obj = filterSubNode.InnerText;
                         }
                       }
-                      var f = new FilterDefinition(schedule, property);
-                      f.Relation = relation;
-                      f.ObjectString = obj;
+                      var f = new FilterDefinition(property)
+                      {
+                        Relation = relation,
+                        ObjectString = obj
+                      };
                       l.FilterDefinitions.Add(f);
                     }
                   }

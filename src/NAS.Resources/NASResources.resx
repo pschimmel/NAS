@@ -345,9 +345,6 @@
   <data name="Auto" xml:space="preserve">
     <value>Auto</value>
   </data>
-  <data name="AutomaticallyCheckForUpdates" xml:space="preserve">
-    <value>Automatically Check for Updates</value>
-  </data>
   <data name="AvailableColors" xml:space="preserve">
     <value>Available Colors</value>
   </data>
@@ -443,15 +440,6 @@
   </data>
   <data name="ChartType" xml:space="preserve">
     <value>Chart Type</value>
-  </data>
-  <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for Updates</value>
-  </data>
-  <data name="CheckForUpdatesToolTipDescription" xml:space="preserve">
-    <value>Checks if a software update ist available.</value>
-  </data>
-  <data name="CheckForUpdatesToolTipTitle" xml:space="preserve">
-    <value>Check for Updates</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>

@@ -7,6 +7,8 @@
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodels:EditSortingAndGroupingViewModel}"
+      d:DesignHeight="250"
+      d:DesignWidth="250"
       mc:Ignorable="d">
   <Grid.Resources>
     <Style TargetType="{x:Type ListBoxItem}">

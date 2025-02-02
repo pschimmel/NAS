@@ -70,8 +70,10 @@ namespace NAS.Models.Controllers
       {
         var emptyNamespaces = new XmlSerializerNamespaces([XmlQualifiedName.Empty]);
         var serializer = new XmlSerializer(typeof(ReportCollection));
-        var writerSettings = new XmlWriterSettings();
-        writerSettings.Indent = true;
+        var writerSettings = new XmlWriterSettings
+        {
+          Indent = true
+        };
         //writerSettings.OmitXmlDeclaration = true;
 
         using var writer = XmlWriter.Create(_userReportsPath, writerSettings);

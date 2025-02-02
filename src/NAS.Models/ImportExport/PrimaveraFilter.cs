@@ -55,8 +55,10 @@ namespace NAS.Models.ImportExport
         int? id = calendarFragment.GetInt("clndr_id", i);
         if (id.HasValue)
         {
-          var c = new Calendar();// controller.AddCalendar(schedule);
-          c.Name = calendarFragment.GetItem("clndr_name", i);
+          var c = new Calendar
+          {
+            Name = calendarFragment.GetItem("clndr_name", i)
+          };// controller.AddCalendar(schedule);
           bool? standard = calendarFragment.GetBoolean("default_flag", i);
           if (standard == true)
           {

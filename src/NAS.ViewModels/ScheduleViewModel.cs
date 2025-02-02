@@ -955,7 +955,7 @@ namespace NAS.ViewModels
 
     private void EditFilters()
     {
-      using (var vm = new FilterDefinitionsViewModel(Schedule, Schedule.ActiveLayout))
+      using (var vm = new EditFiltersViewModel(Schedule, Schedule.ActiveLayout))
       {
         ViewFactory.Instance.ShowDialog(vm);
       }

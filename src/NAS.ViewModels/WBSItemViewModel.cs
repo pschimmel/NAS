@@ -15,7 +15,7 @@ namespace NAS.ViewModels
     {
       isExpanded = true;
       Item = item;
-      Items = new ObservableCollection<WBSItemViewModel>();
+      Items = [];
       Item.PropertyChanged += (sender, e) =>
       {
         if (e.PropertyName == nameof(WBSItem.FullName))

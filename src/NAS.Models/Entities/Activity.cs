@@ -590,12 +590,14 @@ namespace NAS.Models.Entities
         return null;
       }
 
-      var newActivity = new Activity(Schedule, IsFixed);
-      newActivity.Name = Name + NASResources.Copy;
-      newActivity.OriginalDuration = OriginalDuration / 2;
-      newActivity.Calendar = Calendar;
-      newActivity.Fragnet = Fragnet;
-      newActivity.WBSItem = WBSItem;
+      var newActivity = new Activity(Schedule, IsFixed)
+      {
+        Name = Name + NASResources.Copy,
+        OriginalDuration = OriginalDuration / 2,
+        Calendar = Calendar,
+        Fragnet = Fragnet,
+        WBSItem = WBSItem
+      };
       OriginalDuration -= newActivity.OriginalDuration;
       Schedule.AddActivity(newActivity);
 
@@ -807,15 +809,19 @@ namespace NAS.Models.Entities
 
       foreach (var r in predecessors)
       {
-        var newRelationship = new Relationship(r.Activity1, newMilestone);
-        newRelationship.RelationshipType = r.RelationshipType;
-        newRelationship.Lag = r.Lag;
+        var newRelationship = new Relationship(r.Activity1, newMilestone)
+        {
+          RelationshipType = r.RelationshipType,
+          Lag = r.Lag
+        };
       }
       foreach (var r in successors)
       {
-        var newRelationship = new Relationship(newMilestone, r.Activity2);
-        newRelationship.RelationshipType = r.RelationshipType;
-        newRelationship.Lag = r.Lag;
+        var newRelationship = new Relationship(newMilestone, r.Activity2)
+        {
+          RelationshipType = r.RelationshipType,
+          Lag = r.Lag
+        };
       }
 
       return newMilestone;

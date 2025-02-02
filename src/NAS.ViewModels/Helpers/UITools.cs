@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NAS.ViewModels.Helpers
+﻿namespace NAS.ViewModels.Helpers
 {
   /// <summary>
   /// Handles UI related notifications from the ViewModel.

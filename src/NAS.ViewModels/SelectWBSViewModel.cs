@@ -40,9 +40,11 @@ namespace NAS.ViewModels
         {
           if (Schedule.WBSItem == null)
           {
-            var wbs = new WBSItem();
-            wbs.Name = Schedule.Name;
-            wbs.Number = "1";
+            var wbs = new WBSItem
+            {
+              Name = Schedule.Name,
+              Number = "1"
+            };
             Schedule.WBSItem = wbs;
           }
           RefreshWBS();

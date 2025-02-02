@@ -1,12 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ES.Tools.Core.Infrastructure;
@@ -89,7 +86,6 @@ namespace NAS.ViewModels
       CloseCommand = new ActionCommand(CloseCommandExecute, () => CloseCommandCanExecute);
       ProgramSettingsCommand = new ActionCommand(ProgramSettingsCommandExecute, () => ProgramSettingsCommandCanExecute);
       DatabaseSettingsCommand = new ActionCommand(DatabaseSettingsCommandExecute, () => DatabaseSettingsCommandCanExecute);
-      CheckForUpdatesCommand = new ActionCommand(param => CheckForUpdatesCommandExecute(null), param => CheckForUpdatesCommandCanExecute);
       AboutCommand = new ActionCommand(AboutCommandExecute);
       WebsiteCommand = new ActionCommand(WebsiteCommandExecute);
       InstantHelpCommand = new ActionCommand(InstantHelpCommandExecute);
@@ -712,122 +708,6 @@ namespace NAS.ViewModels
 
     #endregion
 
-    #region Check for Updates
-
-    public ICommand CheckForUpdatesCommand { get; }
-
-    private async void CheckForUpdatesCommandExecute(object param)
-    {
-      SetIsBusy(true);
-      if (!string.IsNullOrWhiteSpace(SettingsController.Settings.Language))
-      {
-        SetCultureOfCurrentThread(Cultures.GetCultureInfoFromNativeName(SettingsController.Settings.Language));
-      }
-
-      bool showMessages = true;
-
-      if (param != null && (bool)param == false)
-      {
-        showMessages = false;
-      }
-
-      await Task.Run(async () =>
-      {
-        try
-        {
-          var service = new UpdateServiceHelper();
-          var remoteVersion = await service.GetLatestVersion();
-          var installedVersion = Globals.Version;
-          if (remoteVersion > installedVersion)
-          {
-            var changes = await service.GetChanges(installedVersion);
-            string message = string.Format(NASResources.MessageNewVersionFound, installedVersion.ToString(3), remoteVersion.ToString(3));
-            if (changes.Any())
-            {
-              message += Environment.NewLine + Environment.NewLine + NASResources.Changes + ":";
-              foreach (var change in changes)
-              {
-                if (!string.IsNullOrWhiteSpace(change.Description))
-                {
-                  message += Environment.NewLine + change.ToString();
-                }
-              }
-            }
-
-            UserNotificationService.Instance.Question(message, async () =>
-            {
-              string fileURL = await service.GetDownloadURL();
-              fileURL = fileURL.Replace(@"\", "/");
-
-              if (string.IsNullOrEmpty(fileURL))
-              {
-                UserNotificationService.Instance.Error(string.Format(NASResources.MessageFileNotFound, fileURL));
-                return;
-              }
-              var saveFileDialog = new SaveFileDialog
-              {
-                FileName = Path.GetFileName(fileURL)
-              };
-              if (saveFileDialog.ShowDialog() == true)
-              {
-                await Task.Run(new Action(async () =>
-                {
-                  using var client = new HttpClient();
-                  using var stream = await client.GetStreamAsync(fileURL);
-                  using var fs = File.Create(saveFileDialog.FileName);
-                  stream.Seek(0, SeekOrigin.Begin);
-                  stream.CopyTo(fs);
-                }));
-              }
-            });
-          }
-          else if (showMessages)
-          {
-            UserNotificationService.Instance.Information(string.Format(NASResources.MessageNoNewVersion, installedVersion.ToString(3)));
-          }
-        }
-        catch (Exception ex)
-        {
-          if (showMessages)
-          {
-            UserNotificationService.Instance.Error(NASResources.MessageErrorCheckingVersion + Environment.NewLine + ex.Message);
-          }
-        }
-        finally
-        {
-          SetIsBusy(false);
-        }
-      });
-    }
-
-    private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-    {
-      DownloadProgress.Invoke(this, ProgressEventArgs.Finished);
-
-      if (e.Cancelled)
-      {
-        UserNotificationService.Instance.Warning(NASResources.MessageDownloadCanceled);
-        return;
-      }
-
-      UserNotificationService.Instance.Question(NASResources.MessageDownloadFinished, () =>
-      {
-        try
-        {
-          Process.Start(e.UserState.ToString(), @"/SILENT");
-          Environment.Exit(0);
-        }
-        catch (Exception ex)
-        {
-          UserNotificationService.Instance.Error(NASResources.MessageUpdateError + Environment.NewLine + ex.Message);
-        }
-      });
-    }
-
-    private bool CheckForUpdatesCommandCanExecute => !IsBusy;
-
-    #endregion
-
     #region Website
 
     public ICommand WebsiteCommand { get; }
@@ -971,7 +851,6 @@ namespace NAS.ViewModels
       (CloseCommand as ActionCommand).RaiseCanExecuteChanged();
       (ProgramSettingsCommand as ActionCommand).RaiseCanExecuteChanged();
       (DatabaseSettingsCommand as ActionCommand).RaiseCanExecuteChanged();
-      (CheckForUpdatesCommand as ActionCommand).RaiseCanExecuteChanged();
       (AboutCommand as ActionCommand).RaiseCanExecuteChanged();
       (WebsiteCommand as ActionCommand).RaiseCanExecuteChanged();
       (InstantHelpCommand as ActionCommand).RaiseCanExecuteChanged();

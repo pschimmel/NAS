@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace NAS.Models.Enums
+﻿namespace NAS.Models.Enums
 {
   public static class FilterRelationHelper
   {

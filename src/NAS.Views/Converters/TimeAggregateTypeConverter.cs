@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 using NAS.Models.Enums;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.Views.Converters
 {

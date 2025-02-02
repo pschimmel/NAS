@@ -10,9 +10,11 @@ namespace NAS.Models.Controllers
     {
       if (schedule.Layouts.Count == 0)
       {
-        var newLayout = new GanttLayout();
-        newLayout.Name = NASResources.Layout + " 1";
-        newLayout.IsActive = true;
+        var newLayout = new GanttLayout
+        {
+          Name = NASResources.Layout + " 1",
+          IsActive = true
+        };
         schedule.Layouts.Add(newLayout);
       }
       foreach (var layout in schedule.Layouts)
@@ -59,17 +61,21 @@ namespace NAS.Models.Controllers
 
       if (schedule.WBSItem == null)
       {
-        var wbs = new WBSItem();
-        wbs.Name = schedule.Name;
-        wbs.Number = "1";
+        var wbs = new WBSItem
+        {
+          Name = schedule.Name,
+          Number = "1"
+        };
         schedule.WBSItem = wbs;
       }
     }
 
     public static PERTDefinition GetStandardPert()
     {
-      var result = new PERTDefinition();
-      result.Name = NASResources.Standard;
+      var result = new PERTDefinition
+      {
+        Name = NASResources.Standard
+      };
       result.ColumnDefinitions.Add(new ColumnDefinition());
       result.ColumnDefinitions.Add(new ColumnDefinition());
       result.ColumnDefinitions.Add(new ColumnDefinition());

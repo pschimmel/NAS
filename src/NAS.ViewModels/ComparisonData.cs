@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 
 namespace NAS.ViewModels
 {

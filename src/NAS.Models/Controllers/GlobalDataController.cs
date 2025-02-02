@@ -130,7 +130,7 @@ namespace NAS.Models.Controllers
       return new JsonSerializerSettings
       {
         Formatting = Formatting.Indented,
-        Converters = new List<JsonConverter> { new StringEnumConverter() }
+        Converters = [new StringEnumConverter()]
       };
     }
 

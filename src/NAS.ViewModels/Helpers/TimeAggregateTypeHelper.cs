@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NAS.Models.Enums;
 using NAS.Resources;
 
-namespace NAS.Models.Enums
+namespace NAS.ViewModels.Helpers
 {
   public static class TimeAggregateTypeHelper
   {

@@ -265,12 +265,14 @@ namespace NAS.Models.Entities
 
     public Activity AddActivity(bool isFixed = false)
     {
-      var newActivity = new Activity(this, isFixed);
-      newActivity.Number = GetNewID();
-      newActivity.Calendar = StandardCalendar;
-      newActivity.EarlyStartDate = DataDate;
-      newActivity.LateStartDate = DataDate;
-      newActivity.OriginalDuration = 5;
+      var newActivity = new Activity(this, isFixed)
+      {
+        Number = GetNewID(),
+        Calendar = StandardCalendar,
+        EarlyStartDate = DataDate,
+        LateStartDate = DataDate,
+        OriginalDuration = 5
+      };
       _activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
@@ -296,12 +298,14 @@ namespace NAS.Models.Entities
 
     public Milestone AddMilestone(bool isFixed = false)
     {
-      var newActivity = new Milestone(this, isFixed);
-      newActivity.Number = GetNewID();
-      newActivity.Calendar = StandardCalendar;
-      newActivity.EarlyStartDate = DataDate;
-      newActivity.LateStartDate = DataDate;
-      newActivity.OriginalDuration = 0;
+      var newActivity = new Milestone(this, isFixed)
+      {
+        Number = GetNewID(),
+        Calendar = StandardCalendar,
+        EarlyStartDate = DataDate,
+        LateStartDate = DataDate,
+        OriginalDuration = 0
+      };
       _activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
@@ -687,10 +691,12 @@ namespace NAS.Models.Entities
           foreach (var ra in a.ResourceAssignments)
           {
             var r = newSchedule.Resources.ToList()[oldSchedule.Resources.ToList().IndexOf(ra.Resource)];
-            var newResourceAssignment = new ResourceAssignment(newItem, r);
-            newResourceAssignment.Budget = ra.Budget;
-            newResourceAssignment.FixedCosts = ra.FixedCosts;
-            newResourceAssignment.UnitsPerDay = ra.UnitsPerDay;
+            var newResourceAssignment = new ResourceAssignment(newItem, r)
+            {
+              Budget = ra.Budget,
+              FixedCosts = ra.FixedCosts,
+              UnitsPerDay = ra.UnitsPerDay
+            };
             newItem.ResourceAssignments.Add(newResourceAssignment);
           }
         }
@@ -745,9 +751,11 @@ namespace NAS.Models.Entities
       newSchedule.Name = oldSchedule.Name;
       foreach (var r in oldSchedule.Relationships)
       {
-        var newRelationship = new Relationship(newSchedule.GetActivity(r.Activity1.Number), newSchedule.GetActivity(r.Activity2.Number));
-        newRelationship.Lag = r.Lag;
-        newRelationship.RelationshipType = r.RelationshipType;
+        var newRelationship = new Relationship(newSchedule.GetActivity(r.Activity1.Number), newSchedule.GetActivity(r.Activity2.Number))
+        {
+          Lag = r.Lag,
+          RelationshipType = r.RelationshipType
+        };
       }
       foreach (var layout in oldSchedule.Layouts)
       {
@@ -780,9 +788,11 @@ namespace NAS.Models.Entities
       {
         foreach (var item in parent.Children.ToArray())
         {
-          var newItem = new WBSItem(parent);
-          newItem.Number = item.Number;
-          newItem.Name = item.Name;
+          var newItem = new WBSItem(parent)
+          {
+            Number = item.Number,
+            Name = item.Name
+          };
           copyTo.Children.Add(newItem);
           CopyWBSItems(item, newItem);
         }
@@ -814,14 +824,18 @@ namespace NAS.Models.Entities
 
       foreach (var g in oldLayout.GroupingDefinitions)
       {
-        var definition = new GroupingDefinition(g.Property);
-        definition.Color = g.Color;
+        var definition = new GroupingDefinition(g.Property)
+        {
+          Color = g.Color
+        };
         newLayout.GroupingDefinitions.Add(definition);
       }
       foreach (var s in oldLayout.SortingDefinitions)
       {
-        var definition = new SortingDefinition(s.Property);
-        definition.Direction = s.Direction;
+        var definition = new SortingDefinition(s.Property)
+        {
+          Direction = s.Direction
+        };
         newLayout.SortingDefinitions.Add(definition);
       }
       foreach (var col in oldLayout.ActivityColumns)
@@ -830,24 +844,30 @@ namespace NAS.Models.Entities
       }
       foreach (var f in oldLayout.FilterDefinitions)
       {
-        var filter = new FilterDefinition(f._schedule, f.Property);
-        filter.ObjectString = f.ObjectString;
-        filter.Relation = f.Relation;
+        var filter = new FilterDefinition(f.Property)
+        {
+          ObjectString = f.ObjectString,
+          Relation = f.Relation
+        };
         newLayout.FilterDefinitions.Add(filter);
       }
       foreach (var b in oldLayout.VisibleBaselines)
       {
-        var baseline = new VisibleBaseline(b.Schedule);
-        baseline.Color = b.Color;
+        var baseline = new VisibleBaseline(b.Schedule)
+        {
+          Color = b.Color
+        };
         newLayout.VisibleBaselines.Add(baseline);
       }
       foreach (var r in oldLayout.VisibleResources)
       {
-        var resource = new VisibleResource(newLayout, r.Resource);
-        resource.ShowBudget = r.ShowBudget;
-        resource.ShowActualCosts = r.ShowActualCosts;
-        resource.ShowPlannedCosts = r.ShowPlannedCosts;
-        resource.ShowResourceAllocation = r.ShowResourceAllocation;
+        var resource = new VisibleResource(newLayout, r.Resource)
+        {
+          ShowBudget = r.ShowBudget,
+          ShowActualCosts = r.ShowActualCosts,
+          ShowPlannedCosts = r.ShowPlannedCosts,
+          ShowResourceAllocation = r.ShowResourceAllocation
+        };
         newLayout.VisibleResources.Add(resource);
       }
     }

@@ -23,7 +23,6 @@ namespace NAS.ViewModels
       var settings = SettingsController.Settings;
       _selectedTheme = settings.Theme;
       ShowInstantHelpOnStartUp = settings.ShowInstantHelpOnStartUp;
-      AutoCheckForUpdates = settings.AutoCheckForUpdates;
     }
 
     #endregion
@@ -45,7 +44,6 @@ namespace NAS.ViewModels
                    {
                      var settings = SettingsController.Settings;
                      settings.Theme = SelectedTheme;
-                     settings.AutoCheckForUpdates = AutoCheckForUpdates;
                      settings.ShowInstantHelpOnStartUp = ShowInstantHelpOnStartUp;
                      SettingsController.Save();
                    })
@@ -70,8 +68,6 @@ namespace NAS.ViewModels
     }
 
     public bool ShowInstantHelpOnStartUp { get; set; }
-
-    public bool AutoCheckForUpdates { get; set; }
 
     #endregion
   }

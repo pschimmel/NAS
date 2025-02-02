@@ -15,8 +15,8 @@ namespace NAS.ViewModels
     #region Fields
 
     private readonly Layout _layout;
-    private SortingDefinition _currentSortingDefinition;
-    private GroupingDefinition _currentGroupingDefinition;
+    private SortingDefinitionViewModel _currentSortingDefinition;
+    private GroupingDefinitionViewModel _currentGroupingDefinition;
     private ActionCommand _addSortingDefinitionCommand;
     private ActionCommand _removeSortingDefinitionCommand;
     private ActionCommand _editSortingDefinitionCommand;
@@ -36,16 +36,16 @@ namespace NAS.ViewModels
       : base()
     {
       _layout = layout;
-      SortingDefinitions = new ObservableCollection<SortingDefinition>();
-      foreach (var sortingDefinition in layout.SortingDefinitions)
+      SortingDefinitions = [];
+      foreach (var sortingDefinition in layout.SortingDefinitions.Select(x => x.Clone()))
       {
-        SortingDefinitions.Add(sortingDefinition.Clone());
+        SortingDefinitions.Add(new SortingDefinitionViewModel(sortingDefinition));
       }
 
-      GroupingDefinitions = new ObservableCollection<GroupingDefinition>();
-      foreach (var groupingDefinition in layout.GroupingDefinitions)
+      GroupingDefinitions = [];
+      foreach (var groupingDefinition in layout.GroupingDefinitions.Select(x => x.Clone()))
       {
-        GroupingDefinitions.Add(groupingDefinition.Clone());
+        GroupingDefinitions.Add(new GroupingDefinitionViewModel(groupingDefinition));
       }
     }
 
@@ -65,11 +65,11 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public ObservableCollection<SortingDefinition> SortingDefinitions { get; }
+    public ObservableCollection<SortingDefinitionViewModel> SortingDefinitions { get; }
 
-    public ObservableCollection<GroupingDefinition> GroupingDefinitions { get; }
+    public ObservableCollection<GroupingDefinitionViewModel> GroupingDefinitions { get; }
 
-    public SortingDefinition CurrentSortingDefinition
+    public SortingDefinitionViewModel CurrentSortingDefinition
     {
       get => _currentSortingDefinition;
       set
@@ -82,7 +82,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public GroupingDefinition CurrentGroupingDefinition
+    public GroupingDefinitionViewModel CurrentGroupingDefinition
     {
       get => _currentGroupingDefinition;
       set
@@ -111,8 +111,10 @@ namespace NAS.ViewModels
           Direction = vm.SelectedSortDirection,
           Order = SortingDefinitions.Count,
         };
-        SortingDefinitions.Add(newSortingDefinition);
-        CurrentSortingDefinition = newSortingDefinition;
+
+        var newVM = new SortingDefinitionViewModel(newSortingDefinition);
+        SortingDefinitions.Add(newVM);
+        CurrentSortingDefinition = newVM;
       }
     }
 
@@ -127,6 +129,7 @@ namespace NAS.ViewModels
       UserNotificationService.Instance.Question(NASResources.MessageDeleteSortingDefinition, () =>
       {
         SortingDefinitions.Remove(CurrentSortingDefinition);
+        CurrentSortingDefinition.Dispose();
         CurrentSortingDefinition = null;
       });
     }
@@ -145,11 +148,11 @@ namespace NAS.ViewModels
     private void EditSortingDefinition()
     {
       var item = CurrentSortingDefinition;
-      using var vm = new SelectSortingDefinitionViewModel(item.Property, item.Direction);
+      using var vm = new SelectSortingDefinitionViewModel(item.SortingDefinition.Property, item.SortingDefinition.Direction);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedActivityProperty != ActivityProperty.None)
       {
-        item.Property = vm.SelectedActivityProperty;
-        item.Direction = vm.SelectedSortDirection;
+        item.SortingDefinition.Property = vm.SelectedActivityProperty;
+        item.SortingDefinition.Direction = vm.SelectedSortDirection;
       }
     }
 
@@ -166,17 +169,17 @@ namespace NAS.ViewModels
 
     private void MoveSortingDefinitionUp()
     {
-      var previousItem = SortingDefinitions.FirstOrDefault(x => x.Order == CurrentSortingDefinition.Order - 1);
+      var previousItem = SortingDefinitions.FirstOrDefault(x => x.SortingDefinition.Order == CurrentSortingDefinition.SortingDefinition.Order - 1);
       if (previousItem != null)
       {
-        previousItem.Order++;
-        CurrentSortingDefinition.Order--;
+        previousItem.SortingDefinition.Order++;
+        CurrentSortingDefinition.SortingDefinition.Order--;
       }
     }
 
     private bool CanMoveSortingDefinitionUp()
     {
-      return CurrentSortingDefinition != null && CurrentSortingDefinition.Order > 0;
+      return CurrentSortingDefinition != null && CurrentSortingDefinition.SortingDefinition.Order > 0;
     }
 
     #endregion
@@ -187,17 +190,17 @@ namespace NAS.ViewModels
 
     private void MoveSortingDefinitionDown()
     {
-      var nextItem = SortingDefinitions.FirstOrDefault(x => x.Order == CurrentSortingDefinition.Order + 1);
+      var nextItem = SortingDefinitions.FirstOrDefault(x => x.SortingDefinition.Order == CurrentSortingDefinition.SortingDefinition.Order + 1);
       if (nextItem != null)
       {
-        nextItem.Order--;
-        CurrentSortingDefinition.Order++;
+        nextItem.SortingDefinition.Order--;
+        CurrentSortingDefinition.SortingDefinition.Order++;
       }
     }
 
     private bool CanMoveSortingDefinitionDown()
     {
-      return CurrentSortingDefinition != null && CurrentSortingDefinition.Order < SortingDefinitions.Count - 1;
+      return CurrentSortingDefinition != null && CurrentSortingDefinition.SortingDefinition.Order < SortingDefinitions.Count - 1;
     }
 
     #endregion
@@ -216,8 +219,10 @@ namespace NAS.ViewModels
           Order = GroupingDefinitions.Count,
           Color = vm.SelectedColor.ToString()
         };
-        GroupingDefinitions.Add(newGroupingDefinition);
-        CurrentGroupingDefinition = newGroupingDefinition;
+
+        var newVM = new GroupingDefinitionViewModel(newGroupingDefinition);
+        GroupingDefinitions.Add(newVM);
+        CurrentGroupingDefinition = newVM;
       }
     }
 
@@ -232,6 +237,7 @@ namespace NAS.ViewModels
       UserNotificationService.Instance.Question(NASResources.MessageDeleteGroupingDefinition, () =>
       {
         GroupingDefinitions.Remove(CurrentGroupingDefinition);
+        CurrentSortingDefinition.Dispose();
         CurrentGroupingDefinition = null;
       });
     }
@@ -250,11 +256,11 @@ namespace NAS.ViewModels
     private void EditGroupingDefinition()
     {
       var item = CurrentGroupingDefinition;
-      using var vm = new SelectGroupingDefinitionViewModel(item.Property, (Color)ColorConverter.ConvertFromString(item.Color));
+      using var vm = new SelectGroupingDefinitionViewModel(item.GroupingDefinition.Property, (Color)ColorConverter.ConvertFromString(item.GroupingDefinition.Color));
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedActivityProperty != ActivityProperty.None)
       {
-        item.Property = vm.SelectedActivityProperty;
-        item.Color = vm.SelectedColor.ToString();
+        item.GroupingDefinition.Property = vm.SelectedActivityProperty;
+        item.GroupingDefinition.Color = vm.SelectedColor.ToString();
       }
     }
 
@@ -271,17 +277,17 @@ namespace NAS.ViewModels
 
     private void MoveGroupingDefinitionUp()
     {
-      var previousItem = GroupingDefinitions.FirstOrDefault(x => x.Order == CurrentGroupingDefinition.Order - 1);
+      var previousItem = GroupingDefinitions.FirstOrDefault(x => x.GroupingDefinition.Order == CurrentGroupingDefinition.GroupingDefinition.Order - 1);
       if (previousItem != null)
       {
-        previousItem.Order++;
-        CurrentGroupingDefinition.Order--;
+        previousItem.GroupingDefinition.Order++;
+        CurrentGroupingDefinition.GroupingDefinition.Order--;
       }
     }
 
     private bool CanMoveGroupingDefinitionUp()
     {
-      return CurrentGroupingDefinition != null && CurrentGroupingDefinition.Order > 0;
+      return CurrentGroupingDefinition != null && CurrentGroupingDefinition.GroupingDefinition.Order > 0;
     }
 
     #endregion
@@ -292,17 +298,17 @@ namespace NAS.ViewModels
 
     private void MoveGroupingDefinitionDown()
     {
-      var nextItem = GroupingDefinitions.FirstOrDefault(x => x.Order == CurrentGroupingDefinition.Order + 1);
+      var nextItem = GroupingDefinitions.FirstOrDefault(x => x.GroupingDefinition.Order == CurrentGroupingDefinition.GroupingDefinition.Order + 1);
       if (nextItem != null)
       {
-        nextItem.Order--;
-        CurrentGroupingDefinition.Order++;
+        nextItem.GroupingDefinition.Order--;
+        CurrentGroupingDefinition.GroupingDefinition.Order++;
       }
     }
 
     private bool CanMoveGroupingDefinitionDown()
     {
-      return CurrentGroupingDefinition != null && CurrentGroupingDefinition.Order < GroupingDefinitions.Count - 1;
+      return CurrentGroupingDefinition != null && CurrentGroupingDefinition.GroupingDefinition.Order < GroupingDefinitions.Count - 1;
     }
 
     #endregion
@@ -314,14 +320,35 @@ namespace NAS.ViewModels
       _layout.SortingDefinitions.Clear();
       _layout.GroupingDefinitions.Clear();
 
-      foreach (var sortingDefinition in SortingDefinitions)
+      foreach (var sortingDefinition in SortingDefinitions.Select(x => x.SortingDefinition))
       {
         _layout.SortingDefinitions.Add(sortingDefinition);
       }
 
-      foreach (var groupingDefinition in GroupingDefinitions)
+      foreach (var groupingDefinition in GroupingDefinitions.Select(x => x.GroupingDefinition))
       {
         _layout.GroupingDefinitions.Add(groupingDefinition);
+      }
+    }
+
+    #endregion
+
+    #region IDiaposable
+
+    protected override void Dispose(bool disposing)
+    {
+      base.Dispose(disposing);
+      if (disposing)
+      {
+        foreach (var sortingDefinition in SortingDefinitions)
+        {
+          sortingDefinition.Dispose();
+        }
+
+        foreach (var groupingDefinition in GroupingDefinitions)
+        {
+          groupingDefinition.Dispose();
+        }
       }
     }
 

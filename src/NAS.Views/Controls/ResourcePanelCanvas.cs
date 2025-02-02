@@ -185,7 +185,7 @@ namespace NAS.Views.Controls
 
     private Brush GetBrush(DisplayType display)
     {
-      brushCache ??= new Dictionary<DisplayType, Brush>();
+      brushCache ??= [];
 
       if (brushCache.ContainsKey(display))
       {

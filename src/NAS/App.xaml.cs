@@ -60,6 +60,8 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditSortingAndGroupingViewModel, EditSortingAndGroupingView>();
       ViewFactory.Instance.RegisterDialog<SelectSortingDefinitionViewModel, SelectSortingDefinitionView>();
       ViewFactory.Instance.RegisterDialog<SelectGroupingDefinitionViewModel, SelectGroupingDefinitionView>();
+      ViewFactory.Instance.RegisterDialog<EditFiltersViewModel, EditFiltersView>();
+      ViewFactory.Instance.RegisterDialog<SelectFilterDefinitionViewModel, SelectFilterDefinitionView>();
     }
 
     private static void RegisterNotificationTargets()

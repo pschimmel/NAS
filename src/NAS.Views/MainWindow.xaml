@@ -160,27 +160,31 @@
           <fluent:RibbonGroupBox Name="Schedule"
                                  Header="{x:Static resx:NASResources.Schedule}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/Options.png">
-            <fluent:Button Command="{Binding CurrentSchedule.CalculateCommand}"
-                           Header="{x:Static resx:NASResources.Calculate}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Calculate.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Calculate.png"
-                           SizeDefinition="Large">
-              <fluent:Button.ToolTip>
+            <fluent:SplitButton Command="{Binding CurrentSchedule.CalculateCommand}"
+                                Header="{x:Static resx:NASResources.Calculate}"
+                                Icon="pack://application:,,,/NAS.Views;component/Images/Calculate.png"
+                                LargeIcon="pack://application:,,,/NAS.Views;component/Images/Calculate.png"
+                                SizeDefinition="Large">
+              <fluent:SplitButton.ToolTip>
                 <fluent:ScreenTip Title="{x:Static resx:NASResources.CalculateToolTipTitle}"
                                   Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
                                   Text="{x:Static resx:NASResources.CalculateToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
-            <fluent:Button Command="{Binding CurrentSchedule.EditSchedulingSettingsCommand}"
-                           Header="{x:Static resx:NASResources.Settings}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Settings.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Settings.png">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.SchedulingSettingsToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
+              </fluent:SplitButton.ToolTip>
+              <fluent:SplitButton.Items>
+                <MenuItem Command="{Binding CurrentSchedule.EditSchedulingSettingsCommand}" Header="{x:Static resx:NASResources.Settings}">
+                  <MenuItem.ToolTip>
+                    <fluent:ScreenTip Title="{x:Static resx:NASResources.SchedulingSettingsToolTipTitle}"
+                                      Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
+                                      Text="{x:Static resx:NASResources.SchedulingSettingsToolTipDescription}" />
+                  </MenuItem.ToolTip>
+                  <MenuItem.Icon>
+                    <tools:AutoGrayableImage Width="16"
+                                             Height="16"
+                                             Source="pack://application:,,,/NAS.Views;component/Images/Settings.png" />
+                  </MenuItem.Icon>
+                </MenuItem>
+              </fluent:SplitButton.Items>
+            </fluent:SplitButton>
             <fluent:Button Command="{Binding CurrentSchedule.EditPropertiesCommand}"
                            Header="{x:Static resx:NASResources.ProjectProperties}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Options.png"
@@ -728,17 +732,6 @@
           <fluent:RibbonGroupBox Name="Information"
                                  Header="{x:Static resx:NASResources.Information}"
                                  Icon="pack://application:,,,/NAS.Views;component/Images/Information.png">
-            <fluent:Button Command="{Binding CheckForUpdatesCommand}"
-                           Header="{x:Static resx:NASResources.CheckForUpdates}"
-                           Icon="pack://application:,,,/NAS.Views;component/Images/Download.png"
-                           LargeIcon="pack://application:,,,/NAS.Views;component/Images/Download.png"
-                           SizeDefinition="Large, Middle, Small">
-              <fluent:Button.ToolTip>
-                <fluent:ScreenTip Title="{x:Static resx:NASResources.CheckForUpdatesToolTipTitle}"
-                                  Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
-                                  Text="{x:Static resx:NASResources.CheckForUpdatesToolTipDescription}" />
-              </fluent:Button.ToolTip>
-            </fluent:Button>
             <fluent:Button Command="{Binding AboutCommand}"
                            Header="{x:Static resx:NASResources.About}"
                            Icon="pack://application:,,,/NAS.Views;component/Images/Information.png"

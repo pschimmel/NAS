@@ -1,23 +1,21 @@
-﻿using NAS.Models.Enums;
+﻿using NAS.Models.Base;
+using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class FilterDefinition : NASObject
+  public class FilterDefinition : NASObject, IClonable<FilterDefinition>
   {
-    internal readonly Schedule _schedule;
     private ActivityProperty _property;
     private FilterRelation _relation;
     private string _objectString;
 
-    public FilterDefinition(Schedule schedule, ActivityProperty property)
+    public FilterDefinition(ActivityProperty property)
     {
-      _schedule = schedule;
       _property = property;
     }
 
     public FilterDefinition(FilterDefinition other)
     {
-      _schedule = other._schedule;
       _property = other.Property;
       _relation = other.Relation;
       _objectString = other.ObjectString;
@@ -31,8 +29,7 @@ namespace NAS.Models.Entities
         if (_property != value)
         {
           _property = value;
-          OnPropertyChanged(nameof(Property));
-          OnPropertyChanged(nameof(Name));
+          OnPropertyChanged();
         }
       }
     }
@@ -45,8 +42,7 @@ namespace NAS.Models.Entities
         if (_relation != value)
         {
           _relation = value;
-          OnPropertyChanged(nameof(Relation));
-          OnPropertyChanged(nameof(Name));
+          OnPropertyChanged();
         }
       }
     }
@@ -59,68 +55,10 @@ namespace NAS.Models.Entities
         if (_objectString != value)
         {
           _objectString = value;
-          OnPropertyChanged(nameof(ObjectString));
-          OnPropertyChanged(nameof(Name));
+          OnPropertyChanged();
         }
       }
     }
-
-    public string Name
-    {
-      get
-      {
-        string s = ObjectString;
-        if (Layout != null && _schedule != null)
-        {
-          var schedule = _schedule;
-          if (Guid.TryParse(ObjectString, out var id))
-          {
-            switch (Property)
-            {
-              case ActivityProperty.Fragnet:
-                if (schedule.Fragnets.Any(x => x.ID == id))
-                {
-                  s = schedule.Fragnets.First(x => x.ID == id).Name;
-                }
-
-                break;
-              case ActivityProperty.WBSItem:
-                var item = FindWBSItem(id);
-                if (item != null)
-                {
-                  s = item.FullName;
-                }
-
-                break;
-              case ActivityProperty.CustomAttribute1:
-                if (schedule.CustomAttributes1.Any(x => x.ID == id))
-                {
-                  s = schedule.CustomAttributes1.First(x => x.ID == id).Name;
-                }
-
-                break;
-              case ActivityProperty.CustomAttribute2:
-                if (schedule.CustomAttributes2.Any(x => x.ID == id))
-                {
-                  s = schedule.CustomAttributes2.First(x => x.ID == id).Name;
-                }
-
-                break;
-              case ActivityProperty.CustomAttribute3:
-                if (schedule.CustomAttributes3.Any(x => x.ID == id))
-                {
-                  s = schedule.CustomAttributes3.First(x => x.ID == id).Name;
-                }
-
-                break;
-            }
-          }
-        }
-        return ActivityPropertyHelper.GetNameOfActivityProperty(Property) + " " + FilterRelationHelper.GetNameOfFilterRelation(Relation) + " " + s;
-      }
-    }
-
-    public Layout Layout { get; }
 
     public bool Compare(Activity activity)
     {
@@ -316,34 +254,6 @@ namespace NAS.Models.Entities
       };
     }
 
-    private WBSItem FindWBSItem(Guid id)
-    {
-      return Layout == null || _schedule == null ? null : FindWBSItem(_schedule.WBSItem, id);
-    }
-
-    private static WBSItem FindWBSItem(WBSItem parent, Guid id)
-    {
-      if (parent == null)
-      {
-        return null;
-      }
-
-      if (parent.ID == id)
-      {
-        return parent;
-      }
-
-      foreach (var child in parent.Children)
-      {
-        var foundItem = FindWBSItem(child, id);
-        if (foundItem != null)
-        {
-          return foundItem;
-        }
-      }
-      return null;
-    }
-
     public static FilterRelation[] GetValidFilterRelations(ActivityProperty property)
     {
       return property switch
@@ -378,9 +288,9 @@ namespace NAS.Models.Entities
       };
     }
 
-    public override string ToString()
+    public FilterDefinition Clone()
     {
-      return Name;
+      return new FilterDefinition(this);
     }
   }
 }

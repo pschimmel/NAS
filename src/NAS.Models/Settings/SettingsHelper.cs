@@ -13,9 +13,11 @@ namespace NAS.Models.Settings
       {
         var emptyNamespaces = new XmlSerializerNamespaces([XmlQualifiedName.Empty]);
         var serializer = new XmlSerializer(typeof(Settings));
-        var writerSettings = new XmlWriterSettings();
-        writerSettings.Indent = true;
-        writerSettings.OmitXmlDeclaration = true;
+        var writerSettings = new XmlWriterSettings
+        {
+          Indent = true,
+          OmitXmlDeclaration = true
+        };
 
         Directory.CreateDirectory(Path.GetDirectoryName(Globals.SettingsFileName));
         using var writer = XmlWriter.Create(Globals.SettingsFileName, writerSettings);

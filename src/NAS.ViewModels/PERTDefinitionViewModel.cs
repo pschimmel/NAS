@@ -140,8 +140,10 @@ namespace NAS.ViewModels
 
     private void AddColumnDefinitionCommandExecute()
     {
-      var newItem = new ColumnDefinition();
-      newItem.Sort = Columns.Count == 0 ? 0 : Columns.Max(x => x.Sort) + 1;
+      var newItem = new ColumnDefinition
+      {
+        Sort = Columns.Count == 0 ? 0 : Columns.Max(x => x.Sort) + 1
+      };
       Columns.Add(newItem);
       CurrentColumnDefinition = newItem;
     }
@@ -225,8 +227,10 @@ namespace NAS.ViewModels
 
     private void AddRowDefinitionCommandExecute()
     {
-      var newItem = new RowDefinition();
-      newItem.Sort = Rows.Count == 0 ? 0 : Rows.Max(x => x.Sort) + 1;
+      var newItem = new RowDefinition
+      {
+        Sort = Rows.Count == 0 ? 0 : Rows.Max(x => x.Sort) + 1
+      };
       Rows.Add(newItem);
       CurrentRowDefinition = newItem;
     }

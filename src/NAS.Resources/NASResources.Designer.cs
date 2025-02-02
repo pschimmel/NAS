@@ -745,15 +745,6 @@ namespace NAS.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Automatically Check for Updates.
-        /// </summary>
-        public static string AutomaticallyCheckForUpdates {
-            get {
-                return ResourceManager.GetString("AutomaticallyCheckForUpdates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Available Colors.
         /// </summary>
         public static string AvailableColors {
@@ -1038,33 +1029,6 @@ namespace NAS.Resources {
         public static string ChartType {
             get {
                 return ResourceManager.GetString("ChartType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check for Updates.
-        /// </summary>
-        public static string CheckForUpdates {
-            get {
-                return ResourceManager.GetString("CheckForUpdates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Checks if a software update ist available..
-        /// </summary>
-        public static string CheckForUpdatesToolTipDescription {
-            get {
-                return ResourceManager.GetString("CheckForUpdatesToolTipDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check for Updates.
-        /// </summary>
-        public static string CheckForUpdatesToolTipTitle {
-            get {
-                return ResourceManager.GetString("CheckForUpdatesToolTipTitle", resourceCulture);
             }
         }
         

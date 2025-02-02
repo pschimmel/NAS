@@ -16,8 +16,6 @@ namespace NAS.Models.Settings
 
     public bool ShowInstantHelpOnStartUp { get; set; } = true;
 
-    public bool AutoCheckForUpdates { get; set; } = true;
-
     public string UserReportsFolderPath { get; set; }
 
     public string Language

@@ -361,25 +361,6 @@ namespace NAS.Models.Entities
 
     public ObservableCollection<VisibleResource> VisibleResources { get; }
 
-    #region Filters
-
-    public void RefreshFilterDefinitions(IEnumerable<FilterDefinition> filterDefinitions)
-    {
-      if (filterDefinitions == null)
-      {
-        throw new ArgumentNullException(nameof(filterDefinitions), "Argument can't be null");
-      }
-
-      FilterDefinitions.Clear();
-
-      foreach (var filterDefinition in filterDefinitions)
-      {
-        FilterDefinitions.Add(filterDefinition);
-      }
-    }
-
-    #endregion
-
     #region Public Methods
 
     /// <summary>
