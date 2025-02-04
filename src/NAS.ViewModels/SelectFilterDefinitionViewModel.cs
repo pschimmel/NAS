@@ -36,7 +36,7 @@ namespace NAS.ViewModels
 
     public override string Icon => "Filter";
 
-    public override DialogSize DialogSize => DialogSize.Fixed(350, 150);
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 200);
 
     public override HelpTopic HelpTopicKey => HelpTopic.Filters;
 
