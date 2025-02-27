@@ -6,6 +6,7 @@
         xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+        xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
         Title="{x:Static resx:NASResources.EditLogic}"
         Width="700"
         Height="300"
@@ -13,30 +14,34 @@
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
   <Window.Resources>
-    <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
 
-    <ObjectDataProvider x:Key="relationshipTypeEnumData"
-                        MethodName="GetValues"
-                        ObjectType="{x:Type system:Enum}">
-      <ObjectDataProvider.MethodParameters>
-        <x:Type TypeName="enums:RelationshipType" />
-      </ObjectDataProvider.MethodParameters>
-    </ObjectDataProvider>
+      <ObjectDataProvider x:Key="relationshipTypeEnumData"
+                          MethodName="GetValues"
+                          ObjectType="{x:Type system:Enum}">
+        <ObjectDataProvider.MethodParameters>
+          <x:Type TypeName="enums:RelationshipType" />
+        </ObjectDataProvider.MethodParameters>
+      </ObjectDataProvider>
 
-    <DataTemplate x:Key="ComboBoxViewTemplate">
-      <TextBlock Text="{Binding RelationshipType, Converter={StaticResource RelationshipTypeConverter}}" />
-    </DataTemplate>
+      <DataTemplate x:Key="ComboBoxViewTemplate">
+        <TextBlock Text="{Binding RelationshipType, Converter={StaticResource RelationshipTypeConverter}}" />
+      </DataTemplate>
 
-    <DataTemplate x:Key="ComboBoxEditTemplate">
-      <ComboBox ItemsSource="{Binding Source={StaticResource relationshipTypeEnumData}}" SelectedItem="{Binding RelationshipType}">
-        <ComboBox.ItemTemplate>
-          <DataTemplate>
-            <TextBlock Text="{Binding Path='.', Converter={StaticResource RelationshipTypeConverter}}" />
-          </DataTemplate>
-        </ComboBox.ItemTemplate>
-      </ComboBox>
-    </DataTemplate>
-
+      <DataTemplate x:Key="ComboBoxEditTemplate">
+        <ComboBox ItemsSource="{Binding Source={StaticResource relationshipTypeEnumData}}" SelectedItem="{Binding RelationshipType}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding Path='.', Converter={StaticResource RelationshipTypeConverter}}" />
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </DataTemplate>
+    </ResourceDictionary>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

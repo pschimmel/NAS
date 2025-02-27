@@ -18,7 +18,6 @@
         <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
 
-      <converters:CurrencyConverter x:Key="CurrencyConverter" />
       <converters:ConstraintTypeConverter x:Key="ConstraintTypeConverter" />
       <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
     </ResourceDictionary>

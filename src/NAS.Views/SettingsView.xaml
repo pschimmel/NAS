@@ -18,6 +18,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
+
       <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
       <converters:ZoomToBoolConverter x:Key="ZoomToBoolConverter" />
 

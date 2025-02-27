@@ -4,9 +4,17 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodels:EditWBSItemViewModel}"
       mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Grid.Resources>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="Auto" />
     <ColumnDefinition />

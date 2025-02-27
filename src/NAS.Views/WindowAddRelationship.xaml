@@ -4,6 +4,7 @@
         xmlns:converters="clr-namespace:NAS.Views.Converters"
         xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
         Title="{x:Static resx:NASResources.AddRelationship}"
         Width="400"
         Height="225"
@@ -12,7 +13,13 @@
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
   <Window.Resources>
-    <converters:RelationshipTypeConverter x:Key="RelationshipConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <converters:RelationshipTypeConverter x:Key="RelationshipConverter" />
+    </ResourceDictionary>
   </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>

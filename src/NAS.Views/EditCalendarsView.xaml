@@ -6,13 +6,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
       xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodel:EditCalendarsViewModel}"
       mc:Ignorable="d">
   <Grid.Resources>
-    <DataTemplate x:Key="CalendarDataTemplate">
-      <TextBlock HorizontalAlignment="Stretch" Text="{Binding FullName}" />
-    </DataTemplate>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <DataTemplate x:Key="CalendarDataTemplate">
+        <TextBlock HorizontalAlignment="Stretch" Text="{Binding FullName}" />
+      </DataTemplate>
+    </ResourceDictionary>
   </Grid.Resources>
 
   <TabControl>

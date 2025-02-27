@@ -5,14 +5,21 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodels:SelectSortingDefinitionViewModel}"
       d:DesignHeight="150"
       d:DesignWidth="350"
       mc:Ignorable="d">
   <Grid.Resources>
-    <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
-    <converters:SortDirectionConverter x:Key="SortDirectionConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
+      <converters:SortDirectionConverter x:Key="SortDirectionConverter" />
+    </ResourceDictionary>
   </Grid.Resources>
   <Grid.ColumnDefinitions>
     <ColumnDefinition Width="Auto" />

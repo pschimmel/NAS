@@ -6,12 +6,20 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:model="clr-namespace:NAS.Models.Enums;assembly=NAS.Models"
       xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
-      xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:EditSchedulingSettingsViewModel}"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:EditSchedulingSettingsViewModel}"
       d:DesignHeight="300"
       d:DesignWidth="300"
       mc:Ignorable="d">
   <Grid.Resources>
-    <converters:EnumToNameConverter x:Key="EnumNameConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:EnumToNameConverter x:Key="EnumNameConverter" />
+    </ResourceDictionary>
   </Grid.Resources>
   <Grid.RowDefinitions>
     <RowDefinition Height="Auto" />

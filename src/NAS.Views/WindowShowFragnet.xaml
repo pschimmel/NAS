@@ -12,6 +12,7 @@
   <Window.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
         <ui:SharedResourceDictionary Source="pack://application:,,,/ES.Wpf;Component/Styles/OfficeSlider.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

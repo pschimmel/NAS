@@ -19,8 +19,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
       </ResourceDictionary.MergedDictionaries>
-      <BoolToVisibilityConverter x:Key="VisibilityConverter" />
-      <InverseBoolToVisibilityConverter x:Key="InverseVisibilityConverter" />
+
       <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
       <toolConverters:ColorToStringConverter x:Key="ColorConverter" />
     </ResourceDictionary>

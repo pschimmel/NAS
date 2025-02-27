@@ -4,6 +4,7 @@
                     xmlns:toolsConverters="clr-namespace:ES.Tools.Converters;assembly=ES.Tools">
   <toolsConverters:NegationConverter x:Key="NegationConverter" />
   <converters:DateConverter x:Key="DateConverter" />
+  <converters:CurrencyConverter x:Key="CurrencyConverter" />
   <toolsConverters:InverseBooleanToVisibilityConverter x:Key="InverseVisibilityConverter" />
   <toolsConverters:TextTrimmingConverter x:Key="TextTrimConverter" />
   <toolsConverters:IsNotNullConverter x:Key="IsNotNullConverter" />

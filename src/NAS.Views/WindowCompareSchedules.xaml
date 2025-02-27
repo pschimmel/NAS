@@ -3,12 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
         Title="{x:Static resx:NASResources.Comparison}"
         Width="450"
         Height="300"
         Icon="pack://application:,,,/NAS.Views;component/Images/Compare.png"
         ShowInTaskbar="False"
         WindowStartupLocation="CenterScreen">
+  <Window.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />

@@ -5,6 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+        xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
         Title="{x:Static resx:NASResources.PleaseSelectProperty}"
         Width="343"
         Height="120"
@@ -13,7 +14,12 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
   <Window.Resources>
-    <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <converters:ActivityPropertyConverter x:Key="ActivityPropertyConverter" />
+    </ResourceDictionary>
   </Window.Resources>
   <Grid>
     <Grid.RowDefinitions>

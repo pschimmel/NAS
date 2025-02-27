@@ -4,11 +4,18 @@
       xmlns:converters="clr-namespace:NAS.Views.Converters"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
       xmlns:viewmodel="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
       d:DataContext="{d:DesignInstance Type=viewmodel:SelectResourceViewModel}"
       mc:Ignorable="d">
   <Grid.Resources>
-    <converters:ResourceToImageConverter x:Key="ResourceToImageConverter" />
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <converters:ResourceToImageConverter x:Key="ResourceToImageConverter" />
+    </ResourceDictionary>
   </Grid.Resources>
   <ListBox Margin="2"
            IsSynchronizedWithCurrentItem="True"
