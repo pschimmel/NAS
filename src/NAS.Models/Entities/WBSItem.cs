@@ -4,10 +4,16 @@ namespace NAS.Models.Entities
 {
   public class WBSItem : NASObject, IComparable, IComparable<WBSItem>
   {
+    #region Fields
+
     private string _number;
     private string _name;
     private int _order;
     private WBSItem _parent;
+
+    #endregion
+
+    #region Constructors
 
     public WBSItem(WBSItem parent = null)
     {
@@ -32,6 +38,10 @@ namespace NAS.Models.Entities
         }
       };
     }
+
+    #endregion
+
+    #region Properties
 
     public string Number
     {
@@ -103,6 +113,10 @@ namespace NAS.Models.Entities
       }
     }
 
+    #endregion
+
+    #region Private Methods
+
     private string GetFullNumber()
     {
       if (Parent == null)
@@ -114,15 +128,10 @@ namespace NAS.Models.Entities
       return string.IsNullOrWhiteSpace(parentNumber) ? $" .{Number}" : $"{parentNumber}.{Number}";
     }
 
-    /// <summary>
-    /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the _sort _order as the other object.
-    /// </summary>
-    /// <param _number="obj">An object to compare with this instance.</param>
-    /// <returns>
-    /// A value that indicates the relative _order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance is less than <paramref _number="obj"/>. Zero This instance is equal to <paramref _number="obj"/>. Greater than zero This instance is greater than <paramref _number="obj"/>.
-    /// </returns>
-    /// <exception cref="T:System.ArgumentException">
-    ///   <paramref _number="obj"/> is not the same type as this instance. </exception>
+    #endregion
+
+    #region Public Methods
+
     int IComparable.CompareTo(object obj)
     {
       return obj is not WBSItem other ? -1 : CompareTo(other);
@@ -143,13 +152,6 @@ namespace NAS.Models.Entities
       return 7 ^ FullName.GetHashCode();
     }
 
-    /// <summary>
-    /// Determines whether the specified activity belongs to the WBS Item.
-    /// </summary>
-    /// <param _number="a">A.</param>
-    /// <returns>
-    ///   <c>true</c> if the specified activity belongs to the WBS Item; otherwise, <c>false</c>.
-    /// </returns>
     public bool ContainsItem(Activity a)
     {
       if (a.WBSItem == this)
@@ -167,12 +169,6 @@ namespace NAS.Models.Entities
       return false;
     }
 
-    /// <summary>
-    /// Returns a <see cref="string" /> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="string" /> that represents this instance.
-    /// </returns>
     public override string ToString()
     {
       return FullName;
@@ -207,5 +203,25 @@ namespace NAS.Models.Entities
     {
       return left is null ? right is null : left.CompareTo(right) >= 0;
     }
+
+    #endregion
+
+    #region ICloneable
+
+    public WBSItem Clone()
+    {
+      var clone = new WBSItem();
+
+      foreach (var child in Children)
+      {
+        var childClone = child.Clone();
+        childClone.Parent = clone;
+        clone.Children.Add(clone);
+      }
+
+      return clone;
+    }
+
+    #endregion
   }
 }

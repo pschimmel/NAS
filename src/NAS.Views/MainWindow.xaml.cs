@@ -35,7 +35,7 @@ namespace NAS.Views
     private void MainWindow_Loaded(object sender, RoutedEventArgs e)
     {
       // WPF Bug Workaround: while we have no WPF window open we can`t show MessageBox.
-      var dummyWindow = new Window { AllowsTransparency = true, Background = Brushes.Transparent, WindowStyle = WindowStyle.None, Width = 1, Height = 1, ShowInTaskbar = false, WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen };
+      var dummyWindow = new Window { AllowsTransparency = true, Background = Brushes.Transparent, WindowStyle = WindowStyle.None, Width = 1, Height = 1, ShowInTaskbar = false, WindowStartupLocation = WindowStartupLocation.CenterScreen };
       dummyWindow.Show();
 
       MainViewModel viewModel = null;

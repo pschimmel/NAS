@@ -2,19 +2,19 @@
 {
   public class MaterialResource : Resource
   {
-    private string _unit;
+    public MaterialResource()
+    { }
 
-    public string Unit
+    public MaterialResource(MaterialResource other)
     {
-      get => _unit;
-      set
-      {
-        if (_unit != value)
-        {
-          _unit = value;
-          OnPropertyChanged(nameof(Unit));
-        }
-      }
+      Unit = other.Unit;
+    }
+
+    public string Unit { get; set; }
+
+    public override Resource Clone()
+    {
+      return new MaterialResource(this);
     }
   }
 }

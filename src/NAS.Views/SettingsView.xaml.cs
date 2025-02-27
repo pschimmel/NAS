@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for SettingsView.xaml
   /// </summary>
-  public partial class SettingsView : Grid, IDialogContentView
+  public partial class SettingsView:IDialogContentView
   {
     public SettingsView()
     {

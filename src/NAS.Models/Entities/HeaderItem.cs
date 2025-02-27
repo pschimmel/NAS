@@ -1,15 +1,13 @@
-﻿using NAS.Models.Base;
-
-namespace NAS.Models.Entities
+﻿namespace NAS.Models.Entities
 {
-  public class HeaderItem : NASObject, IPrintLayoutItem, IClonable<HeaderItem>
+  public class HeaderItem : NASObject, IPrintLayoutItem
   {
     public HeaderItem()
     {
       Column = 0;
     }
 
-    public HeaderItem(HeaderItem other)
+    private HeaderItem(HeaderItem other)
     {
       Column = other.Column;
       Definition = other.Definition;

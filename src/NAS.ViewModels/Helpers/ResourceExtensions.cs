@@ -15,7 +15,11 @@ namespace NAS.ViewModels.Helpers
         {
           if (day >= a.StartDate && day <= a.FinishDate && (resource is CalendarResource || a.Calendar.IsWorkDay(day)))
           {
-            result += a.ResourceAssignments.Where(x => x.Resource == resource).Sum(x => x.UnitsPerDay);
+            var assignment = schedule.ResourceAssignments.Where(x => x.Activity == a && x.Resource == resource);
+            if (assignment.Any())
+            {
+              result += assignment.Sum(x => x.UnitsPerDay);
+            }
           }
         }
       }
@@ -32,7 +36,8 @@ namespace NAS.ViewModels.Helpers
         {
           if (day >= a.StartDate && day <= a.FinishDate && (resource is CalendarResource || a.Calendar.IsWorkDay(day)))
           {
-            foreach (var association in a.ResourceAssignments.Where(x => x.Resource == resource))
+            var resourceAssignments = schedule.ResourceAssignments.Where(x => x.Activity == a && x.Resource == resource);
+            foreach (var association in resourceAssignments)
             {
               if (resource is CalendarResource && Math.Round((a.FinishDate - a.StartDate).TotalDays) > 0)
               {
@@ -59,7 +64,9 @@ namespace NAS.ViewModels.Helpers
         {
           if (day >= a.StartDate && day <= a.FinishDate && (resource is CalendarResource || a.Calendar.IsWorkDay(day)))
           {
-            foreach (var association in a.ResourceAssignments.Where(x => x.Resource == resource))
+            var resourceAssignments = schedule.ResourceAssignments.Where(x => x.Activity == a && x.Resource == resource);
+
+            foreach (var association in resourceAssignments)
             {
               result += association.Resource.CostsPerUnit * Convert.ToDecimal(association.UnitsPerDay);
               if (resource is CalendarResource && a.IsFinished && Math.Round((a.FinishDate - a.StartDate).TotalDays) > 0)
@@ -87,7 +94,9 @@ namespace NAS.ViewModels.Helpers
         {
           if (day >= a.EarlyStartDate && day <= a.EarlyFinishDate && (resource is CalendarResource || a.Calendar.IsWorkDay(day)))
           {
-            foreach (var association in a.ResourceAssignments.Where(x => x.Resource == resource))
+            var resourceAssignments = schedule.ResourceAssignments.Where(x => x.Activity == a && x.Resource == resource);
+
+            foreach (var association in resourceAssignments)
             {
               result += association.Resource.CostsPerUnit * Convert.ToDecimal(association.UnitsPerDay);
               if (resource is CalendarResource && Math.Round((a.EarlyFinishDate - a.LateFinishDate).TotalDays) > 0)

@@ -25,7 +25,7 @@ namespace NAS.ViewModels.Helpers
       //using var fastReport = new FastReport.Report();
       //fastReport.Load(fileName);
 
-      //if (RegisterData(_schedule, fastReport) && fastReport.Prepare())
+      //if (RegisterData(_scheduleVM, fastReport) && fastReport.Prepare())
       {
         //using (var reportSettings = new FastReport.EnvironmentSettings())
         //{
@@ -65,7 +65,7 @@ namespace NAS.ViewModels.Helpers
       //var fastReport = FastReport.Report.FromFile(fileName);
       //string oldData = fastReport.SaveToString();
 
-      //if (!RegisterData(_schedule, fastReport))
+      //if (!RegisterData(_scheduleVM, fastReport))
       //{
       //  UserNotificationService.Instance.Error(NASResources.MessageErrorPreparingReport);
       //  return false;

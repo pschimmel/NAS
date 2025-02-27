@@ -4,8 +4,13 @@
   {
     private double? _percent;
 
-    public Inhibition(Activity activity) : base(activity)
+    public Inhibition() : base()
     { }
+
+    protected Inhibition(Inhibition other) : base(other)
+    {
+      _percent = other._percent;
+    }
 
     public double? Percent
     {
@@ -18,6 +23,11 @@
           OnPropertyChanged(nameof(Percent));
         }
       }
+    }
+
+    public override Distortion Clone()
+    {
+      return new Inhibition(this);
     }
   }
 }

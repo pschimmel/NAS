@@ -214,7 +214,7 @@ namespace NAS.ViewModels
 
     private void CopyCalendar()
     {
-      var newCalendar = new Calendar(CurrentCalendar);
+      var newCalendar = CurrentCalendar.Clone();
       _schedule.Calendars.Add(newCalendar);
       CurrentCalendar = newCalendar;
     }

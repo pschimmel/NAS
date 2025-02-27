@@ -1,11 +1,16 @@
 ﻿namespace NAS.Models.Entities
 {
-  public partial class Delay : Distortion
+  public class Delay : Distortion
   {
     private int? _days;
 
-    public Delay(Activity activity) : base(activity)
+    public Delay() : base()
     { }
+
+    protected Delay(Delay other) : base(other)
+    {
+      _days = other._days;
+    }
 
     public int? Days
     {
@@ -18,6 +23,11 @@
           OnPropertyChanged(nameof(Days));
         }
       }
+    }
+
+    public override Distortion Clone()
+    {
+      return new Delay(this);
     }
   }
 }

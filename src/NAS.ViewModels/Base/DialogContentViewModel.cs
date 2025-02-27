@@ -36,6 +36,5 @@
     protected virtual void OnApply() { }
 
     #endregion
-
   }
 }

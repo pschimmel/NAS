@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for SelectFilterDefinitionView.xaml
   /// </summary>
-  public partial class SelectFilterDefinitionView : Grid, IDialogContentView
+  public partial class SelectFilterDefinitionView:IDialogContentView
   {
     public SelectFilterDefinitionView()
     {

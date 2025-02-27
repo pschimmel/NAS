@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for SelectBaselineView.xaml
   /// </summary>
-  public partial class SelectBaselineView : Grid, IDialogContentView
+  public partial class SelectBaselineView:IDialogContentView
   {
     public SelectBaselineView()
     {

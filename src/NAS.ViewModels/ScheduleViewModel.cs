@@ -103,7 +103,7 @@ namespace NAS.ViewModels
 
       foreach (var activity in schedule.Activities)
       {
-        Activities.Add(new ActivityViewModel(activity));
+        Activities.Add(new ActivityViewModel(schedule, activity));
       }
 
       foreach (var relationship in schedule.Relationships)
@@ -119,7 +119,7 @@ namespace NAS.ViewModels
 
     private void Schedule_ActivityRemoved(object sender, ItemEventArgs<Activity> e)
     {
-      Activities.Add(new ActivityViewModel(e.Item));
+      Activities.Add(new ActivityViewModel(Schedule, e.Item));
     }
 
     private void Schedule_ActivityAdded(object sender, ItemEventArgs<Activity> e)
@@ -138,7 +138,7 @@ namespace NAS.ViewModels
     public override HelpTopic HelpTopicKey => HelpTopic.New;
 
     /// <summary>
-    /// Gets the _schedule.
+    /// Gets the _scheduleVM.
     /// </summary>
     public Schedule Schedule { get; }
 
@@ -416,7 +416,7 @@ namespace NAS.ViewModels
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       var activity = Schedule.AddActivity(param?.ToString() == "Fixed");
-      var newActivityVM = new ActivityViewModel(activity);
+      var newActivityVM = new ActivityViewModel(Schedule, activity);
       Activities.Add(newActivityVM);
       OnActivityAdded(newActivityVM);
       CurrentActivity = newActivityVM;
@@ -437,7 +437,7 @@ namespace NAS.ViewModels
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
       var milestone = Schedule.AddMilestone(param?.ToString() == "Fixed");
-      var newActivityVM = new ActivityViewModel(milestone);
+      var newActivityVM = new ActivityViewModel(Schedule, milestone);
       Activities.Add(newActivityVM);
       CurrentActivity = newActivityVM;
       OnActivityAdded(newActivityVM);
@@ -472,7 +472,7 @@ namespace NAS.ViewModels
         OnActivityDeleted(activityVM);
         if (ActiveLayout.LayoutType == LayoutType.PERT)
         {
-          var view = ES.Tools.Core.MVVM.ViewModelExtensions.GetView(Activities);
+          var view = ViewModelExtensions.GetView(Activities);
           CurrentActivity = view.CurrentItem as ActivityViewModel;
         }
       });
@@ -491,7 +491,7 @@ namespace NAS.ViewModels
 
     private void EditActivity()
     {
-      var vm = new EditActivityViewModel(CurrentActivity.Activity);
+      var vm = new EditActivityViewModel(Schedule, CurrentActivity.Activity);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         SortFilterAndGroup(Activities);
@@ -532,7 +532,7 @@ namespace NAS.ViewModels
         relationship.Lag = vm.Lag;
       }
 
-      if (!Scheduler.CheckForLoops(Activities.Select(x => x.Activity).ToList(), [.. Schedule.Relationships]))
+      if (!new Scheduler(Schedule).CheckForLoops(Activities.Select(x => x.Activity).ToList(), [.. Schedule.Relationships]))
       {
         UserNotificationService.Instance.Error(NASResources.MessageNetworkLoopError);
         Schedule.RemoveRelationship(relationship);
@@ -606,7 +606,7 @@ namespace NAS.ViewModels
 
     private void EditLogic()
     {
-      using var vm = new EditLogicViewModel(CurrentActivity.Activity);
+      using var vm = new EditLogicViewModel(Schedule, CurrentActivity.Activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -786,7 +786,7 @@ namespace NAS.ViewModels
       using var vm = new SelectResourceViewModel(Schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
       {
-        var vr = new VisibleResource(_ActiveLayout.Layout, vm.SelectedResource);
+        var vr = new VisibleResource(vm.SelectedResource);
         Resources.Add(new ResourceViewModel(vr, this, CloseResourceCommand));
       }
     }
@@ -895,9 +895,7 @@ namespace NAS.ViewModels
       var vm = new GetTextViewModel(NASResources.CopyLayout, NASResources.Name, ActiveLayout.Name + " (" + NASResources.Copy + ")");
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        var newLayout = ActiveLayout.LayoutType == LayoutType.Gantt
-                        ? new GanttLayout(ActiveLayout.Layout as GanttLayout)
-                        : (Layout)new PERTLayout(ActiveLayout.Layout as PERTLayout);
+        var newLayout = ActiveLayout.Layout.Clone();
         newLayout.Name = vm.Text;
         AddLayoutVM(newLayout, true);
       }
@@ -997,7 +995,7 @@ namespace NAS.ViewModels
 
     private void EditBaselines()
     {
-      using var vm = new BaselinesViewModel(this);
+      using var vm = new EditBaselinesViewModel(this.Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -1079,8 +1077,8 @@ namespace NAS.ViewModels
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Compare);
       string headline = NASResources.DistortionsCompared;
-      var p1 = new Schedule(Schedule);
-      var p2 = new Schedule(Schedule);
+      var p1 = Schedule.Clone();
+      var p2 = Schedule.Clone();
       p1.Fragnets.ToList().ForEach(x => x.IsVisible = true);
       p2.Fragnets.ToList().ForEach(x => x.IsVisible = true);
       foreach (var a in p1.Activities)
@@ -1195,13 +1193,13 @@ namespace NAS.ViewModels
     private void SplitActivity()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Start);
-      var newActivity = CurrentActivity.Activity.SplitActivity();
-      Activities.Add(new ActivityViewModel(newActivity));
+      var newActivity = Schedule.SplitActivity(CurrentActivity.Activity);
+      Activities.Add(new ActivityViewModel(Schedule, newActivity));
     }
 
     private bool CanSplitActivity()
     {
-      return !_isBusy && CurrentActivity != null && CurrentActivity.Activity.CanSplit();
+      return !_isBusy && CurrentActivity != null && Schedule.CanSplit(CurrentActivity.Activity);
     }
 
     #endregion
@@ -1213,12 +1211,12 @@ namespace NAS.ViewModels
     private void CombineActivities()
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Activity);
-      CurrentActivity.Activity.CombineActivities();
+      Schedule.CombineActivities(CurrentActivity.Activity);
     }
 
     private bool CanCombineActivities()
     {
-      return !_isBusy && CurrentActivity != null && CurrentActivity.Activity.CanCombineActivity();
+      return !_isBusy && CurrentActivity != null && Schedule.CanCombineActivity(CurrentActivity.Activity);
     }
 
     #endregion
@@ -1234,8 +1232,8 @@ namespace NAS.ViewModels
       {
         var activityVM = CurrentActivity;
         var activity = CurrentActivity.Activity;
-        var newMilestone = activity.ChangeToMilestone();
-        var newMilestoneVM = new ActivityViewModel(newMilestone);
+        var newMilestone = Schedule.ChangeToMilestone(activity);
+        var newMilestoneVM = new ActivityViewModel(Schedule, newMilestone);
         Activities.Remove(activityVM);
         Activities.Add(newMilestoneVM);
         OnActivityDeleted(activityVM);
@@ -1262,8 +1260,8 @@ namespace NAS.ViewModels
       {
         var milestoneVM = CurrentActivity;
         var milestone = CurrentActivity.Activity as Milestone;
-        var newActivity = milestone.ChangeToActivity();
-        var newActivityVM = new ActivityViewModel(newActivity);
+        var newActivity = Schedule.ChangeToActivity(milestone);
+        var newActivityVM = new ActivityViewModel(Schedule, newActivity);
         Activities.Remove(milestoneVM);
         Activities.Add(newActivityVM);
         OnActivityDeleted(milestoneVM);

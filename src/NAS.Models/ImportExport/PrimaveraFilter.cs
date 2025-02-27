@@ -217,11 +217,11 @@ namespace NAS.Models.ImportExport
             string type = taskFragment.GetItem("task_type", i);
             if (type is "TT_Mile" or "TT_FinMile")
             {
-              a = Models.Entities.Activity.NewMilestone(schedule);
+              a = new Milestone();
             }
             else if (type == "TT_Task")
             {
-              a = Models.Entities.Activity.NewActivity(schedule);
+              a = new Entities.Activity();
             }
             else
             {

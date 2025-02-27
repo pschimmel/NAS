@@ -22,7 +22,7 @@ namespace NAS
       var splashScreen = new SplashScreen("Images/Splash.png");
       splashScreen.Show(true);
 
-      var mainWindow  = new MainWindow();
+      var mainWindow = new MainWindow();
       RegisterViews();
       RegisterNotificationTargets();
       mainWindow.Show();
@@ -62,6 +62,7 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<SelectGroupingDefinitionViewModel, SelectGroupingDefinitionView>();
       ViewFactory.Instance.RegisterDialog<EditFiltersViewModel, EditFiltersView>();
       ViewFactory.Instance.RegisterDialog<SelectFilterDefinitionViewModel, SelectFilterDefinitionView>();
+      ViewFactory.Instance.RegisterDialog<EditBaselinesViewModel, EditBaselinesView>();
     }
 
     private static void RegisterNotificationTargets()

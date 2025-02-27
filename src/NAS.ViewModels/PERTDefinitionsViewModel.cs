@@ -13,10 +13,10 @@ namespace NAS.ViewModels
   {
     #region Fields
 
-    private readonly Schedule schedule;
-    private int tabIndex;
-    private PERTDefinition currentGlobalPertDefinition;
-    private PERTDefinition currentProjectPertDefinition;
+    private readonly Schedule _schedule;
+    private int _tabIndex;
+    private PERTDefinition _currentGlobalPertDefinition;
+    private PERTDefinition _currentProjectPertDefinition;
 
     #endregion
 
@@ -25,7 +25,7 @@ namespace NAS.ViewModels
     public PERTDefinitionsViewModel(Schedule schedule)
       : base()
     {
-      this.schedule = schedule;
+      _schedule = schedule;
       GlobalPERTDefinitions = new ObservableCollection<PERTDefinition>(GlobalDataController.PERTDefinitions);
       ProjectPERTDefinitions = new ObservableCollection<PERTDefinition>(schedule.PERTDefinitions);
       AddGlobalPERTDefinitionCommand = new ActionCommand(AddGlobalPERTDefinitionCommandExecute);
@@ -46,15 +46,15 @@ namespace NAS.ViewModels
 
     public PERTDefinition CurrentGlobalPERTDefinition
     {
-      get => currentGlobalPertDefinition;
+      get => _currentGlobalPertDefinition;
       set
       {
-        if (currentGlobalPertDefinition != value)
+        if (_currentGlobalPertDefinition != value)
         {
-          currentGlobalPertDefinition = value;
-          if (currentGlobalPertDefinition != null)
+          _currentGlobalPertDefinition = value;
+          if (_currentGlobalPertDefinition != null)
           {
-            currentProjectPertDefinition = null;
+            _currentProjectPertDefinition = null;
           }
 
           OnPropertyChanged(nameof(CurrentGlobalPERTDefinition));
@@ -68,15 +68,15 @@ namespace NAS.ViewModels
 
     public PERTDefinition CurrentProjectPERTDefinition
     {
-      get => currentProjectPertDefinition;
+      get => _currentProjectPertDefinition;
       set
       {
-        if (currentProjectPertDefinition != value)
+        if (_currentProjectPertDefinition != value)
         {
-          currentProjectPertDefinition = value;
-          if (currentProjectPertDefinition != null)
+          _currentProjectPertDefinition = value;
+          if (_currentProjectPertDefinition != null)
           {
-            currentGlobalPertDefinition = null;
+            _currentGlobalPertDefinition = null;
           }
 
           OnPropertyChanged(nameof(CurrentGlobalPERTDefinition));
@@ -88,13 +88,13 @@ namespace NAS.ViewModels
 
     public int TabIndex
     {
-      get => tabIndex;
+      get => _tabIndex;
       set
       {
-        if (tabIndex != value)
+        if (_tabIndex != value)
         {
-          tabIndex = value;
-          OnPropertyChanged(nameof(tabIndex));
+          _tabIndex = value;
+          OnPropertyChanged(nameof(_tabIndex));
         }
       }
     }
@@ -261,7 +261,7 @@ namespace NAS.ViewModels
       GlobalDataController.PERTDefinitions.Clear();
       GlobalDataController.PERTDefinitions.AddRange(GlobalPERTDefinitions);
       GlobalDataController.SavePERTDefinitions();
-      schedule.PERTDefinitions.Replace(ProjectPERTDefinitions);
+      _schedule.PERTDefinitions.Replace(ProjectPERTDefinitions);
     }
 
 

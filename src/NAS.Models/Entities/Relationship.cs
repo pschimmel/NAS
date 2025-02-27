@@ -50,5 +50,14 @@ namespace NAS.Models.Entities
     public bool IsDriving { get; set; }
 
     public bool IsCritical { get; set; }
+
+    public Relationship Clone(Activity activity1, Activity activity2)
+    {
+      return new Relationship(activity1, activity2, RelationshipType, Lag)
+      {
+        IsDriving = IsDriving,
+        IsCritical = IsCritical
+      };
+    }
   }
 }

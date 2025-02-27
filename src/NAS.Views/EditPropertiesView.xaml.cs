@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditPropertiesView.xaml
   /// </summary>
-  public partial class EditPropertiesView : Grid, IDialogContentView
+  public partial class EditPropertiesView:IDialogContentView
   {
     public EditPropertiesView()
     {

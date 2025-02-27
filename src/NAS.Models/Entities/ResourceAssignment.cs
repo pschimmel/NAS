@@ -109,5 +109,16 @@
     {
       return Resource == null ? string.Empty : Resource.ToString();
     }
+
+    public ResourceAssignment Clone(Activity activity, Resource resource)
+    {
+      var resourceAssignment = new ResourceAssignment(activity, resource)
+      {
+        Budget = Budget,
+        FixedCosts = FixedCosts,
+        UnitsPerDay = UnitsPerDay
+      };
+      return resourceAssignment;
+    }
   }
 }

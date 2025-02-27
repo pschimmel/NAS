@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using NAS.ViewModels.Base;
+﻿using NAS.ViewModels.Base;
 
 namespace NAS.Views
 {
   /// <summary>
   /// Interaction logic for EditFiltersView.xaml
   /// </summary>
-  public partial class EditFiltersView : Grid, IDialogContentView
+  public partial class EditFiltersView : IDialogContentView
   {
     public EditFiltersView()
     {

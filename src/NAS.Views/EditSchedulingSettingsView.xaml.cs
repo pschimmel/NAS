@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditSchedulingSettingsView.xaml
   /// </summary>
-  public partial class EditSchedulingSettingsView : Grid, IDialogContentView
+  public partial class EditSchedulingSettingsView:IDialogContentView
   {
     public EditSchedulingSettingsView()
     {

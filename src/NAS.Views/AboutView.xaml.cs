@@ -8,7 +8,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for AboutView.xaml
   /// </summary>
-  public partial class AboutView : Grid, IDialogContentView
+  public partial class AboutView:IDialogContentView
   {
     public AboutView()
     {

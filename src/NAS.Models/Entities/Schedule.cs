@@ -1,6 +1,6 @@
-﻿using System.Collections.Immutable;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Data;
 using System.Diagnostics;
 using NAS.Models.Base;
 using NAS.Models.Enums;
@@ -58,9 +58,137 @@ namespace NAS.Models.Entities
       }
     }
 
-    public Schedule(Schedule schedule)
+    private Schedule(Schedule other)
     {
-      CopySchedule(schedule, this);
+      var clonedCalendars = new Dictionary<Calendar, Calendar>();
+      var clonedFragnets = new Dictionary<Fragnet, Fragnet>();
+      var clonedWBSItems = new Dictionary<WBSItem, WBSItem>();
+      var clonedActivities = new Dictionary<Activity, Activity>();
+      var clonedResources = new Dictionary<Resource, Resource>();
+
+      Func<Calendar, Calendar> cloneCalendar = null;
+      cloneCalendar = new Func<Calendar, Calendar>(calendar =>
+      {
+        if (clonedCalendars.TryGetValue(calendar, out Calendar alreadyClonedClone))
+        {
+          return alreadyClonedClone;
+        }
+        else if (calendar.BaseCalendar == null)
+        {
+          var clone = calendar.Clone();
+          clonedCalendars.Add(calendar, clone);
+          return clone;
+        }
+        else
+        {
+          if (!clonedCalendars.TryGetValue(calendar.BaseCalendar, out Calendar clonedBase))
+          {
+            clonedBase = cloneCalendar(calendar.BaseCalendar);
+            clonedCalendars.Add(calendar.BaseCalendar, clonedBase);
+          }
+          var clone = calendar.Clone(clonedBase);
+          clonedCalendars.Add(calendar, clone);
+          return clone;
+        }
+      });
+
+      foreach (var calendar in other.Calendars)
+      {
+        Calendars.Add(cloneCalendar(calendar));
+      }
+
+      foreach (var fragnet in other.Fragnets)
+      {
+        var clonedFragnet = fragnet.Clone();
+        Fragnets.Add(clonedFragnet);
+        clonedFragnets.Add(fragnet, clonedFragnet);
+      }
+
+      foreach (var resource in other.Resources)
+      {
+        var clonedResource = resource.Clone();
+        Resources.Add(clonedResource);
+        clonedResources.Add(resource, clonedResource);
+      }
+
+      WBSItem = other.WBSItem.Clone();
+
+      Action<WBSItem, WBSItem> addToClonedWBSItems = null;
+
+      addToClonedWBSItems = new Action<WBSItem, WBSItem>((item, clone) =>
+      {
+        clonedWBSItems.Add(item, clone);
+        foreach (var child in item.Children)
+        {
+          addToClonedWBSItems(child, clone.Children.First(x => x.Name == child.Name));
+        }
+      });
+
+      addToClonedWBSItems(other.WBSItem, WBSItem);
+
+      foreach (var activity in other.Activities)
+      {
+        var newActivity = activity.Clone();
+        clonedActivities.Add(activity, newActivity);
+        AddActivity(newActivity);
+
+        if (activity.Fragnet != null)
+        {
+          newActivity.Fragnet = clonedFragnets[activity.Fragnet];
+        }
+
+        if (activity.Calendar != null)
+        {
+          newActivity.Calendar = clonedCalendars[activity.Calendar];
+        }
+
+        if (WBSItem != null && activity.WBSItem != null)
+        {
+          newActivity.WBSItem = FindWBSItem(WBSItem, activity.WBSItem.Number);
+        }
+
+        foreach (var distortion in activity.Distortions)
+        {
+          Distortion newDistortion = distortion.Clone();
+
+          if (distortion.Fragnet != null)
+          {
+            if (!clonedFragnets.TryGetValue(distortion.Fragnet, out Fragnet clonedFragnet))
+            {
+              clonedFragnet = distortion.Fragnet.Clone();
+              clonedFragnets.Add(distortion.Fragnet, clonedFragnet);
+            }
+
+            newDistortion.Fragnet = clonedFragnet;
+          }
+        }
+      }
+
+      StartDate = other.StartDate;
+      DataDate = other.DataDate;
+      Description = other.Description;
+      EndDate = other.EndDate;
+      Name = other.Name;
+
+      foreach (var resourceAssignment in other.ResourceAssignments)
+      {
+        var activity = clonedActivities[resourceAssignment.Activity];
+        var resource = clonedResources[resourceAssignment.Resource];
+        ResourceAssignments.Add(resourceAssignment.Clone(activity, resource));
+      }
+
+      foreach (var relationship in other.Relationships)
+      {
+        var activity1 = clonedActivities[relationship.Activity1];
+        var activity2 = clonedActivities[relationship.Activity2];
+        AddRelationship(relationship.Clone(activity1, activity2));
+      }
+
+      foreach (var layout in other.Layouts)
+      {
+        var clonedLayout = layout.Clone(clonedResources);
+        Layouts.Add(clonedLayout);
+      }
     }
 
     #endregion
@@ -122,6 +250,8 @@ namespace NAS.Models.Entities
     public WBSItem WBSItem { get; set; }
 
     public IReadOnlyCollection<Relationship> Relationships => new ReadOnlyCollection<Relationship>(_relationships);
+
+    public ObservableCollection<ResourceAssignment> ResourceAssignments { get; set; } = new ObservableCollection<ResourceAssignment>();
 
     public SchedulingSettings SchedulingSettings { get; } = new SchedulingSettings();
 
@@ -265,7 +395,7 @@ namespace NAS.Models.Entities
 
     public Activity AddActivity(bool isFixed = false)
     {
-      var newActivity = new Activity(this, isFixed)
+      var newActivity = new Activity(isFixed)
       {
         Number = GetNewID(),
         Calendar = StandardCalendar,
@@ -280,12 +410,12 @@ namespace NAS.Models.Entities
 
     public void RemoveActivity(Activity activity)
     {
-      foreach (var item in activity.GetPreceedingRelationships().ToList())
+      foreach (var item in GetPreceedingRelationships(activity).ToList())
       {
         RemoveRelationship(item);
       }
 
-      foreach (var item in activity.GetSucceedingRelationships().ToList())
+      foreach (var item in GetSucceedingRelationships(activity).ToList())
       {
         RemoveRelationship(item);
       }
@@ -298,7 +428,7 @@ namespace NAS.Models.Entities
 
     public Milestone AddMilestone(bool isFixed = false)
     {
-      var newActivity = new Milestone(this, isFixed)
+      var newActivity = new Milestone(isFixed)
       {
         Number = GetNewID(),
         Calendar = StandardCalendar,
@@ -339,6 +469,205 @@ namespace NAS.Models.Entities
     {
       return GetSucceedingRelationships(activity).Select(x => x.Activity2);
     }
+
+    public IEnumerable<Activity> GetVisiblePredecessors(Activity activity)
+    {
+      return GetPredecessors(activity).Where(x => x.Fragnet == null || x.Fragnet.IsVisible);
+    }
+
+    public IEnumerable<Relationship> GetVisiblePreceedingRelationships(Activity activity)
+    {
+      var predecessors = GetVisiblePredecessors(activity);
+      return GetPreceedingRelationships(activity).Where(x => predecessors.Any(y => y.ID == x.Activity1.ID));
+    }
+
+    public int GetVisiblePredecessorCount(Activity activity)
+    {
+      return GetPredecessors(activity).Count(x => x.Fragnet == null || x.Fragnet.IsVisible);
+    }
+
+    public IEnumerable<Activity> GetVisibleSuccessors(Activity activity)
+    {
+      return GetSuccessors(activity).Where(x => x.Fragnet == null || x.Fragnet.IsVisible);
+    }
+
+    public IEnumerable<Relationship> GetVisibleSucceedingRelationships(Activity activity)
+    {
+      var successors = GetVisibleSuccessors(activity);
+      return GetSucceedingRelationships(activity).Where(x => successors.Any(y => y.ID == x.Activity2.ID));
+    }
+
+    public int GetVisibleSuccessorCount(Activity activity)
+    {
+      return GetSuccessors(activity).Count(x => x.Fragnet == null || x.Fragnet.IsVisible);
+    }
+
+    public static bool CanSplit(Activity activity)
+    {
+      return activity.ActivityType == ActivityType.Activity && activity.OriginalDuration > 1 && !activity.IsStarted;
+    }
+
+    /// <summary>
+    /// Splits an activity into two parts. Each resulting activity will have half of the duration of the original
+    /// activity and all features.
+    /// </summary>
+    public Activity SplitActivity(Activity activity)
+    {
+      if (!CanSplit(activity))
+      {
+        return null;
+      }
+
+      var newActivity = new Activity(activity.IsFixed)
+      {
+        Name = Name + NASResources.Copy,
+        OriginalDuration = activity.OriginalDuration / 2,
+        Calendar = activity.Calendar,
+        Fragnet = activity.Fragnet,
+        WBSItem = activity.WBSItem
+      };
+      activity.OriginalDuration -= newActivity.OriginalDuration;
+      AddActivity(newActivity);
+
+      // Move all successors of activity to new activity
+      foreach (var r in GetSucceedingRelationships(activity).ToList())
+      {
+        AddRelationship(newActivity, r.Activity2);
+        RemoveRelationship(r);
+      }
+
+      // Add default relationships between split activitiess
+      AddRelationship(activity, newActivity);
+      newActivity.EarlyStartDate = activity.Calendar.GetEndDate(activity.EarlyFinishDate, 2);
+      return newActivity;
+    }
+
+    /// <summary>
+    /// Checks if an activity can be combined with its following activity.
+    /// </summary>
+    public bool CanCombineActivity(Activity activity)
+    {
+      return activity.ActivityType == ActivityType.Activity && GetSuccessors(activity).Count(x => x.ActivityType == ActivityType.Activity) == 1;
+    }
+
+    /// <summary>
+    /// Combines two subsequent activites.
+    /// </summary>
+    public void CombineActivities(Activity activity)
+    {
+      var successor = GetSuccessors(activity).SingleOrDefault();
+      Debug.Assert(successor != null);
+
+      if (successor == null)
+      {
+        return;
+      }
+
+      foreach (var successorOfSuccessor in GetSuccessors(successor))
+      {
+        AddRelationship(activity, successorOfSuccessor);
+      }
+
+      foreach (var relationship in GetSucceedingRelationships(successor))
+      {
+        RemoveRelationship(relationship);
+      }
+
+      activity.OriginalDuration += successor.OriginalDuration;
+      RemoveActivity(successor);
+    }
+
+    public Milestone ChangeToMilestone(Activity activity)
+    {
+      if (activity is Milestone activityAsMilestone)
+        return activityAsMilestone;
+
+      Debug.Assert(activity.ActivityType == ActivityType.Activity);
+      var predecessors = GetPreceedingRelationships(activity).ToList();
+      var successors = GetSucceedingRelationships(activity).ToList();
+      var newMilestone = AddMilestone(activity.IsFixed);
+      newMilestone.Name = activity.Name;
+      newMilestone.Number = activity.Number;
+      newMilestone.Calendar = activity.Calendar;
+      newMilestone.Constraint = activity.Constraint;
+      newMilestone.ConstraintDate = activity.ConstraintDate;
+      newMilestone.CustomAttribute1 = activity.CustomAttribute1;
+      newMilestone.CustomAttribute2 = activity.CustomAttribute2;
+      newMilestone.CustomAttribute3 = activity.CustomAttribute3;
+      newMilestone.EarlyStartDate = activity.EarlyStartDate;
+      newMilestone.LateStartDate = activity.LateStartDate;
+      newMilestone.WBSItem = activity.WBSItem;
+      newMilestone.Fragnet = activity.Fragnet;
+      if (activity.PercentComplete == 100)
+      {
+        newMilestone.PercentComplete = 100;
+      }
+
+      foreach (var predecessor in predecessors)
+      {
+        var newRelationship = new Relationship(predecessor.Activity1, newMilestone)
+        {
+          RelationshipType = predecessor.RelationshipType,
+          Lag = predecessor.Lag
+        };
+
+        RemoveRelationship(predecessor);
+        AddRelationship(newRelationship);
+      }
+      foreach (var successor in successors)
+      {
+        var newRelationship = new Relationship(newMilestone, successor.Activity2)
+        {
+          RelationshipType = successor.RelationshipType,
+          Lag = successor.Lag
+        };
+
+        RemoveRelationship(successor);
+        AddRelationship(newRelationship);
+      }
+
+      return newMilestone;
+    }
+
+    public Activity ChangeToActivity(Milestone milestone)
+    {
+      var predecessors = GetPreceedingRelationships(milestone).ToList();
+      var successors = GetSucceedingRelationships(milestone).ToList();
+      var newActivity = AddActivity(milestone.IsFixed);
+      newActivity.Number = milestone.Number;
+      newActivity.Name = milestone.Name;
+      newActivity.Calendar = milestone.Calendar;
+      newActivity.Constraint = milestone.Constraint;
+      newActivity.ConstraintDate = milestone.ConstraintDate;
+      newActivity.Constraint = milestone.Constraint;
+      newActivity.CustomAttribute1 = milestone.CustomAttribute1;
+      newActivity.CustomAttribute2 = milestone.CustomAttribute2;
+      newActivity.CustomAttribute3 = milestone.CustomAttribute3;
+      newActivity.EarlyStartDate = milestone.EarlyStartDate;
+      newActivity.LateStartDate = milestone.LateStartDate;
+      newActivity.WBSItem = milestone.WBSItem;
+      newActivity.Fragnet = milestone.Fragnet;
+
+      if (milestone.PercentComplete == 100)
+      {
+        newActivity.PercentComplete = 100;
+      }
+
+      foreach (var predecessor in predecessors)
+      {
+        AddRelationship(predecessor.Activity1, newActivity, predecessor.RelationshipType).Lag = predecessor.Lag;
+        RemoveRelationship(predecessor);
+      }
+
+      foreach (var successor in successors)
+      {
+        AddRelationship(newActivity, successor.Activity2, successor.RelationshipType).Lag = successor.Lag;
+        RemoveRelationship(successor);
+      }
+
+      return newActivity;
+    }
+
 
     #endregion
 
@@ -426,7 +755,7 @@ namespace NAS.Models.Entities
 
     public bool CanRemoveCalendar(Calendar calendar)
     {
-      return !calendar.IsStandard && !Activities.Any(x => x.Schedule.ID == calendar.ID && x.Calendar.ID == calendar.ID);
+      return !calendar.IsStandard && !Activities.Any(x => x.Calendar.ID == calendar.ID);
     }
 
     #endregion
@@ -435,7 +764,7 @@ namespace NAS.Models.Entities
 
     public bool CanRemoveResource(Resource resource)
     {
-      return Activities.Any(x => x.ResourceAssignments.Any(x => x.Resource == resource));
+      return !ResourceAssignments.Any(x => x.Resource == resource);
     }
 
     #endregion
@@ -500,30 +829,7 @@ namespace NAS.Models.Entities
     }
 
     /// <summary>
-    /// Adds a schedule as baseline.
-    /// </summary>
-    public void AddBaseline(Schedule baseline, bool showInActiveLayout)
-    {
-      Baselines.Add(baseline);
-
-      if (showInActiveLayout)
-      {
-        ActiveLayout.VisibleBaselines.Add(new VisibleBaseline(baseline));
-      }
-    }
-
-    /// <summary>
-    /// Adds a copy of the current schedule as baseline to itself.
-    /// </summary>
-    public Schedule AddBaseline(bool showInActiveLayout)
-    {
-      var baseline = new Schedule(this);
-      AddBaseline(baseline, showInActiveLayout);
-      return baseline;
-    }
-
-    /// <summary>
-    /// Removes a baseline.
+    /// Removes activity baseline.
     /// </summary>
     public void RemoveBaseline(Schedule baseline)
     {
@@ -593,178 +899,6 @@ namespace NAS.Models.Entities
       return NewActivityPrefixDefault + id.ToString("0000");
     }
 
-    private static void CopySchedule(Schedule oldSchedule, Schedule newSchedule)
-    {
-      foreach (var c in oldSchedule.Calendars)
-      {
-        var newCalendar = new Calendar();
-        newSchedule.Calendars.Add(newCalendar);
-        newCalendar.Name = c.Name;
-        newCalendar.Sunday = c.Sunday;
-        newCalendar.Monday = c.Monday;
-        newCalendar.Tuesday = c.Tuesday;
-        newCalendar.Wednesday = c.Wednesday;
-        newCalendar.Thursday = c.Thursday;
-        newCalendar.Friday = c.Friday;
-        newCalendar.Saturday = c.Saturday;
-        newCalendar.IsStandard = c.IsStandard;
-        foreach (var h in c.Holidays)
-        {
-          newCalendar.Holidays.Add(new Holiday() { Date = h.Date });
-        }
-      }
-      foreach (var f in oldSchedule.Fragnets)
-      {
-        var newFragnet = new Fragnet();
-        newSchedule.Fragnets.Add(newFragnet);
-        newFragnet.Name = f.Name;
-        newFragnet.Approved = f.Approved;
-        newFragnet.Description = f.Description;
-        newFragnet.Number = f.Number;
-        newFragnet.Identified = f.Identified;
-        newFragnet.IsDisputable = f.IsDisputable;
-        newFragnet.Submitted = f.Submitted;
-        newFragnet.IsVisible = f.IsVisible;
-      }
-      foreach (var r in oldSchedule.Resources)
-      {
-        Resource newResource;
-        if (r is MaterialResource)
-        {
-          newResource = new MaterialResource();
-          (newResource as MaterialResource).Unit = (r as MaterialResource).Unit;
-        }
-        else
-        {
-          newResource = r is WorkResource ? new WorkResource() : new CalendarResource();
-        }
-
-        newResource.Name = r.Name;
-        newResource.Limit = r.Limit;
-        newResource.CostsPerUnit = r.CostsPerUnit;
-        newSchedule.Resources.Add(newResource);
-      }
-      CopyWBSItems(oldSchedule.WBSItem, newSchedule.WBSItem);
-      foreach (var a in oldSchedule.Activities)
-      {
-        Activity newItem = null;
-        if (a.ActivityType == ActivityType.Milestone)
-        {
-          newItem = a.IsFixed ? Activity.NewFixedMilestone(newSchedule) : Activity.NewMilestone(newSchedule);
-        }
-        else // a is activity
-        {
-          newItem = a.IsFixed ? Activity.NewFixedActivity(newSchedule) : Activity.NewActivity(newSchedule);
-          newItem.OriginalDuration = a.OriginalDuration;
-        }
-        newItem.Name = a.Name;
-        newSchedule.AddActivity(newItem);
-        if (a.Calendar != null)
-        {
-          newItem.Calendar = newSchedule.Calendars.ToList()[oldSchedule.Calendars.ToList().IndexOf(a.Calendar)];
-        }
-
-        newItem.ConstraintDate = a.ConstraintDate;
-        newItem.EarlyStartDate = a.EarlyStartDate;
-        newItem.LateStartDate = a.LateStartDate;
-        newItem.EarlyFinishDate = a.EarlyFinishDate;
-        newItem.LateFinishDate = a.LateFinishDate;
-        newItem.ActualFinishDate = a.ActualFinishDate;
-        newItem.ActualStartDate = a.ActualStartDate;
-        newItem.Constraint = a.Constraint;
-        if (a.Fragnet != null)
-        {
-          newItem.Fragnet = newSchedule.Fragnets.ToList()[oldSchedule.Fragnets.ToList().IndexOf(a.Fragnet)];
-        }
-
-        newItem.FreeFloat = a.FreeFloat;
-        newItem.Number = a.Number;
-        newItem.PercentComplete = a.PercentComplete;
-        newItem.TotalFloat = a.TotalFloat;
-        if (newSchedule.WBSItem != null && a.WBSItem != null)
-        {
-          newItem.WBSItem = FindWBSItem(newSchedule.WBSItem, a.WBSItem.Number);
-        }
-
-        if (a.ResourceAssignments != null)
-        {
-          foreach (var ra in a.ResourceAssignments)
-          {
-            var r = newSchedule.Resources.ToList()[oldSchedule.Resources.ToList().IndexOf(ra.Resource)];
-            var newResourceAssignment = new ResourceAssignment(newItem, r)
-            {
-              Budget = ra.Budget,
-              FixedCosts = ra.FixedCosts,
-              UnitsPerDay = ra.UnitsPerDay
-            };
-            newItem.ResourceAssignments.Add(newResourceAssignment);
-          }
-        }
-        if (a.Distortions != null)
-        {
-          foreach (var d in a.Distortions)
-          {
-            Distortion newDistortion = null;
-            if (d is Delay)
-            {
-              newDistortion = new Delay(newItem);
-              (newDistortion as Delay).Days = (d as Delay).Days;
-            }
-            else if (d is Interruption)
-            {
-              newDistortion = new Interruption(newItem);
-              (newDistortion as Interruption).Days = (d as Interruption).Days;
-              (newDistortion as Interruption).Start = (d as Interruption).Start;
-            }
-            else if (d is Inhibition)
-            {
-              newDistortion = new Inhibition(newItem);
-              (newDistortion as Inhibition).Percent = (d as Inhibition).Percent;
-            }
-            else if (d is Extension)
-            {
-              newDistortion = new Extension(newItem);
-              (newDistortion as Extension).Days = (d as Extension).Days;
-            }
-            else if (d is Reduction)
-            {
-              newDistortion = new Reduction(newItem);
-              (newDistortion as Reduction).Days = (d as Reduction).Days;
-            }
-            if (newDistortion != null)
-            {
-              newDistortion.Description = d.Description;
-              if (d.Fragnet != null)
-              {
-                newDistortion.Fragnet = newSchedule.Fragnets.ToList()[oldSchedule.Fragnets.ToList().IndexOf(d.Fragnet)];
-              }
-
-              newItem.Distortions.Add(newDistortion);
-            }
-          }
-        }
-      }
-      newSchedule.StartDate = oldSchedule.StartDate;
-      newSchedule.DataDate = oldSchedule.DataDate;
-      newSchedule.Description = oldSchedule.Description;
-      newSchedule.EndDate = oldSchedule.EndDate;
-      newSchedule.Name = oldSchedule.Name;
-      foreach (var r in oldSchedule.Relationships)
-      {
-        var newRelationship = new Relationship(newSchedule.GetActivity(r.Activity1.Number), newSchedule.GetActivity(r.Activity2.Number))
-        {
-          Lag = r.Lag,
-          RelationshipType = r.RelationshipType
-        };
-      }
-      foreach (var layout in oldSchedule.Layouts)
-      {
-        var newLayout = layout.LayoutType == LayoutType.Gantt ? new GanttLayout() : (Layout)new PERTLayout();
-        newSchedule.Layouts.Add(newLayout);
-        CopyLayoutData(layout, newLayout);
-      }
-    }
-
     private static WBSItem FindWBSItem(WBSItem parent, string number)
     {
       if (parent.Number == number)
@@ -782,94 +916,13 @@ namespace NAS.Models.Entities
       return null;
     }
 
-    private static void CopyWBSItems(WBSItem parent, WBSItem copyTo)
+    #endregion
+
+    #region ICloneable
+
+    public Schedule Clone()
     {
-      if (parent != null && copyTo != null)
-      {
-        foreach (var item in parent.Children.ToArray())
-        {
-          var newItem = new WBSItem(parent)
-          {
-            Number = item.Number,
-            Name = item.Name
-          };
-          copyTo.Children.Add(newItem);
-          CopyWBSItems(item, newItem);
-        }
-      }
-    }
-
-    private static void CopyLayoutData(Layout oldLayout, Layout newLayout)
-    {
-      Debug.Assert(oldLayout.LayoutType == newLayout.LayoutType);
-      newLayout.ActivityCriticalColor = oldLayout.ActivityCriticalColor;
-      newLayout.ActivityDoneColor = oldLayout.ActivityDoneColor;
-      newLayout.ActivityStandardColor = oldLayout.ActivityStandardColor;
-      newLayout.IsActive = oldLayout.IsActive;
-      newLayout.DataDateColor = oldLayout.DataDateColor;
-      newLayout.FilterCombination = oldLayout.FilterCombination;
-      newLayout.MilestoneCriticalColor = oldLayout.MilestoneCriticalColor;
-      newLayout.MilestoneDoneColor = oldLayout.MilestoneDoneColor;
-      newLayout.MilestoneStandardColor = oldLayout.MilestoneStandardColor;
-      newLayout.Name = $"{oldLayout.Name} ({NASResources.Copy})";
-      newLayout.ShowRelationships = oldLayout.ShowRelationships;
-      newLayout.ShowFloat = oldLayout.ShowFloat;
-
-      if (oldLayout is GanttLayout oldGanttLayout && newLayout is GanttLayout newGanttLayout)
-      {
-        newGanttLayout.LeftText = oldGanttLayout.LeftText;
-        newGanttLayout.CenterText = oldGanttLayout.CenterText;
-        newGanttLayout.RightText = oldGanttLayout.RightText;
-      }
-
-      foreach (var g in oldLayout.GroupingDefinitions)
-      {
-        var definition = new GroupingDefinition(g.Property)
-        {
-          Color = g.Color
-        };
-        newLayout.GroupingDefinitions.Add(definition);
-      }
-      foreach (var s in oldLayout.SortingDefinitions)
-      {
-        var definition = new SortingDefinition(s.Property)
-        {
-          Direction = s.Direction
-        };
-        newLayout.SortingDefinitions.Add(definition);
-      }
-      foreach (var col in oldLayout.ActivityColumns)
-      {
-        newLayout.ActivityColumns.Add(new ActivityColumn(col.Property) { ColumnWidth = col.ColumnWidth, Order = col.Order });
-      }
-      foreach (var f in oldLayout.FilterDefinitions)
-      {
-        var filter = new FilterDefinition(f.Property)
-        {
-          ObjectString = f.ObjectString,
-          Relation = f.Relation
-        };
-        newLayout.FilterDefinitions.Add(filter);
-      }
-      foreach (var b in oldLayout.VisibleBaselines)
-      {
-        var baseline = new VisibleBaseline(b.Schedule)
-        {
-          Color = b.Color
-        };
-        newLayout.VisibleBaselines.Add(baseline);
-      }
-      foreach (var r in oldLayout.VisibleResources)
-      {
-        var resource = new VisibleResource(newLayout, r.Resource)
-        {
-          ShowBudget = r.ShowBudget,
-          ShowActualCosts = r.ShowActualCosts,
-          ShowPlannedCosts = r.ShowPlannedCosts,
-          ShowResourceAllocation = r.ShowResourceAllocation
-        };
-        newLayout.VisibleResources.Add(resource);
-      }
+      return new Schedule(this);
     }
 
     #endregion

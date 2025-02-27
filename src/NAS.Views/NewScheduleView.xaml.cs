@@ -9,7 +9,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for NewScheduleView.xaml
   /// </summary>
-  public partial class NewScheduleView : Grid, IDialogContentView
+  public partial class NewScheduleView:IDialogContentView
   {
     public NewScheduleView()
     {

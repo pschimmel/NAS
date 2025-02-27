@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for SelectSortingDefinitionView.xaml
   /// </summary>
-  public partial class SelectSortingDefinitionView : Grid, IDialogContentView
+  public partial class SelectSortingDefinitionView:IDialogContentView
   {
     public SelectSortingDefinitionView()
     {

@@ -50,15 +50,19 @@ namespace NAS.Models.Entities
       VisibleResources = [];
     }
 
+    protected Layout(Layout other)
+      : this(other, other.VisibleResources.ToDictionary(x => x.Resource, x => x.Resource))
+    { }
+
     /// <summary>
     /// Copy constructor
     /// </summary>
-    protected Layout(Layout other)
+    protected Layout(Layout other, Dictionary<Resource, Resource> resourceMapping)
     {
       Debug.Assert(LayoutType == other.LayoutType);
       foreach (var otherActivityColumn in other.ActivityColumns)
       {
-        ActivityColumns.Add(new ActivityColumn(otherActivityColumn));
+        ActivityColumns.Add(otherActivityColumn.Clone());
       }
       ActivityCriticalColor = other.ActivityCriticalColor;
       ActivityDoneColor = other.ActivityDoneColor;
@@ -67,21 +71,21 @@ namespace NAS.Models.Entities
       FilterCombination = other.FilterCombination;
       foreach (var otherFilterDefinition in other.FilterDefinitions)
       {
-        FilterDefinitions.Add(new FilterDefinition(otherFilterDefinition));
+        FilterDefinitions.Add(otherFilterDefinition.Clone());
       }
       FooterHeight = other.FooterHeight;
       foreach (var otherFooterItem in other.FooterItems)
       {
-        FooterItems.Add(new FooterItem(otherFooterItem));
+        FooterItems.Add(otherFooterItem.Clone());
       }
       foreach (var otherGroupingDefinition in other.GroupingDefinitions)
       {
-        GroupingDefinitions.Add(new GroupingDefinition(otherGroupingDefinition));
+        GroupingDefinitions.Add(otherGroupingDefinition.Clone());
       }
       HeaderHeight = other.HeaderHeight;
       foreach (var otherHeaderItem in other.HeaderItems)
       {
-        HeaderItems.Add(new HeaderItem(otherHeaderItem));
+        HeaderItems.Add(otherHeaderItem.Clone());
       }
 
       BottomMargin = other.BottomMargin;
@@ -97,15 +101,16 @@ namespace NAS.Models.Entities
       ShowRelationships = other.ShowRelationships;
       foreach (var otherSortingDefinition in other.SortingDefinitions)
       {
-        SortingDefinitions.Add(new SortingDefinition(otherSortingDefinition));
+        SortingDefinitions.Add(otherSortingDefinition.Clone());
       }
       foreach (var otherVisibleBaseline in other.VisibleBaselines)
       {
-        VisibleBaselines.Add(new VisibleBaseline(otherVisibleBaseline));
+        VisibleBaselines.Add(otherVisibleBaseline.Clone());
       }
       foreach (var otherVisibleResource in other.VisibleResources)
       {
-        VisibleResources.Add(new VisibleResource(otherVisibleResource));
+        var otherResource = resourceMapping[otherVisibleResource.Resource];
+        VisibleResources.Add(otherVisibleResource.Clone(otherResource));
       }
     }
 
@@ -373,6 +378,10 @@ namespace NAS.Models.Entities
     {
       return Name;
     }
+
+    public abstract Layout Clone(Dictionary<Resource, Resource> resourceMapping);
+
+    public abstract Layout Clone();
 
     #endregion
 

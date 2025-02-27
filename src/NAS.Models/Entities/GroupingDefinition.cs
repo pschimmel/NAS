@@ -1,9 +1,8 @@
-﻿using NAS.Models.Base;
-using NAS.Models.Enums;
+﻿using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class GroupingDefinition : NASObject, IClonable<GroupingDefinition>
+  public class GroupingDefinition : NASObject
   {
     private ActivityProperty _property;
     private int _order;
@@ -15,7 +14,7 @@ namespace NAS.Models.Entities
       _order = 0;
     }
 
-    public GroupingDefinition(GroupingDefinition other)
+    private GroupingDefinition(GroupingDefinition other)
     {
       _order = other.Order;
       _color = other.Color;

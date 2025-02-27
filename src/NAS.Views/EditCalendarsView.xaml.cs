@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditCalendarsView.xaml
   /// </summary>
-  public partial class EditCalendarsView : Grid, IDialogContentView
+  public partial class EditCalendarsView:IDialogContentView
   {
     public EditCalendarsView()
     {

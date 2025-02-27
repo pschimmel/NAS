@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 
 namespace NAS.ViewModels.Helpers
 {
@@ -12,9 +10,9 @@ namespace NAS.ViewModels.Helpers
       var matrix = new PERTActivityData[activities.Count(), activities.Count()];
       var usedActivities = new List<Activity>();
 
-      foreach (var item in activities.Where(x => x.GetVisiblePredecessorCount() == 0))
+      foreach (var item in activities.Where(x => schedule.GetVisiblePredecessorCount(x) == 0))
       {
-        ArrangeActivity(matrix, item, usedActivities, 0, 0);
+        ArrangeActivity(schedule, matrix, item, usedActivities, 0, 0);
       }
 
       for (int x = 0; x < matrix.GetLength(0); x++)
@@ -30,9 +28,9 @@ namespace NAS.ViewModels.Helpers
       }
     }
 
-    private static void ArrangeActivity(PERTActivityData[,] matrix, Activity item, List<Activity> usedActivities, int requestedX, int requestedY)
+    private static void ArrangeActivity(Schedule schedule, PERTActivityData[,] matrix, Activity item, List<Activity> usedActivities, int requestedX, int requestedY)
     {
-      var activityData = item.GetActivityData();
+      var activityData = schedule.GetOrAddActivityData(item);
 
       int y = requestedY;
       if (!usedActivities.Contains(item))
@@ -42,31 +40,31 @@ namespace NAS.ViewModels.Helpers
           y++;
         }
         matrix[requestedX, y] = activityData;
-        MovePredecessors(matrix, item, y - requestedY);
+        MovePredecessors(schedule, matrix, item, y - requestedY);
         usedActivities.Add(item);
       }
-      int newY = requestedY - item.GetVisibleSuccessorCount() / 2;
+      int newY = requestedY - schedule.GetVisibleSuccessorCount(item) / 2;
       if (newY < 0)
       {
         newY = 0;
       }
 
-      for (int i = 0; i < item.GetVisibleSuccessorCount(); i++)
+      for (int i = 0; i < schedule.GetVisibleSuccessorCount(item); i++)
       {
-        ArrangeActivity(matrix, item.GetVisibleSuccessors().ElementAt(i), usedActivities, requestedX + 1, newY + i);
+        ArrangeActivity(schedule, matrix, schedule.GetVisibleSuccessors(item).ElementAt(i), usedActivities, requestedX + 1, newY + i);
       }
     }
 
-    private static void MovePredecessors(PERTActivityData[,] matrix, Activity item, int amount)
+    private static void MovePredecessors(Schedule schedule, PERTActivityData[,] matrix, Activity item, int amount)
     {
       if (amount <= 0)
       {
         return;
       }
 
-      foreach (var predecessor in item.GetVisiblePredecessors())
+      foreach (var predecessor in schedule.GetVisiblePredecessors(item))
       {
-        var data = predecessor.GetActivityData();
+        var data = schedule.GetOrAddActivityData(predecessor);
         int x = data.LocationX;
         int y = data.LocationY;
         if (x > -1 && y > -1 && x < matrix.GetLength(0) - 1 && y + amount < matrix.GetLength(1) - 1 && matrix[x, y + amount] == null)
@@ -75,7 +73,7 @@ namespace NAS.ViewModels.Helpers
           data.LocationX = x;
           data.LocationY = y + amount;
           matrix[x, y] = null;
-          MovePredecessors(matrix, predecessor, amount);
+          MovePredecessors(schedule, matrix, predecessor, amount);
         }
       }
     }

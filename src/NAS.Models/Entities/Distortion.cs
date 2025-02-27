@@ -5,9 +5,13 @@
     public string _description;
     private Fragnet _fragnet;
 
-    public Distortion(Activity activity)
+    protected Distortion()
+    { }
+
+    protected Distortion(Distortion other)
     {
-      Activity = activity;
+      _description = other._description;
+      _fragnet = other._fragnet;
     }
 
     public string Description
@@ -23,8 +27,6 @@
       }
     }
 
-    public Activity Activity { get; }
-
     public Fragnet Fragnet
     {
       get => _fragnet;
@@ -37,5 +39,7 @@
         }
       }
     }
+
+    public abstract Distortion Clone();
   }
 }

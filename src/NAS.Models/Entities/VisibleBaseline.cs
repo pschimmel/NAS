@@ -1,21 +1,29 @@
-﻿using NAS.Models.Base;
-
-namespace NAS.Models.Entities
+﻿namespace NAS.Models.Entities
 {
-  public class VisibleBaseline : NASObject, IClonable<VisibleBaseline>
+  public class VisibleBaseline : NASObject
   {
+    #region Fields
+
     private string _color = "LightGray";
+
+    #endregion
+
+    #region Constructors
 
     public VisibleBaseline(Schedule schedule)
     {
       Schedule = schedule;
     }
 
-    public VisibleBaseline(VisibleBaseline other)
+    private VisibleBaseline(VisibleBaseline other)
       : this(other.Schedule)
     {
       _color = other.Color;
     }
+
+    #endregion
+
+    #region Properties
 
     public string Color
     {
@@ -32,20 +40,15 @@ namespace NAS.Models.Entities
 
     public Schedule Schedule { get; }
 
-    /// <summary>
-    /// Returns activity <see cref="string"/> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="string"/> that represents this instance.
-    /// </returns>
-    public override string ToString()
-    {
-      return Schedule != null ? Schedule.Name : "VisibleBaseline";
-    }
+    #endregion
+
+    #region Cloneable
 
     public VisibleBaseline Clone()
     {
       return new VisibleBaseline(this);
     }
+
+    #endregion
   }
 }

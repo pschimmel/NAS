@@ -25,7 +25,7 @@ namespace NAS.ViewModels
     {
       _schedule = schedule;
       _fragnet = fragnet;
-      FragnetActivities = new ObservableCollection<Activity>(_fragnet.Activities);
+      FragnetActivities = new ObservableCollection<Activity>(schedule.Activities.Where(x => x.Fragnet == fragnet));
       Number = fragnet.Number;
       Name = fragnet.Name;
       AddActivityToFragnetCommand = new ActionCommand(AddActivityToFragnetCommandExecute);
@@ -121,7 +121,7 @@ namespace NAS.ViewModels
       {
         _fragnet.Number = Number;
         _fragnet.Name = Name;
-        _fragnet.RefreshActibities(FragnetActivities);
+        //   _fragnet.RefreshActibities(FragnetActivities);
       }
     }
 

@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditSortingAndGroupingView.xaml
   /// </summary>
-  public partial class EditSortingAndGroupingView : Grid, IDialogContentView
+  public partial class EditSortingAndGroupingView:IDialogContentView
   {
     public EditSortingAndGroupingView()
     {

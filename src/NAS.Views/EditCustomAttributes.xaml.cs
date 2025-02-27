@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditCustomAttributesView.xaml
   /// </summary>
-  public partial class EditCustomAttributesView : Grid, IDialogContentView
+  public partial class EditCustomAttributesView:IDialogContentView
   {
     public EditCustomAttributesView()
     {

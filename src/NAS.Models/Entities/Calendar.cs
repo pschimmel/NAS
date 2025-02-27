@@ -5,6 +5,8 @@ namespace NAS.Models.Entities
 {
   public class Calendar : NASObject
   {
+    #region Fields 
+
     private string _name;
     private bool _monday;
     private bool _tuesday;
@@ -15,6 +17,10 @@ namespace NAS.Models.Entities
     private bool _sunday;
     private bool _isStandard;
     private Calendar _baseCalendar;
+
+    #endregion
+
+    #region Constructor
 
     public Calendar()
       : this(false)
@@ -34,11 +40,37 @@ namespace NAS.Models.Entities
       IsGlobal = isBase;
     }
 
-    public Calendar(Calendar calendar)
+    private Calendar(Calendar other)
       : this()
     {
-      CopyCalendar(this, calendar);
+      if (IsGlobal != IsGlobal)
+      {
+        throw new ArgumentException("The calendars have different levels.");
+      }
+
+      Name = other.Name;
+      Monday = other.Monday;
+      Tuesday = other.Tuesday;
+      Wednesday = other.Wednesday;
+      Thursday = other.Thursday;
+      Friday = other.Friday;
+      Saturday = other.Saturday;
+      Sunday = other.Sunday;
+
+      if (other.Holidays != null)
+      {
+        foreach (var holiday in other.Holidays)
+        {
+          Holidays.Add(holiday.Clone());
+        }
+      }
+
+      BaseCalendar = other.BaseCalendar;
     }
+
+    #endregion
+
+    #region Properties
 
     public string Name
     {
@@ -177,6 +209,10 @@ namespace NAS.Models.Entities
         }
       }
     }
+
+    #endregion
+
+    #region Public Methods
 
     public void ReplaceHolidays(IEnumerable<Holiday> newHolidays)
     {
@@ -336,16 +372,7 @@ namespace NAS.Models.Entities
       return days * sign;
     }
 
-    /// <summary>
-    /// Returns activity <see cref="string"/> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="string"/> that represents this instance.
-    /// </returns>
-    public override string ToString()
-    {
-      return Name;
-    }
+    #endregion
 
     #region Private Members
 
@@ -353,31 +380,6 @@ namespace NAS.Models.Entities
     {
       return BaseCalendar != null && BaseCalendar.Holidays.Any(x => x.Date == day.Date)
             || Holidays != null && Holidays.Any(x => x.Date == day.Date);
-    }
-
-    public static void CopyCalendar(Calendar newCalendar, Calendar oldCalendar)
-    {
-      if (newCalendar.IsGlobal != oldCalendar.IsGlobal)
-      {
-        throw new ArgumentException("The calendars have different levels.");
-      }
-
-      newCalendar.Name = oldCalendar.Name + " (" + NASResources.Copy + ")";
-      newCalendar.Monday = oldCalendar.Monday;
-      newCalendar.Tuesday = oldCalendar.Tuesday;
-      newCalendar.Wednesday = oldCalendar.Wednesday;
-      newCalendar.Thursday = oldCalendar.Thursday;
-      newCalendar.Friday = oldCalendar.Friday;
-      newCalendar.Saturday = oldCalendar.Saturday;
-      newCalendar.Sunday = oldCalendar.Sunday;
-
-      if (oldCalendar.Holidays != null)
-      {
-        foreach (var h in oldCalendar.Holidays)
-        {
-          newCalendar.Holidays.Add(new Holiday() { Date = h.Date });
-        }
-      }
     }
 
     private bool IsWorkDayInternal(DateTime day)
@@ -434,6 +436,23 @@ namespace NAS.Models.Entities
       }
 
       return result;
+    }
+
+    #endregion
+
+    #region ICloneable
+
+    public Calendar Clone()
+    {
+      return new Calendar(this);
+    }
+
+    public Calendar Clone(Calendar newBaseCalendar)
+    {
+      var newCalendar = Clone();
+      if (newBaseCalendar != null)
+        newCalendar.BaseCalendar = newBaseCalendar;
+      return newCalendar;
     }
 
     #endregion

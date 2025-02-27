@@ -15,7 +15,7 @@ namespace NAS.Models.Entities
       _property = property;
     }
 
-    public ActivityColumn(ActivityColumn other)
+    private ActivityColumn(ActivityColumn other)
     {
       _columnWidth = other._columnWidth;
       _order = other._order;
@@ -59,6 +59,11 @@ namespace NAS.Models.Entities
           OnPropertyChanged(nameof(Order));
         }
       }
+    }
+
+    public ActivityColumn Clone()
+    {
+      return new ActivityColumn(this);
     }
   }
 }

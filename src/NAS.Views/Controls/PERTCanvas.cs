@@ -84,8 +84,6 @@ namespace NAS.Views.Controls
 
     #region ViewModel
 
-    private ScheduleViewModel VM => DataContext as ScheduleViewModel;
-
     private void Canvas_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       suspendRefreshing = true;
@@ -117,7 +115,7 @@ namespace NAS.Views.Controls
     private void ViewModel_ActivityAdded(object sender, ItemEventArgs<ActivityViewModel> e)
     {
       var activity = e.Item;
-      var data = activity.Schedule.GetOrAddActivityData(activity.Activity);
+      var data = Schedule.GetOrAddActivityData(activity.Activity);
       AddActivity(data);
       VM.CurrentActivity = activity;
     }
@@ -189,8 +187,8 @@ namespace NAS.Views.Controls
           }
 
           var visibleActivities = view.Cast<Activity>().ToList();
-          int matrixX = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationX), 3) : 1;
-          int matrixY = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => x.GetActivityData().LocationY), 3) : 1;
+          int matrixX = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => Schedule.GetOrAddActivityData(x).LocationX), 3) : 1;
+          int matrixY = visibleActivities.Count != 0 ? Math.Max(visibleActivities.Max(x => Schedule.GetOrAddActivityData(x).LocationY), 3) : 1;
           if (matrixX * matrixY < visibleActivities.Count)
           {
             matrixX = Convert.ToInt32(Math.Sqrt(Math.Ceiling(Convert.ToDouble(visibleActivities.Count))));
@@ -199,7 +197,7 @@ namespace NAS.Views.Controls
           matrix = new PERTActivityData[matrixX + 2, matrixY + 2];
           foreach (var a in visibleActivities)
           {
-            AddActivity(a.GetActivityData());
+            AddActivity(Schedule.GetOrAddActivityData(a));
           }
 
           // Draw Relationships
@@ -253,7 +251,8 @@ namespace NAS.Views.Controls
           }
         }
         return Layout.FilterCombination == FilterCombinationType.And;
-      };
+      }
+      ;
     }
 
     #endregion
@@ -300,12 +299,12 @@ namespace NAS.Views.Controls
         if (args.PropertyName is "IsStarted" or "IsFinished" or "IsCritical")
         {
           RefreshActivity(vm);
-          foreach (var predecessor in activity.GetPreceedingRelationships())
+          foreach (var predecessor in Schedule.GetPreceedingRelationships(activity))
           {
             RefreshRelationship(new RelationshipViewModel(predecessor));
           }
 
-          foreach (var successor in activity.GetSucceedingRelationships())
+          foreach (var successor in Schedule.GetSucceedingRelationships(activity))
           {
             RefreshRelationship(new RelationshipViewModel(successor));
           }
@@ -580,8 +579,8 @@ namespace NAS.Views.Controls
       }
 
       var path = GetPathFromRelationship(r);
-      var diagramm1 = GetDiagramFromActivity(new ActivityViewModel(r.Activity1));
-      var diagramm2 = GetDiagramFromActivity(new ActivityViewModel(r.Activity2));
+      var diagramm1 = GetDiagramFromActivity(new ActivityViewModel(Schedule, r.Activity1));
+      var diagramm2 = GetDiagramFromActivity(new ActivityViewModel(Schedule, r.Activity2));
       if (path == null || diagramm1 == null || diagramm2 == null)
       {
         return;
@@ -670,7 +669,7 @@ namespace NAS.Views.Controls
         }
 
         var activity = diagramm.Item;
-        dragActivityData = activity.Activity.GetActivityData();
+        dragActivityData = Schedule.GetOrAddActivityData(activity.Activity);
 
         var rect = new Rect(diagramm.RenderSize);
         if (rect.Width > 10 && rect.Height > 10)
@@ -681,7 +680,7 @@ namespace NAS.Views.Controls
         // Move activity if mouse click is inside of the diagram
         if (rect.Contains(Mouse.GetPosition(diagramm)))
         {
-          var template =  (DataTemplate)TryFindResource("PERTDragDrop");
+          var template = (DataTemplate)TryFindResource("PERTDragDrop");
           var tempDiagram = GetActivityDiagram(activity);
           var dummy = new PERTDiagramDummy { Width = tempDiagram.Width, Height = tempDiagram.Height };
           dragAdorner = new DataTemplateAdorner(this, dummy, template);
@@ -706,7 +705,7 @@ namespace NAS.Views.Controls
           }
           else
           {
-            dragActivityData = activity.Activity.GetActivityData();
+            dragActivityData = Schedule.GetOrAddActivityData(activity.Activity);
           }
 
           return;
@@ -762,7 +761,7 @@ namespace NAS.Views.Controls
           }
 
           var activity = dragActivityData.Activity;
-          var diagram = GetDiagramFromActivity(new ActivityViewModel(activity));
+          var diagram = GetDiagramFromActivity(new ActivityViewModel(Schedule, activity));
           tempLine.Y1 = GetTop(diagram) + template.Height / 2;
           tempLine.X1 = GetLeft(diagram);
           if (!(activity.ActivityType == ActivityType.Milestone))
@@ -837,14 +836,14 @@ namespace NAS.Views.Controls
             dragActivityData.LocationY = tempY;
 
             var activity = dragActivityData.Activity;
-            RefreshActivity(new ActivityViewModel(activity));
+            RefreshActivity(new ActivityViewModel(Schedule, activity));
 
-            foreach (var rel in activity.GetVisiblePreceedingRelationships())
+            foreach (var rel in Schedule.GetVisiblePreceedingRelationships(activity))
             {
               RefreshRelationship(new RelationshipViewModel(rel));
             }
 
-            foreach (var rel in activity.GetVisibleSucceedingRelationships())
+            foreach (var rel in Schedule.GetVisibleSucceedingRelationships(activity))
             {
               RefreshRelationship(new RelationshipViewModel(rel));
             }
@@ -890,13 +889,13 @@ namespace NAS.Views.Controls
 
     private double GetXOfActivity(ActivityViewModel activity)
     {
-      var a = activity.Activity.GetActivityData();
+      var a = Schedule.GetOrAddActivityData(activity.Activity);
       return template.SpacingX + a.LocationX * (template.Width + template.SpacingX);
     }
 
     private double GetYOfActivity(ActivityViewModel activity)
     {
-      var a = activity.Activity.GetActivityData();
+      var a = Schedule.GetOrAddActivityData(activity.Activity);
       return template.SpacingY + a.LocationY * (template.Height + template.SpacingY);
     }
 

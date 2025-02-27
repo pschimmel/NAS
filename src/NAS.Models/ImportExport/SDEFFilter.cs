@@ -45,7 +45,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes _start token to filestream
     /// </summary>
-    /// <param _name="sw">filestream</param>
+    /// <param _name="writer">filestream</param>
     private static void WriteStartToken(StreamWriter sw)
     {
       sw.WriteLine("VOLM  1");
@@ -54,7 +54,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes project data to filestream
     /// </summary>
-    /// <param _name="sw">filestream</param>
+    /// <param _name="writer">filestream</param>
     private void WriteProjectData(StreamWriter sw)
     {
       if (schedule != null)
@@ -90,7 +90,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes calendars to filestream
     /// </summary>
-    /// <param _name="sw">filestream</param>
+    /// <param _name="writer">filestream</param>
     private void WriteCalendars(StreamWriter sw)
     {
       if (schedule != null)
@@ -209,7 +209,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes activities to filestream
     /// </summary>
-    /// <param _name="sw">Filestream</param>
+    /// <param _name="writer">Filestream</param>
     private void WriteActivityData(StreamWriter sw)
     {
       if (schedule != null)
@@ -254,26 +254,26 @@ namespace NAS.Models.ImportExport
           _ = act.Calendar == null ? sb.Append(' ') : sb.Append(calendarIDs[act.Calendar]);
 
           sb.Append(' ');
-          //if (act.HammockCode)
+          //if (activity.HammockCode)
           //  sb.Append("Y");
           //else
           sb.Append(' ');
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.WorkersPerDay.ToString()*/, 3, TextAlignment.Right));
+          sb.Append(TextFormatter("" /*activity.WorkersPerDay.ToString()*/, 3, TextAlignment.Right));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.Responsibility*/, 4, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.Responsibility*/, 4, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.Area*/, 4, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.Area*/, 4, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.Modification*/, 6, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.Modification*/, 6, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.BidItem*/, 6, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.BidItem*/, 6, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.Phase*/, 2, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.Phase*/, 2, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.CategoryOfWork*/, 1, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.CategoryOfWork*/, 1, TextAlignment.Left));
           sb.Append(' ');
-          sb.Append(TextFormatter("" /*act.FeatureOfWork*/, 30, TextAlignment.Left));
+          sb.Append(TextFormatter("" /*activity.FeatureOfWork*/, 30, TextAlignment.Left));
           sw.WriteLine(sb.ToString());
         }
       }
@@ -282,18 +282,18 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes predecessors to filestream
     /// </summary>
-    /// <param _name="sw">Filestream</param>
+    /// <param _name="writer">Filestream</param>
     private void WritePredecessors(StreamWriter sw)
     {
       if (schedule != null)
       {
         // PRED 2.32.01-A  1.01.03-E  F   10
-        foreach (var act in schedule.Activities)
+        foreach (var activity in schedule.Activities)
         {
-          foreach (var relationship in act.GetPreceedingRelationships())
+          foreach (var relationship in schedule.GetPreceedingRelationships(activity))
           {
             var sb = new StringBuilder("PRED ");
-            sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
+            sb.Append(TextFormatter(activityIDs[activity].ToString(), 10, TextAlignment.Left));
             sb.Append(' ');
             sb.Append(TextFormatter(activityIDs[schedule.GetActivity(relationship.Activity1.ID)].ToString(), 10, TextAlignment.Left));
             sb.Append(' ');
@@ -324,70 +324,68 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes _unit cost information to filestream
     /// </summary>
-    /// <param _name="sw">Filestream</param>
-    private void WriteUnitCosts(StreamWriter sw)
+    /// <param _name="writer">Filestream</param>
+    private void WriteUnitCosts(StreamWriter writer)
     {
       if (schedule != null)
       {
         // UNIT       1030       15.0000       22.2000         .0000
-        foreach (var act in schedule.Activities)
+        foreach (var activity in schedule.Activities)
         {
-          if (act.ResourceAssignments != null)
+          var assignments = schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? Enumerable.Empty<ResourceAssignment>();
+          foreach (var assignment in assignments)
           {
-            foreach (var association in act.ResourceAssignments)
+            var sb = new StringBuilder("UNIT ");
+            sb.Append(TextFormatter(activityIDs[activity].ToString(), 10, TextAlignment.Left));
+            sb.Append(' ');
+            double totalQuantity = 0;
+            if (assignment.Resource is MaterialResource)
             {
-              var sb = new StringBuilder("UNIT ");
-              sb.Append(TextFormatter(activityIDs[act].ToString(), 10, TextAlignment.Left));
-              sb.Append(' ');
-              double totalQuantity = 0;
-              if (association.Resource is MaterialResource)
-              {
-                totalQuantity += association.UnitsPerDay * Convert.ToDouble(act.OriginalDuration);
-              }
-              else if (association.Resource is WorkResource)
-              {
-                totalQuantity += association.UnitsPerDay * Convert.ToDouble(act.OriginalDuration);
-              }
-              else if (association.Resource is CalendarResource)
-              {
-                totalQuantity += association.UnitsPerDay * (act.EarlyFinishDate - act.EarlyStartDate).TotalDays;
-              }
-
-              sb.Append(CurrencyFormatter(totalQuantity));
-              sb.Append(' ');
-              sb.Append(CurrencyFormatter(Convert.ToDouble(association.Resource.CostsPerUnit)));
-              sb.Append(' ');
-              double actualQuantity = 0;
-              if (association.Resource is MaterialResource)
-              {
-                actualQuantity += association.UnitsPerDay * Convert.ToDouble(act.ActualDuration);
-              }
-              else if (association.Resource is WorkResource)
-              {
-                actualQuantity += association.UnitsPerDay * Convert.ToDouble(act.ActualDuration);
-              }
-              else if (association.Resource is CalendarResource)
-              {
-                actualQuantity += association.UnitsPerDay * (act.FinishDate - act.StartDate).TotalDays;
-              }
-
-              sb.Append(CurrencyFormatter(actualQuantity));
-              sb.Append(' ');
-              if (association.Resource is WorkResource)
-              {
-                sb.Append("Work");
-              }
-              else if (association.Resource is CalendarResource)
-              {
-                sb.Append("Days");
-              }
-              else if (association.Resource is MaterialResource)
-              {
-                sb.Append((association.Resource as MaterialResource).Unit);
-              }
-
-              sw.WriteLine(sb.ToString());
+              totalQuantity += assignment.UnitsPerDay * Convert.ToDouble(activity.OriginalDuration);
             }
+            else if (assignment.Resource is WorkResource)
+            {
+              totalQuantity += assignment.UnitsPerDay * Convert.ToDouble(activity.OriginalDuration);
+            }
+            else if (assignment.Resource is CalendarResource)
+            {
+              totalQuantity += assignment.UnitsPerDay * (activity.EarlyFinishDate - activity.EarlyStartDate).TotalDays;
+            }
+
+            sb.Append(CurrencyFormatter(totalQuantity));
+            sb.Append(' ');
+            sb.Append(CurrencyFormatter(Convert.ToDouble(assignment.Resource.CostsPerUnit)));
+            sb.Append(' ');
+            double actualQuantity = 0;
+            if (assignment.Resource is MaterialResource)
+            {
+              actualQuantity += assignment.UnitsPerDay * Convert.ToDouble(activity.ActualDuration);
+            }
+            else if (assignment.Resource is WorkResource)
+            {
+              actualQuantity += assignment.UnitsPerDay * Convert.ToDouble(activity.ActualDuration);
+            }
+            else if (assignment.Resource is CalendarResource)
+            {
+              actualQuantity += assignment.UnitsPerDay * (activity.FinishDate - activity.StartDate).TotalDays;
+            }
+
+            sb.Append(CurrencyFormatter(actualQuantity));
+            sb.Append(' ');
+            if (assignment.Resource is WorkResource)
+            {
+              sb.Append("Work");
+            }
+            else if (assignment.Resource is CalendarResource)
+            {
+              sb.Append("Days");
+            }
+            else if (assignment.Resource is MaterialResource)
+            {
+              sb.Append((assignment.Resource as MaterialResource).Unit);
+            }
+
+            writer.WriteLine(sb.ToString());
           }
         }
       }
@@ -396,7 +394,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes progress information to filestream
     /// </summary>
-    /// <param _name="sw">Filestream</param>
+    /// <param _name="writer">Filestream</param>
     private void WriteProgress(StreamWriter sw)
     {
       if (schedule != null)
@@ -441,7 +439,7 @@ namespace NAS.Models.ImportExport
     /// <summary>
     /// Writes end token to filestream
     /// </summary>
-    /// <param _name="sw">Filestream</param>
+    /// <param _name="writer">Filestream</param>
     private static void WriteEndToken(StreamWriter sw)
     {
       sw.WriteLine("END");

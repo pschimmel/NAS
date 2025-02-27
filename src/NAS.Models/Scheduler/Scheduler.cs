@@ -76,6 +76,7 @@ namespace NAS.Models.Scheduler
         CalculateActivityDates();
         SetCriticalPath();
         CalculateRelationshipDates();
+        CalculateResources();
       }
       catch (Exception ex)
       {
@@ -118,7 +119,7 @@ namespace NAS.Models.Scheduler
       scheduledActivities.Clear();
 
       // Do a forward calculation for activities that have no predecessors only.
-      foreach (Activity a in _schedule.Activities.Where(x => x.GetVisiblePredecessorCount() == 0))
+      foreach (Activity a in _schedule.Activities.Where(x => _schedule.GetVisiblePredecessorCount(x) == 0))
       {
         CalculateForward2(a);
       }
@@ -253,7 +254,7 @@ namespace NAS.Models.Scheduler
       // Cast Progress event
       calculationProgress?.Invoke(Convert.ToDouble(scheduledActivities.Count) * 50d / Convert.ToDouble(_schedule.Activities.Count));
       // Do the same calculation with sucessing activities
-      foreach (Activity successor in activity.GetVisibleSuccessors())
+      foreach (Activity successor in _schedule.GetVisibleSuccessors(activity))
       {
         CalculateForward2(successor);
       }
@@ -261,7 +262,7 @@ namespace NAS.Models.Scheduler
 
     private DateTime CalculatePredecessors(Activity activity, DateTime startDate)
     {
-      IEnumerable<Activity> predecessors = activity.GetVisiblePredecessors();
+      IEnumerable<Activity> predecessors = _schedule.GetVisiblePredecessors(activity);
 
       foreach (Activity predecessor in predecessors.ToList())
       {
@@ -327,7 +328,7 @@ namespace NAS.Models.Scheduler
       scheduledActivities.Clear();
 
       // Start backward calculation with activities that do not have successors
-      foreach (Activity a in _schedule.Activities.Where(x => x.GetVisibleSuccessorCount() == 0).ToList())
+      foreach (Activity a in _schedule.Activities.Where(x => _schedule.GetVisibleSuccessorCount(x) == 0).ToList())
       {
         CalculateBackward2(a);
       }
@@ -458,7 +459,7 @@ namespace NAS.Models.Scheduler
       // Cast Progress event
       calculationProgress?.Invoke(Convert.ToDouble(scheduledActivities.Count) * 50d / Convert.ToDouble(_schedule.Activities.Count) + 50d);
       // Do the same calculation with predecessing activities
-      foreach (Activity predecessor in activity.GetVisiblePredecessors())
+      foreach (Activity predecessor in _schedule.GetVisiblePredecessors(activity))
       {
         CalculateBackward2(predecessor);
       }
@@ -466,7 +467,7 @@ namespace NAS.Models.Scheduler
 
     private DateTime CalculateSuccessors(Activity activity, DateTime endDate)
     {
-      IEnumerable<Activity> successors = activity.GetVisibleSuccessors();
+      IEnumerable<Activity> successors = _schedule.GetVisibleSuccessors(activity);
 
       foreach (Activity successor in successors)
       {
@@ -537,7 +538,7 @@ namespace NAS.Models.Scheduler
 
         activity.TotalFloat = activity.IsFinished ? 0 : activity.Calendar.GetWorkDays(activity.EarlyFinishDate, activity.LateFinishDate, false);
         int freeFloat = activity.TotalFloat;
-        IEnumerable<Activity> successors = activity.GetVisibleSuccessors();
+        IEnumerable<Activity> successors = _schedule.GetVisibleSuccessors(activity);
 
         foreach (Activity successor in successors)
         {
@@ -563,6 +564,21 @@ namespace NAS.Models.Scheduler
 
     #endregion
 
+    #region Calculate Resources
+
+    public void CalculateResources()
+    {
+      foreach (Activity activity in _schedule.Activities)
+      {
+        var assignments = _schedule.ResourceAssignments.Where(x => x.Activity == activity).ToArray();
+        activity.TotalBudget = assignments.Sum(x => x.Budget);
+        activity.TotalPlannedCosts = assignments.Sum(x => x.PlannedCosts);
+        activity.TotalActualCosts = assignments.Sum(x => x.ActualCosts);
+      }
+    }
+
+    #endregion
+
     #region Checks
 
     /// <summary>
@@ -580,7 +596,7 @@ namespace NAS.Models.Scheduler
     /// </summary>
     /// <param _number="relationships">The relationships to check.</param>
     /// <returns>true, if no loop was found</returns>
-    public static bool CheckForLoops(List<Activity> activities, List<Relationship> relationships)
+    public bool CheckForLoops(List<Activity> activities, List<Relationship> relationships)
     {
       if (activities == null)
       {
@@ -597,14 +613,13 @@ namespace NAS.Models.Scheduler
         return true;
       }
 
-      Schedule schedule = activities[0].Schedule;
       var relatedActivities = new List<(Activity, Activity)>();
 
       foreach (Relationship relationship in relationships)
       {
         if (activities.Any(x => x.ID == relationship.Activity1.ID) && activities.Any(x => x.ID == relationship.Activity2.ID))
         {
-          relatedActivities.Add((schedule.GetActivity(relationship.Activity1.ID), schedule.GetActivity(relationship.Activity2.ID)));
+          relatedActivities.Add((_schedule.GetActivity(relationship.Activity1.ID), _schedule.GetActivity(relationship.Activity2.ID)));
         }
       }
 
@@ -701,18 +716,18 @@ namespace NAS.Models.Scheduler
           activity.IsCritical = false;
         }
 
-        var paths = _schedule.Activities.Where(x => !x.GetPreceedingRelationships().Any())
+        var paths = _schedule.Activities.Where(x => !_schedule.GetPreceedingRelationships(x).Any())
                                               .Select(GetLongestPath).ToList();
         var longestPaths = paths.Where(x => x.Length == paths.Max(y => y.Length)).ToList();
         SetLongestPathCritical(longestPaths);
       }
     }
 
-    private static PathItem GetLongestPath(Activity parent)
+    private PathItem GetLongestPath(Activity parent)
     {
       var item = new PathItem(parent);
 
-      foreach (Relationship relationship in parent.GetSucceedingRelationships())
+      foreach (Relationship relationship in _schedule.GetSucceedingRelationships(parent))
       {
         Activity successor = relationship.Activity2;
         int count = relationship.Lag + successor.AtCompletionDuration;
@@ -736,7 +751,7 @@ namespace NAS.Models.Scheduler
     {
       foreach (PathItem path in longestPaths)
       {
-        Activity activity =     _schedule.GetActivity(path.ActivityID);
+        Activity activity = _schedule.GetActivity(path.ActivityID);
         activity.IsCritical = true;
         SetLongestPathCritical(path.Children);
       }

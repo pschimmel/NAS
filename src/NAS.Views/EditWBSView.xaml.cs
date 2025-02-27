@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditWBSView.xaml
   /// </summary>
-  public partial class EditWBSView : Grid, IDialogContentView
+  public partial class EditWBSView:IDialogContentView
   {
     public EditWBSView()
     {

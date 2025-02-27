@@ -2,19 +2,19 @@
 {
   public class Holiday : NASObject
   {
-    private DateTime _date;
+    public Holiday()
+    { }
 
-    public DateTime Date
+    private Holiday(Holiday other)
     {
-      get => _date;
-      set
-      {
-        if (_date != value)
-        {
-          _date = value;
-          OnPropertyChanged(nameof(Date));
-        }
-      }
+      Date = other.Date;
+    }
+
+    public DateTime Date { get; set; }
+
+    public Holiday Clone()
+    {
+      return new Holiday(this);
     }
   }
 }

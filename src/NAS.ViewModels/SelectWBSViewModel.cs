@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
 using NAS.ViewModels.Base;
@@ -16,10 +15,10 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public SelectWBSViewModel(Activity activity)
+    public SelectWBSViewModel(Schedule schedule, Activity activity)
       : base()
     {
-      Schedule = activity.Schedule;
+      Schedule = schedule;
       CurrentActivity = activity;
       RemoveSelectionCommand = new ActionCommand(param => RemoveSelectionCommandExecute(), param => RemoveSelectionCommandCanExecute);
     }

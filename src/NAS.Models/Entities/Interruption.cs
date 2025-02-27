@@ -5,9 +5,15 @@
     private int? _days;
     private DateTime? _start;
 
-    public Interruption(Activity activity) : base(activity)
+    public Interruption() : base()
     {
       _start = DateTime.Today;
+    }
+
+    protected Interruption(Interruption other) : base(other)
+    {
+      _days = other._days;
+      _start = other._start;
     }
 
     public int? Days
@@ -34,6 +40,11 @@
           OnPropertyChanged(nameof(Start));
         }
       }
+    }
+
+    public override Distortion Clone()
+    {
+      return new Interruption(this);
     }
   }
 }

@@ -36,15 +36,40 @@ namespace NAS.Models.Entities
 
     #region Constructors
 
-    public Activity(Schedule schedule, bool isFixed = false)
+    public Activity(bool isFixed = false)
     {
-      Schedule = schedule;
       IsFixed = isFixed;
       constraint = ConstraintType.None;
       name = NASResources.NewActivity;
       _originalDuration = 5;
-      ResourceAssignments = new ObservableCollection<ResourceAssignment>();
       Distortions = new ObservableCollection<Distortion>();
+    }
+
+    public Activity(Activity other)
+    {
+      number = other.number;
+      name = other.name;
+      earlyStartDate = other.earlyStartDate;
+      earlyFinishDate = other.earlyFinishDate;
+      lateStartDate = other.lateStartDate;
+      lateFinishDate = other.lateFinishDate;
+      actualStartDate = other.actualStartDate;
+      actualFinishDate = other.actualFinishDate;
+      _originalDuration = other._originalDuration;
+      _remainingDuration = other._remainingDuration;
+      percentComplete = other.percentComplete;
+      totalFloat = other.totalFloat;
+      freeFloat = other.freeFloat;
+      constraint = other.constraint;
+      constraintDate = other.constraintDate;
+      calendar = other.calendar;
+      customAttribute1 = other.customAttribute1;
+      customAttribute2 = other.customAttribute2;
+      customAttribute3 = other.customAttribute3;
+      fragnet = other.fragnet;
+      wbsItem = other.wbsItem;
+      IsFixed = other.IsFixed;
+      Distortions = new ObservableCollection<Distortion>(other.Distortions.Select(x => x.Clone()));
     }
 
     #endregion
@@ -95,87 +120,6 @@ namespace NAS.Models.Entities
     /// Is activity part of the critical path?
     /// </summary>
     public bool IsCritical { get; set; }
-
-    #endregion
-
-    #region Public Methods
-
-    public static Activity NewActivity(Schedule schedule)
-    {
-      return new Activity(schedule);
-    }
-
-    public static Activity NewFixedActivity(Schedule schedule)
-    {
-      return new Activity(schedule, true);
-    }
-
-    public static Activity NewMilestone(Schedule schedule)
-    {
-      return new Milestone(schedule);
-    }
-
-    public static Activity NewFixedMilestone(Schedule schedule)
-    {
-      return new Milestone(schedule, true);
-    }
-
-    public IEnumerable<Activity> GetPredecessors()
-    {
-      return Schedule.GetPredecessors(this);
-    }
-
-    public IEnumerable<Activity> GetSuccessors()
-    {
-      return Schedule.GetSuccessors(this);
-    }
-
-    public IEnumerable<Relationship> GetPreceedingRelationships()
-    {
-      return Schedule.GetPreceedingRelationships(this);
-    }
-
-    public IEnumerable<Relationship> GetSucceedingRelationships()
-    {
-      return Schedule.GetSucceedingRelationships(this);
-    }
-
-    public IEnumerable<Activity> GetVisiblePredecessors()
-    {
-      return GetPredecessors().Where(x => x.Fragnet == null || x.Fragnet.IsVisible);
-    }
-
-    public IEnumerable<Relationship> GetVisiblePreceedingRelationships()
-    {
-      var predecessors = GetVisiblePredecessors();
-      return GetPreceedingRelationships().Where(x => predecessors.Any(y => y.ID == x.Activity1.ID));
-    }
-
-    public int GetVisiblePredecessorCount()
-    {
-      return GetPredecessors().Count(x => x.Fragnet == null || x.Fragnet.IsVisible);
-    }
-
-    public IEnumerable<Activity> GetVisibleSuccessors()
-    {
-      return GetSuccessors().Where(x => x.Fragnet == null || x.Fragnet.IsVisible);
-    }
-
-    public IEnumerable<Relationship> GetVisibleSucceedingRelationships()
-    {
-      var successors = GetVisibleSuccessors();
-      return GetSucceedingRelationships().Where(x => successors.Any(y => y.ID == x.Activity2.ID));
-    }
-
-    public int GetVisibleSuccessorCount()
-    {
-      return GetSuccessors().Count(x => x.Fragnet == null || x.Fragnet.IsVisible);
-    }
-
-    public PERTActivityData GetActivityData()
-    {
-      return Schedule.GetOrAddActivityData(this);
-    }
 
     #endregion
 
@@ -518,17 +462,17 @@ namespace NAS.Models.Entities
     /// <summary>
     /// Gets the total _budget.
     /// </summary>
-    public decimal TotalBudget => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.Budget);
+    public decimal TotalBudget { get; set; }
 
     /// <summary>
     /// Gets the total planned costs.
     /// </summary>
-    public decimal TotalPlannedCosts => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.PlannedCosts);
+    public decimal TotalPlannedCosts { get; set; }
 
     /// <summary>
     /// Gets the total actual costs.
     /// </summary>
-    public decimal TotalActualCosts => ResourceAssignments == null ? 0 : ResourceAssignments.Sum(x => x.ActualCosts);
+    public decimal TotalActualCosts { get; set; }
 
     #endregion
 
@@ -551,118 +495,7 @@ namespace NAS.Models.Entities
 
     #endregion
 
-    #region Resource Associations
-
-    public void RefreshResourceAssignments(IEnumerable<ResourceAssignment> resourceAssignments)
-    {
-      if (resourceAssignments == null)
-      {
-        throw new ArgumentNullException(nameof(resourceAssignments), "Argument can't be null");
-      }
-
-      Distortions.Clear();
-
-      foreach (var resourceAssignment in resourceAssignments)
-      {
-        ResourceAssignments.Add(resourceAssignment);
-      }
-    }
-
-    #endregion
-
-    #region General
-
-    #region Splitting
-
-    public bool CanSplit()
-    {
-      return ActivityType == ActivityType.Activity && OriginalDuration > 1 && !IsStarted;
-    }
-
-    /// <summary>
-    /// Splits an activity into two parts. Each resulting activity will have half of the duration of the original
-    /// activity and all features.
-    /// </summary>
-    public Activity SplitActivity()
-    {
-      if (!CanSplit())
-      {
-        return null;
-      }
-
-      var newActivity = new Activity(Schedule, IsFixed)
-      {
-        Name = Name + NASResources.Copy,
-        OriginalDuration = OriginalDuration / 2,
-        Calendar = Calendar,
-        Fragnet = Fragnet,
-        WBSItem = WBSItem
-      };
-      OriginalDuration -= newActivity.OriginalDuration;
-      Schedule.AddActivity(newActivity);
-
-      // Move all successors of activity to new activity
-      foreach (var r in GetSucceedingRelationships().ToList())
-      {
-        Schedule.AddRelationship(newActivity, r.Activity2);
-        Schedule.RemoveRelationship(r);
-      }
-
-      // Add default relationships between split activitiess
-      Schedule.AddRelationship(this, newActivity);
-      newActivity.EarlyStartDate = Calendar.GetEndDate(EarlyFinishDate, 2);
-      return newActivity;
-    }
-
-    #endregion
-
-    #region Combining
-
-    /// <summary>
-    /// Combines two subsequent activites.
-    /// </summary>
-    public void CombineActivities()
-    {
-      var schedule = Schedule;
-      var successor = GetSuccessors().SingleOrDefault();
-      Debug.Assert(successor != null);
-
-      if (successor == null)
-      {
-        return;
-      }
-
-      foreach (var successorOfSuccessor in successor.GetSuccessors())
-      {
-        schedule.AddRelationship(this, successorOfSuccessor);
-      }
-
-      foreach (var relationship in successor.GetSucceedingRelationships())
-      {
-        schedule.RemoveRelationship(relationship);
-      }
-
-      OriginalDuration += successor.OriginalDuration;
-      Schedule.RemoveActivity(successor);
-    }
-
-    /// <summary>
-    /// Checks if an activity can be combined with its following activity.
-    /// </summary>
-    public bool CanCombineActivity()
-    {
-      return ActivityType == ActivityType.Activity && GetSuccessors().Count(x => x.ActivityType == ActivityType.Activity) == 1;
-    }
-
-    #endregion
-
-    #endregion
-
     #region Navigation Properties
-
-    public ICollection<ResourceAssignment> ResourceAssignments { get; }
-
-    public Schedule Schedule { get; }
 
     public ICollection<Distortion> Distortions { get; }
 
@@ -777,54 +610,18 @@ namespace NAS.Models.Entities
     /// </summary>
     public override int GetHashCode()
     {
-      return (ID + Number + Name).GetHashCode();//if (!string.IsNullOrEmpty(Number))//  return ID ^ Number.GetHashCode();//if (!string.IsNullOrEmpty(Name))//  return ID ^ Name.GetHashCode();//return ID.GetHashCode();
+      return new { ID, Number, Name }.GetHashCode();
     }
 
     #endregion
 
-    public Milestone ChangeToMilestone()
+    #region ICloneable
+
+    public virtual Activity Clone()
     {
-      Debug.Assert(ActivityType == ActivityType.Activity);
-      var schedule = Schedule;
-      var predecessors = GetPreceedingRelationships().ToList();
-      var successors = GetSucceedingRelationships().ToList();
-      var newMilestone = schedule.AddMilestone(IsFixed);
-      newMilestone.Name = Name;
-      newMilestone.Number = Number;
-      newMilestone.Calendar = Calendar;
-      newMilestone.Constraint = Constraint;
-      newMilestone.ConstraintDate = ConstraintDate;
-      newMilestone.Constraint = Constraint;
-      newMilestone.CustomAttribute1 = CustomAttribute1;
-      newMilestone.CustomAttribute2 = CustomAttribute2;
-      newMilestone.CustomAttribute3 = CustomAttribute3;
-      newMilestone.EarlyStartDate = EarlyStartDate;
-      newMilestone.LateStartDate = LateStartDate;
-      newMilestone.WBSItem = WBSItem;
-      newMilestone.Fragnet = Fragnet;
-      if (PercentComplete == 100)
-      {
-        newMilestone.PercentComplete = 100;
-      }
-
-      foreach (var r in predecessors)
-      {
-        var newRelationship = new Relationship(r.Activity1, newMilestone)
-        {
-          RelationshipType = r.RelationshipType,
-          Lag = r.Lag
-        };
-      }
-      foreach (var r in successors)
-      {
-        var newRelationship = new Relationship(newMilestone, r.Activity2)
-        {
-          RelationshipType = r.RelationshipType,
-          Lag = r.Lag
-        };
-      }
-
-      return newMilestone;
+      return new Activity(this);
     }
+
+    #endregion
   }
 }

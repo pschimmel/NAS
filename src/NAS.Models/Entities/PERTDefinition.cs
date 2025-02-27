@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using NAS.Models.Base;
 
 namespace NAS.Models.Entities
 {
-  public class PERTDefinition : NASObject, IClonable<PERTDefinition>
+  public class PERTDefinition : NASObject
   {
     private string _name;
     private double _width = 150;

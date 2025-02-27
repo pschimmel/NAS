@@ -1,9 +1,8 @@
-﻿using NAS.Models.Base;
-using NAS.Models.Enums;
+﻿using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class FilterDefinition : NASObject, IClonable<FilterDefinition>
+  public class FilterDefinition : NASObject
   {
     private ActivityProperty _property;
     private FilterRelation _relation;
@@ -14,7 +13,7 @@ namespace NAS.Models.Entities
       _property = property;
     }
 
-    public FilterDefinition(FilterDefinition other)
+    private FilterDefinition(FilterDefinition other)
     {
       _property = other.Property;
       _relation = other.Relation;

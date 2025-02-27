@@ -4,8 +4,13 @@
   {
     private int? days;
 
-    public Reduction(Activity activity) : base(activity)
+    public Reduction() : base()
     { }
+
+    protected Reduction(Reduction other) : base(other)
+    {
+      days = other.days;
+    }
 
     public int? Days
     {
@@ -18,6 +23,11 @@
           OnPropertyChanged(nameof(Days));
         }
       }
+    }
+
+    public override Distortion Clone()
+    {
+      return new Reduction(this);
     }
   }
 }

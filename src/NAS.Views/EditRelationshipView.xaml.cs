@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditRelationshipView.xaml
   /// </summary>
-  public partial class EditRelationshipView : Grid, IDialogContentView
+  public partial class EditRelationshipView:IDialogContentView
   {
     public EditRelationshipView()
     {

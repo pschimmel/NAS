@@ -96,8 +96,8 @@ namespace NAS.ViewModels
           fragnets2.Add(f.Fragnet);
         }
       }
-      var p1 = new Schedule(Schedule);
-      var p2 = new Schedule(Schedule);
+      var p1 = Schedule.Clone();
+      var p2 = Schedule.Clone();
       var result = new ComparisonData(p1, p2);
       foreach (var f in p1.Fragnets)
       {

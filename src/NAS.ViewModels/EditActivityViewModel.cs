@@ -21,11 +21,12 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public EditActivityViewModel(Activity activity)
+    public EditActivityViewModel(Schedule schedule, Activity activity)
       : base()
     {
       ArgumentNullException.ThrowIfNull(activity);
-      _schedule = activity.Schedule;
+      ArgumentNullException.ThrowIfNull(schedule);
+      _schedule = schedule;
       _activity = activity;
       ResourceAssignments = [];
       Calendars = new ObservableCollection<Calendar>(_schedule.Calendars);
@@ -114,7 +115,7 @@ namespace NAS.ViewModels
 
     private void SelectWBSCommandExecute()
     {
-      using var vm = new SelectWBSViewModel(_activity);
+      using var vm = new SelectWBSViewModel(_schedule, _activity);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         _activity.WBSItem = vm.CurrentWBSItem?.Item;
@@ -129,7 +130,7 @@ namespace NAS.ViewModels
 
     private void EditLogicCommandExecute()
     {
-      var vm = new EditLogicViewModel(_activity);
+      var vm = new EditLogicViewModel(_schedule, _activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -243,15 +244,6 @@ namespace NAS.ViewModels
         }
       }
       return ValidationResult.OK();
-    }
-
-    #endregion
-
-    #region Apply
-
-    protected override void OnApply()
-    {
-      _activity.RefreshResourceAssignments(ResourceAssignments);
     }
 
     #endregion

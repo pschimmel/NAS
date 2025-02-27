@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditResourceView.xaml
   /// </summary>
-  public partial class EditResourceView : Grid, IDialogContentView
+  public partial class EditResourceView:IDialogContentView
   {
     public EditResourceView()
     {

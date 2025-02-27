@@ -144,8 +144,6 @@ namespace NAS.Views.Controls
 
     #region ViewModel
 
-    protected ScheduleViewModel VM => DataContext as ScheduleViewModel;
-
     private void Canvas_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
       suspendRefreshing = true;
@@ -206,12 +204,12 @@ namespace NAS.Views.Controls
     {
       var activity = e.Item;
       RefreshActivity(activity);
-      foreach (var predecessor in activity.Activity.GetPreceedingRelationships())
+      foreach (var predecessor in Schedule?.GetPreceedingRelationships(activity.Activity) ?? [])
       {
         RefreshRelationship(VM.Relationships.FirstOrDefault(x => x.Relationship == predecessor));
       }
 
-      foreach (var successor in activity.Activity.GetSucceedingRelationships())
+      foreach (var successor in Schedule?.GetSucceedingRelationships(activity.Activity) ?? [])
       {
         RefreshRelationship(VM.Relationships.FirstOrDefault(x => x.Relationship == successor));
       }
@@ -723,7 +721,7 @@ namespace NAS.Views.Controls
           return;
         }
 
-        var shape = CreateActivityShape(new ActivityViewModel(baselineActivity));
+        var shape = CreateActivityShape(new ActivityViewModel(Schedule, baselineActivity));
         shape.Tag = baselineTag + baseline.Schedule.ID.ToString();
 
         Children.Add(shape);

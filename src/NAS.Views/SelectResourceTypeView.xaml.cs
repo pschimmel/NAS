@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for SelectResourceTypeView.xaml
   /// </summary>
-  public partial class SelectResourceTypeView : Grid, IDialogContentView
+  public partial class SelectResourceTypeView:IDialogContentView
   {
     public SelectResourceTypeView()
     {

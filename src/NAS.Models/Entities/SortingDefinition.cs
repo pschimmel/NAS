@@ -1,9 +1,8 @@
-﻿using NAS.Models.Base;
-using NAS.Models.Enums;
+﻿using NAS.Models.Enums;
 
 namespace NAS.Models.Entities
 {
-  public class SortingDefinition : NASObject, IClonable<SortingDefinition>
+  public class SortingDefinition : NASObject
   {
     private ActivityProperty _property;
     private SortDirection _direction;
@@ -17,7 +16,7 @@ namespace NAS.Models.Entities
     /// <summary>
     /// Copy constructor.
     /// </summary>
-    public SortingDefinition(SortingDefinition other)
+    private SortingDefinition(SortingDefinition other)
     {
       _property = other.Property;
       _direction = other.Direction;

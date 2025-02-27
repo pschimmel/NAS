@@ -96,29 +96,32 @@ namespace NAS
 
     private double GetX(Distortion distortion, double day)
     {
-      double w = canvas.ActualWidth;
-      double days = distortion.Activity.OriginalDuration;
-      foreach (var d in distortion.Activity.Distortions)
-      {
-        if (d is Delay && (d as Delay).Days.HasValue)
-        {
-          days += (d as Delay).Days.Value;
-        }
-        else if (d is Interruption && (d as Interruption).Days.HasValue)
-        {
-          days += (d as Interruption).Days.Value;
-        }
-        else if (d is Inhibition && (d as Inhibition).Percent.HasValue)
-        {
-          days *= (d as Inhibition).Percent.Value / 100 + 1;
-        }
-        else if (d is Extension && (d as Extension).Days.HasValue)
-        {
-          days += (d as Extension).Days.Value;
-        }
-      }
+      //TODO: Implement this method
+      return 0;
 
-      return days > 0 ? w / days * day : 0;
+      //double w = canvas.ActualWidth;
+      //double days = distortion.Activity.OriginalDuration;
+      //foreach (var d in distortion.Activity.Distortions)
+      //{
+      //  if (d is Delay && (d as Delay).Days.HasValue)
+      //  {
+      //    days += (d as Delay).Days.Value;
+      //  }
+      //  else if (d is Interruption && (d as Interruption).Days.HasValue)
+      //  {
+      //    days += (d as Interruption).Days.Value;
+      //  }
+      //  else if (d is Inhibition && (d as Inhibition).Percent.HasValue)
+      //  {
+      //    days *= (d as Inhibition).Percent.Value / 100 + 1;
+      //  }
+      //  else if (d is Extension && (d as Extension).Days.HasValue)
+      //  {
+      //    days += (d as Extension).Days.Value;
+      //  }
+      //}
+
+      //return days > 0 ? w / days * day : 0;
     }
 
     private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

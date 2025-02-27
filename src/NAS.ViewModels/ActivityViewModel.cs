@@ -16,18 +16,17 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public ActivityViewModel(Activity activity)
+    public ActivityViewModel(Schedule schedule, Activity activity)
       : base()
     {
       ArgumentNullException.ThrowIfNull(activity);
 
-      Schedule = activity.Schedule;
       Activity = activity;
-      Calendars = new List<Calendar>(Schedule.Calendars);
-      Fragnets = new List<Fragnet>(Schedule.Fragnets);
-      CustomAttributes1 = new List<CustomAttribute>(Schedule.CustomAttributes1);
-      CustomAttributes2 = new List<CustomAttribute>(Schedule.CustomAttributes2);
-      CustomAttributes3 = new List<CustomAttribute>(Schedule.CustomAttributes3);
+      Calendars = new List<Calendar>(schedule.Calendars);
+      Fragnets = new List<Fragnet>(schedule.Fragnets);
+      CustomAttributes1 = new List<CustomAttribute>(schedule.CustomAttributes1);
+      CustomAttributes2 = new List<CustomAttribute>(schedule.CustomAttributes2);
+      CustomAttributes3 = new List<CustomAttribute>(schedule.CustomAttributes3);
     }
 
     #endregion
@@ -37,8 +36,6 @@ namespace NAS.ViewModels
     public override HelpTopic HelpTopicKey => HelpTopic.Activity;
 
     public Activity Activity { get; }
-
-    public Schedule Schedule { get; }
 
     public List<Calendar> Calendars { get; }
 

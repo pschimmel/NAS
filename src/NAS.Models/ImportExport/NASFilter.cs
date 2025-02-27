@@ -311,7 +311,7 @@ namespace NAS.Models.ImportExport
             Activity activity = null;
             if (activityNode.Name is "Activity" or "Milestone")
             {
-              activity = activityNode.Name == "Activity" ? Activity.NewActivity(schedule) : Activity.NewMilestone(schedule);
+              activity = activityNode.Name == "Activity" ? new Activity() : new Milestone();
               schedule.AddActivity(activity);
               foreach (XmlNode activitySubNode in activityNode.ChildNodes)
               {
@@ -419,7 +419,7 @@ namespace NAS.Models.ImportExport
                       }
                       if (ra != null)
                       {
-                        activity.ResourceAssignments.Add(ra);
+                        schedule.ResourceAssignments.Add(ra);
                         foreach (XmlNode resourceSubNode in resourceNode.ChildNodes)
                         {
                           if (resourceSubNode.Name == "FixedCosts" && resourceSubNode.GetDecimal().HasValue)
@@ -446,7 +446,7 @@ namespace NAS.Models.ImportExport
                     Distortion distortion = null;
                     if (distortionNode.Name == "Delay")
                     {
-                      distortion = new Delay(activity);
+                      distortion = new Delay();
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -457,7 +457,7 @@ namespace NAS.Models.ImportExport
                     }
                     else if (distortionNode.Name == "Interruption")
                     {
-                      distortion = new Interruption(activity);
+                      distortion = new Interruption();
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -472,7 +472,7 @@ namespace NAS.Models.ImportExport
                     }
                     else if (distortionNode.Name == "Inhibition")
                     {
-                      distortion = new Inhibition(activity);
+                      distortion = new Inhibition();
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Percent" && distortionSubNode.GetDouble().HasValue)
@@ -483,7 +483,7 @@ namespace NAS.Models.ImportExport
                     }
                     else if (distortionNode.Name == "Extension")
                     {
-                      distortion = new Extension(activity);
+                      distortion = new Extension();
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -494,7 +494,7 @@ namespace NAS.Models.ImportExport
                     }
                     else if (distortionNode.Name == "Reduction")
                     {
-                      distortion = new Reduction(activity);
+                      distortion = new Reduction();
                       foreach (XmlNode distortionSubNode in distortionNode.ChildNodes)
                       {
                         if (distortionSubNode.Name == "Days" && distortionSubNode.GetInteger().HasValue)
@@ -973,7 +973,7 @@ namespace NAS.Models.ImportExport
                       }
                       if (r != null)
                       {
-                        var v = new VisibleResource(l, r);
+                        var v = new VisibleResource(r);
                         l.VisibleResources.Add(v);
                         v.ShowBudget = b1;
                         v.ShowActualCosts = b2;
@@ -1270,7 +1270,7 @@ namespace NAS.Models.ImportExport
           constraintElement.AppendTextChild("ConstraintDate", a.ConstraintDate);
         }
         // Add Resources
-        var resourceAssignments = new List<ResourceAssignment>(a.ResourceAssignments);
+        var resourceAssignments = new List<ResourceAssignment>(schedule.ResourceAssignments);
         if (resourceAssignments.Count > 0)
         {
           var resourcesElement = xml.CreateElement("Resources");

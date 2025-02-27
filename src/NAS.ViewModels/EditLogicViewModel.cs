@@ -21,10 +21,10 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public EditLogicViewModel(Activity activity)
+    public EditLogicViewModel(Schedule schedule, Activity activity)
       : base()
     {
-      _schedule = activity.Schedule;
+      _schedule = schedule;
       CurrentActivity = activity;
       AddPredecessorCommand = new ActionCommand(AddPredecessorCommandExecute, () => AddPredecessorCommandCanExecute);
       RemovePredecessorCommand = new ActionCommand(RemovePredecessorCommandExecute, () => RemovePredecessorCommandCanExecute);
@@ -54,12 +54,12 @@ namespace NAS.ViewModels
           Successors.Clear();
           if (_currentActivity != null)
           {
-            foreach (var relationship in _currentActivity.GetPreceedingRelationships())
+            foreach (var relationship in _schedule.GetPreceedingRelationships(_currentActivity))
             {
               Predecessors.Add(new LogicRelatedViewModel(relationship.Activity1, relationship));
             }
 
-            foreach (var relationship in _currentActivity.GetSucceedingRelationships())
+            foreach (var relationship in _schedule.GetSucceedingRelationships(_currentActivity))
             {
               Successors.Add(new LogicRelatedViewModel(relationship.Activity2, relationship));
             }
@@ -149,7 +149,7 @@ namespace NAS.ViewModels
 
     private void EditPredecessorCommandExecute()
     {
-      using var vm = new EditRelationshipViewModel(CurrentActivity.Schedule)
+      using var vm = new EditRelationshipViewModel(_schedule)
       {
         SelectedActivity1 = CurrentPredecessor.Activity,
         SelectedActivity2 = CurrentActivity,
@@ -229,7 +229,7 @@ namespace NAS.ViewModels
 
     private void EditSuccessorCommandExecute()
     {
-      using var vm = new EditRelationshipViewModel(CurrentActivity.Schedule)
+      using var vm = new EditRelationshipViewModel(_schedule)
       {
         SelectedActivity1 = CurrentActivity,
         SelectedActivity2 = CurrentSuccessor.Activity,

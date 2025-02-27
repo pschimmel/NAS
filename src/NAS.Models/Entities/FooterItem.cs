@@ -1,15 +1,13 @@
-﻿using NAS.Models.Base;
-
-namespace NAS.Models.Entities
+﻿namespace NAS.Models.Entities
 {
-  public class FooterItem : NASObject, IPrintLayoutItem, IClonable<FooterItem>
+  public class FooterItem : NASObject, IPrintLayoutItem
   {
     public FooterItem()
     {
       Column = 0;
     }
 
-    public FooterItem(FooterItem other)
+    private FooterItem(FooterItem other)
     {
       Column = other.Column;
       Definition = other.Definition;

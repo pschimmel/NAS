@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for ResourceAssignmentView.xaml
   /// </summary>
-  public partial class ResourceAssignmentView : Grid, IDialogContentView
+  public partial class ResourceAssignmentView:IDialogContentView
   {
     public ResourceAssignmentView()
     {

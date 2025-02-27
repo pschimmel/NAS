@@ -4,6 +4,8 @@ namespace NAS.Models.Entities
 {
   public class Fragnet : NASObject
   {
+    #region Fields
+
     private string _number;
     private string _name;
     private string _description;
@@ -13,13 +15,37 @@ namespace NAS.Models.Entities
     private DateTime? _submitted;
     private bool _isVisible;
 
+    #endregion
+
+    #region Constructor
+
     public Fragnet()
     {
       _identified = DateTime.Today;
       _isVisible = true;
-      Activities = [];
-      Distortion = [];
+      Distortions = [];
     }
+
+    private Fragnet(Fragnet other)
+    {
+      Number = other.Number;
+      Name = other.Name;
+      Description = other.Description;
+      IsDisputable = other.IsDisputable;
+      Identified = other.Identified;
+      Approved = other.Approved;
+      Submitted = other.Submitted;
+      IsVisible = other.IsVisible;
+
+      foreach (var distortion in other.Distortions)
+      {
+        Distortions.Add(distortion.Clone());
+      }
+    }
+
+    #endregion
+
+    #region Properties
 
     public string Number
     {
@@ -125,29 +151,18 @@ namespace NAS.Models.Entities
       }
     }
 
-    public ObservableCollection<Activity> Activities { get; }
-
-    public ObservableCollection<Distortion> Distortion { get; }
-
-    #region Activity
-
-    public void RefreshActibities(IEnumerable<Activity> activities)
-    {
-      ArgumentNullException.ThrowIfNull(activities);
-
-      Activities.Clear();
-
-      foreach (var activity in activities)
-      {
-        Activities.Add(activity);
-      }
-    }
+    public ObservableCollection<Distortion> Distortions { get; }
 
     #endregion
 
-    public override string ToString()
+
+    #region ICloneable
+
+    public Fragnet Clone()
     {
-      return Name;
+      return new Fragnet(this);
     }
+
+    #endregion
   }
 }

@@ -10,16 +10,20 @@ namespace NAS.Models.Entities
     private bool _showActualCosts;
     private TimeAggregateType _aggregationType;
 
-    public VisibleResource(Layout layout, Resource resource)
+    public VisibleResource(Resource resource)
     {
-      Layout = layout;
       Resource = resource;
-      layout.VisibleResources.Add(this);
     }
 
-    public VisibleResource(VisibleResource other)
-      : this(other.Layout, other.Resource)
-    { }
+    private VisibleResource(VisibleResource other)
+      : this(other.Resource)
+    {
+      ShowResourceAllocation = other.ShowResourceAllocation;
+      ShowBudget = other.ShowBudget;
+      ShowPlannedCosts = other.ShowPlannedCosts;
+      ShowActualCosts = other.ShowActualCosts;
+      AggregationType = other.AggregationType;
+    }
 
     public bool ShowResourceAllocation
     {
@@ -86,8 +90,23 @@ namespace NAS.Models.Entities
       }
     }
 
-    public Layout Layout { get; }
-
     public Resource Resource { get; }
+
+    public VisibleResource Clone()
+    {
+      return new VisibleResource(this);
+    }
+
+    public VisibleResource Clone(Resource resource)
+    {
+      return new VisibleResource(resource)
+      {
+        ShowResourceAllocation = ShowResourceAllocation,
+        ShowBudget = ShowBudget,
+        ShowPlannedCosts = ShowPlannedCosts,
+        ShowActualCosts = ShowActualCosts,
+        AggregationType = AggregationType
+      };
+    }
   }
 }

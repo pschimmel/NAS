@@ -4,12 +4,17 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Threading;
 using NAS.Models.Entities;
+using NAS.ViewModels;
 using NAS.Views.Shapes;
 
 namespace NAS.Views.Helpers
 {
   public abstract class DiagramCanvasBase : Canvas
   {
+    protected ScheduleViewModel VM => DataContext as ScheduleViewModel;
+
+    protected Schedule Schedule => VM?.Schedule;
+
     public abstract Layout Layout { get; set; }
 
     public abstract void Refresh();

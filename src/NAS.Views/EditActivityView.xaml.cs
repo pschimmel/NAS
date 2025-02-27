@@ -6,7 +6,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditActivityView.xaml
   /// </summary>
-  public partial class EditActivityView : Grid, IDialogContentView
+  public partial class EditActivityView:IDialogContentView
   {
     public EditActivityView()
     {

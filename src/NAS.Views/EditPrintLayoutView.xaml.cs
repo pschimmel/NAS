@@ -7,7 +7,7 @@ namespace NAS.Views
   /// <summary>
   /// Interaction logic for EditPrintLayoutView.xaml
   /// </summary>
-  public partial class EditPrintLayoutView : Grid, IDialogContentView
+  public partial class EditPrintLayoutView:IDialogContentView
   {
     public EditPrintLayoutView()
     {

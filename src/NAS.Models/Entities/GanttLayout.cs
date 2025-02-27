@@ -11,7 +11,7 @@ namespace NAS.Models.Entities
     public GanttLayout()
     { }
 
-    public GanttLayout(GanttLayout other)
+    protected GanttLayout(GanttLayout other)
       : base(other)
     {
       CenterText = other.CenterText;
@@ -19,8 +19,15 @@ namespace NAS.Models.Entities
       RightText = other.RightText;
     }
 
-    public override LayoutType LayoutType => LayoutType.Gantt;
+    protected GanttLayout(GanttLayout other, Dictionary<Resource, Resource> resourceMapping)
+      : base(other, resourceMapping)
+    {
+      CenterText = other.CenterText;
+      LeftText = other.LeftText;
+      RightText = other.RightText;
+    }
 
+    public override LayoutType LayoutType => LayoutType.Gantt;
 
     public ActivityProperty LeftText
     {
@@ -59,6 +66,16 @@ namespace NAS.Models.Entities
           OnPropertyChanged(nameof(RightText));
         }
       }
+    }
+
+    public override Layout Clone(Dictionary<Resource, Resource> resourceMapping)
+    {
+      return new GanttLayout(this, resourceMapping);
+    }
+
+    public override Layout Clone()
+    {
+      return new GanttLayout(this);
     }
   }
 }

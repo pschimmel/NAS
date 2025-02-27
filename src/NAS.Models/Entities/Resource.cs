@@ -2,9 +2,29 @@
 {
   public abstract class Resource : NASObject
   {
+    #region Fields
+
     private string _name;
     private decimal _costsPerUnit;
     private double? _limit;
+
+    #endregion
+
+    #region Constructor
+
+    protected Resource()
+    { }
+
+    protected Resource(Resource other)
+    {
+      Name = other.Name;
+      CostsPerUnit = other.CostsPerUnit;
+      Limit = other.Limit;
+    }
+
+    #endregion
+
+    #region Properties
 
     public string Name
     {
@@ -44,5 +64,13 @@
         }
       }
     }
+
+    #endregion
+
+    #region ICloneable
+
+    public abstract Resource Clone();
+
+    #endregion
   }
 }
