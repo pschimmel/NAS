@@ -5,8 +5,15 @@ using MessageBox = Xceed.Wpf.Toolkit.MessageBox;
 
 namespace NAS.Views.Helpers
 {
+  /// <summary>
+  /// Target for messages that will be shown in a message box.
+  /// </summary>
   public class MessageBoxNotificationTarget : IUserNotificationTarget
   {
+    /// <summary>
+    /// Shows an error message.
+    /// All actions are optional.
+    /// </summary>
     public void Error(string message, Action okAction = null, Action cancelAction = null)
     {
       var button = MessageBoxButton.OK;
@@ -18,7 +25,7 @@ namespace NAS.Views.Helpers
 
       if (MessageBox.Show(message, NASResources.Error, button, MessageBoxImage.Error) == MessageBoxResult.OK)
       {
-        okAction.Invoke();
+        okAction?.Invoke();
       }
       else
       {
@@ -26,6 +33,10 @@ namespace NAS.Views.Helpers
       }
     }
 
+    /// <summary>
+    /// Shows a warning message.
+    /// All actions are optional.
+    /// </summary>
     public void Warning(string message, Action okAction = null, Action cancelAction = null)
     {
       var button = MessageBoxButton.OK;
@@ -37,7 +48,7 @@ namespace NAS.Views.Helpers
 
       if (MessageBox.Show(message, NASResources.Warning, button, MessageBoxImage.Warning) == MessageBoxResult.OK)
       {
-        okAction.Invoke();
+        okAction?.Invoke();
       }
       else
       {
@@ -45,12 +56,19 @@ namespace NAS.Views.Helpers
       }
     }
 
+    /// <summary>
+    /// Shows an information message.
+    /// </summary>
     public void Information(string message)
     {
       MessageBox.Show(message, NASResources.Information, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
-    public void Question(string message, Action yesAction, Action noAction, Action cancelAction = null)
+    /// <summary>
+    /// Shows a question message.
+    /// All actions are optional.
+    /// </summary>
+    public void Question(string message, Action yesAction = null, Action noAction = null, Action cancelAction = null)
     {
       var button = MessageBoxButton.YesNo;
 
@@ -64,10 +82,10 @@ namespace NAS.Views.Helpers
       switch (result)
       {
         case MessageBoxResult.Yes:
-          yesAction.Invoke();
+          yesAction?.Invoke();
           break;
         case MessageBoxResult.No:
-          noAction.Invoke();
+          noAction?.Invoke();
           break;
         default:
           cancelAction?.Invoke();

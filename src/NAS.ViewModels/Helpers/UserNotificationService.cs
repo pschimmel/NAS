@@ -47,7 +47,7 @@
 
       foreach (var target in _targets)
       {
-        target.Error(message, okAction ?? new Action(() => { }), cancelAction);
+        target.Error(message, okAction, cancelAction);
       }
     }
 
@@ -66,7 +66,7 @@
 
       foreach (var target in _targets)
       {
-        target.Warning(message, okAction ?? new Action(() => { }), cancelAction);
+        target.Warning(message, okAction, cancelAction);
       }
     }
 
@@ -103,7 +103,7 @@
 
       foreach (var target in _targets)
       {
-        target.Question(message, yesAction ?? new Action(() => { }), noAction ?? new Action(() => { }), cancelAction ?? new Action(() => { }));
+        target.Question(message, yesAction, noAction, cancelAction);
       }
     }
   }
