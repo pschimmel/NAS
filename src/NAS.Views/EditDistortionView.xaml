@@ -1,0 +1,66 @@
+﻿<Grid x:Class="NAS.Views.EditDistortionView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools" xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=viewmodels:EditDistortionViewModel}">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Grid.Resources>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="Auto" />
+    <ColumnDefinition />
+  </Grid.ColumnDefinitions>
+  <TextBlock Margin="5" Text="{x:Static resx:NASResources.Description}" />
+  <TextBox Grid.Column="1"
+           Margin="2"
+           Text="{Binding Description}" />
+  <TextBlock Grid.Row="1"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Start}"
+             Visibility="{Binding StartVisible, Converter={StaticResource VisibilityConverter}}" />
+  <DatePicker Grid.Row="1"
+              Grid.Column="1"
+              Width="120"
+              Margin="2"
+              HorizontalAlignment="Left"
+              SelectedDate="{Binding Start}"
+              Visibility="{Binding StartVisible, Converter={StaticResource VisibilityConverter}}" />
+  <TextBlock Grid.Row="2"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Days}"
+             Visibility="{Binding DaysVisible, Converter={StaticResource VisibilityConverter}}" />
+  <TextBox Grid.Row="2"
+           Grid.Column="1"
+           Margin="2"
+           Text="{Binding Days}"
+           Visibility="{Binding DaysVisible, Converter={StaticResource VisibilityConverter}}" />
+  <TextBlock Grid.Row="3"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Percent}"
+             Visibility="{Binding PercentVisible, Converter={StaticResource VisibilityConverter}}" />
+  <TextBox Grid.Row="3"
+           Grid.Column="1"
+           Margin="2"
+           Text="{Binding Percent}"
+           Visibility="{Binding PercentVisible, Converter={StaticResource VisibilityConverter}}" />
+  <TextBlock Grid.Row="4"
+             Margin="5"
+             Text="{x:Static resx:NASResources.Fragnet}" />
+  <ComboBox Grid.Row="4"
+            Grid.Column="1"
+            Margin="2"
+            ItemsSource="{Binding Fragnets}"
+            SelectedItem="{Binding SelectedFragnet}" />
+</Grid>

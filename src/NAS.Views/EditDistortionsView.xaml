@@ -1,0 +1,60 @@
+﻿<Grid x:Class="NAS.Views.EditDistortionsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:tools="clr-namespace:ES.Tools.Controls;assembly=ES.Tools"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:EditDistortionsViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Grid.Resources>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
+  <ToolBarPanel>
+    <ToolBar ToolBarTray.IsLocked="True">
+      <Button Command="{Binding AddDistortionCommand}" ToolTip="{x:Static resx:NASResources.AddDistortion}">
+        <tools:AutoGrayableImage Width="16"
+                                 Height="16"
+                                 Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+      </Button>
+      <Button Command="{Binding RemoveDistortionCommand}" ToolTip="{x:Static resx:NASResources.RemoveDistortion}">
+        <tools:AutoGrayableImage Width="16"
+                                 Height="16"
+                                 Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+      </Button>
+    </ToolBar>
+  </ToolBarPanel>
+  <Canvas Name="canvas"
+          Grid.Row="1"
+          Height="30"
+          Margin="5"
+          VerticalAlignment="Top"
+          Loaded="Canvas_Loaded" />
+  <ListBox Name="listBox"
+           Grid.Row="2"
+           Margin="2"
+           ItemsSource="{Binding Distortions}"
+           SelectedItem="{Binding SelectedDistortion}"
+           SelectionChanged="ListBox_SelectionChanged">
+    <ListBox.ItemTemplate>
+      <DataTemplate>
+        <TextBlock Text="{Binding Description}">
+          <TextBlock.InputBindings>
+            <MouseBinding Command="{Binding DataContext.EditDistortionCommand, RelativeSource={RelativeSource AncestorType=Window}}" Gesture="LeftDoubleClick" />
+          </TextBlock.InputBindings>
+        </TextBlock>
+      </DataTemplate>
+    </ListBox.ItemTemplate>
+  </ListBox>
+</Grid>

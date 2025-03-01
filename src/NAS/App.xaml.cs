@@ -66,6 +66,9 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditFragnetsViewModel, EditFragnetsView>();
       ViewFactory.Instance.RegisterDialog<EditFragnetViewModel, EditFragnetView>();
       ViewFactory.Instance.RegisterDialog<ShowFragnetViewModel, ShowFragnetView>();
+      ViewFactory.Instance.RegisterDialog<EditDistortionsViewModel, EditDistortionsView>();
+      ViewFactory.Instance.RegisterDialog<EditDistortionViewModel, EditDistortionView>();
+      ViewFactory.Instance.RegisterDialog<AddDistortionViewModel, AddDistortionView>();
     }
 
     private static void RegisterNotificationTargets()

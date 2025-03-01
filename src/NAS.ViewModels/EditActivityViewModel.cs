@@ -64,9 +64,7 @@ namespace NAS.ViewModels
 
     public ObservableCollection<Fragnet> Fragnets { get; }
 
-#pragma warning disable CA1822 // Mark members as static
-    public List<ConstraintType> ConstraintTypes => Enum.GetValues(typeof(ConstraintType)).Cast<ConstraintType>().ToList();
-#pragma warning restore CA1822 // Mark members as static
+    public List<ConstraintType> ConstraintTypes => Enum.GetValues<ConstraintType>().Cast<ConstraintType>().ToList();
 
     public ResourceAssignment CurrentResourceAssignment
     {
@@ -144,7 +142,7 @@ namespace NAS.ViewModels
 
     private void EditDistortionsCommandExecute()
     {
-      using var vm = new DistortionsViewModel(_activity);
+      using var vm = new EditDistortionsViewModel(_schedule, _activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 

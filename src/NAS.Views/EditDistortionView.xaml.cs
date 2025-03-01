@@ -3,11 +3,11 @@
 namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for AddDistortionView.xaml
+  /// Interaction logic for EditDistortionView.xaml
   /// </summary>
-  public partial class AddDistortionView : IDialogContentView
+  public partial class EditDistortionView : IDialogContentView
   {
-    public AddDistortionView()
+    public EditDistortionView()
     {
       InitializeComponent();
     }

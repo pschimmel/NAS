@@ -870,7 +870,8 @@
                              Grid.ColumnSpan="2"
                              Command="{Binding CurrentSchedule.IncreaseDurationCommand}"
                              Header="{x:Static resx:NASResources.IncreaseDuration}"
-                             Icon="pack://application:,,,/NAS.Views;component/Images/Add.png">
+                             Icon="pack://application:,,,/NAS.Views;component/Images/Add.png"
+                             SizeDefinition="Middle">
                 <fluent:Button.ToolTip>
                   <fluent:ScreenTip Title="{x:Static resx:NASResources.IncreaseDurationToolTipTitle}"
                                     Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
@@ -881,7 +882,8 @@
                              Grid.ColumnSpan="2"
                              Command="{Binding CurrentSchedule.DecreaseDurationCommand}"
                              Header="{x:Static resx:NASResources.DecreaseDuration}"
-                             Icon="pack://application:,,,/NAS.Views;component/Images/Remove.png">
+                             Icon="pack://application:,,,/NAS.Views;component/Images/Remove.png"
+                             SizeDefinition="Middle">
                 <fluent:Button.ToolTip>
                   <fluent:ScreenTip Title="{x:Static resx:NASResources.DecreaseDurationToolTipTitle}"
                                     Image="pack://application:,,,/NAS.Views;component/Images/Information.png"

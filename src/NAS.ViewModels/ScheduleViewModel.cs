@@ -1130,7 +1130,7 @@ namespace NAS.ViewModels
 
     private void EditDistortions()
     {
-      using var vm = new DistortionsViewModel(CurrentActivity.Activity);
+      using var vm = new EditDistortionsViewModel(Schedule, CurrentActivity.Activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 

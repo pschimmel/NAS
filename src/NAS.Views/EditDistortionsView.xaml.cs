@@ -2,31 +2,26 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
 using NAS.ViewModels;
+using NAS.ViewModels.Base;
 
-namespace NAS
+namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for WindowDistortions.xaml
+  /// Interaction logic for EditDistortiosView.xaml
   /// </summary>
-  public partial class WindowDistortions : IView
+  public partial class EditDistortionsView : IDialogContentView
   {
-    public WindowDistortions()
+    public EditDistortionsView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
-    }
-
-    private void ButtonOK_Click(object sender, RoutedEventArgs e)
-    {
-      DialogResult = true;
     }
 
     private void Update()
@@ -96,32 +91,29 @@ namespace NAS
 
     private double GetX(Distortion distortion, double day)
     {
-      //TODO: Implement this method
-      return 0;
+      double w = canvas.ActualWidth;
+      double days = (ViewModel as EditDistortionsViewModel).Activity.OriginalDuration;
+      foreach (var d in (ViewModel as EditDistortionsViewModel).Distortions)
+      {
+        if (d is Delay && (d as Delay).Days.HasValue)
+        {
+          days += (d as Delay).Days.Value;
+        }
+        else if (d is Interruption && (d as Interruption).Days.HasValue)
+        {
+          days += (d as Interruption).Days.Value;
+        }
+        else if (d is Inhibition && (d as Inhibition).Percent.HasValue)
+        {
+          days *= (d as Inhibition).Percent.Value / 100 + 1;
+        }
+        else if (d is Extension && (d as Extension).Days.HasValue)
+        {
+          days += (d as Extension).Days.Value;
+        }
+      }
 
-      //double w = canvas.ActualWidth;
-      //double days = distortion.Activity.OriginalDuration;
-      //foreach (var d in distortion.Activity.Distortions)
-      //{
-      //  if (d is Delay && (d as Delay).Days.HasValue)
-      //  {
-      //    days += (d as Delay).Days.Value;
-      //  }
-      //  else if (d is Interruption && (d as Interruption).Days.HasValue)
-      //  {
-      //    days += (d as Interruption).Days.Value;
-      //  }
-      //  else if (d is Inhibition && (d as Inhibition).Percent.HasValue)
-      //  {
-      //    days *= (d as Inhibition).Percent.Value / 100 + 1;
-      //  }
-      //  else if (d is Extension && (d as Extension).Days.HasValue)
-      //  {
-      //    days += (d as Extension).Days.Value;
-      //  }
-      //}
-
-      //return days > 0 ? w / days * day : 0;
+      return days > 0 ? w / days * day : 0;
     }
 
     private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
