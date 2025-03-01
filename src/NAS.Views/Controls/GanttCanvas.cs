@@ -123,6 +123,11 @@ namespace NAS.Views.Controls
           throw new ArgumentException("Wrong layout type.");
         }
 
+        if (VM == null)
+        {
+          throw new ApplicationException("Set DataContext before setting a layout!");
+        }
+
         layout = ganttLayout;
 
         if (layout != null)

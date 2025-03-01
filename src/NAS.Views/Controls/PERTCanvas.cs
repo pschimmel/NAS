@@ -66,6 +66,15 @@ namespace NAS.Views.Controls
       set
       {
         layout = value as PERTLayout;
+
+        if (layout == null)
+          throw new ArgumentException("Layout must be of type PERTLayout");
+
+        if (VM == null)
+        {
+          throw new ApplicationException("Set DataContext before setting a layout!");
+        }
+
         if (layout != null)
         {
           activityStandardColor = DiagramHelperExtensions.TryParseColor(layout.ActivityStandardColor, activityStandardColor);

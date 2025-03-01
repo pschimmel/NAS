@@ -1,67 +1,80 @@
-﻿using System.Windows.Controls;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
 using NAS.Models.Enums;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class ShowFragnetViewModel : ViewModelBase
+  public class ShowFragnetViewModel : DialogContentViewModel, ILayoutViewModel
   {
-    private readonly ScheduleViewModel _scheduleVM;
-    private readonly Layout _layout;
+    #region Fields
+
+
+    #endregion
+
+    #region Constructor
 
     public ShowFragnetViewModel(Schedule schedule, Fragnet fragnet)
       : base()
     {
-      if (schedule == null)
-      {
-        throw new ArgumentNullException(nameof(schedule), "Argument mustn't be null");
-      }
+      ArgumentNullException.ThrowIfNull(schedule);
+      ArgumentNullException.ThrowIfNull(fragnet);
 
-      if (fragnet == null)
-      {
-        throw new ArgumentNullException(nameof(fragnet), "Argument mustn't be null");
-      }
+      Schedule = new ScheduleViewModel(schedule);
 
-      _scheduleVM = new ScheduleViewModel(schedule);
-
-      _layout = new GanttLayout
+      Layout = new GanttLayout
       {
         FilterCombination = FilterCombinationType.Or
       };
 
-      _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
+      Layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Fragnet) { Relation = FilterRelation.EqualTo, ObjectString = fragnet.ID.ToString() });
 
-      foreach (var a in _scheduleVM.Schedule.Activities)
+      foreach (var a in Schedule.Schedule.Activities)
       {
         if (a.Distortions != null)
         {
           foreach (var d in a.Distortions.Where(x => x.Fragnet == fragnet))
           {
-            _layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Number) { Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
+            Layout.FilterDefinitions.Add(new FilterDefinition(ActivityProperty.Number) { Relation = FilterRelation.EqualTo, ObjectString = a.ID.ToString() });
           }
         }
       }
 
-      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
-      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
-      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
-      _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
-      Title = "Fragnet " + fragnet;
+      Layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
+      Layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
+      Layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
+      Layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
+      Title = "Fragnet " + fragnet.Name;
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title { get; }
+
+    public override string Icon => "Chart";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(800, 600);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Fragnets;
+
+    public override IEnumerable<IButtonViewModel> Buttons => new List<IButtonViewModel> { ButtonViewModel.CreateCloseButton() };
+
+    #endregion
 
     #region Properties
 
-    public Canvas Canvas { get; set; }
+    public IPrintableCanvas Canvas { get; set; }
 
-    public Layout Layout { get; private set; }
+    public Layout Layout { get; }
 
-    public string Title { get; private set; }
+    public ScheduleViewModel Schedule { get; }
 
     public double Zoom
     {
-      get => _scheduleVM.Zoom * 4d;
-      set => _scheduleVM.Zoom = value / 4d;
+      get => Schedule.Zoom * 4d;
+      set => Schedule.Zoom = value / 4d;
     }
 
     #endregion
@@ -73,7 +86,7 @@ namespace NAS.ViewModels
       base.Dispose(disposing);
       if (disposing)
       {
-        _scheduleVM.Dispose();
+        Schedule.Dispose();
       }
     }
 

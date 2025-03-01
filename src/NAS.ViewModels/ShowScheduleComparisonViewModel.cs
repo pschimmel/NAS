@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Windows.Controls;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
 using NAS.Resources;
@@ -7,41 +6,42 @@ using NAS.ViewModels.Base;
 
 namespace NAS.ViewModels
 {
-  public class ShowSchedulesComparisonViewModel : ViewModelBase
+  public class ShowSchedulesComparisonViewModel : ViewModelBase, ILayoutViewModel
   {
-    private readonly ScheduleViewModel vm;
-    private readonly Layout layout;
+    private readonly Layout _layout;
 
     public ShowSchedulesComparisonViewModel(Schedule schedule, Schedule baseline)
       : base()
     {
-      vm = new ScheduleViewModel(schedule);
-      layout = new GanttLayout();
+      Schedule = new ScheduleViewModel(schedule);
+      _layout = new GanttLayout();
       Debug.Assert(baseline != null);
 
       if (baseline != null)
       {
-        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
-        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
-        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
-        layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
-        layout.VisibleBaselines.Add(new VisibleBaseline(baseline));
+        _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Number));
+        _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.Name));
+        _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.StartDate));
+        _layout.ActivityColumns.Add(new ActivityColumn(ActivityProperty.FinishDate));
+        _layout.VisibleBaselines.Add(new VisibleBaseline(baseline));
         Title = NASResources.ProjectComparison;
       }
     }
 
     #region Properties
 
-    public Canvas Canvas { get; set; }
+    public IPrintableCanvas Canvas { get; set; }
 
-    public Layout Layout { get; private set; }
+    public Layout Layout { get; }
 
-    public string Title { get; private set; }
+    public ScheduleViewModel Schedule { get; }
+
+    public string Title { get; }
 
     public double Zoom
     {
-      get => vm.Zoom * 4d;
-      set => vm.Zoom = value / 4d;
+      get => Schedule.Zoom * 4d;
+      set => Schedule.Zoom = value / 4d;
     }
 
     #endregion
@@ -53,7 +53,7 @@ namespace NAS.ViewModels
       base.Dispose(disposing);
       if (disposing)
       {
-        vm.Dispose();
+        Schedule.Dispose();
       }
     }
 

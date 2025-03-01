@@ -38,7 +38,7 @@ namespace NAS.ViewModels
     private double _zoom = 1.0;
     private RelationshipViewModel _currentRelationship;
     private ActivityViewModel _currentActivity;
-    private IVisibleLayoutViewModel _ActiveLayout;
+    private IVisibleLayoutViewModel _activeLayout;
     private ActionCommand<DateTime?> _calculateCommand;
     private ActionCommand _editSchedulingSettingsCommand;
     private ActionCommand<string> _addActivityCommand;
@@ -315,13 +315,13 @@ namespace NAS.ViewModels
 
     public IVisibleLayoutViewModel ActiveLayout
     {
-      get => _ActiveLayout;
+      get => _activeLayout;
       set
       {
-        if (_ActiveLayout != value)
+        if (_activeLayout != value)
         {
-          bool typeChanged = !Equals(_ActiveLayout?.LayoutType, value?.LayoutType);
-          _ActiveLayout = value;
+          bool typeChanged = !Equals(_activeLayout?.LayoutType, value?.LayoutType);
+          _activeLayout = value;
           Schedule.ActiveLayout = value?.Layout;
           OnPropertyChanged(nameof(ActiveLayout));
           OnRefreshLayout(typeChanged);
@@ -1012,7 +1012,7 @@ namespace NAS.ViewModels
 
     private void EditFragnets()
     {
-      using var vm = new FragnetsViewModel(Schedule);
+      using var vm = new EditFragnetsViewModel(Schedule);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
@@ -1487,10 +1487,10 @@ namespace NAS.ViewModels
         Schedule.ActivityAdded -= Schedule_ActivityAdded;
         Schedule.ActivityRemoved -= Schedule_ActivityRemoved;
 
-        if (_ActiveLayout != null)
+        if (_activeLayout != null)
         {
-          _ActiveLayout.Dispose();
-          _ActiveLayout = null;
+          _activeLayout.Dispose();
+          _activeLayout = null;
         }
       }
     }

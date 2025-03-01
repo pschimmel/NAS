@@ -3,11 +3,11 @@
 namespace NAS.Views
 {
   /// <summary>
-  /// Interaction logic for EditCalendarsView.xaml
+  /// Interaction logic for EditFragnetView.xaml
   /// </summary>
-  public partial class EditCalendarsView : IDialogContentView
+  public partial class EditFragnetView : IDialogContentView
   {
-    public EditCalendarsView()
+    public EditFragnetView()
     {
       InitializeComponent();
     }

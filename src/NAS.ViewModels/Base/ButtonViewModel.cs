@@ -19,7 +19,7 @@ namespace NAS.ViewModels.Base
       (
         x =>
         {
-          var resultArgs= new CancelEventArgs();
+          var resultArgs = new CancelEventArgs();
           CommandExecuting?.Invoke(this, resultArgs);
 
           if (resultArgs.Cancel)
@@ -56,6 +56,11 @@ namespace NAS.ViewModels.Base
     public static ButtonViewModel CreateOKButton(Action action = null, Func<bool> canExecuteAction = null)
     {
       return new ButtonViewModel(NASResources.OK, action, canExecuteAction) { IsDefault = true };
+    }
+
+    public static ButtonViewModel CreateCloseButton(Action action = null, Func<bool> canExecuteAction = null)
+    {
+      return new ButtonViewModel(NASResources.Close, action, canExecuteAction);
     }
 
     public static ButtonViewModel CreateCancelButton(Action action = null)

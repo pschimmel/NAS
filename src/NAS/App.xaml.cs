@@ -63,6 +63,9 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditFiltersViewModel, EditFiltersView>();
       ViewFactory.Instance.RegisterDialog<SelectFilterDefinitionViewModel, SelectFilterDefinitionView>();
       ViewFactory.Instance.RegisterDialog<EditBaselinesViewModel, EditBaselinesView>();
+      ViewFactory.Instance.RegisterDialog<EditFragnetsViewModel, EditFragnetsView>();
+      ViewFactory.Instance.RegisterDialog<EditFragnetViewModel, EditFragnetView>();
+      ViewFactory.Instance.RegisterDialog<ShowFragnetViewModel, ShowFragnetView>();
     }
 
     private static void RegisterNotificationTargets()
