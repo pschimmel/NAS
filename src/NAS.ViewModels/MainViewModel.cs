@@ -28,7 +28,6 @@ namespace NAS.ViewModels
   {
     #region Events
 
-    public event EventHandler ShutDownRequested;
     public event EventHandler<ItemEventArgs<Theme>> OnThemeChangeRequested;
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> ShowFastReport;

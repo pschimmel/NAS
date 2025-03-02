@@ -1,63 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using NAS.Models.Enums;
+﻿using NAS.Models.Enums;
+using NAS.Resources;
 using NAS.ViewModels.Base;
 
 namespace NAS.ViewModels
 {
-  public class SelectActivityPropertyViewModel : ViewModelBase
+  public class SelectActivityPropertyViewModel : DialogContentViewModel
   {
-    #region Fields
-
-    private ActivityProperty selectedActivityProperty;
-
-    #endregion
-
     #region Constructor
 
     public SelectActivityPropertyViewModel()
       : base()
     {
-      if (ActivityProperties.Count != 0)
-      {
-        selectedActivityProperty = ActivityProperties.First();
-      }
+      SelectedActivityProperty = ActivityProperties.First();
     }
 
     #endregion
 
     #region Properties
 
-    public List<ActivityProperty> ActivityProperties
-    {
-      get
-      {
-        var list = new List<ActivityProperty>();
-        foreach (ActivityProperty item in Enum.GetValues(typeof(ActivityProperty)))
-        {
-          if (item != ActivityProperty.None)
-          {
-            list.Add(item);
-          }
-        }
+#pragma warning disable CA1822 // Mark members as static
+    public IEnumerable<ActivityProperty> ActivityProperties => Enum.GetValues<ActivityProperty>().Cast<ActivityProperty>();
+#pragma warning restore CA1822 // Mark members as static
 
-        return list;
-      }
-    }
+    public ActivityProperty SelectedActivityProperty { get; set; }
 
-    public ActivityProperty SelectedActivityProperty
-    {
-      get => selectedActivityProperty;
-      set
-      {
-        if (selectedActivityProperty != value)
-        {
-          selectedActivityProperty = value;
-          OnPropertyChanged(nameof(SelectedActivityProperty));
-        }
-      }
-    }
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.PleaseSelectProperty;
+
+    public override string Icon => "Activity";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 150);
 
     #endregion
   }
