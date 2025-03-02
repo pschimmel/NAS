@@ -9,7 +9,6 @@ using NAS.Models.Enums;
 using NAS.Models.Settings;
 using NAS.Resources;
 using NAS.ViewModels;
-using NAS.ViewModels.Helpers;
 using NAS.Views.Controls;
 
 namespace NAS.Views
@@ -19,12 +18,6 @@ namespace NAS.Views
   /// </summary>
   public partial class MainWindow
   {
-    #region Fields
-
-    private WindowProgress windowProgress;
-
-    #endregion
-
     #region Constructor
 
     public MainWindow()
@@ -50,8 +43,7 @@ namespace NAS.Views
       }
 
       DataContext = viewModel;
-      viewModel.DownloadProgress += ViewModel_DownloadProgress;
-      viewModel.RequestThemeChange += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
+      viewModel.OnThemeChangeRequested += (s, args) => Helpers.ThemeManager.SetTheme(args.Item, dockingManager);
       viewModel.ActivateRibbonStartTab += (_, __) => Ribbon.SelectedTabItem = StartTab;
 
       viewModel.GetCanvas += (s, args) =>
@@ -119,28 +111,6 @@ namespace NAS.Views
     {
       var scheduleViewModel = e.Document.Content as ScheduleViewModel;
       (DataContext as MainViewModel).Schedules.Remove(scheduleViewModel);
-    }
-
-    #endregion
-
-    #region Progress
-
-    private void ViewModel_DownloadProgress(object sender, ProgressEventArgs e)
-    {
-      if (e == ProgressEventArgs.Starting)
-      {
-        windowProgress = new WindowProgress(0, NASResources.Downloading + "...");
-        windowProgress.Show();
-      }
-      else if (e == ProgressEventArgs.Finished)
-      {
-        windowProgress.Close();
-        windowProgress = null;
-      }
-      else
-      {
-        windowProgress?.SetProgress(e.CurrentProgress);
-      }
     }
 
     #endregion

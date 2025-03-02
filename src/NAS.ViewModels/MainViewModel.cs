@@ -29,8 +29,7 @@ namespace NAS.ViewModels
     #region Events
 
     public event EventHandler ShutDownRequested;
-    public event EventHandler<ProgressEventArgs> DownloadProgress;
-    public event EventHandler<ItemEventArgs<Theme>> RequestThemeChange;
+    public event EventHandler<ItemEventArgs<Theme>> OnThemeChangeRequested;
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> ShowFastReport;
     public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> EditFastReport;
@@ -570,12 +569,12 @@ namespace NAS.ViewModels
     {
       var oldTheme = SettingsController.Settings.Theme;
 
-      var vm = new SettingsViewModel(() => RequestThemeChange?.Invoke(this, new ItemEventArgs<Theme>(oldTheme)));
+      var vm = new SettingsViewModel(() => OnThemeChangeRequested?.Invoke(this, new ItemEventArgs<Theme>(oldTheme)));
       vm.PropertyChanged += (sender, args) =>
       {
         if (args.PropertyName == nameof(SettingsViewModel.SelectedTheme))
         {
-          RequestThemeChange?.Invoke(this, new ItemEventArgs<Theme>(vm.SelectedTheme));
+          OnThemeChangeRequested?.Invoke(this, new ItemEventArgs<Theme>(vm.SelectedTheme));
         }
       };
 
