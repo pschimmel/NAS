@@ -16,46 +16,44 @@
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Grid.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition />
-      <ColumnDefinition />
-    </Grid.ColumnDefinitions>
-    <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-      <TextBlock Margin="5" Text="{x:Static resx:NASResources.DataDate}" />
-      <DatePicker Grid.Column="1"
-                  Width="150"
-                  Margin="2"
-                  SelectedDate="{Binding DataDate}" />
-    </StackPanel>
-    <GroupBox Grid.Row="1"
-              Margin="2"
-              Header="{x:Static resx:NASResources.Schedule1}">
-      <extToolkit:CheckListBox Margin="2"
-                               DisplayMemberPath="Name"
-                               ItemsSource="{Binding Fragnets1}"
-                               SelectedMemberPath="IsChecked">
-        <extToolkit:CheckListBox.BorderBrush>
-          <SolidColorBrush />
-        </extToolkit:CheckListBox.BorderBrush>
-      </extToolkit:CheckListBox>
-    </GroupBox>
-    <GroupBox Grid.Row="1"
-              Grid.Column="1"
-              Margin="2"
-              Header="{x:Static resx:NASResources.Schedule2}">
-      <extToolkit:CheckListBox Margin="2"
-                               DisplayMemberPath="Name"
-                               ItemsSource="{Binding Fragnets2}"
-                               SelectedMemberPath="IsChecked">
-        <extToolkit:CheckListBox.BorderBrush>
-          <SolidColorBrush />
-        </extToolkit:CheckListBox.BorderBrush>
-      </extToolkit:CheckListBox>
-    </GroupBox>
-  </Grid>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition Height="*" />
+  </Grid.RowDefinitions>
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition />
+    <ColumnDefinition />
+  </Grid.ColumnDefinitions>
+  <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
+    <TextBlock Margin="5" Text="{x:Static resx:NASResources.DataDate}" />
+    <DatePicker Grid.Column="1"
+                Width="150"
+                Margin="2"
+                SelectedDate="{Binding DataDate}" />
+  </StackPanel>
+  <GroupBox Grid.Row="1"
+            Margin="2"
+            Header="{x:Static resx:NASResources.Schedule1}">
+    <extToolkit:CheckListBox Margin="2"
+                             DisplayMemberPath="Name"
+                             ItemsSource="{Binding Fragnets1}"
+                             SelectedMemberPath="IsChecked">
+      <extToolkit:CheckListBox.BorderBrush>
+        <SolidColorBrush />
+      </extToolkit:CheckListBox.BorderBrush>
+    </extToolkit:CheckListBox>
+  </GroupBox>
+  <GroupBox Grid.Row="1"
+            Grid.Column="1"
+            Margin="2"
+            Header="{x:Static resx:NASResources.Schedule2}">
+    <extToolkit:CheckListBox Margin="2"
+                             DisplayMemberPath="Name"
+                             ItemsSource="{Binding Fragnets2}"
+                             SelectedMemberPath="IsChecked">
+      <extToolkit:CheckListBox.BorderBrush>
+        <SolidColorBrush />
+      </extToolkit:CheckListBox.BorderBrush>
+    </extToolkit:CheckListBox>
+  </GroupBox>
 </Grid>
