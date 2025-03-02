@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Documents;
+﻿using System.Windows.Documents;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
@@ -10,13 +8,22 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class CompareResultsViewModel : ViewModelBase
+  public class CompareResultsViewModel : DialogContentViewModel
   {
+    #region Events
+
+    public event EventHandler OnPrintRequested;
+
+    #endregion
+
     #region Fields
 
-    private Schedule p1, p2;
-    private readonly string headline;
-    private readonly List<string> strings;
+    private readonly Schedule _schedule1;
+    private readonly Schedule _schedule2;
+    private readonly string _headline;
+    private readonly List<string> _strings;
+    private ActionCommand _printCommand;
+    private ActionCommand _showGraphCommand;
 
     #endregion
 
@@ -28,21 +35,42 @@ namespace NAS.ViewModels
       {
         IsColumnWidthFlexible = false
       };
-      p1 = data.Schedule1;
-      p2 = data.Schedule2;
-      headline = data.Headline;
-      strings = data.Text ?? [];
+      _schedule1 = data.Schedule1;
+      _schedule2 = data.Schedule2;
+      _headline = data.Headline;
+      _strings = data.Text ?? [];
 
       ShowComparisonResults();
-      PrintCommand = new ActionCommand(param => PrintCommandExecute(), param => PrintCommandCanExecute);
-      ShowComparisonGraphicCommand = new ActionCommand(param => ShowComparisonGraphicCommandExecute(), param => ShowComparisonGraphicCommandCanExecute);
     }
 
     #endregion
 
-    #region Public Members
+    #region Overwritten Members
+
+    public override string Title => NASResources.Comparison;
+
+    public override string Icon => "Compare";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(600, 350);
 
     public override HelpTopic HelpTopicKey => HelpTopic.Compare;
+
+    public override IEnumerable<IButtonViewModel> Buttons
+    {
+      get
+      {
+        return new List<IButtonViewModel>
+        {
+          ButtonViewModel.CreateButton(NASResources.Print, Print, CanPrint),
+          ButtonViewModel.CreateButton(NASResources.ShowChart, ShowGraph, CanShowGraph),
+          ButtonViewModel.CreateOKButton()
+        };
+      }
+    }
+
+    #endregion
+
+    #region Properties
 
     public FlowDocument ComparisonDocument { get; private set; }
 
@@ -50,34 +78,34 @@ namespace NAS.ViewModels
 
     #region Print
 
-    public ICommand PrintCommand { get; }
+    public ICommand PrintCommand => _printCommand ??= new ActionCommand(Print, CanPrint);
 
-    private void PrintCommandExecute()
+    private void Print()
     {
-      // TODO: Move to view
-      //TreeHelper.GetParent<FlowDocumentReader>(ComparisonDocument);
-      //var doc = ComparisonDocument.GetParent<FlowDocumentReader>();
-      //if (doc != null)
-      //{
-      //  doc.Print();
-      //}
+      OnPrintRequested?.Invoke(this, EventArgs.Empty);
     }
 
-    private bool PrintCommandCanExecute => p1 != null && p2 != null;
+    private bool CanPrint()
+    {
+      return _schedule1 != null && _schedule2 != null;
+    }
 
     #endregion
 
-    #region Show Comparison Graphic
+    #region Show Graph
 
-    public ICommand ShowComparisonGraphicCommand { get; }
+    public ICommand ShowGraphCommand => _showGraphCommand ??= new ActionCommand(ShowGraph, CanShowGraph);
 
-    private void ShowComparisonGraphicCommandExecute()
+    private void ShowGraph()
     {
-      using var vm = new ShowSchedulesComparisonViewModel(p1, p2);
+      using var vm = new ShowSchedulesComparisonViewModel(_schedule1, _schedule2);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool ShowComparisonGraphicCommandCanExecute => p1 != null && p2 != null;
+    private bool CanShowGraph()
+    {
+      return _schedule1 != null && _schedule2 != null;
+    }
 
     #endregion
 
@@ -85,114 +113,114 @@ namespace NAS.ViewModels
 
     private void ShowComparisonResults()
     {
-      ComparisonDocument.Blocks.Add(new Paragraph(new Bold(new Run(headline))) { FontSize = 16 });
-      foreach (string s in strings)
+      ComparisonDocument.Blocks.Add(new Paragraph(new Bold(new Run(_headline))) { FontSize = 16 });
+      foreach (string s in _strings)
       {
         ComparisonDocument.Blocks.Add(new Paragraph(new Run(s)) { FontSize = 12 });
       }
 
-      foreach (var a1 in p1.Activities)
+      foreach (var activity1 in _schedule1.Activities)
       {
         string s = "";
-        var a2 = p2.Activities.ToList().Find(x => x.Number == a1.Number);
-        if (a2 != null)
+        var activity2 = _schedule2.Activities.ToList().Find(x => x.Number == activity1.Number);
+        if (activity2 != null)
         {
-          if (a1.Fragnet != null && a2.Fragnet != null && a1.Fragnet.IsVisible && !a2.Fragnet.IsVisible)
+          if (activity1.Fragnet != null && activity2.Fragnet != null && activity1.Fragnet.IsVisible && !activity2.Fragnet.IsVisible)
           {
             s += string.Format(NASResources.ActivityDoesNotExist, 2) + " ";
           }
 
-          if (a1.Fragnet != null && a2.Fragnet != null && a2.Fragnet.IsVisible && !a1.Fragnet.IsVisible)
+          if (activity1.Fragnet != null && activity2.Fragnet != null && activity2.Fragnet.IsVisible && !activity1.Fragnet.IsVisible)
           {
             s += string.Format(NASResources.ActivityDoesNotExist, 1) + " ";
           }
 
-          if (a2.RetardedDuration > a1.RetardedDuration)
+          if (activity2.RetardedDuration > activity1.RetardedDuration)
           {
-            s += string.Format(NASResources.DurationIncreased, a2.RetardedDuration - a1.RetardedDuration) + " ";
+            s += string.Format(NASResources.DurationIncreased, activity2.RetardedDuration - activity1.RetardedDuration) + " ";
           }
 
-          if (a2.RetardedDuration < a1.RetardedDuration)
+          if (activity2.RetardedDuration < activity1.RetardedDuration)
           {
-            s += string.Format(NASResources.DurationDecreased, a1.RetardedDuration - a2.RetardedDuration) + " ";
+            s += string.Format(NASResources.DurationDecreased, activity1.RetardedDuration - activity2.RetardedDuration) + " ";
           }
 
-          if (a2.IsStarted && !a1.IsStarted && a2.StartDate != a1.StartDate)
+          if (activity2.IsStarted && !activity1.IsStarted && activity2.StartDate != activity1.StartDate)
           {
-            if (a2.StartDate > a1.StartDate)
+            if (activity2.StartDate > activity1.StartDate)
             {
-              s += string.Format(NASResources.ActivityStartedLater, a2.Calendar.GetWorkDays(a1.StartDate, a2.StartDate, true)) + " ";
+              s += string.Format(NASResources.ActivityStartedLater, activity2.Calendar.GetWorkDays(activity1.StartDate, activity2.StartDate, true)) + " ";
             }
             else
             {
-              s += string.Format(NASResources.ActivityStartedEarlier, a2.Calendar.GetWorkDays(a2.StartDate, a1.StartDate, true)) + " ";
+              s += string.Format(NASResources.ActivityStartedEarlier, activity2.Calendar.GetWorkDays(activity2.StartDate, activity1.StartDate, true)) + " ";
             }
           }
-          if (a2.IsFinished && !a1.IsFinished && a1.StartDate - a1.StartDate != a2.FinishDate - a2.StartDate)
+          if (activity2.IsFinished && !activity1.IsFinished && activity1.StartDate - activity1.StartDate != activity2.FinishDate - activity2.StartDate)
           {
-            if (a1.FinishDate - a1.StartDate > a2.FinishDate - a2.StartDate)
+            if (activity1.FinishDate - activity1.StartDate > activity2.FinishDate - activity2.StartDate)
             {
-              s += string.Format(NASResources.ActivityFinishedEarlier, a1.Calendar.GetWorkDays(a1.StartDate, a1.FinishDate, true) - a2.Calendar.GetWorkDays(a2.StartDate, a2.FinishDate, true)) + " ";
+              s += string.Format(NASResources.ActivityFinishedEarlier, activity1.Calendar.GetWorkDays(activity1.StartDate, activity1.FinishDate, true) - activity2.Calendar.GetWorkDays(activity2.StartDate, activity2.FinishDate, true)) + " ";
             }
             else
             {
-              s += string.Format(NASResources.ActivityFinishedLater, a2.Calendar.GetWorkDays(a2.StartDate, a2.FinishDate, true) - a1.Calendar.GetWorkDays(a1.StartDate, a1.FinishDate, true)) + " ";
+              s += string.Format(NASResources.ActivityFinishedLater, activity2.Calendar.GetWorkDays(activity2.StartDate, activity2.FinishDate, true) - activity1.Calendar.GetWorkDays(activity1.StartDate, activity1.FinishDate, true)) + " ";
             }
           }
-          if (a2.EarlyStartDate != a1.EarlyStartDate)
+          if (activity2.EarlyStartDate != activity1.EarlyStartDate)
           {
-            s += string.Format(NASResources.EarlyStartDateChanged, a1.EarlyStartDate.ToShortDateString(), a2.EarlyStartDate.ToShortDateString()) + " ";
+            s += string.Format(NASResources.EarlyStartDateChanged, activity1.EarlyStartDate.ToShortDateString(), activity2.EarlyStartDate.ToShortDateString()) + " ";
           }
 
-          if (a2.TotalFloat > a1.TotalFloat)
+          if (activity2.TotalFloat > activity1.TotalFloat)
           {
-            s += string.Format(NASResources.TotalFloatIncreased, a2.TotalFloat - a1.TotalFloat) + " ";
+            s += string.Format(NASResources.TotalFloatIncreased, activity2.TotalFloat - activity1.TotalFloat) + " ";
           }
 
-          if (a2.TotalFloat < a1.TotalFloat)
+          if (activity2.TotalFloat < activity1.TotalFloat)
           {
-            s += string.Format(NASResources.TotalFloatDecreased, a1.TotalFloat - a2.TotalFloat) + " ";
-            if (a2.TotalFloat < 0)
+            s += string.Format(NASResources.TotalFloatDecreased, activity1.TotalFloat - activity2.TotalFloat) + " ";
+            if (activity2.TotalFloat < 0)
             {
-              s += string.Format(NASResources.ActivityHasDelay, -a2.TotalFloat) + " ";
+              s += string.Format(NASResources.ActivityHasDelay, -activity2.TotalFloat) + " ";
             }
           }
-          if (a2.TotalPlannedCosts > a1.TotalPlannedCosts)
+          if (activity2.TotalPlannedCosts > activity1.TotalPlannedCosts)
           {
-            s += string.Format(NASResources.PlannedCostsIncreased, a2.TotalPlannedCosts - a1.TotalPlannedCosts) + " ";
+            s += string.Format(NASResources.PlannedCostsIncreased, activity2.TotalPlannedCosts - activity1.TotalPlannedCosts) + " ";
           }
 
-          if (a2.TotalPlannedCosts < a1.TotalPlannedCosts)
+          if (activity2.TotalPlannedCosts < activity1.TotalPlannedCosts)
           {
-            s += string.Format(NASResources.PlannedCostsDecreased, a1.TotalPlannedCosts - a2.TotalPlannedCosts) + " ";
+            s += string.Format(NASResources.PlannedCostsDecreased, activity1.TotalPlannedCosts - activity2.TotalPlannedCosts) + " ";
           }
 
-          if (a2.TotalActualCosts > a1.TotalActualCosts)
+          if (activity2.TotalActualCosts > activity1.TotalActualCosts)
           {
-            s += string.Format(NASResources.ActualCostsIncreased, a2.TotalActualCosts - a1.TotalActualCosts) + " ";
+            s += string.Format(NASResources.ActualCostsIncreased, activity2.TotalActualCosts - activity1.TotalActualCosts) + " ";
           }
 
-          if (a2.TotalActualCosts < a1.TotalActualCosts)
+          if (activity2.TotalActualCosts < activity1.TotalActualCosts)
           {
-            s += string.Format(NASResources.ActualCostsDecreased, a1.TotalActualCosts - a2.TotalActualCosts) + " ";
+            s += string.Format(NASResources.ActualCostsDecreased, activity1.TotalActualCosts - activity2.TotalActualCosts) + " ";
           }
 
-          if (a2.TotalActualCosts > a1.TotalBudget)
+          if (activity2.TotalActualCosts > activity1.TotalBudget)
           {
-            s += string.Format(NASResources.CostsHigherAsBudget, a2.TotalActualCosts - a1.TotalBudget) + " ";
+            s += string.Format(NASResources.CostsHigherAsBudget, activity2.TotalActualCosts - activity1.TotalBudget) + " ";
           }
         }
         if (!string.IsNullOrWhiteSpace(s))
         {
-          AddTextWithLabel(a1.Number + " (" + a1.Name + "): ", s);
+          AddTextWithLabel(activity1.Number + " (" + activity1.Name + "): ", s);
         }
       }
-      var e1 = p1.LastDay;
-      var e2 = p2.LastDay;
+      var e1 = _schedule1.LastDay;
+      var e2 = _schedule2.LastDay;
       if (e1 == e2)
       {
         string s = NASResources.ProjectEndUnchanged;
-        if (p2.EndDate.HasValue)
+        if (_schedule2.EndDate.HasValue)
         {
           s += " (" + NASResources.FixedEndDate + ").";
         }
@@ -208,38 +236,35 @@ namespace NAS.ViewModels
         ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ProjectEndChanged, e1.ToShortDateString(), e2.ToShortDateString()))) { FontSize = 12 });
       }
 
-      if (p2.TotalPlannedCosts > p1.TotalPlannedCosts)
+      if (_schedule2.TotalPlannedCosts > _schedule1.TotalPlannedCosts)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.PlannedCostsIncreased, p2.TotalPlannedCosts - p1.TotalPlannedCosts))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.PlannedCostsIncreased, _schedule2.TotalPlannedCosts - _schedule1.TotalPlannedCosts))) { FontSize = 12 });
       }
 
-      if (p2.TotalPlannedCosts < p1.TotalPlannedCosts)
+      if (_schedule2.TotalPlannedCosts < _schedule1.TotalPlannedCosts)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.PlannedCostsDecreased, p1.TotalPlannedCosts - p2.TotalPlannedCosts))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.PlannedCostsDecreased, _schedule1.TotalPlannedCosts - _schedule2.TotalPlannedCosts))) { FontSize = 12 });
       }
 
-      if (p2.TotalBudget > p1.TotalBudget)
+      if (_schedule2.TotalBudget > _schedule1.TotalBudget)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ProjectBudgetIncreased, p2.TotalBudget - p1.TotalBudget))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ProjectBudgetIncreased, _schedule2.TotalBudget - _schedule1.TotalBudget))) { FontSize = 12 });
       }
 
-      if (p2.TotalBudget < p1.TotalBudget)
+      if (_schedule2.TotalBudget < _schedule1.TotalBudget)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ProjectBudgetDecreased, p1.TotalBudget - p2.TotalBudget))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ProjectBudgetDecreased, _schedule1.TotalBudget - _schedule2.TotalBudget))) { FontSize = 12 });
       }
 
-      if (p2.TotalActualCosts > p1.TotalActualCosts)
+      if (_schedule2.TotalActualCosts > _schedule1.TotalActualCosts)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ActualCostsIncreased, p2.TotalActualCosts - p1.TotalActualCosts))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ActualCostsIncreased, _schedule2.TotalActualCosts - _schedule1.TotalActualCosts))) { FontSize = 12 });
       }
 
-      if (p2.TotalActualCosts < p1.TotalActualCosts)
+      if (_schedule2.TotalActualCosts < _schedule1.TotalActualCosts)
       {
-        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ActualCostsDecreased, p1.TotalActualCosts - p2.TotalActualCosts))) { FontSize = 12 });
+        ComparisonDocument.Blocks.Add(new Paragraph(new Run(string.Format(NASResources.ActualCostsDecreased, _schedule1.TotalActualCosts - _schedule2.TotalActualCosts))) { FontSize = 12 });
       }
-
-      p1 = null;
-      p2 = null;
     }
 
     private void AddTextWithLabel(string label, string text)

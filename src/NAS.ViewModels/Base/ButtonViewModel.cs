@@ -12,7 +12,12 @@ namespace NAS.ViewModels.Base
 
     private readonly ActionCommand<object> _command;
 
-    public ButtonViewModel(string text, Action executeDelegate = null, Func<bool> canExecuteDelegate = null)
+    private ButtonViewModel(string text,
+                            Action executeDelegate,
+                            Func<bool> canExecuteDelegate,
+                            bool isDefault,
+                            bool isCancel,
+                            bool closesDialog = true)
     {
       Text = text;
       _command = new ActionCommand
@@ -34,19 +39,22 @@ namespace NAS.ViewModels.Base
             CommandExecuted?.Invoke(this, EventArgs.Empty);
           }
         },
-        x => canExecuteDelegate?.Invoke() ?? true
+        x => canExecuteDelegate.Invoke()
       );
+      IsDefault = isDefault;
+      IsCancel = isCancel;
+      ClosesDialog = closesDialog;
     }
 
     public string Text { get; }
 
     public ICommand Command => _command;
 
-    public bool IsDefault { get; set; }
+    public bool IsDefault { get; }
 
-    public bool IsCancel { get; set; }
+    public bool IsCancel { get; }
 
-    public bool ClosesDialog { get; set; } = true;
+    public bool ClosesDialog { get; } = true;
 
     public void RaiseCanExecuteChanged()
     {
@@ -55,17 +63,27 @@ namespace NAS.ViewModels.Base
 
     public static ButtonViewModel CreateOKButton(Action action = null, Func<bool> canExecuteAction = null)
     {
-      return new ButtonViewModel(NASResources.OK, action, canExecuteAction) { IsDefault = true };
+      return new ButtonViewModel(NASResources.OK, action ?? new Action(() => { }), canExecuteAction ?? new Func<bool>(() => true), true, false);
     }
 
     public static ButtonViewModel CreateCloseButton(Action action = null, Func<bool> canExecuteAction = null)
     {
-      return new ButtonViewModel(NASResources.Close, action, canExecuteAction);
+      return new ButtonViewModel(NASResources.Close, action ?? new Action(() => { }), canExecuteAction ?? new Func<bool>(() => true), true, true);
     }
 
     public static ButtonViewModel CreateCancelButton(Action action = null)
     {
-      return new ButtonViewModel(NASResources.Cancel, action) { IsCancel = true };
+      return new ButtonViewModel(NASResources.Cancel, action ?? new Action(() => { }), new Func<bool>(() => true), false, true);
+    }
+
+    public static ButtonViewModel CreateButton(string text, Action action, Func<bool> canExecuteAction = null)
+    {
+      return new ButtonViewModel(text, action, canExecuteAction ?? new Func<bool>(() => true), false, false, false);
+    }
+
+    public static ButtonViewModel CreateAcceptButton(string text, Action action, Func<bool> canExecuteAction = null)
+    {
+      return new ButtonViewModel(text, action, canExecuteAction ?? new Func<bool>(() => true), false, false, true);
     }
   }
 }

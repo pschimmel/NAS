@@ -47,6 +47,8 @@ namespace NAS.ViewModels
 
     public override DialogSize DialogSize => DialogSize.Fixed(450, 325);
 
+    override public HelpTopic HelpTopicKey => HelpTopic.Calendars;
+
     #endregion
 
     #region Properties

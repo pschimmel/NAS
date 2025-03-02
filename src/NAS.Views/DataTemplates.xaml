@@ -6,7 +6,7 @@
   <DataTemplate DataType="{x:Type vmBase:ButtonViewModel}">
     <Button MinWidth="50"
             Margin="5,0,0,0"
-            Padding="2,0"
+            Padding="5,1"
             Command="{Binding Command}"
             Content="{Binding Text, Mode=OneTime}"
             IsCancel="{Binding IsCancel}"

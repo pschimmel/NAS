@@ -60,34 +60,18 @@ namespace NAS.Models.Entities
     protected Layout(Layout other, Dictionary<Resource, Resource> resourceMapping)
     {
       Debug.Assert(LayoutType == other.LayoutType);
-      foreach (var otherActivityColumn in other.ActivityColumns)
-      {
-        ActivityColumns.Add(otherActivityColumn.Clone());
-      }
+      ActivityColumns = new ObservableCollection<ActivityColumn>(other.ActivityColumns.Select(x => x.Clone()));
       ActivityCriticalColor = other.ActivityCriticalColor;
       ActivityDoneColor = other.ActivityDoneColor;
       ActivityStandardColor = other.ActivityDoneColor;
       DataDateColor = other.DataDateColor;
       FilterCombination = other.FilterCombination;
-      foreach (var otherFilterDefinition in other.FilterDefinitions)
-      {
-        FilterDefinitions.Add(otherFilterDefinition.Clone());
-      }
+      FilterDefinitions = new ObservableCollection<FilterDefinition>(other.FilterDefinitions.Select(x => x.Clone()));
       FooterHeight = other.FooterHeight;
-      foreach (var otherFooterItem in other.FooterItems)
-      {
-        FooterItems.Add(otherFooterItem.Clone());
-      }
-      foreach (var otherGroupingDefinition in other.GroupingDefinitions)
-      {
-        GroupingDefinitions.Add(otherGroupingDefinition.Clone());
-      }
+      FooterItems = new ObservableCollection<FooterItem>(other.FooterItems.Select(x => x.Clone()));
+      GroupingDefinitions = new ObservableCollection<GroupingDefinition>(other.GroupingDefinitions.Select(x => x.Clone()));
       HeaderHeight = other.HeaderHeight;
-      foreach (var otherHeaderItem in other.HeaderItems)
-      {
-        HeaderItems.Add(otherHeaderItem.Clone());
-      }
-
+      HeaderItems = new ObservableCollection<HeaderItem>(other.HeaderItems.Select(x => x.Clone()));
       BottomMargin = other.BottomMargin;
       LeftMargin = other.LeftMargin;
       RightMargin = other.RightMargin;
@@ -99,14 +83,9 @@ namespace NAS.Models.Entities
       Name = other.Name;
       ShowFloat = other.ShowFloat;
       ShowRelationships = other.ShowRelationships;
-      foreach (var otherSortingDefinition in other.SortingDefinitions)
-      {
-        SortingDefinitions.Add(otherSortingDefinition.Clone());
-      }
-      foreach (var otherVisibleBaseline in other.VisibleBaselines)
-      {
-        VisibleBaselines.Add(otherVisibleBaseline.Clone());
-      }
+      SortingDefinitions = new ObservableCollection<SortingDefinition>(other.SortingDefinitions.Select(x => x.Clone()));
+      VisibleBaselines = new ObservableCollection<VisibleBaseline>(other.VisibleBaselines.Select(x => x.Clone()));
+      VisibleResources = new ObservableCollection<VisibleResource>();
       foreach (var otherVisibleResource in other.VisibleResources)
       {
         var otherResource = resourceMapping[otherVisibleResource.Resource];

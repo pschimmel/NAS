@@ -69,6 +69,8 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditDistortionsViewModel, EditDistortionsView>();
       ViewFactory.Instance.RegisterDialog<EditDistortionViewModel, EditDistortionView>();
       ViewFactory.Instance.RegisterDialog<AddDistortionViewModel, AddDistortionView>();
+      ViewFactory.Instance.RegisterDialog<CompareResultsViewModel, CompareResultsView>();
+      ViewFactory.Instance.RegisterDialog<CompareSchedulesViewModel, CompareSchedulesView>();
     }
 
     private static void RegisterNotificationTargets()

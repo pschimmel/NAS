@@ -11,7 +11,7 @@ namespace NAS.ViewModels
 
     public Fragnet Fragnet { get; private set; }
 
-    public string Name => Fragnet.ToString();
+    public string Name => Fragnet.Name;
 
     public bool IsChecked { get; set; }
   }
