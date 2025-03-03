@@ -43,6 +43,7 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<SelectResourceTypeViewModel, SelectResourceTypeView>();
       ViewFactory.Instance.RegisterDialog<SelectResourceViewModel, SelectResourceView>();
       ViewFactory.Instance.RegisterDialog<SelectActivityPropertyViewModel, SelectActivityPropertyView>();
+      ViewFactory.Instance.RegisterDialog<SelectActivityViewModel, SelectActivityView>();
       ViewFactory.Instance.RegisterDialog<NewScheduleViewModel, NewScheduleView>();
       ViewFactory.Instance.RegisterDialog<EditWBSViewModel, EditWBSView>();
       ViewFactory.Instance.RegisterDialog<EditWBSItemViewModel, EditWBSItemView>();

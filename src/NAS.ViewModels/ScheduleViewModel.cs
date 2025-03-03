@@ -472,7 +472,7 @@ namespace NAS.ViewModels
         OnActivityDeleted(activityVM);
         if (ActiveLayout.LayoutType == LayoutType.PERT)
         {
-          var view = ViewModelExtensions.GetView(Activities);
+          var view = Activities.GetView();
           CurrentActivity = view.CurrentItem as ActivityViewModel;
         }
       });

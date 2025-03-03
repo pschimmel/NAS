@@ -63,7 +63,7 @@ namespace NAS.ViewModels
         if (sortingDefinitions == null)
         {
           sortingDefinitions = new ObservableCollection<SortingDefinition>(Layout.SortingDefinitions);
-          var view = ViewModelExtensions.GetView(sortingDefinitions);
+          var view = sortingDefinitions.GetView();
           view.SortDescriptions.Add(new SortDescription("Order", ListSortDirection.Ascending));
         }
         return sortingDefinitions;
@@ -80,7 +80,7 @@ namespace NAS.ViewModels
         if (groupingDefinitions == null)
         {
           groupingDefinitions = new ObservableCollection<GroupingDefinition>(Layout.GroupingDefinitions);
-          var view = ViewModelExtensions.GetView(groupingDefinitions);
+          var view = groupingDefinitions.GetView();
           view.SortDescriptions.Add(new SortDescription("Order", ListSortDirection.Ascending));
         }
         return groupingDefinitions;

@@ -1,16 +1,17 @@
-﻿using NAS.Models.Entities;
+﻿using ES.Tools.Core.MVVM;
+using NAS.Models.Entities;
+using NAS.Resources;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class SelectActivityViewModel : ViewModelBase
+  public class SelectActivityViewModel : DialogContentViewModel
   {
     #region Fields
 
-    private List<Activity> activities;
-    private Activity selectedActivity;
-    private string textFilter;
+    private Activity _selectedActivity;
+    private string _textFilter;
 
     #endregion
 
@@ -19,34 +20,35 @@ namespace NAS.ViewModels
     public SelectActivityViewModel(Schedule schedule)
       : base()
     {
-      Schedule = schedule;
+      Activities = new List<Activity>(schedule.Activities);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.Activity;
+
+    public override string Icon => "Activity";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 350);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Activity;
 
     #endregion
 
     #region Properties
 
-    public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
-
-    public Schedule Schedule { get; private set; }
-
-    public List<Activity> Activities
-    {
-      get
-      {
-        activities ??= new List<Activity>(Schedule.Activities);
-        return activities;
-      }
-    }
+    public List<Activity> Activities { get; }
 
     public Activity SelectedActivity
     {
-      get => selectedActivity;
+      get => _selectedActivity;
       set
       {
-        if (selectedActivity != value)
+        if (_selectedActivity != value)
         {
-          selectedActivity = value;
+          _selectedActivity = value;
           OnPropertyChanged(nameof(SelectedActivity));
         }
       }
@@ -54,14 +56,19 @@ namespace NAS.ViewModels
 
     public string TextFilter
     {
-      get => textFilter;
+      get => _textFilter;
       set
       {
-        if (textFilter != value)
+        if (_textFilter != value)
         {
-          textFilter = value;
+          _textFilter = value;
+          var view = Activities.GetView();
+          if (view != null)
+          {
+            view.Filter = new Predicate<object>(Filter);
+            OnPropertyChanged(nameof(Activities));
+          }
           OnPropertyChanged(nameof(TextFilter));
-          DoFilter();
         }
       }
     }
@@ -69,16 +76,6 @@ namespace NAS.ViewModels
     #endregion
 
     #region Private Members
-
-    private void DoFilter()
-    {
-      var view = ES.Tools.Core.MVVM.ViewModelExtensions.GetView(Activities);
-      if (view != null)
-      {
-        view.Filter = new Predicate<object>(Filter);
-        OnPropertyChanged(nameof(Activities));
-      }
-    }
 
     private bool Filter(object obj)
     {
@@ -88,14 +85,14 @@ namespace NAS.ViewModels
       }
 
       string t = null;
-      if (textFilter != null)
+      if (_textFilter != null)
       {
-        t = textFilter.ToLower();
+        t = _textFilter.ToLower();
       }
 
       return string.IsNullOrWhiteSpace(t) ||
-        item.Number != null && item.Number.ToLower().Contains(t) ||
-        item.Name != null && item.Name.ToLower().Contains(t);
+        item.Number != null && item.Number.Contains(t, StringComparison.CurrentCultureIgnoreCase) ||
+        item.Name != null && item.Name.Contains(t, StringComparison.CurrentCultureIgnoreCase);
     }
 
     #endregion

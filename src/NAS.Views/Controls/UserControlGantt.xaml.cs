@@ -229,7 +229,7 @@ namespace NAS.Views.Controls
 
     private void SortFilterAndGroup()
     {
-      var view = ViewModelExtensions.GetView(VM.Activities);
+      var view = VM.Activities.GetView();
       if (view != null)
       {
         if (view is IEditableCollectionView)
@@ -601,7 +601,7 @@ namespace NAS.Views.Controls
 
       foreach (var activityColumn in Layout.ActivityColumns.OrderBy(x => x.Order))
       {
-        DataGridColumn column= CreateColumn(activityColumn.Property);
+        DataGridColumn column = CreateColumn(activityColumn.Property);
         Debug.Assert(column is ITaggable);
         column.Width = activityColumn.ColumnWidth.HasValue ? new DataGridLength(activityColumn.ColumnWidth.Value) : DataGridLength.Auto;
         column.Header = ActivityPropertyHelper.GetNameOfActivityProperty(activityColumn.Property);

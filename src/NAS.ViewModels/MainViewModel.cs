@@ -903,7 +903,7 @@ namespace NAS.ViewModels
         var viewModel = new ScheduleViewModel(schedule);
         var buffer = new List<ScheduleViewModel>(Schedules);
         Schedules.Add(viewModel);
-        var view = ViewModelExtensions.GetView(Schedules);
+        var view = Schedules.GetView();
         view.Refresh();
         OnPropertyChanged(nameof(Schedules));
         CurrentSchedule = viewModel;

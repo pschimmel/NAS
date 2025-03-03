@@ -1,0 +1,54 @@
+﻿<Grid x:Class="NAS.Views.SelectActivityView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:resx="clr-namespace:NAS.Resources;assembly=NAS.Resources"
+      xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+      xmlns:ui="clr-namespace:ES.Tools.UI;assembly=ES.Tools"
+      xmlns:viewmodels="clr-namespace:NAS.ViewModels;assembly=NAS.ViewModels"
+      d:DataContext="{d:DesignInstance Type=viewmodels:SelectActivityViewModel}"
+      mc:Ignorable="d">
+  <Grid.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ui:SharedResourceDictionary Source="pack://application:,,,/NAS.Views;component/CommonResources.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Grid.Resources>
+  <Grid.RowDefinitions>
+    <RowDefinition Height="Auto" />
+    <RowDefinition />
+  </Grid.RowDefinitions>
+  <toolkit:WatermarkTextBox Margin="2"
+                            BorderBrush="Black"
+                            Text="{Binding TextFilter, UpdateSourceTrigger=PropertyChanged}"
+                            Watermark="{x:Static resx:NASResources.Search}" />
+  <DataGrid Grid.Row="1"
+            Margin="2"
+            AutoGenerateColumns="False"
+            GridLinesVisibility="Horizontal"
+            HorizontalScrollBarVisibility="Auto"
+            IsReadOnly="True"
+            IsSynchronizedWithCurrentItem="True"
+            ItemsSource="{Binding Activities}"
+            MouseDoubleClick="dataGrid_MouseDoubleClick"
+            SelectedItem="{Binding SelectedActivity}"
+            SelectionMode="Single"
+            VerticalScrollBarVisibility="Auto">
+    <DataGrid.Columns>
+      <DataGridTextColumn Width="Auto"
+                          Binding="{Binding Number}"
+                          Header="{x:Static resx:NASResources.Number}" />
+      <DataGridTextColumn Width="Auto"
+                          Binding="{Binding Name}"
+                          Header="{x:Static resx:NASResources.Name}" />
+      <DataGridTextColumn Width="Auto"
+                          Binding="{Binding StartDate, Converter={StaticResource DateConverter}}"
+                          Header="{x:Static resx:NASResources.StartDate}" />
+      <DataGridTextColumn Width="Auto"
+                          Binding="{Binding FinishDate, Converter={StaticResource DateConverter}}"
+                          Header="{x:Static resx:NASResources.FinishDate}" />
+    </DataGrid.Columns>
+  </DataGrid>
+</Grid>

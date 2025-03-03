@@ -22,11 +22,11 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Sofort-Hilfe</Bold>
+            <Bold>Instant Help</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit diesem Hilfefenster erhalten Sie kontextbasierende Hilfe zu allen Funktionen des Programms.
+          In this help window you will get context based help for all features of the program.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="start"
@@ -35,20 +35,20 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Hauptbildschirm</Bold>
+            <Bold>Main Screen</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Der Hauptbildschirm teilt sich in einen Tabellenbereich und einen Gantt-Bereich, der die Termine grafisch darstellt.
+          The main screen is divided into a table area and a Gantt area that graphically displays the schedules.
         </Paragraph>
         <Paragraph>
-          Über das Menü im oberen Bereich können Vorgänge und Meilensteine zum Terminplan hinzugefügt und die neuen Vorgänge in der Tabelle mit einer Dauer versehen werden.
+          Through the menu at the top, tasks and milestones can be added to the schedule, and the new tasks can be assigned a duration in the table.
         </Paragraph>
         <Paragraph>
-          Abhängigkeiten werden erstellt, indem mit der Maus eine Linie von einem Vorgang zu einem anderen gezogen wird.
+          Dependencies are created by drawing a line from one task to another with the mouse.
         </Paragraph>
         <Paragraph>
-          Durch einen Doppelklick auf einen Vorgang können die Vorgangsdetails bearbeitet werden.
+          By double-clicking on a task, the task details can be edited.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="wbs"
@@ -57,17 +57,17 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Projektstrukturplan</Bold>
+            <Bold>Work Breakdown Structure</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Der Projektstrukturplan dient der Strukturierung der Vorgänge des Projekts.
+          The work breakdown structure is used to structure the tasks of the project.
         </Paragraph>
         <Paragraph>
-          Das Hauptelement ist das Projekt, von welchem aus beliebig viele Unterebenen hierarchisch angelegt werden können.
+          The main element is the project, from which any number of sub-levels can be created hierarchically.
         </Paragraph>
         <Paragraph>
-          Der Projektstrukturplan kann als Gruppierung in der Ansicht verwendet werden.
+          The work breakdown structure can be used as a grouping in the view.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="calendars"
@@ -76,14 +76,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Projektkalender</Bold>
+            <Bold>Project Calendar</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Projektkalender definieren die Arbeitstage und die freien Tage der Vorgänge. Bei den Vorgangsdetails kann der Kalender des Vorgangs gewählt werden.
+          Project calendars define the working days and the free days of the tasks. In the task details, the calendar of the task can be selected.
         </Paragraph>
         <Paragraph>
-          Die eingegebenen Arbeitstage und die Feiertage werden bei der Berechnung der Start- und Endtermine der Vorgänge berücksichtigt.
+          The entered working days and holidays are taken into account when calculating the start and end dates of the tasks.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="resources"
@@ -92,23 +92,23 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Ressourcen</Bold>
+            <Bold>Resources</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Ressourcen können Arbeitsressourcen, Materialresourcen oder Kalenderresourcen sein. Diese können angelegt und danach den Vorgängen zugeordnet werden.
+          Resources can be work resources, material resources, or calendar resources. These can be created and then assigned to the tasks.
         </Paragraph>
         <Paragraph>
-          Ressourcen können Kosten für jede Einheit zugeordnet werden. Die Anzahl der Einheiten werden bei der Zuordnung zum Vorgang angegeben.
+          Resources can be assigned costs for each unit. The number of units is specified when assigning to the task.
         </Paragraph>
         <Paragraph>
-          Arbeitsressourcen beschreiben die Arbeitskräfte, die dem Projekt zur Verfügung stehen. Sie beziehen sich auf Werktage.
+          Work resources describe the workforce available to the project. They refer to working days.
         </Paragraph>
         <Paragraph>
-          Materialressourcen beschreiben die Materialien, die für das Projekt verwendet werden. Sie beziehen sich auf Werktage.
+          Material resources describe the materials used for the project. They refer to working days.
         </Paragraph>
         <Paragraph>
-          Kalenderressourcen verursachen Kosten, die an Kalendertagen auftreten.
+          Calendar resources cause costs that occur on calendar days.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="view"
@@ -117,17 +117,17 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Ansicht</Bold>
+            <Bold>View</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Im Ansicht-Menü kann der Zoom der Gantt-Ansicht eingestellt werden.
+          In the view menu, the zoom of the Gantt view can be adjusted.
         </Paragraph>
         <Paragraph>
-          Außerdem können verschiedene Layouts definiert werden, die die Darstellung der Gantt-Ansicht definieren.
+          Additionally, different layouts can be defined that determine the display of the Gantt view.
         </Paragraph>
         <Paragraph>
-          Die Einstellungen in diesem Menü außer dem Zoom-Faktor beziehen sich immer auf das aktuell ausgewählte Layout.
+          The settings in this menu, except for the zoom factor, always refer to the currently selected layout.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="GroupAndSort"
@@ -136,17 +136,17 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Sortieren und Gruppieren</Bold>
+            <Bold>Group and Sort</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Sortierungen sortieren die Vorgänge in der Gantt-Ansicht. Durch einen Klick auf eine Tabellenspalte wird diese als Sortierkriterium verwendet.
+          Sorting sorts the tasks in the Gantt view. By clicking on a table column, it is used as a sorting criterion.
         </Paragraph>
         <Paragraph>
-          Gruppierungen gruppieren die Vorgänge in der Gantt-Ansicht nach bestimmten Eigenschaften. Es können mehrere Gruppierkriterien und pro Kriterium eine Farbe ausgewählt werden. In der Tabelle wird dann die Gruppenüberschrift in dieser Farbe dargestellt.
+          Grouping groups the tasks in the Gantt view by certain properties. Multiple grouping criteria can be selected, and a color can be chosen for each criterion. The group header in the table is then displayed in this color.
         </Paragraph>
         <Paragraph>
-          Gruppierungen und Sortierungen werden im aktuell ausgewählten Layout gespeichert.
+          Grouping and sorting are saved in the currently selected layout.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="filters"
@@ -155,17 +155,17 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Filter</Bold>
+            <Bold>Filters</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit Filtern können die angezeigten Vorgänge nach bestimmten Eigenschaften gefiltert werden. Beim Anlegen neuer Filter muss die Eigenschaft ausgewählt werden, nach der die Vorgänge gefiltert werden, ein Vergleichsoperator und ein Wert angegeben werden, mit welchem die Vorgangseigenschaft verglichen wird.
+          Filters can be used to filter the displayed tasks by certain properties. When creating new filters, the property to filter by, a comparison operator, and a value to compare the task property with must be selected.
         </Paragraph>
         <Paragraph>
-          Vorgänge, die durch einen gesetzten Filter nicht mehr sichtbar sind, werden trotzdem bei der Berechnung berücksichtigt.
+          Tasks that are no longer visible due to a set filter are still considered in the calculation.
         </Paragraph>
         <Paragraph>
-          Filter werden im aktuell ausgewählten Layout gespeichert.
+          Filters are saved in the currently selected layout.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="baseline"
@@ -174,14 +174,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Basispläne</Bold>
+            <Bold>Baselines</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit Basisplänen können Soll-Ist-Vergleiche durchgeführt werden. Hierzu kann ein Planstand aus dem aktuellen Plan eingefrohren werden, oder aus einer Datei importiert werden.
+          Baselines can be used to perform planned vs. actual comparisons. A plan state can be frozen from the current plan or imported from a file.
         </Paragraph>
         <Paragraph>
-          Um den Basisplan in der Gantt-Ansicht zu sehen, muss dieser im aktuellen Layout auf sichtbar gesetzt sein und die Termine des aktuelle Plans müssen sich unterscheiden, um den Basisplan nicht zu verdecken.
+          To see the baseline in the Gantt view, it must be set to visible in the current layout, and the dates of the current plan must differ to avoid covering the baseline.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="fragnets"
@@ -194,10 +194,10 @@
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit Fragnets können Was-Wäre-Wenn-Vergleiche durchgeführt werden. Fragnets entsprechen einem Nachtrag. Im Detailfenster können verschiedene Daten eingegeben werden, um den Nachtrag zu überwachen. Den Fragnets werden bestehende Vorgänge hinzugeordnet.
+          Fragnets can be used to perform what-if comparisons. Fragnets correspond to a change request. In the detail window, various data can be entered to monitor the change request. Existing tasks are assigned to the fragnets.
         </Paragraph>
         <Paragraph>
-          Fragnets können einzeln ein- und ausgeblendet werden. Der Terminplan wird im Anschluss neu berechnet um direkt die Auswirkungen sichtbar zu machen.
+          Fragnets can be individually shown and hidden. The schedule is then recalculated to immediately show the effects.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="compare"
@@ -206,20 +206,20 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Vergleiche</Bold>
+            <Bold>Comparisons</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Vergleiche zeigen die Unterschiede zwischen zwei Plänen in Textform an. Im Ergebnisfenster kann auch eine grafische Darstellung der Unterschiede aufgerufen werden.
+          Comparisons show the differences between two plans in text form. In the result window, a graphical representation of the differences can also be called up.
         </Paragraph>
         <Paragraph>
-          Basisplan-Vergleiche vergleichen den aktuellen Plan mit dem Basisplan und zeigen so einen Soll-Ist-Vergleich.
+          Baseline comparisons compare the current plan with the baseline and thus show a planned vs. actual comparison.
         </Paragraph>
         <Paragraph>
-          Störungs-Vergleiche vergleichen den aktuellen Plan ohne und mit Störungen und zeigen so die Auswirkungen der Störungen aus.
+          Disturbance comparisons compare the current plan with and without disturbances and thus show the effects of the disturbances.
         </Paragraph>
         <Paragraph>
-          Für Fragnet-Vergleiche müssen ein oder mehrere Fragnets ausgewählt werden, die in jeweils einem Plan aktiviert werden sollen. Die beiden Pläne werden neu durchgerechnet und verglichen.
+          For fragnet comparisons, one or more fragnets must be selected, which are to be activated in each plan. The two plans are recalculated and compared.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="new"
@@ -228,11 +228,11 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Neues Projekt</Bold>
+            <Bold>New Project</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Diese Funktion legt ein neues Projekt an. Ein Projektname und ein Starttermin müssen angegeben werden.
+          This function creates a new project. A project name and a start date must be specified.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="print"
@@ -241,11 +241,11 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Druckausgabe</Bold>
+            <Bold>Print Output</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Die Druckausgabe druckt den Terminplan mit dem aktuellen Layout.
+          The print output prints the schedule with the current layout.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="reports"
@@ -254,14 +254,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Berichte</Bold>
+            <Bold>Reports</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit Berichten können die wichtigsten Daten des Terminplans in Textform ausgewertet werden.
+          Reports can be used to evaluate the most important data of the schedule in text form.
         </Paragraph>
         <Paragraph>
-          Bitte wählen Sie einen Bericht aus der Liste. Je nach Kategorie werden unterschiedliche Daten an den Bericht übergeben.
+          Please select a report from the list. Depending on the category, different data is passed to the report.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="activity"
@@ -270,14 +270,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Vorgänge</Bold>
+            <Bold>Tasks</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Vorgänge sind die kleinsten Arbeitsschritte im Terminplan. Es muss mindestens eine Plandauer angegeben werden. Die Vorgangstermine werden dann abhängig von den angegebenen Nachfolgern und Vorgängern berechnet.
+          Tasks are the smallest work steps in the schedule. At least one planned duration must be specified. The task dates are then calculated based on the specified successors and predecessors.
         </Paragraph>
         <Paragraph>
-          Wenn ein Fortschrittsgrad eingegeben wird, so wird dieser entsprechend im Diagramm dargestellt.
+          If a progress percentage is entered, it is displayed accordingly in the diagram.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="distortions"
@@ -286,30 +286,30 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Störungen</Bold>
+            <Bold>Disturbances</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Störungen definieren Abweichungen vom geplanten Fortschritt des Vorgangs. Hiermit können fremdverschuldete Verzögerungen an einem Vorgang dokumentiert werden.
+          Disturbances define deviations from the planned progress of the task. This can be used to document delays caused by external factors.
         </Paragraph>
         <Paragraph>
-          Jede Störung kann einem Fragnet zugeordnet und zusammen mit diesem ein- und ausgeblendet werden.
+          Each disturbance can be assigned to a fragnet and shown or hidden together with it.
         </Paragraph>
         <List>
           <ListItem>
-            <Paragraph>Verzögerungen definieren Störungen, bei denen der Vorgang nicht wie geplant beginnen konnte.</Paragraph>
+            <Paragraph>Delays define disturbances where the task could not start as planned.</Paragraph>
           </ListItem>
           <ListItem>
-            <Paragraph>Unterbrechungen definieren Störungen, bei denen der Vorgang unterbrochen werden musste.</Paragraph>
+            <Paragraph>Interruptions define disturbances where the task had to be interrupted.</Paragraph>
           </ListItem>
           <ListItem>
-            <Paragraph>Hemmungen definieren Störungen, bei denen der Vorgang nicht wie geplant fortschreiten kann und deshalb länger dauert.</Paragraph>
+            <Paragraph>Inhibitions define disturbances where the task cannot progress as planned and therefore takes longer.</Paragraph>
           </ListItem>
           <ListItem>
-            <Paragraph>Erweiterungen zusätzliche Leistungen, die die Dauer des Vorgangs verlängern.</Paragraph>
+            <Paragraph>Extensions define additional work that extends the duration of the task.</Paragraph>
           </ListItem>
           <ListItem>
-            <Paragraph>Verringerungen weggefallene Leistungen, die die Dauer des Vorgangs verringern.</Paragraph>
+            <Paragraph>Reductions define work that is no longer required, reducing the duration of the task.</Paragraph>
           </ListItem>
         </List>
       </FlowDocument>
@@ -319,23 +319,23 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Abhängigkeiten</Bold>
+            <Bold>Dependencies</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Abhängigkeiten definieren Beziehungen zwischen Vorgängen.
+          Dependencies define relationships between tasks.
         </Paragraph>
         <Paragraph>
-          Eine Ende-Start-Beziehung definiert, dass Vorgang 2 nach Vorgang 1 beginnt.
+          An end-to-start relationship defines that task 2 starts after task 1 ends.
         </Paragraph>
         <Paragraph>
-          Eine Start-Start-Beziehung definiert, dass Vorgang 1 und Vorgang 2 gemeinsam beginnen.
+          A start-to-start relationship defines that task 1 and task 2 start together.
         </Paragraph>
         <Paragraph>
-          Eine Ende-Ende-Beziehung definiert, dass Vorgang 1 und Vorgang 2 gemeinsam enden.
+          An end-to-end relationship defines that task 1 and task 2 end together.
         </Paragraph>
         <Paragraph>
-          Der Abstandswert definiert einen Abstand zwischen den Vorgängen.
+          The offset value defines a gap between the tasks.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="properties"
@@ -344,11 +344,11 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Projekt-Eigenschaften</Bold>
+            <Bold>Project Properties</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Die Projekt-Eigenschaften definieren die Grunddaten des Projekts. Das aktuelle Datum wird für die Berechnung der Termine verwendet.
+          The project properties define the basic data of the project. The current date is used for calculating the dates.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="layout"
@@ -361,7 +361,7 @@
           </Underline>
         </Paragraph>
         <Paragraph>
-          Ein Layout definiert die aktuelle Ansicht des Projekts. Es können mehrere Layouts pro Projekt angelegt werden.
+          A layout defines the current view of the project. Multiple layouts can be created per project.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="calculate"
@@ -370,11 +370,11 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Berechnen</Bold>
+            <Bold>Calculate</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Mit dem Berechnen des Terminplans werden alle Termine der Vorgänge neu berechnet und die Ansicht aktualisiert.
+          Calculating the schedule recalculates all task dates and updates the view.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="pert"
@@ -383,14 +383,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>PERT-Diagramm</Bold>
+            <Bold>PERT Diagram</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Das PERT-Diagramm zeigt die Vorgänge in der PERT-Ansicht.
+          The PERT diagram shows the tasks in the PERT view.
         </Paragraph>
         <Paragraph>
-          Mit der Maus können Abhängigkeiten gezeichnet werden. Durch das Drücken der Steuerungstaste beim Ziehen von Vorgängen wird der Vorgang verschoben.
+          Dependencies can be drawn with the mouse. By pressing the control key while dragging tasks, the task is moved.
         </Paragraph>
       </FlowDocument>
       <FlowDocument x:Key="customattributes"
@@ -399,14 +399,14 @@
                     IsColumnWidthFlexible="False">
         <Paragraph>
           <Underline>
-            <Bold>Benutzerdefinierte Attribute</Bold>
+            <Bold>Custom Attributes</Bold>
           </Underline>
         </Paragraph>
         <Paragraph>
-          Hier können Sie eigene Attribute anlegen, nach denen sie die Vorgänge gruppieren und sortieren können.
+          Here you can create your own attributes by which you can group and sort the tasks.
         </Paragraph>
         <Paragraph>
-          Mit der Maus können Abhängigkeiten gezeichnet werden. Durch das Drücken der Steuerungstaste beim Ziehen von Vorgängen wird der Vorgang verschoben.
+          Dependencies can be drawn with the mouse. By pressing the control key while dragging tasks, the task is moved.
         </Paragraph>
       </FlowDocument>
     </ResourceDictionary>

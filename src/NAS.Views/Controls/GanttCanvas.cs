@@ -926,7 +926,7 @@ namespace NAS.Views.Controls
     {
       if (VM.Schedule != null)
       {
-        var view = ViewModelExtensions.GetView(VM.Activities);
+        var view = VM.Activities.GetView();
         if (view != null)
         {
           // Filtering
@@ -1323,7 +1323,7 @@ namespace NAS.Views.Controls
 
     private double GetYOfActivity(ActivityViewModel a)
     {
-      var view = ViewModelExtensions.GetView(VM.Activities);
+      var view = VM.Activities.GetView();
       return view.GetRowY(a, RowHeight, GroupHeaderHeight) + ColumnHeaderHeight;
     }
 
