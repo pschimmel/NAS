@@ -36,6 +36,8 @@ namespace NAS.ViewModels
     {
       _schedule = schedule;
       var clonedActivities = new Dictionary<Activity, Activity>();
+      _activities = new List<Activity>();
+      _relationships = new List<Relationship>();
 
       foreach (var activity in schedule.Activities)
       {

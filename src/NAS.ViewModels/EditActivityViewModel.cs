@@ -113,10 +113,10 @@ namespace NAS.ViewModels
 
     private void SelectWBSCommandExecute()
     {
-      using var vm = new SelectWBSViewModel(_schedule, _activity);
+      using var vm = new SelectWBSViewModel(_schedule, _activity.WBSItem);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        _activity.WBSItem = vm.CurrentWBSItem?.Item;
+        _activity.WBSItem = vm.SelectedWBSItem?.Item;
       }
     }
 

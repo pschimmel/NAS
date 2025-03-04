@@ -1,64 +1,66 @@
-﻿using System.Windows.Input;
-using ES.Tools.Core.MVVM;
-using NAS.Models.Entities;
+﻿using NAS.Models.Entities;
+using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class SelectWBSViewModel : ViewModelBase
+  public class SelectWBSViewModel : DialogContentViewModel
   {
-    #region Fields
+    #region Constructor
 
-    private WBSItemViewModel _wbsRoot;
+    public SelectWBSViewModel(Schedule schedule, WBSItem selection)
+      : base()
+    {
+      if (schedule.WBSItem == null)
+      {
+        WBS = [];
+        return;
+      }
+
+      var root = GetWBSViewModel(schedule.WBSItem);
+      WBS = [root];
+      SelectWBSItem(WBS, FindWBSViewModel(WBS, selection));
+    }
 
     #endregion
 
-    #region Constructor
+    #region Overwritten Members
 
-    public SelectWBSViewModel(Schedule schedule, Activity activity)
-      : base()
+    public override string Title => NASResources.WBS;
+
+    public override string Icon => "WBS";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(400, 350);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.WBS;
+
+    public override IEnumerable<IButtonViewModel> Buttons
     {
-      Schedule = schedule;
-      CurrentActivity = activity;
-      RemoveSelectionCommand = new ActionCommand(param => RemoveSelectionCommandExecute(), param => RemoveSelectionCommandCanExecute);
+      get
+      {
+        return new List<IButtonViewModel>
+        {
+          ButtonViewModel.CreateButton(NASResources.ResetSelection, RemoveSelection, CanRemoveSelection),
+          ButtonViewModel.CreateCancelButton(),
+          ButtonViewModel.CreateOKButton()
+        };
+      }
     }
 
     #endregion
 
     #region Properties
 
-    public Activity CurrentActivity { get; private set; }
+    public List<WBSItemViewModel> WBS { get; }
 
-    public Schedule Schedule { get; private set; }
-
-    public List<WBSItemViewModel> WBS
+    public WBSItemViewModel SelectedWBSItem
     {
-      get
-      {
-        if (_wbsRoot == null)
-        {
-          if (Schedule.WBSItem == null)
-          {
-            var wbs = new WBSItem
-            {
-              Name = Schedule.Name,
-              Number = "1"
-            };
-            Schedule.WBSItem = wbs;
-          }
-          RefreshWBS();
-        }
-        return [_wbsRoot];
-      }
-    }
-
-    public WBSItemViewModel CurrentWBSItem
-    {
-      get => FindSelectedItem(_wbsRoot);
+      get => FindSelectedItem(WBS);
       private set
       {
-        SelectWBSItem(_wbsRoot, value);
-        OnPropertyChanged(nameof(CurrentWBSItem));
+        SelectWBSItem(WBS, value);
+        OnPropertyChanged(nameof(SelectedWBSItem));
       }
     }
 
@@ -66,122 +68,117 @@ namespace NAS.ViewModels
 
     #region Remove Selection
 
-    public ICommand RemoveSelectionCommand { get; }
-
-    private void RemoveSelectionCommandExecute()
+    private void RemoveSelection()
     {
-      DeselectWBSItem(_wbsRoot);
+      DeselectWBSItems(WBS);
     }
 
-    private bool RemoveSelectionCommandCanExecute => CurrentActivity != null && CurrentActivity.WBSItem != null;
+    private bool CanRemoveSelection()
+    {
+      return SelectedWBSItem == null;
+    }
 
     #endregion
 
     #region Private Members
 
-    private void RefreshWBS()
+    private WBSItemViewModel GetWBSViewModel(WBSItem item)
     {
-      _wbsRoot = GetWBSModel(Schedule.WBSItem);
-      OnPropertyChanged(nameof(WBS));
-    }
-
-    private WBSItemViewModel GetWBSModel(WBSItem item)
-    {
-      var model = new WBSItemViewModel(item);
-      model.SelectionChanged += (sender, args) =>
+      var vm = new WBSItemViewModel(item);
+      vm.SelectionChanged += (sender, args) =>
       {
         if ((sender as WBSItemViewModel).IsSelected)
         {
-          CurrentWBSItem = sender as WBSItemViewModel;
+          SelectedWBSItem = sender as WBSItemViewModel;
         }
       };
       foreach (var subItem in item.Children.OrderBy(x => x.Order))
       {
-        var subModel = GetWBSModel(subItem);
-        model.Items.Add(subModel);
+        var subModel = GetWBSViewModel(subItem);
+        vm.Items.Add(subModel);
       }
       item.Children.CollectionChanged += (sender, e) =>
       {
         if (e.Action is NotifyCollectionChangedAction.Add or NotifyCollectionChangedAction.Replace)
         {
-          var list = model.Items.ToList();
-          model.Items.Clear();
+          var list = vm.Items.ToList();
+          vm.Items.Clear();
           foreach (object newItem in e.NewItems)
           {
-            list.Add(GetWBSModel(newItem as WBSItem));
+            list.Add(GetWBSViewModel(newItem as WBSItem));
           }
           foreach (var listItem in list.OrderBy(x => x.Order))
           {
-            model.Items.Add(listItem);
+            vm.Items.Add(listItem);
           }
         }
         if (e.Action is NotifyCollectionChangedAction.Remove or NotifyCollectionChangedAction.Replace)
         {
-          var list = model.Items.ToList();
-          model.Items.Clear();
+          var list = vm.Items.ToList();
+          vm.Items.Clear();
           foreach (object oldItem in e.OldItems)
           {
             list.RemoveAll(x => x.Item == (WBSItem)oldItem);
           }
           foreach (var listItem in list)
           {
-            model.Items.Add(listItem);
+            vm.Items.Add(listItem);
           }
         }
       };
-      return model;
+      return vm;
     }
 
-    private WBSItemViewModel FindWBSItemModel(WBSItemViewModel parent, WBSItem item)
+    private static WBSItemViewModel FindWBSViewModel(IEnumerable<WBSItemViewModel> wbsItems, WBSItem item)
     {
-      if (parent.Item == item)
+      foreach (var vm in wbsItems)
       {
-        return parent;
-      }
-
-      foreach (var child in parent.Items)
-      {
-        var model = FindWBSItemModel(child, item);
-        if (model != null)
+        if (vm.Item == item)
         {
-          return model;
+          return vm;
+        }
+
+        var child = FindWBSViewModel(vm.Items, item);
+        if (child != null)
+        {
+          return child;
         }
       }
+
       return null;
     }
 
-    private void SelectWBSItem(WBSItemViewModel wbs, WBSItemViewModel selectedItem)
+    private static void SelectWBSItem(IEnumerable<WBSItemViewModel> wbsItems, WBSItemViewModel selectedItem)
     {
-      foreach (var subItem in wbs.Items)
+      foreach (var item in wbsItems)
       {
-        SelectWBSItem(subItem, selectedItem);
-      }
-
-      wbs.IsSelected = wbs == selectedItem;
-    }
-
-    private void DeselectWBSItem(WBSItemViewModel wbs)
-    {
-      wbs.IsSelected = false;
-      foreach (var child in wbs.Items)
-      {
-        DeselectWBSItem(child);
+        item.IsSelected = item == selectedItem;
+        SelectWBSItem(item.Items, selectedItem);
       }
     }
 
-    private WBSItemViewModel FindSelectedItem(WBSItemViewModel wbs)
+    private static void DeselectWBSItems(IEnumerable<WBSItemViewModel> wbsItems)
     {
-      if (wbs.IsSelected)
+      foreach (var item in wbsItems)
       {
-        return wbs;
+        item.IsSelected = false;
+        DeselectWBSItems(item.Items);
       }
+    }
 
-      foreach (var item in wbs.Items)
+    private static WBSItemViewModel FindSelectedItem(IEnumerable<WBSItemViewModel> wbsItems)
+    {
+      foreach (var item in wbsItems)
       {
-        var childModel = FindSelectedItem(item);
-        if (childModel != null)
+        if (item.IsSelected)
         {
-          return childModel;
+          return item;
+        }
+
+        var child = FindSelectedItem(item.Items);
+        if (child != null)
+        {
+          return child;
         }
       }
       return null;
@@ -196,7 +193,8 @@ namespace NAS.ViewModels
       base.Dispose(disposing);
       if (disposing)
       {
-        _wbsRoot.Dispose();
+        WBS.ToList().ForEach(x => x.Dispose());
+        WBS.Clear();
       }
     }
 

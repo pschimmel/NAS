@@ -75,6 +75,7 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<CompareResultsViewModel, CompareResultsView>();
       ViewFactory.Instance.RegisterDialog<CompareSchedulesViewModel, CompareSchedulesView>();
       ViewFactory.Instance.RegisterDialog<EditLogicViewModel, EditLogicView>();
+      ViewFactory.Instance.RegisterDialog<SelectWBSViewModel, SelectWBSView>();
     }
 
     private static void RegisterNotificationTargets()
