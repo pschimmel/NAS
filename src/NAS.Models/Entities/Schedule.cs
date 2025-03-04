@@ -218,7 +218,7 @@ namespace NAS.Models.Entities
 
     public ObservableCollection<VisibleBaseline> VisibleBaselines { get; } = [];
 
-    public ObservableCollection<Activity> Activities => new();
+    public ObservableCollection<Activity> Activities { get; } = [];
 
     public ObservableCollection<Calendar> Calendars { get; } = [];
 
@@ -240,7 +240,7 @@ namespace NAS.Models.Entities
 
     public WBSItem WBSItem { get; set; }
 
-    public ObservableCollection<Relationship> Relationships => new();
+    public ObservableCollection<Relationship> Relationships { get; } = [];
 
     public ObservableCollection<ResourceAssignment> ResourceAssignments { get; set; } = new ObservableCollection<ResourceAssignment>();
 
