@@ -8,92 +8,121 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels
 {
-  public class EditLogicViewModel : ViewModelBase
+  public class EditLogicViewModel : DialogContentViewModel
   {
     #region Fields
 
-    private Activity _currentActivity;
+    private Activity _selectedActivity;
     private readonly Schedule _schedule;
-    private LogicRelatedViewModel _currentPredecessor;
-    private LogicRelatedViewModel _currentSuccessor;
+    private readonly List<Activity> _activities;
+    private readonly List<Relationship> _relationships;
+    private LogicRelatedViewModel _selectedPredecessor;
+    private LogicRelatedViewModel _selectedSuccessor;
+    private ActionCommand _addPredecessorCommand;
+    private ActionCommand _removePredecessorCommand;
+    private ActionCommand _editPredecessorCommand;
+    private ActionCommand _gotoPredecessorCommand;
+    private ActionCommand _addSuccessorCommand;
+    private ActionCommand _removeSuccessorCommand;
+    private ActionCommand _editSuccessorCommand;
+    private ActionCommand _gotoSuccessorCommand;
 
     #endregion
 
     #region Constructor
 
-    public EditLogicViewModel(Schedule schedule, Activity activity)
+    public EditLogicViewModel(Schedule schedule, Activity selectedActivity)
       : base()
     {
       _schedule = schedule;
-      CurrentActivity = activity;
-      AddPredecessorCommand = new ActionCommand(AddPredecessorCommandExecute, () => AddPredecessorCommandCanExecute);
-      RemovePredecessorCommand = new ActionCommand(RemovePredecessorCommandExecute, () => RemovePredecessorCommandCanExecute);
-      EditPredecessorCommand = new ActionCommand(EditPredecessorCommandExecute, () => EditPredecessorCommandCanExecute);
-      GotoPredecessorCommand = new ActionCommand(GotoPredecessorCommandExecute, () => GotoPredecessorCommandCanExecute);
-      AddSuccessorCommand = new ActionCommand(AddSuccessorCommandExecute, () => AddSuccessorCommandCanExecute);
-      RemoveSuccessorCommand = new ActionCommand(RemoveSuccessorCommandExecute, () => RemoveSuccessorCommandCanExecute);
-      EditSuccessorCommand = new ActionCommand(EditSuccessorCommandExecute, () => EditSuccessorCommandCanExecute);
-      GotoSuccessorCommand = new ActionCommand(GotoSuccessorCommandExecute, () => GotoSuccessorCommandCanExecute);
+      var clonedActivities = new Dictionary<Activity, Activity>();
+
+      foreach (var activity in schedule.Activities)
+      {
+        var clone = activity.Clone();
+        _activities.Add(clone);
+        clonedActivities.Add(activity, clone);
+      }
+
+      foreach (var relationship in schedule.Relationships)
+      {
+        var clone = relationship.Clone(clonedActivities[relationship.Activity1], clonedActivities[relationship.Activity2]);
+        _relationships.Add(clone);
+      }
+
+      SelectedActivity = clonedActivities[selectedActivity];
     }
 
     #endregion
 
-    #region Public Members
+    #region Overwritten Members
+
+    public override string Title => NASResources.EditLogic;
+
+    public override string Icon => "EditRelationships";
+
+    public override DialogSize DialogSize => DialogSize.Fixed(350, 350);
 
     public override HelpTopic HelpTopicKey => HelpTopic.Relationship;
 
-    public Activity CurrentActivity
+    #endregion
+
+    #region Properties
+
+    public Activity SelectedActivity
     {
-      get => _currentActivity;
+      get => _selectedActivity;
       private set
       {
-        if (!ReferenceEquals(_currentActivity, value))
+        if (!ReferenceEquals(_selectedActivity, value))
         {
-          _currentActivity = value;
+          _selectedActivity = value;
           Predecessors.Clear();
           Successors.Clear();
-          if (_currentActivity != null)
+          if (_selectedActivity != null)
           {
-            foreach (var relationship in _schedule.GetPreceedingRelationships(_currentActivity))
+            foreach (var relationship in GetPreceedingRelationships(_selectedActivity))
             {
               Predecessors.Add(new LogicRelatedViewModel(relationship.Activity1, relationship));
             }
 
-            foreach (var relationship in _schedule.GetSucceedingRelationships(_currentActivity))
+            foreach (var relationship in GetSucceedingRelationships(_selectedActivity))
             {
               Successors.Add(new LogicRelatedViewModel(relationship.Activity2, relationship));
             }
           }
+
+          OnPropertyChanged(nameof(SelectedActivity));
         }
       }
     }
 
     public ObservableCollection<LogicRelatedViewModel> Predecessors { get; } = [];
 
-    public LogicRelatedViewModel CurrentPredecessor
+    public LogicRelatedViewModel SelectedPredecessor
     {
-      get => _currentPredecessor;
+      get => _selectedPredecessor;
       set
       {
-        if (_currentPredecessor != value)
+        if (_selectedPredecessor != value)
         {
-          _currentPredecessor = value;
-          OnPropertyChanged(nameof(CurrentPredecessor));
+          _selectedPredecessor = value;
+          OnPropertyChanged(nameof(SelectedPredecessor));
         }
       }
     }
 
     public ObservableCollection<LogicRelatedViewModel> Successors { get; } = [];
 
-    public LogicRelatedViewModel CurrentSuccessor
+    public LogicRelatedViewModel SelectedSuccessor
     {
-      get => _currentSuccessor;
+      get => _selectedSuccessor;
       set
       {
-        if (_currentSuccessor != value)
+        if (_selectedSuccessor != value)
         {
-          _currentSuccessor = value;
-          OnPropertyChanged(nameof(CurrentSuccessor));
+          _selectedSuccessor = value;
+          OnPropertyChanged(nameof(SelectedSuccessor));
         }
       }
     }
@@ -102,161 +131,213 @@ namespace NAS.ViewModels
 
     #region Add Predecessor
 
-    public ICommand AddPredecessorCommand { get; }
+    public ICommand AddPredecessorCommand => _addPredecessorCommand ??= new ActionCommand(AddPredecessor, CanAddPredecessor);
 
-    private void AddPredecessorCommandExecute()
+    private void AddPredecessor()
     {
-      using var vm = new SelectActivityViewModel(_schedule);
+      var otherActivities = _activities.Where(x => x != SelectedActivity && !Predecessors.Select(y => y.Activity).Contains(x));
+      using var vm = new SelectActivityViewModel(otherActivities);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        if (vm.SelectedActivity == CurrentActivity)
+        if (vm.SelectedActivity == SelectedActivity)
         {
           UserNotificationService.Instance.Error(NASResources.MessageCircularDependency);
         }
         else
         {
-          var relationship = _schedule.AddRelationship(vm.SelectedActivity, CurrentActivity);
+          var relationship = new Relationship(vm.SelectedActivity, SelectedActivity);
           var newVM = new LogicRelatedViewModel(vm.SelectedActivity, relationship);
           Predecessors.Add(newVM);
-          CurrentPredecessor = newVM;
+          SelectedPredecessor = newVM;
         }
       }
     }
 
-    private bool AddPredecessorCommandCanExecute => CurrentActivity != null;
+    private bool CanAddPredecessor()
+    {
+      return SelectedActivity != null;
+    }
 
     #endregion
 
     #region Remove Predecessor
 
-    public ICommand RemovePredecessorCommand { get; }
+    public ICommand RemovePredecessorCommand => _removePredecessorCommand ??= new ActionCommand(RemovePredecessor, CanRemovePredecessor);
 
-    private void RemovePredecessorCommandExecute()
+    private void RemovePredecessor()
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteRelationship, () =>
       {
-        _schedule.RemoveRelationship(CurrentPredecessor.Relationship);
+        _relationships.Remove(SelectedPredecessor.Relationship);
       });
     }
 
-    private bool RemovePredecessorCommandCanExecute => CurrentPredecessor != null;
+    private bool CanRemovePredecessor()
+    {
+      return SelectedPredecessor != null;
+    }
 
     #endregion
 
     #region Edit Predecessor
 
-    public ICommand EditPredecessorCommand { get; }
+    public ICommand EditPredecessorCommand => _editPredecessorCommand ??= new ActionCommand(EditPredecessor, CanEditPredecessor);
 
-    private void EditPredecessorCommandExecute()
+    private void EditPredecessor()
     {
-      using var vm = new EditRelationshipViewModel(_schedule)
+      using var vm = new EditRelationshipViewModel(_activities)
       {
-        SelectedActivity1 = CurrentPredecessor.Activity,
-        SelectedActivity2 = CurrentActivity,
-        Lag = CurrentPredecessor.Lag,
-        SelectedRelationshipType = CurrentPredecessor.RelationshipType
+        SelectedActivity1 = SelectedPredecessor.Activity,
+        SelectedActivity2 = SelectedActivity,
+        Lag = SelectedPredecessor.Lag,
+        SelectedRelationshipType = SelectedPredecessor.RelationshipType
       };
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        CurrentPredecessor.Lag = vm.Lag;
-        CurrentPredecessor.RelationshipType = vm.SelectedRelationshipType;
+        SelectedPredecessor.Lag = vm.Lag;
+        SelectedPredecessor.RelationshipType = vm.SelectedRelationshipType;
       }
     }
 
-    private bool EditPredecessorCommandCanExecute => CurrentPredecessor != null;
+    private bool CanEditPredecessor()
+    {
+      return SelectedPredecessor != null;
+    }
 
     #endregion
 
     #region Goto Predecessor
 
-    public ICommand GotoPredecessorCommand { get; }
+    public ICommand GotoPredecessorCommand => _gotoPredecessorCommand ??= new ActionCommand(GotoPredecessor, CanGotoPredecessor);
 
-    private void GotoPredecessorCommandExecute()
+    private void GotoPredecessor()
     {
-      CurrentActivity = CurrentPredecessor.Activity;
+      SelectedActivity = SelectedPredecessor.Activity;
     }
 
-    private bool GotoPredecessorCommandCanExecute => CurrentPredecessor != null;
+    private bool CanGotoPredecessor()
+    {
+      return SelectedPredecessor != null;
+    }
 
     #endregion
 
     #region Add Successor
 
-    public ICommand AddSuccessorCommand { get; }
+    public ICommand AddSuccessorCommand => _addSuccessorCommand ??= new ActionCommand(AddSuccessor, CanAddSuccessor);
 
-    private void AddSuccessorCommandExecute()
+    private void AddSuccessor()
     {
-      using var vm = new SelectActivityViewModel(_schedule);
+      var otherActivities = _activities.Where(x => x != SelectedActivity && !Successors.Select(y => y.Activity).Contains(x));
+      using var vm = new SelectActivityViewModel(otherActivities);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        if (vm.SelectedActivity == CurrentActivity)
+        if (vm.SelectedActivity == SelectedActivity)
         {
           UserNotificationService.Instance.Error(NASResources.MessageCircularDependency);
         }
         else
         {
-          var relationship = _schedule.AddRelationship(CurrentActivity, vm.SelectedActivity);
+          var relationship = new Relationship(SelectedActivity, vm.SelectedActivity);
           var newVM = new LogicRelatedViewModel(vm.SelectedActivity, relationship);
           Successors.Add(newVM);
-          CurrentSuccessor = newVM;
+          SelectedSuccessor = newVM;
         }
       }
     }
 
-    private bool AddSuccessorCommandCanExecute => CurrentActivity != null;
+    private bool CanAddSuccessor()
+    {
+      return SelectedActivity != null;
+    }
 
     #endregion
 
     #region Remove Successor
 
-    public ICommand RemoveSuccessorCommand { get; }
+    public ICommand RemoveSuccessorCommand => _removeSuccessorCommand ??= new ActionCommand(RemoveSuccessor, CanRemoveSuccessor);
 
-    private void RemoveSuccessorCommandExecute()
+    private void RemoveSuccessor()
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteRelationship, () =>
       {
-        _schedule.RemoveRelationship(CurrentSuccessor.Relationship);
+        _relationships.Remove(SelectedSuccessor.Relationship);
       });
     }
 
-    private bool RemoveSuccessorCommandCanExecute => CurrentSuccessor != null;
+    private bool CanRemoveSuccessor()
+    {
+      return SelectedSuccessor != null;
+    }
 
     #endregion
 
     #region Edit Successor
 
-    public ICommand EditSuccessorCommand { get; }
+    public ICommand EditSuccessorCommand => _editSuccessorCommand ??= new ActionCommand(EditSuccessor, CanEditSuccessor);
 
-    private void EditSuccessorCommandExecute()
+    private void EditSuccessor()
     {
-      using var vm = new EditRelationshipViewModel(_schedule)
+      using var vm = new EditRelationshipViewModel(_activities)
       {
-        SelectedActivity1 = CurrentActivity,
-        SelectedActivity2 = CurrentSuccessor.Activity,
-        Lag = CurrentSuccessor.Lag,
-        SelectedRelationshipType = CurrentSuccessor.RelationshipType
+        SelectedActivity1 = SelectedActivity,
+        SelectedActivity2 = SelectedSuccessor.Activity,
+        Lag = SelectedSuccessor.Lag,
+        SelectedRelationshipType = SelectedSuccessor.RelationshipType
       };
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        CurrentSuccessor.Lag = vm.Lag;
-        CurrentSuccessor.RelationshipType = vm.SelectedRelationshipType;
+        SelectedSuccessor.Lag = vm.Lag;
+        SelectedSuccessor.RelationshipType = vm.SelectedRelationshipType;
       }
     }
 
-    private bool EditSuccessorCommandCanExecute => CurrentSuccessor != null;
+    private bool CanEditSuccessor()
+    {
+      return SelectedSuccessor != null;
+    }
 
     #endregion
 
     #region Goto Successor
 
-    public ICommand GotoSuccessorCommand { get; }
+    public ICommand GotoSuccessorCommand => _gotoSuccessorCommand ??= new ActionCommand(GotoSuccessor, CanGotoSuccessor);
 
-    private void GotoSuccessorCommandExecute()
+    private void GotoSuccessor()
     {
-      CurrentActivity = CurrentSuccessor.Activity;
+      SelectedActivity = SelectedSuccessor.Activity;
     }
 
-    private bool GotoSuccessorCommandCanExecute => CurrentSuccessor != null;
+    private bool CanGotoSuccessor()
+    {
+      return SelectedSuccessor != null;
+    }
+
+    #endregion
+
+    #region Private Members
+
+    private IEnumerable<Relationship> GetPreceedingRelationships(Activity activity)
+    {
+      return _relationships.Where(x => x.Activity2 == activity);
+    }
+
+    private IEnumerable<Relationship> GetSucceedingRelationships(Activity activity)
+    {
+      return _relationships.Where(x => x.Activity1 == activity);
+    }
+
+    #endregion
+
+    #region Apply
+
+    protected override void OnApply()
+    {
+      _schedule.Relationships.Clear();
+      _schedule.Relationships.AddRange(_relationships);
+      _schedule.Activities.Clear();
+      _schedule.Activities.AddRange(_activities);
+    }
 
     #endregion
   }

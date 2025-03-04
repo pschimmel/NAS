@@ -20,13 +20,6 @@ namespace NAS.Models.Entities
 
     #endregion
 
-    #region Fields
-
-    private readonly List<Activity> _activities = [];
-    private readonly List<Relationship> _relationships = [];
-
-    #endregion
-
     #region Constructors
 
     public Schedule()
@@ -223,11 +216,9 @@ namespace NAS.Models.Entities
 
     public ObservableCollection<Schedule> Baselines { get; } = [];
 
-    public Schedule BaselineOf { get; set; }
-
     public ObservableCollection<VisibleBaseline> VisibleBaselines { get; } = [];
 
-    public IReadOnlyCollection<Activity> Activities => new ReadOnlyCollection<Activity>(_activities);
+    public ObservableCollection<Activity> Activities => new();
 
     public ObservableCollection<Calendar> Calendars { get; } = [];
 
@@ -249,7 +240,7 @@ namespace NAS.Models.Entities
 
     public WBSItem WBSItem { get; set; }
 
-    public IReadOnlyCollection<Relationship> Relationships => new ReadOnlyCollection<Relationship>(_relationships);
+    public ObservableCollection<Relationship> Relationships => new();
 
     public ObservableCollection<ResourceAssignment> ResourceAssignments { get; set; } = new ObservableCollection<ResourceAssignment>();
 
@@ -382,14 +373,14 @@ namespace NAS.Models.Entities
 
     public void AddActivity(Activity activity)
     {
-      if (string.IsNullOrWhiteSpace(activity.Number) || _activities.Any(x => x.Number == activity.Number))
+      if (string.IsNullOrWhiteSpace(activity.Number) || Activities.Any(x => x.Number == activity.Number))
       {
         activity.Number = GetNewID();
       }
 
       activity.Calendar ??= StandardCalendar;
 
-      _activities.Add(activity);
+      Activities.Add(activity);
       OnActivityAdded(activity);
     }
 
@@ -403,7 +394,7 @@ namespace NAS.Models.Entities
         LateStartDate = DataDate,
         OriginalDuration = 5
       };
-      _activities.Add(newActivity);
+      Activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
     }
@@ -420,7 +411,7 @@ namespace NAS.Models.Entities
         RemoveRelationship(item);
       }
 
-      if (_activities.Remove(activity))
+      if (Activities.Remove(activity))
       {
         OnActivityRemoved(activity);
       }
@@ -436,7 +427,7 @@ namespace NAS.Models.Entities
         LateStartDate = DataDate,
         OriginalDuration = 0
       };
-      _activities.Add(newActivity);
+      Activities.Add(newActivity);
       OnActivityAdded(newActivity);
       return newActivity;
     }
@@ -675,21 +666,21 @@ namespace NAS.Models.Entities
 
     public void AddRelationship(Relationship relationship)
     {
-      _relationships.Add(relationship);
+      Relationships.Add(relationship);
       OnRelationshipAdded(relationship);
     }
 
     public Relationship AddRelationship(Activity activity1, Activity activity2, RelationshipType type = RelationshipType.FinishFinish)
     {
       var relationship = new Relationship(activity1, activity2, type);
-      _relationships.Add(relationship);
+      Relationships.Add(relationship);
       OnRelationshipAdded(relationship);
       return relationship;
     }
 
     public void RemoveRelationship(Relationship relationship)
     {
-      _relationships.Remove(relationship);
+      Relationships.Remove(relationship);
       OnRelationshipRemoved(relationship);
     }
 
@@ -833,7 +824,6 @@ namespace NAS.Models.Entities
     /// </summary>
     public void RemoveBaseline(Schedule baseline)
     {
-      baseline.BaselineOf = null;
       Baselines.Remove(baseline);
 
       // Also remove the visible baseline defintion from the layouts.

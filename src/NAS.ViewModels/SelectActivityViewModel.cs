@@ -17,10 +17,10 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public SelectActivityViewModel(Schedule schedule)
+    public SelectActivityViewModel(IEnumerable<Activity> activities)
       : base()
     {
-      Activities = new List<Activity>(schedule.Activities);
+      Activities = new List<Activity>(activities);
     }
 
     #endregion

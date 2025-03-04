@@ -10,7 +10,6 @@ namespace NAS.ViewModels
   {
     #region Fields
 
-    private readonly Schedule _schedule;
     private Activity _selectedActivity1;
     private Activity _selectedActivity2;
     private RelationshipType _selectedRelationshipType;
@@ -20,13 +19,13 @@ namespace NAS.ViewModels
 
     #region Constructor
 
-    public EditRelationshipViewModel(Schedule schedule)
+    public EditRelationshipViewModel(IEnumerable<Activity> activities)
     {
-      _schedule = schedule ?? throw new ArgumentNullException(nameof(schedule));
+      Activities = new List<Activity>(activities);
     }
 
-    public EditRelationshipViewModel(Schedule schedule, Relationship relationShip = null)
-      : this(schedule)
+    public EditRelationshipViewModel(IEnumerable<Activity> activities, Relationship relationShip = null)
+      : this(activities)
     {
       _selectedActivity1 = relationShip?.Activity1;
       _selectedActivity2 = relationShip?.Activity2;
@@ -50,7 +49,7 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public List<Activity> Activities => _schedule.Activities.ToList();
+    public List<Activity> Activities { get; }
 
     public Activity SelectedActivity1
     {

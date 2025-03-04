@@ -522,7 +522,7 @@ namespace NAS.ViewModels
       }
       else
       {
-        var vm = new EditRelationshipViewModel(Schedule);
+        var vm = new EditRelationshipViewModel(Schedule.Activities);
         if (ViewFactory.Instance.ShowDialog(vm) != true)
         {
           return;
@@ -581,7 +581,7 @@ namespace NAS.ViewModels
     private void EditRelationship()
     {
       var relationship = CurrentRelationship.Relationship;
-      using var vm = new EditRelationshipViewModel(Schedule, relationship);
+      using var vm = new EditRelationshipViewModel(Schedule.Activities, relationship);
 
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {

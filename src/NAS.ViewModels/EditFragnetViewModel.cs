@@ -93,7 +93,7 @@ namespace NAS.ViewModels
 
     private void AddActivityToFragnet()
     {
-      using var vm = new SelectActivityViewModel(_schedule);
+      using var vm = new SelectActivityViewModel(_schedule.Activities);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedActivity != null)
       {
         if (vm.SelectedActivity.Fragnet == _fragnet)

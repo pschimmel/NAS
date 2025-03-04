@@ -32,7 +32,6 @@
             IsReadOnly="True"
             IsSynchronizedWithCurrentItem="True"
             ItemsSource="{Binding Activities}"
-            MouseDoubleClick="dataGrid_MouseDoubleClick"
             SelectedItem="{Binding SelectedActivity}"
             SelectionMode="Single"
             VerticalScrollBarVisibility="Auto">
