@@ -210,15 +210,15 @@ namespace NAS.Views.Controls
           }
 
           // Draw Relationships
-          foreach (var r in VM.Relationships)
+          foreach (RelationshipViewModel relationship in VM.Relationships)
           {
-            if (visibleActivities.Contains(r.Activity1) && visibleActivities.Contains(r.Activity2))
+            if (view.PassesFilter(relationship.Activity1) && view.PassesFilter(relationship.Activity2))
             {
-              AddRelationship(r);
+              AddRelationship(relationship);
             }
             else
             {
-              RemoveRelationship(r);
+              RemoveRelationship(relationship);
             }
           }
         }
@@ -310,12 +310,16 @@ namespace NAS.Views.Controls
           RefreshActivity(vm);
           foreach (var predecessor in Schedule.GetPreceedingRelationships(activity))
           {
-            RefreshRelationship(new RelationshipViewModel(predecessor));
+            var activity1 = VM.Activities.First(x => x.Activity == predecessor.Activity1);
+            var activity2 = VM.Activities.First(x => x.Activity == predecessor.Activity2);
+            RefreshRelationship(new RelationshipViewModel(predecessor, activity1, activity2));
           }
 
           foreach (var successor in Schedule.GetSucceedingRelationships(activity))
           {
-            RefreshRelationship(new RelationshipViewModel(successor));
+            var activity1 = VM.Activities.First(x => x.Activity == successor.Activity1);
+            var activity2 = VM.Activities.First(x => x.Activity == successor.Activity2);
+            RefreshRelationship(new RelationshipViewModel(successor, activity1, activity2));
           }
         }
       };
@@ -588,8 +592,8 @@ namespace NAS.Views.Controls
       }
 
       var path = GetPathFromRelationship(r);
-      var diagramm1 = GetDiagramFromActivity(new ActivityViewModel(Schedule, r.Activity1));
-      var diagramm2 = GetDiagramFromActivity(new ActivityViewModel(Schedule, r.Activity2));
+      var diagramm1 = GetDiagramFromActivity(r.Activity1);
+      var diagramm2 = GetDiagramFromActivity(r.Activity2);
       if (path == null || diagramm1 == null || diagramm2 == null)
       {
         return;
@@ -847,14 +851,18 @@ namespace NAS.Views.Controls
             var activity = dragActivityData.Activity;
             RefreshActivity(new ActivityViewModel(Schedule, activity));
 
-            foreach (var rel in Schedule.GetVisiblePreceedingRelationships(activity))
+            foreach (var predecessor in Schedule.GetVisiblePreceedingRelationships(activity))
             {
-              RefreshRelationship(new RelationshipViewModel(rel));
+              var activity1 = VM.Activities.First(x => x.Activity == predecessor.Activity1);
+              var activity2 = VM.Activities.First(x => x.Activity == predecessor.Activity2);
+              RefreshRelationship(new RelationshipViewModel(predecessor, activity1, activity2));
             }
 
-            foreach (var rel in Schedule.GetVisibleSucceedingRelationships(activity))
+            foreach (var successor in Schedule.GetVisibleSucceedingRelationships(activity))
             {
-              RefreshRelationship(new RelationshipViewModel(rel));
+              var activity1 = VM.Activities.First(x => x.Activity == successor.Activity1);
+              var activity2 = VM.Activities.First(x => x.Activity == successor.Activity2);
+              RefreshRelationship(new RelationshipViewModel(successor, activity1, activity2));
             }
           }
         }
@@ -863,7 +871,7 @@ namespace NAS.Views.Controls
       {
         var activity = dragActivityData.Activity;
 
-        // Draw relationship
+        // Draw predecessor
         var diagramm = e.OriginalSource is PERTDiagram ? e.OriginalSource as PERTDiagram : (e.OriginalSource as TextBlock).GetParent<PERTDiagram>();
         var selectedActivity = diagramm.Item;
         if (selectedActivity == null)

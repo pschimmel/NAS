@@ -288,7 +288,7 @@ namespace NAS.Views.Controls
         SortFilterAndGroup();
 
         // Draw Activities
-        var view = (CollectionView)CollectionViewSource.GetDefaultView(VM.Activities);
+        var view = VM.Activities.GetView();
         if (view != null)
         {
           foreach (var a in view.OfType<ActivityViewModel>().ToList())
@@ -297,15 +297,15 @@ namespace NAS.Views.Controls
           }
 
           // Draw Relationships
-          foreach (var r in VM.Relationships)
+          foreach (RelationshipViewModel relationship in VM.Relationships)
           {
-            if (view.PassesFilter(r.Relationship.Activity1) && view.PassesFilter(r.Relationship.Activity2))
+            if (view.PassesFilter(relationship.Activity1) && view.PassesFilter(relationship.Activity2))
             {
-              AddRelationship(r);
+              AddRelationship(relationship);
             }
             else
             {
-              RemoveRelationship(r);
+              RemoveRelationship(relationship);
             }
           }
         }
@@ -922,8 +922,11 @@ namespace NAS.Views.Controls
 
     #region Current Layout
 
-    protected CollectionView SortFilterAndGroup()
+    protected void SortFilterAndGroup()
     {
+      if (suspendRefreshing)
+        return;
+
       if (VM.Schedule != null)
       {
         var view = VM.Activities.GetView();
@@ -947,9 +950,7 @@ namespace NAS.Views.Controls
             AddGroupDescriptions(view);
           }
         }
-        return view;
       }
-      return null;
     }
 
     private void AddGroupDescriptions(CollectionView view)
@@ -979,12 +980,14 @@ namespace NAS.Views.Controls
 
     private bool Contains(object obj)
     {
-      if (obj is not Activity)
+      if (obj is not ActivityViewModel vm)
       {
+        Debug.Fail("Expected ActivityViewModel, but got " + obj.GetType().Name);
         return false;
       }
 
-      var activity = obj as Activity;
+      Activity activity = vm.Activity;
+
       if (activity.Fragnet != null && !activity.Fragnet.IsVisible)
       {
         return false;

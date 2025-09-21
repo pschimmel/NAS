@@ -64,12 +64,6 @@ namespace NAS.ViewModels
     public MainViewModel()
     {
       _startupSettings = CommandLineParser.GetStartupSettings();
-#if !DEBUG
-        //if (CurrentInfoHolder.Settings.AutoCheckForUpdates)
-        //{
-        //  CheckForUpdatesCommand.Execute(false);
-        //}
-#endif
       _reportsController = new ReportController(SettingsController.Settings.UserReportsFolderPath);
       _reportsController.ReportsChanged += (s, e) => RefreshReports();
 

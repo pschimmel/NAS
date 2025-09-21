@@ -3,6 +3,7 @@ using System.Windows.Input;
 using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
+using NAS.Models.Scheduler;
 using NAS.Resources;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
@@ -16,6 +17,13 @@ namespace NAS.ViewModels
     private readonly Schedule _schedule;
     private readonly Activity _activity;
     private ResourceAssignment _currentResourceAssignment;
+    private WBSItem _wbsItem;
+    private ActionCommand _selectWBSCommand;
+    private ActionCommand _editLogicCommand;
+    private ActionCommand _editDistortionsCommand;
+    private ActionCommand _addResourceAssignmentCommand;
+    private ActionCommand _removeResourceAssignmentCommand;
+    private ActionCommand _editResourceAssignmentCommand;
 
     #endregion
 
@@ -28,18 +36,40 @@ namespace NAS.ViewModels
       ArgumentNullException.ThrowIfNull(schedule);
       _schedule = schedule;
       _activity = activity;
-      ResourceAssignments = [];
+      ResourceAssignments = new ObservableCollection<ResourceAssignment>(schedule.ResourceAssignments.Where(x => x.Activity == activity));
       Calendars = new ObservableCollection<Calendar>(_schedule.Calendars);
-      Fragnets = new ObservableCollection<Fragnet>(_schedule.Fragnets);
+      Fragnets = new List<Fragnet>(_schedule.Fragnets);
       CustomAttributes1 = new List<CustomAttribute>(_schedule.CustomAttributes1);
       CustomAttributes2 = new List<CustomAttribute>(_schedule.CustomAttributes2);
       CustomAttributes3 = new List<CustomAttribute>(_schedule.CustomAttributes3);
-      SelectWBSCommand = new ActionCommand(SelectWBSCommandExecute);
-      EditLogicCommand = new ActionCommand(EditLogicCommandExecute, () => EditLogicCommandCanExecute);
-      EditDistortionsCommand = new ActionCommand(EditDistortionsCommandExecute, () => EditDistortionsCommandCanExecute);
-      AddResourceAssignmentCommand = new ActionCommand(AddResourceAssignmentCommandExecute);
-      RemoveResourceAssignmentCommand = new ActionCommand(RemoveResourceAssignmentCommandExecute, () => RemoveResourceAssignmentCommandCanExecute);
-      EditResourceAssignmentCommand = new ActionCommand(EditResourceAssignmentCommandExecute, () => EditResourceAssignmentCommandCanExecute);
+      Number = activity.Number;
+      Name = activity.Name;
+      IsActivity = activity.ActivityType == ActivityType.Activity;
+      IsFixed = activity.IsFixed;
+      OriginalDuration = activity.OriginalDuration;
+      Calendar = activity.Calendar;
+      EarlyStartDate = activity.EarlyStartDate;
+      EarlyFinishDate = activity.EarlyFinishDate;
+      LateStartDate = activity.LateStartDate;
+      LateFinishDate = activity.LateFinishDate;
+      TotalFloat = activity.TotalFloat;
+      FreeFloat = activity.FreeFloat;
+      ActualStartDate = activity.ActualStartDate;
+      ActualFinishDate = activity.ActualFinishDate;
+      PercentComplete = activity.PercentComplete;
+      RemainingDuration = activity.RemainingDuration;
+      ActualDuration = activity.ActualDuration;
+      AtCompletionDuration = activity.AtCompletionDuration;
+      _wbsItem = activity.WBSItem;
+      Fragnet = activity.Fragnet;
+      Constraint = activity.Constraint;
+      ConstraintDate = activity.ConstraintDate;
+      CustomAttribute1 = activity.CustomAttribute1;
+      CustomAttribute2 = activity.CustomAttribute2;
+      CustomAttribute3 = activity.CustomAttribute3;
+      TotalBudget = activity.TotalBudget;
+      TotalPlannedCosts = activity.TotalPlannedCosts;
+      TotalActualCosts = activity.TotalActualCosts;
     }
 
     #endregion
@@ -52,19 +82,76 @@ namespace NAS.ViewModels
 
     public override DialogSize DialogSize => DialogSize.Fixed(600, 450);
 
+    public override HelpTopic HelpTopicKey => HelpTopic.Activity;
+
     #endregion
 
     #region Properties
 
-    public override HelpTopic HelpTopicKey => HelpTopic.Activity;
+    public string Number { get; set; }
 
-    public ObservableCollection<ResourceAssignment> ResourceAssignments { get; }
+    public string Name { get; set; }
+
+    public bool IsActivity { get; }
+
+    public bool IsFixed { get; }
+
+    public bool IsNotFixed => !IsFixed;
+
+    public int OriginalDuration { get; set; }
 
     public ObservableCollection<Calendar> Calendars { get; }
 
-    public ObservableCollection<Fragnet> Fragnets { get; }
+    public Calendar Calendar { get; set; }
+
+    public DateTime EarlyStartDate { get; set; }
+
+    public DateTime EarlyFinishDate { get; }
+
+    public DateTime LateStartDate { get; }
+
+    public DateTime LateFinishDate { get; }
+
+    public int TotalFloat { get; }
+
+    public int FreeFloat { get; }
+
+    public DateTime? ActualStartDate { get; set; }
+    
+    public DateTime? ActualFinishDate { get; set; }
+
+    public double PercentComplete { get; set; }
+
+    public int RemainingDuration { get; set; }
+
+    public int ActualDuration { get; }
+
+    public int AtCompletionDuration { get; }
+
+    public WBSItem WBSItem 
+    { 
+      get => _wbsItem;
+      set 
+      {
+        if (_wbsItem != value)
+        {
+          _wbsItem = value;
+          OnPropertyChanged(nameof(WBSItem));
+        }
+      }
+    }
+
+    public List<Fragnet> Fragnets { get; }
+
+    public Fragnet Fragnet { get; set; }
 
     public List<ConstraintType> ConstraintTypes => Enum.GetValues<ConstraintType>().Cast<ConstraintType>().ToList();
+
+    public ConstraintType Constraint { get; set; }
+
+    public DateTime? ConstraintDate { get; set; }
+
+    public ObservableCollection<ResourceAssignment> ResourceAssignments { get; }
 
     public ResourceAssignment CurrentResourceAssignment
     {
@@ -79,44 +166,42 @@ namespace NAS.ViewModels
       }
     }
 
+    public string CustomAttribute1Header => _schedule.CustomAttribute1Header;
+
     public List<CustomAttribute> CustomAttributes1 { get; }
+
+    public CustomAttribute CustomAttribute1 { get; set; }
+
+    public string CustomAttribute2Header => _schedule.CustomAttribute2Header;
 
     public List<CustomAttribute> CustomAttributes2 { get; }
 
+    public CustomAttribute CustomAttribute2 { get; set; }
+
+    public string CustomAttribute3Header => _schedule.CustomAttribute3Header;
+
     public List<CustomAttribute> CustomAttributes3 { get; }
 
-    public bool IsActivity => _activity.ActivityType == ActivityType.Activity;
+    public CustomAttribute CustomAttribute3 { get; set; }
 
-    public bool IsFixed => _activity.IsFixed;
+    public decimal TotalBudget { get; private set; }
 
-    public bool IsNotFixed => !IsFixed;
+    public decimal TotalPlannedCosts { get; private set; }
 
-    public string DisplayName
-    {
-      get
-      {
-        string result = _activity.Number + " " + _activity.Name;
-        if (IsFixed)
-        {
-          result += " (" + NASResources.Fixed + ")";
-        }
-
-        return result;
-      }
-    }
+    public decimal TotalActualCosts { get; private set; }
 
     #endregion
 
     #region Select WBS
 
-    public ICommand SelectWBSCommand { get; }
+    public ICommand SelectWBSCommand => _selectWBSCommand ??= new ActionCommand(SelectWBS);
 
-    private void SelectWBSCommandExecute()
+    private void SelectWBS()
     {
       using var vm = new SelectWBSViewModel(_schedule, _activity.WBSItem);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        _activity.WBSItem = vm.SelectedWBSItem?.Item;
+        WBSItem = vm.SelectedWBSItem?.Item;
       }
     }
 
@@ -124,37 +209,43 @@ namespace NAS.ViewModels
 
     #region Edit Logic
 
-    public ICommand EditLogicCommand { get; }
+    public ICommand EditLogicCommand => _editLogicCommand ??= new ActionCommand(EditLogic, CanEditLogic);
 
-    private void EditLogicCommandExecute()
+    private void EditLogic()
     {
       var vm = new EditLogicViewModel(_schedule, _activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditLogicCommandCanExecute => _activity != null;
+    private bool CanEditLogic()
+    {
+      return _activity != null;
+    }
 
     #endregion
 
     #region Edit Distortions
 
-    public ICommand EditDistortionsCommand { get; }
+    public ICommand EditDistortionsCommand => _editDistortionsCommand ??= new ActionCommand(EditDistortions, CanEditDistortions);
 
-    private void EditDistortionsCommandExecute()
+    private void EditDistortions()
     {
       using var vm = new EditDistortionsViewModel(_schedule, _activity);
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool EditDistortionsCommandCanExecute => _activity.ActivityType == ActivityType.Activity;
+    private bool CanEditDistortions()
+    {
+      return _activity.ActivityType == ActivityType.Activity;
+    }
 
     #endregion
 
     #region Add Resource Association
 
-    public ICommand AddResourceAssignmentCommand { get; }
+    public ICommand AddResourceAssignmentCommand => _addResourceAssignmentCommand ??= new ActionCommand(AddResourceAssignment);
 
-    private void AddResourceAssignmentCommandExecute()
+    private void AddResourceAssignment()
     {
       using var vm = new SelectResourceViewModel(_schedule.Resources);
       if (ViewFactory.Instance.ShowDialog(vm) == true && vm.SelectedResource != null)
@@ -164,6 +255,7 @@ namespace NAS.ViewModels
         if (ViewFactory.Instance.ShowDialog(vm2) == true)
         {
           ResourceAssignments.Add(ResourceAssignment);
+          CalculateResourceCosts();
         }
       }
     }
@@ -172,31 +264,53 @@ namespace NAS.ViewModels
 
     #region Remove Resource Association
 
-    public ICommand RemoveResourceAssignmentCommand { get; }
+    public ICommand RemoveResourceAssignmentCommand => _removeResourceAssignmentCommand ??= new ActionCommand(RemoveResourceAssignment, CanRemoveResourceAssignment);
 
-    private void RemoveResourceAssignmentCommandExecute()
+    private void RemoveResourceAssignment()
     {
       UserNotificationService.Instance.Question(NASResources.MessageDeleteResourceAssignment, () =>
       {
         ResourceAssignments.Remove(CurrentResourceAssignment);
+        CalculateResourceCosts();
       });
     }
 
-    private bool RemoveResourceAssignmentCommandCanExecute => CurrentResourceAssignment != null;
+    private bool CanRemoveResourceAssignment()
+    {
+      return CurrentResourceAssignment != null;
+    }
 
     #endregion
 
     #region Edit Resource Association
 
-    public ICommand EditResourceAssignmentCommand { get; }
+    public ICommand EditResourceAssignmentCommand => _editResourceAssignmentCommand ??= new ActionCommand(EditResourceAssignment, CanEditResourceAssignment);
 
-    private void EditResourceAssignmentCommandExecute()
+    private void EditResourceAssignment()
     {
       using var vm = new ResourceAssignmentViewModel(CurrentResourceAssignment);
       ViewFactory.Instance.ShowDialog(vm);
+      CalculateResourceCosts();
     }
 
-    private bool EditResourceAssignmentCommandCanExecute => CurrentResourceAssignment != null;
+    private bool CanEditResourceAssignment()
+    {
+      return CurrentResourceAssignment != null;
+    }
+
+    #endregion
+
+    #region Private members
+
+    private void CalculateResourceCosts()
+    {
+      TotalBudget = ResourceAssignments.Sum(x => x.Budget + x.FixedCosts);
+      TotalPlannedCosts = ResourceAssignments.Sum(x => x.PlannedCosts);
+      TotalActualCosts = ResourceAssignments.Sum(x => x.ActualCosts);
+      OnPropertyChanged(nameof(TotalBudget));
+      OnPropertyChanged(nameof(TotalPlannedCosts));
+      OnPropertyChanged(nameof(TotalActualCosts));
+    }
 
     #endregion
 
@@ -242,6 +356,44 @@ namespace NAS.ViewModels
         }
       }
       return ValidationResult.OK();
+    }
+
+    #endregion
+
+    #region Apply
+
+    protected override void OnApply()
+    {
+      _activity.Number = Number;
+      _activity.Name = Name;
+      _activity.OriginalDuration = OriginalDuration;
+      _activity.Calendar = Calendar;
+      _activity.EarlyStartDate = EarlyStartDate;
+      _activity.ActualStartDate = ActualStartDate;
+      _activity.ActualFinishDate = ActualFinishDate;
+      _activity.PercentComplete = PercentComplete;
+      _activity.RemainingDuration = RemainingDuration;
+      _activity.WBSItem = WBSItem;
+      _activity.Fragnet = Fragnet;
+      _activity.Constraint = Constraint;
+      _activity.ConstraintDate = ConstraintDate;
+      _activity.CustomAttribute1 = CustomAttribute1;
+      _activity.CustomAttribute2 = CustomAttribute2;
+      _activity.CustomAttribute3 = CustomAttribute3;
+      foreach (var ra in _schedule.ResourceAssignments.Where(x => x.Activity == _activity).ToList())
+      {
+        if (!ResourceAssignments.Contains(ra))
+        {
+          _schedule.ResourceAssignments.Remove(ra);
+        }
+      }
+      foreach (var ra in ResourceAssignments)
+      {
+        if (!_schedule.ResourceAssignments.Contains(ra))
+        {
+          _schedule.ResourceAssignments.Add(ra);
+        }
+      }
     }
 
     #endregion

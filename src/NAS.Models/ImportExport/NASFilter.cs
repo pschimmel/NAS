@@ -22,8 +22,6 @@ namespace NAS.Models.ImportExport
 
     public Schedule Import(string fileName)
     {
-      var schedule = new Schedule();
-
       if (!File.Exists(fileName))
       {
         throw new FileNotFoundException("File " + fileName + " not found!");
@@ -34,8 +32,10 @@ namespace NAS.Models.ImportExport
         throw new Exception("Wrong file extension!");
       }
 
+      var schedule = new Schedule();
       var xml = new XmlDocument();
       xml.Load(fileName);
+
       if (xml.FirstChild.Name == "Project")
       {
         var projectNode = xml.FirstChild;
@@ -49,7 +49,8 @@ namespace NAS.Models.ImportExport
       foreach (XmlNode node in projectNode.ChildNodes)
       {
         if (node.Name == "Baselines")
-        { // Read Baselines first
+        {
+          // Read Baselines first
           foreach (XmlNode baselineNode in node.ChildNodes)
           {
             if (baselineNode.Name == "Baseline")
@@ -61,6 +62,7 @@ namespace NAS.Models.ImportExport
           }
         }
       }
+
       foreach (XmlNode node in projectNode.ChildNodes)
       {
         if (node.Name == "Name")

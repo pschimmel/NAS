@@ -249,12 +249,13 @@ namespace NAS.Views.Controls
         {
           view.Filter = (object obj) =>
           {
-            if (obj is not Models.Entities.Activity)
+            if (obj is not ActivityViewModel vm)
             {
+              Debug.Fail("A ViewModel is expected!");
               return false;
             }
 
-            var activity = obj as Models.Entities.Activity;
+            var activity = vm.Activity;
             if (activity.Fragnet != null && !activity.Fragnet.IsVisible)
             {
               return false;
@@ -620,27 +621,27 @@ namespace NAS.Views.Controls
       {
         var comboBoxColumn = new TaggableDataGridComboBoxColumn();
         comboBoxColumn.ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
-        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
         return comboBoxColumn;
       }
       else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(WBSItem))
       {
         var comboBoxColumn = new TaggableDataGridComboBoxColumn();
         comboBoxColumn.ItemsSource = VM.WBSItems;
-        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
         return comboBoxColumn;
       }
       else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(CustomAttribute))
       {
         var comboBoxColumn = new TaggableDataGridComboBoxColumn();
         comboBoxColumn.ItemsSource = VM.Schedule.CustomAttributes1;
-        comboBoxColumn.SelectedItemBinding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
         return comboBoxColumn;
       }
       else
       {
         var textColumn = new TaggableDataGridTextColumn();
-        var binding = new Binding(property.ToString()) { NotifyOnSourceUpdated = true };
+        var binding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
         if (ActivityPropertyHelper.GetPropertyType(property) == typeof(DateTime))
         {
           binding.Converter = new DateConverter();

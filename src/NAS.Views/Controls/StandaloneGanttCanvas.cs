@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
 using NAS.ViewModels;
@@ -33,7 +34,10 @@ namespace NAS.Views.Controls
       if (VM.Schedule != null)
       {
         AddTableHeaders();
-        var view = SortFilterAndGroup();
+        SortFilterAndGroup();
+
+        var view = VM.Activities.GetView();
+
         if (view != null)
         {
           if (view.Groups == null)

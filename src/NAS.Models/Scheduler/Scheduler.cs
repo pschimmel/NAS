@@ -76,7 +76,7 @@ namespace NAS.Models.Scheduler
         CalculateActivityDates();
         SetCriticalPath();
         CalculateRelationshipDates();
-        CalculateResources();
+        CalculateResourceCosts();
       }
       catch (Exception ex)
       {
@@ -536,45 +536,64 @@ namespace NAS.Models.Scheduler
           continue;
         }
 
-        activity.TotalFloat = activity.IsFinished ? 0 : activity.Calendar.GetWorkDays(activity.EarlyFinishDate, activity.LateFinishDate, false);
-        int freeFloat = activity.TotalFloat;
-        IEnumerable<Activity> successors = _schedule.GetVisibleSuccessors(activity);
-
-        foreach (Activity successor in successors)
-        {
-          Relationship relationship = _schedule.GetRelationship(activity, successor);
-
-          switch (relationship.RelationshipType)
-          {
-            case RelationshipType.FinishStart:
-              freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyFinishDate, successor.EarlyStartDate, false) - relationship.Lag - 1);
-              break;
-            case RelationshipType.StartStart:
-              freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyStartDate, successor.EarlyStartDate, false) - relationship.Lag);
-              break;
-            case RelationshipType.FinishFinish:
-              freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyFinishDate, successor.EarlyFinishDate, false) - relationship.Lag);
-              break;
-          }
-        }
-
-        activity.FreeFloat = freeFloat;
+        CalculateFloat(activity);
       }
+    }
+
+    public void CalculateFloat(Activity activity)
+    {
+      activity.TotalFloat = activity.IsFinished ? 0 : activity.Calendar.GetWorkDays(activity.EarlyFinishDate, activity.LateFinishDate, false);
+      int freeFloat = activity.TotalFloat;
+      IEnumerable<Activity> successors = _schedule.GetVisibleSuccessors(activity);
+
+      foreach (Activity successor in successors)
+      {
+        Relationship relationship = _schedule.GetRelationship(activity, successor);
+
+        switch (relationship.RelationshipType)
+        {
+          case RelationshipType.FinishStart:
+            freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyFinishDate, successor.EarlyStartDate, false) - relationship.Lag - 1);
+            break;
+          case RelationshipType.StartStart:
+            freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyStartDate, successor.EarlyStartDate, false) - relationship.Lag);
+            break;
+          case RelationshipType.FinishFinish:
+            freeFloat = Math.Min(freeFloat, activity.Calendar.GetWorkDays(activity.EarlyFinishDate, successor.EarlyFinishDate, false) - relationship.Lag);
+            break;
+        }
+      }
+
+      activity.FreeFloat = freeFloat;
+    }
+
+    public int CalculateTotalFloat(Activity activity)
+    {
+      if (activity.Fragnet != null && !activity.Fragnet.IsVisible)
+      {
+        return 0;
+      }
+      return activity.IsFinished ? 0 : activity.Calendar.GetWorkDays(activity.EarlyFinishDate, activity.LateFinishDate, false);
     }
 
     #endregion
 
     #region Calculate Resources
 
-    public void CalculateResources()
+    public void CalculateResourceCosts()
     {
       foreach (Activity activity in _schedule.Activities)
       {
-        var assignments = _schedule.ResourceAssignments.Where(x => x.Activity == activity).ToArray();
-        activity.TotalBudget = assignments.Sum(x => x.Budget);
-        activity.TotalPlannedCosts = assignments.Sum(x => x.PlannedCosts);
-        activity.TotalActualCosts = assignments.Sum(x => x.ActualCosts);
+        CalculateResourceCosts(activity);
       }
+    }
+
+    public void CalculateResourceCosts(Activity activity)
+    {
+      var assignments = _schedule.ResourceAssignments.Where(x => x.Activity == activity).ToArray();
+      activity.TotalBudget = assignments.Sum(x => x.Budget);
+      activity.TotalPlannedCosts = assignments.Sum(x => x.PlannedCosts);
+      activity.TotalActualCosts = assignments.Sum(x => x.ActualCosts);
     }
 
     #endregion

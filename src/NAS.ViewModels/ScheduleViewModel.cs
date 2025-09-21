@@ -108,9 +108,10 @@ namespace NAS.ViewModels
 
       foreach (var relationship in schedule.Relationships)
       {
-        Relationships.Add(new RelationshipViewModel(relationship));
+        var activity1 = Activities.FirstOrDefault(x => x.Activity == relationship.Activity1);
+        var activity2 = Activities.FirstOrDefault(x => x.Activity == relationship.Activity2);
+        Relationships.Add(new RelationshipViewModel(relationship, activity1, activity2));
       }
-
 
       Schedule.ActivityAdded += Schedule_ActivityAdded;
       Schedule.ActivityRemoved += Schedule_ActivityRemoved;
@@ -539,7 +540,9 @@ namespace NAS.ViewModels
       }
       else
       {
-        CurrentRelationship = new RelationshipViewModel(relationship);
+        var activity1 = Activities.First(x => x.Activity == relationship.Activity1);
+        var activity2 = Activities.First(x => x.Activity == relationship.Activity2);
+        CurrentRelationship = new RelationshipViewModel(relationship, activity1, activity2);
         OnRelationshipAdded(CurrentRelationship);
       }
     }
@@ -587,7 +590,12 @@ namespace NAS.ViewModels
       {
         if (vm.Validate().IsOK)
         {
-          CurrentRelationship.Relationship = relationship;
+          Relationships.Remove(CurrentRelationship);
+          var activity1 = Activities.First(x => x.Activity == vm.SelectedActivity1);
+          var activity2 = Activities.First(x => x.Activity == vm.SelectedActivity2);
+          var newVM = new RelationshipViewModel(relationship, activity1, activity2);
+          Relationships.Add(newVM);
+          CurrentRelationship = newVM;
           OnRelationshipChanged(CurrentRelationship);
         }
       }
