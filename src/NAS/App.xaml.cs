@@ -1,12 +1,15 @@
-﻿using System.IO;
-using System.Windows;
-using ES.Tools.Core.MVVM;
+﻿using ES.Tools.Core.MVVM;
 using NAS.Models.Controllers;
 using NAS.ViewModels;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
 using NAS.Views;
 using NAS.Views.Helpers;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace NAS
 {
@@ -18,6 +21,7 @@ namespace NAS
     protected override void OnStartup(StartupEventArgs e)
     {
       base.OnStartup(e);
+      DispatcherUnhandledException += App_DispatcherUnhandledException;
 
       var splashScreen = new SplashScreen("Images/Splash.png");
       splashScreen.Show(true);
@@ -87,6 +91,16 @@ namespace NAS
     private static void GlobalDataController_Error(object sender, ErrorEventArgs e)
     {
       UserNotificationService.Instance.Error(e.GetException().Message);
+    }
+
+    void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+    {
+      // Process unhandled exception
+
+      Debug.Fail(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
+
+      // Prevent default unhandled exception processing
+      e.Handled = true;
     }
   }
 }

@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using ES.Tools.Core.MVVM;
+﻿using ES.Tools.Core.MVVM;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
-using NAS.Models.Scheduler;
 using NAS.Resources;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace NAS.ViewModels
 {
@@ -32,34 +31,48 @@ namespace NAS.ViewModels
     public EditActivityViewModel(Schedule schedule, Activity activity)
       : base()
     {
-      ArgumentNullException.ThrowIfNull(activity);
-      ArgumentNullException.ThrowIfNull(schedule);
+      ArgumentNullException.ThrowIfNull(schedule, nameof(schedule));
+      ArgumentNullException.ThrowIfNull(activity, nameof(activity));
+
       _schedule = schedule;
       _activity = activity;
-      ResourceAssignments = new ObservableCollection<ResourceAssignment>(schedule.ResourceAssignments.Where(x => x.Activity == activity));
-      Calendars = new ObservableCollection<Calendar>(_schedule.Calendars);
-      Fragnets = new List<Fragnet>(_schedule.Fragnets);
-      CustomAttributes1 = new List<CustomAttribute>(_schedule.CustomAttributes1);
-      CustomAttributes2 = new List<CustomAttribute>(_schedule.CustomAttributes2);
-      CustomAttributes3 = new List<CustomAttribute>(_schedule.CustomAttributes3);
+
+      // Initialize collections with null checks
+      ResourceAssignments = new ObservableCollection<ResourceAssignment>(
+        schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? Enumerable.Empty<ResourceAssignment>()
+      );
+
+      Calendars = new ObservableCollection<Calendar>(schedule.Calendars ?? Enumerable.Empty<Calendar>());
+      Fragnets = new List<Fragnet>(schedule.Fragnets ?? Enumerable.Empty<Fragnet>());
+      CustomAttributes1 = new List<CustomAttribute>(schedule.CustomAttributes1 ?? Enumerable.Empty<CustomAttribute>());
+      CustomAttributes2 = new List<CustomAttribute>(schedule.CustomAttributes2 ?? Enumerable.Empty<CustomAttribute>());
+      CustomAttributes3 = new List<CustomAttribute>(schedule.CustomAttributes3 ?? Enumerable.Empty<CustomAttribute>());
+
+      // Initialize basic properties
       Number = activity.Number;
       Name = activity.Name;
       IsActivity = activity.ActivityType == ActivityType.Activity;
       IsFixed = activity.IsFixed;
       OriginalDuration = activity.OriginalDuration;
-      Calendar = activity.Calendar;
+      Calendar = activity.Calendar ?? Calendars.FirstOrDefault();
+
+      // Initialize dates with proper null checks
       EarlyStartDate = activity.EarlyStartDate;
       EarlyFinishDate = activity.EarlyFinishDate;
       LateStartDate = activity.LateStartDate;
       LateFinishDate = activity.LateFinishDate;
-      TotalFloat = activity.TotalFloat;
-      FreeFloat = activity.FreeFloat;
       ActualStartDate = activity.ActualStartDate;
       ActualFinishDate = activity.ActualFinishDate;
+
+      // Initialize numeric values
+      TotalFloat = activity.TotalFloat;
+      FreeFloat = activity.FreeFloat;
       PercentComplete = activity.PercentComplete;
       RemainingDuration = activity.RemainingDuration;
       ActualDuration = activity.ActualDuration;
       AtCompletionDuration = activity.AtCompletionDuration;
+
+      // Initialize references
       _wbsItem = activity.WBSItem;
       Fragnet = activity.Fragnet;
       Constraint = activity.Constraint;
@@ -67,9 +80,9 @@ namespace NAS.ViewModels
       CustomAttribute1 = activity.CustomAttribute1;
       CustomAttribute2 = activity.CustomAttribute2;
       CustomAttribute3 = activity.CustomAttribute3;
-      TotalBudget = activity.TotalBudget;
-      TotalPlannedCosts = activity.TotalPlannedCosts;
-      TotalActualCosts = activity.TotalActualCosts;
+
+      // Initialize costs
+      CalculateResourceCosts();
     }
 
     #endregion
@@ -106,7 +119,7 @@ namespace NAS.ViewModels
 
     public DateTime EarlyStartDate { get; set; }
 
-    public DateTime EarlyFinishDate { get; }
+    public DateTime EarlyFinishDate { get; set; }
 
     public DateTime LateStartDate { get; }
 
@@ -117,7 +130,7 @@ namespace NAS.ViewModels
     public int FreeFloat { get; }
 
     public DateTime? ActualStartDate { get; set; }
-    
+
     public DateTime? ActualFinishDate { get; set; }
 
     public double PercentComplete { get; set; }
@@ -128,10 +141,10 @@ namespace NAS.ViewModels
 
     public int AtCompletionDuration { get; }
 
-    public WBSItem WBSItem 
-    { 
+    public WBSItem WBSItem
+    {
       get => _wbsItem;
-      set 
+      set
       {
         if (_wbsItem != value)
         {
@@ -304,9 +317,10 @@ namespace NAS.ViewModels
 
     private void CalculateResourceCosts()
     {
-      TotalBudget = ResourceAssignments.Sum(x => x.Budget + x.FixedCosts);
-      TotalPlannedCosts = ResourceAssignments.Sum(x => x.PlannedCosts);
-      TotalActualCosts = ResourceAssignments.Sum(x => x.ActualCosts);
+      TotalBudget = ResourceAssignments?.Sum(x => (x.Budget + x.FixedCosts)) ?? 0m;
+      TotalPlannedCosts = ResourceAssignments?.Sum(x => x.PlannedCosts) ?? 0m;
+      TotalActualCosts = ResourceAssignments?.Sum(x => x.ActualCosts) ?? 0m;
+
       OnPropertyChanged(nameof(TotalBudget));
       OnPropertyChanged(nameof(TotalPlannedCosts));
       OnPropertyChanged(nameof(TotalActualCosts));
@@ -369,6 +383,7 @@ namespace NAS.ViewModels
       _activity.OriginalDuration = OriginalDuration;
       _activity.Calendar = Calendar;
       _activity.EarlyStartDate = EarlyStartDate;
+      _activity.EarlyFinishDate = EarlyFinishDate;
       _activity.ActualStartDate = ActualStartDate;
       _activity.ActualFinishDate = ActualFinishDate;
       _activity.PercentComplete = PercentComplete;
