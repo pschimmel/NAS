@@ -16,7 +16,16 @@ namespace NAS.ViewModels
     private readonly Schedule _schedule;
     private readonly Activity _activity;
     private ResourceAssignment _currentResourceAssignment;
+    private DateTime _earlyStartDate;
+    private DateTime _earlyFinishDate;
+    private DateTime _lateStartDate;
+    private DateTime _lateFinishDate;
+    private DateTime? _actualStartDate;
+    private DateTime? _actualFinishDate;
+    private double _percentComplete;
     private WBSItem _wbsItem;
+    private int _originalDuration;
+    private int _remainingDuration;
     private ActionCommand _selectWBSCommand;
     private ActionCommand _editLogicCommand;
     private ActionCommand _editDistortionsCommand;
@@ -39,7 +48,7 @@ namespace NAS.ViewModels
 
       // Initialize collections with null checks
       ResourceAssignments = new ObservableCollection<ResourceAssignment>(
-        schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? Enumerable.Empty<ResourceAssignment>()
+        schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? []
       );
 
       Calendars = new ObservableCollection<Calendar>(schedule.Calendars ?? Enumerable.Empty<Calendar>());
@@ -53,24 +62,22 @@ namespace NAS.ViewModels
       Name = activity.Name;
       IsActivity = activity.ActivityType == ActivityType.Activity;
       IsFixed = activity.IsFixed;
-      OriginalDuration = activity.OriginalDuration;
+      _originalDuration = activity.OriginalDuration;
       Calendar = activity.Calendar ?? Calendars.FirstOrDefault();
 
       // Initialize dates with proper null checks
-      EarlyStartDate = activity.EarlyStartDate;
-      EarlyFinishDate = activity.EarlyFinishDate;
-      LateStartDate = activity.LateStartDate;
-      LateFinishDate = activity.LateFinishDate;
-      ActualStartDate = activity.ActualStartDate;
-      ActualFinishDate = activity.ActualFinishDate;
+      _earlyStartDate = activity.EarlyStartDate;
+      _earlyFinishDate = activity.EarlyFinishDate;
+      _lateStartDate = activity.LateStartDate;
+      _lateFinishDate = activity.LateFinishDate;
+      _actualStartDate = activity.ActualStartDate;
+      _actualFinishDate = activity.ActualFinishDate;
 
       // Initialize numeric values
       TotalFloat = activity.TotalFloat;
       FreeFloat = activity.FreeFloat;
-      PercentComplete = activity.PercentComplete;
-      RemainingDuration = activity.RemainingDuration;
-      ActualDuration = activity.ActualDuration;
-      AtCompletionDuration = activity.AtCompletionDuration;
+      _percentComplete = activity.PercentComplete;
+      _remainingDuration = activity.RemainingDuration;
 
       // Initialize references
       _wbsItem = activity.WBSItem;
@@ -107,39 +114,248 @@ namespace NAS.ViewModels
 
     public bool IsActivity { get; }
 
+    public bool IsMilestone => !IsActivity;
+
     public bool IsFixed { get; }
 
     public bool IsNotFixed => !IsFixed;
-
-    public int OriginalDuration { get; set; }
 
     public ObservableCollection<Calendar> Calendars { get; }
 
     public Calendar Calendar { get; set; }
 
-    public DateTime EarlyStartDate { get; set; }
+    public DateTime EarlyStartDate
+    {
+      get => _earlyStartDate;
+      set
+      {
+        if (_earlyStartDate != value)
+        {
+          _earlyStartDate = value;
+          OnPropertyChanged(nameof(EarlyStartDate));
+          if (Calendar != null)
+          {
+            EarlyFinishDate = Calendar.GetEndDate(EarlyStartDate, RemainingDuration);
+          }
+        }
+      }
+    }
 
-    public DateTime EarlyFinishDate { get; set; }
+    public DateTime EarlyFinishDate
+    {
+      get => _earlyFinishDate;
+      set
+      {
+        if (_earlyFinishDate != value)
+        {
+          _earlyFinishDate = value;
+          OnPropertyChanged(nameof(EarlyFinishDate));
+          if (Calendar != null)
+          {
+            EarlyStartDate = Calendar.GetStartDate(EarlyFinishDate, RemainingDuration);
+          }
+        }
+      }
+    }
 
-    public DateTime LateStartDate { get; }
+    public DateTime LateStartDate
+    {
+      get => _lateStartDate;
+      set
+      {
+        if (_lateStartDate != value)
+        {
+          _lateStartDate = value;
+          OnPropertyChanged(nameof(LateStartDate));
+          if (Calendar != null)
+          {
+            LateFinishDate = Calendar.GetEndDate(LateStartDate, RemainingDuration);
+          }
+        }
+      }
+    }
 
-    public DateTime LateFinishDate { get; }
+    public DateTime LateFinishDate
+    {
+      get => _lateFinishDate;
+      set
+      {
+        if (_lateFinishDate != value)
+        {
+          _lateFinishDate = value;
+          OnPropertyChanged(nameof(LateFinishDate));
+          if (Calendar != null)
+          {
+            LateStartDate = Calendar.GetStartDate(LateFinishDate, RemainingDuration);
+          }
+        }
+      }
+    }
+
+
+    public DateTime? ActualStartDate
+    {
+      get => _actualStartDate;
+      set
+      {
+        if (_actualStartDate != value)
+        {
+          _actualStartDate = value;
+          OnPropertyChanged(nameof(ActualStartDate));
+          OnPropertyChanged(nameof(ActualDuration));
+        }
+      }
+    }
+
+    public DateTime? ActualFinishDate
+    {
+      get => _actualFinishDate;
+      set
+      {
+        if (_actualFinishDate != value)
+        {
+          _actualFinishDate = value;
+          OnPropertyChanged(nameof(ActualFinishDate));
+          OnPropertyChanged(nameof(ActualDuration));
+        }
+      }
+    }
+
+    public int OriginalDuration
+    {
+      get => IsActivity ? _originalDuration : 0;
+      set
+      {
+        if (_originalDuration != value && IsActivity)
+        {
+          _originalDuration = value;
+          OnPropertyChanged(nameof(OriginalDuration));
+          OnPropertyChanged(nameof(RemainingDuration));
+          OnPropertyChanged(nameof(AtCompletionDuration));
+          RemainingDuration = Convert.ToInt32(Convert.ToDouble(DelayedDuration) * (100d - PercentComplete) / 100d);
+          if (Calendar != null)
+          {
+            EarlyFinishDate = Calendar.GetEndDate(EarlyStartDate, RemainingDuration);
+          }
+        }
+      }
+    }
+
+    public int RemainingDuration
+    {
+      get => IsActivity ? _remainingDuration : 0;
+      set
+      {
+        if (_remainingDuration != value && IsActivity)
+        {
+          _remainingDuration = value;
+          PercentComplete = DelayedDuration != 0
+            ? (Convert.ToDouble(DelayedDuration) - Convert.ToDouble(RemainingDuration)) * 100d / Convert.ToDouble(DelayedDuration)
+            : 0;
+
+          OnPropertyChanged(nameof(RemainingDuration));
+          OnPropertyChanged(nameof(AtCompletionDuration));
+        }
+      }
+    }
+
+    public int AtCompletionDuration => ActualDuration + RemainingDuration;
+
+    public int DelayedDuration
+    {
+      get
+      {
+        if (IsMilestone)
+        {
+          return 0;
+        }
+
+        int result = OriginalDuration;
+        foreach (var d in _activity.Distortions)
+        {
+          if (d.Fragnet == null || d.Fragnet.IsVisible)
+          {
+            if (d is Delay && (d as Delay).Days.HasValue)
+            {
+              result += (d as Delay).Days.Value;
+            }
+            else if (d is Interruption && (d as Interruption).Days.HasValue)
+            {
+              result += (d as Interruption).Days.Value;
+            }
+            else if (d is Inhibition && (d as Inhibition).Percent.HasValue)
+            {
+              result += Convert.ToInt32(Math.Round(OriginalDuration * (d as Inhibition).Percent.Value / 100));
+            }
+            else if (d is Extension && (d as Extension).Days.HasValue)
+            {
+              result += (d as Extension).Days.Value;
+            }
+            else if (d is Reduction && (d as Reduction).Days.HasValue)
+            {
+              result -= (d as Reduction).Days.Value;
+            }
+          }
+        }
+        if (result < 1)
+        {
+          result = 1;
+        }
+
+        return result;
+      }
+    }
+
+    public double PercentComplete
+    {
+      get => _percentComplete;
+      set
+      {
+        if (_percentComplete != value)
+        {
+          if (value < 0)
+          {
+            _percentComplete = 0;
+          }
+          else if (value > 100)
+          {
+            _percentComplete = 100;
+          }
+          else if (IsMilestone)
+          {
+            _percentComplete = value < 50 ? 0 : 100;
+          }
+          else
+          {
+            _percentComplete = value;
+            if (_percentComplete > 0 && !ActualStartDate.HasValue)
+            {
+              ActualStartDate = EarlyStartDate;
+            }
+
+            if (_percentComplete == 100 && !ActualFinishDate.HasValue)
+            {
+              ActualFinishDate = EarlyFinishDate;
+            }
+          }
+
+          OnPropertyChanged(nameof(PercentComplete));
+        }
+      }
+    }
 
     public int TotalFloat { get; }
 
     public int FreeFloat { get; }
 
-    public DateTime? ActualStartDate { get; set; }
-
-    public DateTime? ActualFinishDate { get; set; }
-
-    public double PercentComplete { get; set; }
-
-    public int RemainingDuration { get; set; }
-
-    public int ActualDuration { get; }
-
-    public int AtCompletionDuration { get; }
+    public int ActualDuration
+    {
+      get => IsActivity && ActualStartDate.HasValue
+            ? ActualStartDate.HasValue && ActualFinishDate.HasValue && Calendar != null
+              ? Calendar.GetWorkDays(ActualStartDate.Value, ActualFinishDate.Value, false)
+              : DelayedDuration
+            : 0;
+    }
 
     public WBSItem WBSItem
     {

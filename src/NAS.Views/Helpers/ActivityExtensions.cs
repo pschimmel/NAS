@@ -15,7 +15,7 @@ namespace NAS.Views.Helpers
       switch (property)
       {
         case ActivityProperty.ActualDuration:
-        case ActivityProperty.RetardedDuration:
+        case ActivityProperty.DelayedDuration:
         case ActivityProperty.FreeFloat:
         case ActivityProperty.Number:
         case ActivityProperty.Name:

@@ -126,8 +126,8 @@ namespace NAS.Models.Entities
           return CompareDecimals(activity.TotalBudget, ObjectString, Relation);
         case ActivityProperty.ActualDuration:
           return CompareIntegers(activity.ActualDuration, ObjectString, Relation);
-        case ActivityProperty.RetardedDuration:
-          return CompareIntegers(activity.RetardedDuration, ObjectString, Relation);
+        case ActivityProperty.DelayedDuration:
+          return CompareIntegers(activity.DelayedDuration, ObjectString, Relation);
         case ActivityProperty.FreeFloat:
           return CompareIntegers(activity.FreeFloat, ObjectString, Relation);
         case ActivityProperty.OriginalDuration:
@@ -271,7 +271,7 @@ namespace NAS.Models.Entities
         ActivityProperty.PercentComplete or
         ActivityProperty.OriginalDuration or
         ActivityProperty.RemainingDuration or
-        ActivityProperty.RetardedDuration or
+        ActivityProperty.DelayedDuration or
         ActivityProperty.ActualDuration or
         ActivityProperty.TotalFloat or
         ActivityProperty.FreeFloat or

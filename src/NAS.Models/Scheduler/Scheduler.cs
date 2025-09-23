@@ -697,7 +697,7 @@ namespace NAS.Models.Scheduler
 
     public static void RefreshDates(Activity activity)
     {
-      int remainingDuration = Convert.ToInt32(Convert.ToDouble(activity.RetardedDuration) * (100d - activity.PercentComplete) / 100d);
+      int remainingDuration = Convert.ToInt32(Convert.ToDouble(activity.DelayedDuration) * (100d - activity.PercentComplete) / 100d);
       if (remainingDuration != activity.RemainingDuration)
       {
         activity.RemainingDuration = remainingDuration;

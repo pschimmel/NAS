@@ -111,7 +111,7 @@ namespace NAS.Models.Controllers
 
         if (activity.EarlyFinishDate == default)
         {
-          activity.EarlyFinishDate = activity.Calendar.GetEndDate(activity.EarlyStartDate, activity.RetardedDuration);
+          activity.EarlyFinishDate = activity.Calendar.GetEndDate(activity.EarlyStartDate, activity.DelayedDuration);
         }
         if (activity.LateStartDate == default)
         {
@@ -120,7 +120,7 @@ namespace NAS.Models.Controllers
 
         if (activity.LateFinishDate == default)
         {
-          activity.LateFinishDate = activity.Calendar.GetEndDate(activity.LateStartDate, activity.RetardedDuration);
+          activity.LateFinishDate = activity.Calendar.GetEndDate(activity.LateStartDate, activity.DelayedDuration);
         }
       }
     }

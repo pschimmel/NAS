@@ -332,7 +332,7 @@ namespace NAS.Models.ImportExport
         // UNIT       1030       15.0000       22.2000         .0000
         foreach (var activity in schedule.Activities)
         {
-          var assignments = schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? Enumerable.Empty<ResourceAssignment>();
+          var assignments = schedule.ResourceAssignments?.Where(x => x.Activity == activity) ?? [];
           foreach (var assignment in assignments)
           {
             var sb = new StringBuilder("UNIT ");

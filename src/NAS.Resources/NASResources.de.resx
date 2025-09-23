@@ -1614,7 +1614,7 @@
   <data name="Resources" xml:space="preserve">
     <value>Ressourcen</value>
   </data>
-  <data name="RetardedDuration" xml:space="preserve">
+  <data name="DelayedDuration" xml:space="preserve">
     <value>Verzögerte Dauer</value>
   </data>
   <data name="Right" xml:space="preserve">

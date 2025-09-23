@@ -333,7 +333,7 @@ namespace NAS.Views.Controls
                 factory.SetBinding(TextBlock.TextProperty, new Binding("Name") { StringFormat = "{0:c}" });
                 break;
               case ActivityProperty.ActualDuration:
-              case ActivityProperty.RetardedDuration:
+              case ActivityProperty.DelayedDuration:
               case ActivityProperty.FreeFloat:
               case ActivityProperty.OriginalDuration:
               case ActivityProperty.RemainingDuration:

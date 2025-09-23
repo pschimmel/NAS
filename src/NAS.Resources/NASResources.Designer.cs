@@ -1474,6 +1474,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delayed Duration.
+        /// </summary>
+        public static string DelayedDuration {
+            get {
+                return ResourceManager.GetString("DelayedDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Report.
         /// </summary>
         public static string DeleteReport {
@@ -4548,15 +4557,6 @@ namespace NAS.Resources {
         public static string Resources {
             get {
                 return ResourceManager.GetString("Resources", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Retarded Duration.
-        /// </summary>
-        public static string RetardedDuration {
-            get {
-                return ResourceManager.GetString("RetardedDuration", resourceCulture);
             }
         }
         

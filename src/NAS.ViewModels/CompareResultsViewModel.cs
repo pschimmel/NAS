@@ -135,14 +135,14 @@ namespace NAS.ViewModels
             s += string.Format(NASResources.ActivityDoesNotExist, 1) + " ";
           }
 
-          if (activity2.RetardedDuration > activity1.RetardedDuration)
+          if (activity2.DelayedDuration > activity1.DelayedDuration)
           {
-            s += string.Format(NASResources.DurationIncreased, activity2.RetardedDuration - activity1.RetardedDuration) + " ";
+            s += string.Format(NASResources.DurationIncreased, activity2.DelayedDuration - activity1.DelayedDuration) + " ";
           }
 
-          if (activity2.RetardedDuration < activity1.RetardedDuration)
+          if (activity2.DelayedDuration < activity1.DelayedDuration)
           {
-            s += string.Format(NASResources.DurationDecreased, activity1.RetardedDuration - activity2.RetardedDuration) + " ";
+            s += string.Format(NASResources.DurationDecreased, activity1.DelayedDuration - activity2.DelayedDuration) + " ";
           }
 
           if (activity2.IsStarted && !activity1.IsStarted && activity2.StartDate != activity1.StartDate)

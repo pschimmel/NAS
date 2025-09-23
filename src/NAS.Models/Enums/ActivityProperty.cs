@@ -21,7 +21,7 @@ namespace NAS.Models.Enums
     PercentComplete,
     OriginalDuration,
     RemainingDuration,
-    RetardedDuration,
+    DelayedDuration,
     ActualDuration,
     TotalFloat,
     FreeFloat,

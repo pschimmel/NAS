@@ -25,7 +25,7 @@ namespace NAS.Models.Enums
       { ActivityProperty.PercentComplete, NASResources.PercentComplete},
       { ActivityProperty.RemainingDuration, NASResources.RemainingDuration},
       { ActivityProperty.ActualDuration, NASResources.ActualDuration},
-      { ActivityProperty.RetardedDuration, NASResources.RetardedDuration},
+      { ActivityProperty.DelayedDuration, NASResources.DelayedDuration},
       { ActivityProperty.WBSItem, NASResources.WBSItem},
       { ActivityProperty.Fragnet, NASResources.Fragnet},
       { ActivityProperty.TotalBudget, NASResources.Budget},
@@ -69,7 +69,7 @@ namespace NAS.Models.Enums
     {
       return property switch
       {
-        ActivityProperty.ActualDuration or ActivityProperty.RetardedDuration or ActivityProperty.EarlyFinishDate or ActivityProperty.EarlyStartDate or ActivityProperty.FinishDate or ActivityProperty.FreeFloat or ActivityProperty.LateFinishDate or ActivityProperty.LateStartDate or ActivityProperty.StartDate or ActivityProperty.TotalActualCosts or ActivityProperty.TotalFloat or ActivityProperty.TotalPlannedCosts => true,
+        ActivityProperty.ActualDuration or ActivityProperty.DelayedDuration or ActivityProperty.EarlyFinishDate or ActivityProperty.EarlyStartDate or ActivityProperty.FinishDate or ActivityProperty.FreeFloat or ActivityProperty.LateFinishDate or ActivityProperty.LateStartDate or ActivityProperty.StartDate or ActivityProperty.TotalActualCosts or ActivityProperty.TotalFloat or ActivityProperty.TotalPlannedCosts => true,
         _ => false,
       };
     }
@@ -95,7 +95,7 @@ namespace NAS.Models.Enums
       return property switch
       {
         ActivityProperty.ActualDuration => a.ActualDuration.ToString(),
-        ActivityProperty.RetardedDuration => a.RetardedDuration.ToString(),
+        ActivityProperty.DelayedDuration => a.DelayedDuration.ToString(),
         ActivityProperty.ActualFinishDate => a.ActualFinishDate.HasValue ? a.ActualFinishDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null,
         ActivityProperty.ActualStartDate => a.ActualStartDate.HasValue ? a.ActualStartDate.Value.ToString(GetFormatStringForType(GetPropertyType(property))) : null,
         ActivityProperty.EarlyFinishDate => a.EarlyFinishDate.ToString(GetFormatStringForType(GetPropertyType(property))),

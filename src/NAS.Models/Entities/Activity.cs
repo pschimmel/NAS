@@ -10,27 +10,27 @@ namespace NAS.Models.Entities
   {
     #region Fields
 
-    private string number;
-    private string name;
-    private DateTime earlyStartDate;
-    private DateTime earlyFinishDate;
-    private DateTime lateStartDate;
-    private DateTime lateFinishDate;
-    private DateTime? actualStartDate;
-    private DateTime? actualFinishDate;
+    private string _number;
+    private string _name;
+    private DateTime _earlyStartDate;
+    private DateTime _earlyFinishDate;
+    private DateTime _lateStartDate;
+    private DateTime _lateFinishDate;
+    private DateTime? _actualStartDate;
+    private DateTime? _actualFinishDate;
     private int _originalDuration;
     private int _remainingDuration;
-    private double percentComplete;
-    private int totalFloat;
-    private int freeFloat;
-    private ConstraintType constraint;
-    private DateTime? constraintDate;
-    private Calendar calendar;
-    private CustomAttribute customAttribute1;
-    private CustomAttribute customAttribute2;
-    private CustomAttribute customAttribute3;
-    private Fragnet fragnet;
-    private WBSItem wbsItem;
+    protected double _percentComplete;
+    private int _totalFloat;
+    private int _freeFloat;
+    private ConstraintType _constraintType;
+    private DateTime? _constraintDate;
+    private Calendar _calendar;
+    private CustomAttribute _customAttribute1;
+    private CustomAttribute _customAttribute2;
+    private CustomAttribute _customAttribute3;
+    private Fragnet _fragnet;
+    private WBSItem _wbsItem;
 
     #endregion
 
@@ -39,35 +39,35 @@ namespace NAS.Models.Entities
     public Activity(bool isFixed = false)
     {
       IsFixed = isFixed;
-      constraint = ConstraintType.None;
-      name = NASResources.NewActivity;
+      _constraintType = ConstraintType.None;
+      _name = NASResources.NewActivity;
       _originalDuration = 5;
       Distortions = new ObservableCollection<Distortion>();
     }
 
     public Activity(Activity other)
     {
-      number = other.number;
-      name = other.name;
-      earlyStartDate = other.earlyStartDate;
-      earlyFinishDate = other.earlyFinishDate;
-      lateStartDate = other.lateStartDate;
-      lateFinishDate = other.lateFinishDate;
-      actualStartDate = other.actualStartDate;
-      actualFinishDate = other.actualFinishDate;
+      _number = other._number;
+      _name = other._name;
+      _earlyStartDate = other._earlyStartDate;
+      _earlyFinishDate = other._earlyFinishDate;
+      _lateStartDate = other._lateStartDate;
+      _lateFinishDate = other._lateFinishDate;
+      _actualStartDate = other._actualStartDate;
+      _actualFinishDate = other._actualFinishDate;
       _originalDuration = other._originalDuration;
       _remainingDuration = other._remainingDuration;
-      percentComplete = other.percentComplete;
-      totalFloat = other.totalFloat;
-      freeFloat = other.freeFloat;
-      constraint = other.constraint;
-      constraintDate = other.constraintDate;
-      calendar = other.calendar;
-      customAttribute1 = other.customAttribute1;
-      customAttribute2 = other.customAttribute2;
-      customAttribute3 = other.customAttribute3;
-      fragnet = other.fragnet;
-      wbsItem = other.wbsItem;
+      _percentComplete = other._percentComplete;
+      _totalFloat = other._totalFloat;
+      _freeFloat = other._freeFloat;
+      _constraintType = other._constraintType;
+      _constraintDate = other._constraintDate;
+      _calendar = other._calendar;
+      _customAttribute1 = other._customAttribute1;
+      _customAttribute2 = other._customAttribute2;
+      _customAttribute3 = other._customAttribute3;
+      _fragnet = other._fragnet;
+      _wbsItem = other._wbsItem;
       IsFixed = other.IsFixed;
       Distortions = new ObservableCollection<Distortion>(other.Distortions.Select(x => x.Clone()));
     }
@@ -78,12 +78,12 @@ namespace NAS.Models.Entities
 
     public string Number
     {
-      get => number;
+      get => _number;
       set
       {
-        if (number != value)
+        if (_number != value)
         {
-          number = value;
+          _number = value;
           OnPropertyChanged(nameof(Number));
         }
       }
@@ -91,12 +91,12 @@ namespace NAS.Models.Entities
 
     public string Name
     {
-      get => name;
+      get => _name;
       set
       {
-        if (name != value)
+        if (_name != value)
         {
-          name = value;
+          _name = value;
           OnPropertyChanged(nameof(Name));
         }
       }
@@ -127,12 +127,12 @@ namespace NAS.Models.Entities
 
     public DateTime EarlyStartDate
     {
-      get => earlyStartDate;
+      get => _earlyStartDate;
       set
       {
-        if (earlyStartDate != value)
+        if (_earlyStartDate != value)
         {
-          earlyStartDate = value;
+          _earlyStartDate = value;
           OnPropertyChanged(nameof(EarlyStartDate));
           if (Calendar != null)
           {
@@ -145,12 +145,12 @@ namespace NAS.Models.Entities
 
     public DateTime EarlyFinishDate
     {
-      get => earlyFinishDate;
+      get => _earlyFinishDate;
       set
       {
-        if (earlyFinishDate != value)
+        if (_earlyFinishDate != value)
         {
-          earlyFinishDate = value;
+          _earlyFinishDate = value;
           OnPropertyChanged(nameof(EarlyFinishDate));
           if (Calendar != null)
           {
@@ -163,12 +163,12 @@ namespace NAS.Models.Entities
 
     public DateTime LateStartDate
     {
-      get => lateStartDate;
+      get => _lateStartDate;
       set
       {
-        if (lateStartDate != value)
+        if (_lateStartDate != value)
         {
-          lateStartDate = value;
+          _lateStartDate = value;
           OnPropertyChanged(nameof(LateStartDate));
           if (Calendar != null)
           {
@@ -180,12 +180,12 @@ namespace NAS.Models.Entities
 
     public DateTime LateFinishDate
     {
-      get => lateFinishDate;
+      get => _lateFinishDate;
       set
       {
-        if (lateFinishDate != value)
+        if (_lateFinishDate != value)
         {
-          lateFinishDate = value;
+          _lateFinishDate = value;
           OnPropertyChanged(nameof(LateFinishDate));
           if (Calendar != null)
           {
@@ -197,12 +197,12 @@ namespace NAS.Models.Entities
 
     public DateTime? ActualStartDate
     {
-      get => actualStartDate;
+      get => _actualStartDate;
       set
       {
-        if (actualStartDate != value)
+        if (_actualStartDate != value)
         {
-          actualStartDate = value;
+          _actualStartDate = value;
           OnPropertyChanged(nameof(ActualStartDate));
           OnPropertyChanged(nameof(StartDate));
           OnPropertyChanged(nameof(ActualDuration));
@@ -212,12 +212,12 @@ namespace NAS.Models.Entities
 
     public DateTime? ActualFinishDate
     {
-      get => actualFinishDate;
+      get => _actualFinishDate;
       set
       {
-        if (actualFinishDate != value)
+        if (_actualFinishDate != value)
         {
-          actualFinishDate = value;
+          _actualFinishDate = value;
           OnPropertyChanged(nameof(ActualFinishDate));
           OnPropertyChanged(nameof(FinishDate));
           OnPropertyChanged(nameof(ActualDuration));
@@ -242,10 +242,10 @@ namespace NAS.Models.Entities
         {
           _originalDuration = value;
           OnPropertyChanged(nameof(OriginalDuration));
-          OnPropertyChanged(nameof(RetardedDuration));
+          OnPropertyChanged(nameof(DelayedDuration));
           OnPropertyChanged(nameof(RemainingDuration));
           OnPropertyChanged(nameof(AtCompletionDuration));
-          RemainingDuration = Convert.ToInt32(Convert.ToDouble(RetardedDuration) * (100d - PercentComplete) / 100d);
+          RemainingDuration = Convert.ToInt32(Convert.ToDouble(DelayedDuration) * (100d - PercentComplete) / 100d);
           if (Calendar != null)
           {
             EarlyFinishDate = Calendar.GetEndDate(EarlyStartDate, RemainingDuration);
@@ -259,14 +259,14 @@ namespace NAS.Models.Entities
     /// </summary>
     public virtual int RemainingDuration
     {
-      get => ActivityType == ActivityType.Milestone ? 0 : _remainingDuration;
+      get => _remainingDuration;
       set
       {
-        if (_remainingDuration != value && ActivityType != ActivityType.Milestone)
+        if (_remainingDuration != value)
         {
           _remainingDuration = value;
-          PercentComplete = RetardedDuration != 0
-            ? (Convert.ToDouble(RetardedDuration) - Convert.ToDouble(RemainingDuration)) * 100d / Convert.ToDouble(RetardedDuration)
+          PercentComplete = DelayedDuration != 0
+            ? (Convert.ToDouble(DelayedDuration) - Convert.ToDouble(RemainingDuration)) * 100d / Convert.ToDouble(DelayedDuration)
             : 0;
 
           OnPropertyChanged(nameof(RemainingDuration));
@@ -280,15 +280,10 @@ namespace NAS.Models.Entities
     /// </summary>
     public int AtCompletionDuration => ActualDuration + RemainingDuration;
 
-    public int RetardedDuration
+    public virtual int DelayedDuration
     {
       get
       {
-        if (ActivityType == ActivityType.Milestone)
-        {
-          return 0;
-        }
-
         int result = OriginalDuration;
         foreach (var d in Distortions)
         {
@@ -330,7 +325,7 @@ namespace NAS.Models.Entities
       get => ActualStartDate.HasValue
             ? ActualStartDate.HasValue && ActualFinishDate.HasValue && Calendar != null
               ? Calendar.GetWorkDays(ActualStartDate.Value, ActualFinishDate.Value, false)
-              : RetardedDuration
+              : DelayedDuration
             : 0;
     }
 
@@ -338,34 +333,30 @@ namespace NAS.Models.Entities
 
     #region Percentages
 
-    public double PercentComplete
+    public virtual double PercentComplete
     {
-      get => percentComplete;
+      get => _percentComplete;
       set
       {
-        if (percentComplete != value)
+        if (_percentComplete != value)
         {
           if (value < 0)
           {
-            percentComplete = 0;
+            _percentComplete = 0;
           }
           else if (value > 100)
           {
-            percentComplete = 100;
+            _percentComplete = 100;
           }
-          else if (ActivityType == ActivityType.Milestone)
+          else 
           {
-            percentComplete = value < 50 ? 0 : 100;
-          }
-          else
-          {
-            percentComplete = value;
-            if (percentComplete > 0 && !ActualStartDate.HasValue)
+            _percentComplete = value;
+            if (_percentComplete > 0 && !ActualStartDate.HasValue)
             {
               ActualStartDate = EarlyStartDate;
             }
 
-            if (percentComplete == 100 && !ActualFinishDate.HasValue)
+            if (_percentComplete == 100 && !ActualFinishDate.HasValue)
             {
               ActualFinishDate = EarlyFinishDate;
             }
@@ -382,12 +373,12 @@ namespace NAS.Models.Entities
 
     public int TotalFloat
     {
-      get => totalFloat;
+      get => _totalFloat;
       set
       {
-        if (totalFloat != value)
+        if (_totalFloat != value)
         {
-          totalFloat = value;
+          _totalFloat = value;
           OnPropertyChanged(nameof(TotalFloat));
         }
       }
@@ -395,12 +386,12 @@ namespace NAS.Models.Entities
 
     public int FreeFloat
     {
-      get => freeFloat;
+      get => _freeFloat;
       set
       {
-        if (freeFloat != value)
+        if (_freeFloat != value)
         {
-          freeFloat = value;
+          _freeFloat = value;
           OnPropertyChanged(nameof(FreeFloat));
         }
       }
@@ -412,12 +403,12 @@ namespace NAS.Models.Entities
 
     public ConstraintType Constraint
     {
-      get => constraint;
+      get => _constraintType;
       set
       {
-        if (constraint != value)
+        if (_constraintType != value)
         {
-          constraint = value;
+          _constraintType = value;
           OnPropertyChanged(nameof(Constraint));
           if (ConstraintDate == null)
           {
@@ -440,12 +431,12 @@ namespace NAS.Models.Entities
 
     public DateTime? ConstraintDate
     {
-      get => constraintDate;
+      get => _constraintDate;
       set
       {
-        if (constraintDate != value)
+        if (_constraintDate != value)
         {
-          constraintDate = value;
+          _constraintDate = value;
           OnPropertyChanged(nameof(ConstraintDate));
           if (ConstraintDate != null && Constraint == ConstraintType.None)
           {
@@ -501,12 +492,12 @@ namespace NAS.Models.Entities
 
     public Calendar Calendar
     {
-      get => calendar;
+      get => _calendar;
       set
       {
-        if (calendar != value)
+        if (_calendar != value)
         {
-          calendar = value;
+          _calendar = value;
           OnPropertyChanged(nameof(Calendar));
         }
       }
@@ -514,12 +505,12 @@ namespace NAS.Models.Entities
 
     public CustomAttribute CustomAttribute1
     {
-      get => customAttribute1;
+      get => _customAttribute1;
       set
       {
-        if (customAttribute1 != value)
+        if (_customAttribute1 != value)
         {
-          customAttribute1 = value;
+          _customAttribute1 = value;
           OnPropertyChanged(nameof(CustomAttribute1));
         }
       }
@@ -527,12 +518,12 @@ namespace NAS.Models.Entities
 
     public CustomAttribute CustomAttribute2
     {
-      get => customAttribute2;
+      get => _customAttribute2;
       set
       {
-        if (customAttribute2 != value)
+        if (_customAttribute2 != value)
         {
-          customAttribute2 = value;
+          _customAttribute2 = value;
           OnPropertyChanged(nameof(CustomAttribute2));
         }
       }
@@ -540,12 +531,12 @@ namespace NAS.Models.Entities
 
     public CustomAttribute CustomAttribute3
     {
-      get => customAttribute3;
+      get => _customAttribute3;
       set
       {
-        if (customAttribute3 != value)
+        if (_customAttribute3 != value)
         {
-          customAttribute3 = value;
+          _customAttribute3 = value;
           OnPropertyChanged(nameof(CustomAttribute3));
         }
       }
@@ -553,12 +544,12 @@ namespace NAS.Models.Entities
 
     public Fragnet Fragnet
     {
-      get => fragnet;
+      get => _fragnet;
       set
       {
-        if (fragnet != value)
+        if (_fragnet != value)
         {
-          fragnet = value;
+          _fragnet = value;
           OnPropertyChanged(nameof(Fragnet));
         }
       }
@@ -566,12 +557,12 @@ namespace NAS.Models.Entities
 
     public WBSItem WBSItem
     {
-      get => wbsItem;
+      get => _wbsItem;
       set
       {
-        if (wbsItem != value)
+        if (_wbsItem != value)
         {
-          wbsItem = value;
+          _wbsItem = value;
           OnPropertyChanged(nameof(WBSItem));
         }
       }

@@ -216,7 +216,7 @@ namespace NAS.ViewModels
       switch (SelectedProperty)
       {
         case ActivityProperty.ActualDuration:
-        case ActivityProperty.RetardedDuration:
+        case ActivityProperty.DelayedDuration:
         case ActivityProperty.OriginalDuration:
         case ActivityProperty.RemainingDuration:
           if (!int.TryParse(ObjectString, out int i) || i < 0)

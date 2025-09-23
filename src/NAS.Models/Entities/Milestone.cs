@@ -17,8 +17,7 @@ namespace NAS.Models.Entities
 
     public Milestone(Milestone other)
       : base(other)
-    {
-    }
+    { }
 
     #endregion
 
@@ -38,7 +37,22 @@ namespace NAS.Models.Entities
       set { }
     }
 
+    public override int DelayedDuration => 0;
+
     public override int ActualDuration => 0;
+
+    public override double PercentComplete
+    {
+      get => _percentComplete;
+      set
+      {
+        if (_percentComplete != value)
+        {
+          _percentComplete = value < 50 ? 0 : 100;
+          OnPropertyChanged(nameof(PercentComplete));
+        }
+      }
+    }
 
     #endregion
 
