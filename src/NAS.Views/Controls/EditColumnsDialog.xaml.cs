@@ -1,20 +1,21 @@
 ﻿using ES.Tools.Core.MVVM;
+using NAS.ViewModels.Base;
 
 namespace NAS.Views.Controls
 {
   /// <summary>
-  /// Interaction logic for EditColumnsDialog.xaml
+  /// Interaction logic for EditColumnsView.xaml
   /// </summary>
-  public partial class EditColumnsDialog : IView
+  public partial class EditColumnsView : IDialogContentView
   {
-    public EditColumnsDialog()
+    public EditColumnsView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
     }
   }

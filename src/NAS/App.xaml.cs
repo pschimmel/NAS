@@ -4,6 +4,7 @@ using NAS.ViewModels;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
 using NAS.Views;
+using NAS.Views.Controls;
 using NAS.Views.Helpers;
 using System;
 using System.Diagnostics;
@@ -80,6 +81,7 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<CompareSchedulesViewModel, CompareSchedulesView>();
       ViewFactory.Instance.RegisterDialog<EditLogicViewModel, EditLogicView>();
       ViewFactory.Instance.RegisterDialog<SelectWBSViewModel, SelectWBSView>();
+      ViewFactory.Instance.RegisterDialog<EditColumnsViewModel, EditColumnsView>();
     }
 
     private static void RegisterNotificationTargets()
@@ -96,10 +98,9 @@ namespace NAS
     void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
       // Process unhandled exception
-
       Debug.Fail(e.Exception.Message + Environment.NewLine + e.Exception.StackTrace);
 
-      // Prevent default unhandled exception processing
+      // Prevent crashing the application
       e.Handled = true;
     }
   }
