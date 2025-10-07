@@ -2,7 +2,6 @@
 using System.Xml;
 using System.Xml.Serialization;
 using NAS.Models.Controllers;
-using NAS.Models.Entities;
 using NUnit.Framework;
 
 namespace NAS.UnitTests
@@ -23,7 +22,6 @@ namespace NAS.UnitTests
         new Report
         {
            Name = "Name",
-           IsReadOnly = false,
            ReportLevel = Models.Enums.ReportLevel.Integrated,
            ReportType = Models.Enums.ReportType.Controlling,
            FileName= "filename"

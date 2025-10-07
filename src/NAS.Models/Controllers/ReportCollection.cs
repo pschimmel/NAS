@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Xml.Serialization;
-using NAS.Models.Entities;
+﻿using System.Xml.Serialization;
+using NAS.Models.Enums;
 
 namespace NAS.Models.Controllers
 {
@@ -13,5 +12,15 @@ namespace NAS.Models.Controllers
     public ReportCollection(IEnumerable<Report> reports)
       : base(reports)
     { }
+
+    public ReportCollection GetCollection(ReportLevel level)
+    {
+      return GetCollection(r => r.ReportLevel == level);
+    }
+
+    public ReportCollection GetCollection(Func<Report, bool> predicate)
+    {
+      return new ReportCollection(this.Where(predicate).OrderBy(x => x.Name));
+    }
   }
 }

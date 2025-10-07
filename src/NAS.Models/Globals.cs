@@ -1,5 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
+using ES.Tools.Core.Infrastructure;
+using NAS.Models.Controllers;
 
 namespace NAS.Models
 {
@@ -17,11 +19,11 @@ namespace NAS.Models
 
     public static string SettingsFileName => Path.Combine(GetStoragePath(), "NAS.Settings.xml");
 
-    public const string ReportsFileName = "NAS.Reports.xml";
+    public const string ReportDefinitionFileName = "NAS.Reports.xml";
 
-    public static string UserReportsPath => Path.Combine(GetStoragePath(), ReportsFileName);
+    public static string UserReportsDefaultPath => Path.Combine(GetStoragePath(), "Reports");
 
-    public const string ReportsPathName = "Reports";
+    public static string IntegratedReportsPath => Path.Combine(ApplicationHelper.StartupPath, "Reports");
 
     public static string UserName => Environment.UserName;
 

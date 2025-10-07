@@ -588,6 +588,9 @@
   <data name="Delay" xml:space="preserve">
     <value>Delay</value>
   </data>
+  <data name="DelayedDuration" xml:space="preserve">
+    <value>Delayed Duration</value>
+  </data>
   <data name="DeleteReport" xml:space="preserve">
     <value>Delete Report</value>
   </data>
@@ -1176,6 +1179,9 @@
   <data name="MessageNoNewVersion" xml:space="preserve">
     <value>You are using the current version ({0}).</value>
   </data>
+  <data name="MessageReportExists" xml:space="preserve">
+    <value>A Report with the same name already exists.</value>
+  </data>
   <data name="Messages" xml:space="preserve">
     <value>Messages</value>
   </data>
@@ -1613,9 +1619,6 @@
   </data>
   <data name="Resources" xml:space="preserve">
     <value>Resources</value>
-  </data>
-  <data name="DelayedDuration" xml:space="preserve">
-    <value>Delayed Duration</value>
   </data>
   <data name="Right" xml:space="preserve">
     <value>Right</value>

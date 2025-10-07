@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using NAS.Models.Enums;
 
-namespace NAS.Models.Entities
+namespace NAS.Models.Controllers
 {
   public class Report
   {
@@ -21,7 +21,6 @@ namespace NAS.Models.Entities
       Name = other.Name;
       Description = other.Description;
       FileName = other.FileName;
-      IsReadOnly = false;
     }
 
     public ReportType ReportType { get; set; }
@@ -44,8 +43,6 @@ namespace NAS.Models.Entities
     public string Description { get; set; }
 
     public string FileName { get; set; }
-
-    public bool IsReadOnly { get; set; }
 
     [MaxLength]
     public string Data

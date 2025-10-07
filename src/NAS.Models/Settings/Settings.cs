@@ -11,12 +11,17 @@ namespace NAS.Models.Settings
   {
     private readonly Lazy<List<string>> _lazyLanguages = new(InitLanguages);
     private string _language;
+    private string _userReportsFolderPath;
 
     public Theme Theme { get; set; } = Theme.Default;
 
     public bool ShowInstantHelpOnStartUp { get; set; } = true;
 
-    public string UserReportsFolderPath { get; set; }
+    public string UserReportsFolderPath 
+    {
+      get => string.IsNullOrWhiteSpace(_userReportsFolderPath) ? Globals.UserReportsDefaultPath : _userReportsFolderPath;
+      set => _userReportsFolderPath = value; 
+    }
 
     public string Language
     {

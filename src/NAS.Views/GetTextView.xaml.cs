@@ -1,4 +1,5 @@
-﻿using NAS.ViewModels.Base;
+﻿using System.Windows;
+using NAS.ViewModels.Base;
 
 namespace NAS.Views
 {
@@ -13,16 +14,18 @@ namespace NAS.Views
       Loaded += GetTextView_Loaded;
     }
 
-    private void GetTextView_Loaded(object sender, System.Windows.RoutedEventArgs e)
-    {
-      Loaded -= GetTextView_Loaded;
-      textBoxText.Focus();
-    }
-
     public IDialogContentViewModel ViewModel
     {
       get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
+    }
+
+    private void GetTextView_Loaded(object sender, RoutedEventArgs e)
+    {
+      Loaded -= GetTextView_Loaded;
+      textBoxText.Focus();
+      // Move caret to end of text
+      textBoxText.CaretIndex = textBoxText.Text.Length;
     }
   }
 }

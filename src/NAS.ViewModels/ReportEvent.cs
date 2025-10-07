@@ -1,5 +1,5 @@
 ﻿using NAS.Models.Base;
-using NAS.Models.Entities;
+using NAS.Models.Controllers;
 
 namespace NAS.ViewModels
 {

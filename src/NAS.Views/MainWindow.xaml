@@ -90,7 +90,7 @@
               </ResourceDictionary>
             </fluent:Backstage.Resources>
             <fluent:BackstageTabControl>
-              <fluent:Button Command="{Binding NewScheduleCommand}" Header="{x:Static resx:NASResources.CreateNewSchedule}" Icon="pack://application:,,,/NAS.Views;component/Images/NewProject.png" />
+              <fluent:Button Command="{Binding CreateNewScheduleCommand}" Header="{x:Static resx:NASResources.CreateNewSchedule}" Icon="pack://application:,,,/NAS.Views;component/Images/NewProject.png" />
               <fluent:BackstageTabItem Header="{x:Static resx:NASResources.OpenSchedule}" Icon="pack://application:,,,/NAS.Views;component/Images/OpenProject.png">
                 <Grid Margin="10">
                   <Grid.ColumnDefinitions>
@@ -110,7 +110,7 @@
               <fluent:Button Command="{Binding ImportScheduleCommand}" Header="{x:Static resx:NASResources.ImportSchedule}" Icon="pack://application:,,,/NAS.Views;component/Images/ImportProject.png" />
               <fluent:Button Command="{Binding ExportScheduleCommand}" Header="{x:Static resx:NASResources.ExportSchedule}" Icon="pack://application:,,,/NAS.Views;component/Images/ExportProject.png" />
               <fluent:SeparatorTabItem />
-              <fluent:Button Command="{Binding ProgramSettingsCommand}" Header="{x:Static resx:NASResources.Settings}" Icon="pack://application:,,,/NAS.Views;component/Images/Gear.png" />
+              <fluent:Button Command="{Binding OpenProgramSettingsCommand}" Header="{x:Static resx:NASResources.Settings}" Icon="pack://application:,,,/NAS.Views;component/Images/Gear.png" />
               <fluent:SeparatorTabItem />
               <fluent:Button VerticalAlignment="Bottom"
                              Command="{Binding CloseCommand}"

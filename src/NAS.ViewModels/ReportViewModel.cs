@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using NAS.Models.Base;
+using NAS.Models.Controllers;
 using NAS.Resources;
 using NAS.ViewModels.Base;
 
@@ -15,7 +16,7 @@ namespace NAS.ViewModels
 
     #region Constructors
 
-    public ReportViewModel(Models.Entities.Report report)
+    public ReportViewModel(Report report)
     {
       Report = report;
       report.NameChanged += (_, __) =>
@@ -47,7 +48,7 @@ namespace NAS.ViewModels
       }
     }
 
-    internal Models.Entities.Report Report { get; }
+    internal Report Report { get; }
 
     public object Image => _imageCache.Value;
 

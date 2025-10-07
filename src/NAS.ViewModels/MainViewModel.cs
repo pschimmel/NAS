@@ -30,8 +30,6 @@ namespace NAS.ViewModels
 
     public event EventHandler<ItemEventArgs<Theme>> OnThemeChangeRequested;
     public event EventHandler<RequestItemEventArgs<LayoutType, IPrintableCanvas>> GetCanvas;
-    public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> ShowFastReport;
-    public event EventHandler<ItemEventArgs<(Schedule Schedule, string FileName, CultureInfo Language)>> EditFastReport;
     public event EventHandler ActivateRibbonStartTab;
 
     #endregion
@@ -39,23 +37,34 @@ namespace NAS.ViewModels
     #region Fields
 
     private int _busyCount = 0;
+    private readonly Lock _busyLock = new();
     private bool _backstageOpen = false;
     private readonly CommandLineSettings _startupSettings;
     private ObservableCollection<ScheduleViewModel> _schedules;
     private ScheduleViewModel _currentSchedule;
     private ReportViewModel _selectedReport;
-    private readonly ReportController _reportsController;
     private readonly Lazy<OpenFileDialog> _lazyOpenFileDialog = new(GetOpenFileDialog);
     private readonly Lazy<SaveFileDialog> _lazySaveFileDialog = new(GetSaveFileDialog);
     private readonly Lazy<OpenFileDialog> _lazyImportFileDialog = new(GetImportFileDialog);
     private readonly Lazy<SaveFileDialog> _lazyExportFileDialog = new(GetExportFileDialog);
-    private ActionCommand _newScheduleCommand;
+    private ActionCommand _createNewScheduleCommand;
     private ActionCommand<string> _openScheduleCommand;
     private ActionCommand _closeScheduleCommand;
     private ActionCommand _saveScheduleCommand;
     private ActionCommand _saveScheduleAsCommand;
     private ActionCommand _importScheduleCommand;
     private ActionCommand _exportScheduleAsCommand;
+    private ActionCommand _printCommand;
+    private ActionCommand _closeCommand;
+    private ActionCommand _openProgramSettingsCommand;
+    private ActionCommand _aboutCommand;
+    private ActionCommand _websiteCommand;
+    private ActionCommand _instantHelpCommand;
+    private ActionCommand _showReportCommand;
+    private ActionCommand _editReportCommand;
+    private ActionCommand _copyReportCommand;
+    private ActionCommand _deleteReportCommand;
+    private ActionCommand _renameReportCommand;
 
     #endregion
 
@@ -64,29 +73,15 @@ namespace NAS.ViewModels
     public MainViewModel()
     {
       _startupSettings = CommandLineParser.GetStartupSettings();
-      _reportsController = new ReportController(SettingsController.Settings.UserReportsFolderPath);
-      _reportsController.ReportsChanged += (s, e) => RefreshReports();
 
       if (SettingsController.Settings.ShowInstantHelpOnStartUp)
       {
-        InstantHelpCommandExecute();
+        InstantHelp();
       }
 
       InstantHelpManager.Instance.HelpWindowsChanged += (_, __) => OnPropertyChanged(nameof(InstantHelpVisible));
 
-      PrintCommand = new ActionCommand(PrintCommandExecute, () => PrintCommandCanExecute);
-      CloseCommand = new ActionCommand(CloseCommandExecute, () => CloseCommandCanExecute);
-      ProgramSettingsCommand = new ActionCommand(ProgramSettingsCommandExecute, () => ProgramSettingsCommandCanExecute);
-      DatabaseSettingsCommand = new ActionCommand(DatabaseSettingsCommandExecute, () => DatabaseSettingsCommandCanExecute);
-      AboutCommand = new ActionCommand(AboutCommandExecute);
-      WebsiteCommand = new ActionCommand(WebsiteCommandExecute);
-      InstantHelpCommand = new ActionCommand(InstantHelpCommandExecute);
-      ShowReportCommand = new ActionCommand(ShowReportCommandExecute, () => ShowReportCommandCanExecute);
-      EditReportCommand = new ActionCommand(EditReportCommandExecute, () => EditReportCommandCanExecute);
-      CopyReportCommand = new ActionCommand(CopyReportCommandExecute, () => CopyReportCommandCanExecute);
-      DeleteReportCommand = new ActionCommand(DeleteReportCommandExecute, () => DeleteReportCommandCanExecute);
-      RenameReportCommand = new ActionCommand(RenameReportCommandExecute, () => RenameReportCommandCanExecute);
-      RefreshReports();
+      ReportsController.LoadReports().ForEach(x => Reports.Add(new ReportViewModel(x)));
 
       if (_startupSettings.Get(CommandLineSettings.CommandLineSettingsType.OpenFile, out string path))
       {
@@ -118,9 +113,7 @@ namespace NAS.ViewModels
       }
     }
 
-#pragma warning disable CA1822 // Mark members as static
     public string Version => Globals.Version.ToString(3);
-#pragma warning restore CA1822 // Mark members as static
 
     /// <summary>
     /// Gets the window title.
@@ -221,9 +214,9 @@ namespace NAS.ViewModels
 
     #region New Schedule
 
-    public ICommand NewScheduleCommand => _newScheduleCommand ??= new ActionCommand(NewScheduleExecute, NewScheduleCanExecute);
+    public ICommand CreateNewScheduleCommand => _createNewScheduleCommand ??= new ActionCommand(CreateNewSchedule, CanCreateNewSchedule);
 
-    private void NewScheduleExecute()
+    private void CreateNewSchedule()
     {
       using var vm = new NewScheduleViewModel();
       if (ViewFactory.Instance.ShowDialog(vm) == true)
@@ -235,7 +228,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool NewScheduleCanExecute()
+    private bool CanCreateNewSchedule()
     {
       return !IsBusy;
     }
@@ -244,9 +237,9 @@ namespace NAS.ViewModels
 
     #region Open Schedule
 
-    public ICommand OpenScheduleCommand => _openScheduleCommand ??= new ActionCommand<string>(OpenScheduleExecute, OpenScheduleCanExecute);
+    public ICommand OpenScheduleCommand => _openScheduleCommand ??= new ActionCommand<string>(OpenSchedule, CanOpenSchedule);
 
-    private void OpenScheduleExecute(string param)
+    private void OpenSchedule(string param)
     {
       string fileName = null;
 
@@ -310,7 +303,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public bool OpenScheduleCanExecute(string _)
+    public bool CanOpenSchedule(string _)
     {
       return !IsBusy;
     }
@@ -319,14 +312,14 @@ namespace NAS.ViewModels
 
     #region Close Schedule
 
-    public ICommand CloseScheduleCommand => _closeScheduleCommand ??= new ActionCommand(CloseScheduleExecute, CloseScheduleCanExecute);
+    public ICommand CloseScheduleCommand => _closeScheduleCommand ??= new ActionCommand(CloseSchedule, CanCloseSchedule);
 
-    public void CloseScheduleExecute()
+    public void CloseSchedule()
     {
       RemoveScheduleViewModel(CurrentSchedule);
     }
 
-    private bool CloseScheduleCanExecute()
+    private bool CanCloseSchedule()
     {
       return CurrentSchedule != null && !IsBusy;
     }
@@ -335,15 +328,15 @@ namespace NAS.ViewModels
 
     #region Save Schedule
 
-    public ICommand SaveScheduleCommand => _saveScheduleCommand ??= new ActionCommand(SaveScheduleExecute, SaveScheduleCanExecute);
+    public ICommand SaveScheduleCommand => _saveScheduleCommand ??= new ActionCommand(SaveSchedule, CanSaveSchedule);
 
-    private void SaveScheduleExecute()
+    private void SaveSchedule()
     {
       string fileName = null;
 
-      if (string.IsNullOrWhiteSpace(CurrentSchedule.Schedule.FileName) && SaveScheduleAsCanExecute())
+      if (string.IsNullOrWhiteSpace(CurrentSchedule.Schedule.FileName) && CanSaveScheduleAs())
       {
-        SaveScheduleAsExecute();
+        SaveScheduleAs();
       }
 
       try
@@ -362,7 +355,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public bool SaveScheduleCanExecute()
+    public bool CanSaveSchedule()
     {
       return CurrentSchedule != null && !IsBusy;
     }
@@ -371,20 +364,20 @@ namespace NAS.ViewModels
 
     #region Save Schedule As
 
-    public ICommand SaveScheduleAsCommand => _saveScheduleAsCommand ??= new ActionCommand(SaveScheduleAsExecute, SaveScheduleAsCanExecute);
+    public ICommand SaveScheduleAsCommand => _saveScheduleAsCommand ??= new ActionCommand(SaveScheduleAs, CanSaveScheduleAs);
 
-    private void SaveScheduleAsExecute()
+    private void SaveScheduleAs()
     {
       var saveFileDialog = _lazySaveFileDialog.Value;
 
       if (saveFileDialog.ShowDialog() == true)
       {
         CurrentSchedule.Schedule.FileName = saveFileDialog.FileName;
-        SaveScheduleExecute();
+        SaveSchedule();
       }
     }
 
-    public bool SaveScheduleAsCanExecute()
+    public bool CanSaveScheduleAs()
     {
       return CurrentSchedule != null && !IsBusy;
     }
@@ -393,9 +386,9 @@ namespace NAS.ViewModels
 
     #region Import Schedule
 
-    public ICommand ImportScheduleCommand => _importScheduleCommand ??= new ActionCommand(ImportScheduleExecute, ImportScheduleCanExecute);
+    public ICommand ImportScheduleCommand => _importScheduleCommand ??= new ActionCommand(ImportSchedule, CanImportSchedule);
 
-    private void ImportScheduleExecute()
+    private void ImportSchedule()
     {
       var openFileDialog = _lazyImportFileDialog.Value;
 
@@ -444,7 +437,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool ImportScheduleCanExecute()
+    private bool CanImportSchedule()
     {
       return CurrentSchedule != null && !IsBusy;
     }
@@ -453,9 +446,9 @@ namespace NAS.ViewModels
 
     #region Export Schedule
 
-    public ICommand ExportScheduleCommand => _exportScheduleAsCommand ??= new ActionCommand(ExportScheduleExecute, ExportScheduleCanExecute);
+    public ICommand ExportScheduleCommand => _exportScheduleAsCommand ??= new ActionCommand(ExportSchedule, CanExportSchedule);
 
-    private void ExportScheduleExecute()
+    private void ExportSchedule()
     {
       var saveFileDialog = _lazyExportFileDialog.Value;
 
@@ -485,7 +478,7 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool ExportScheduleCanExecute()
+    private bool CanExportSchedule()
     {
       return CurrentSchedule != null && !IsBusy;
     }
@@ -494,9 +487,9 @@ namespace NAS.ViewModels
 
     #region Printing
 
-    public ICommand PrintCommand { get; }
+    public ICommand PrintCommand => _printCommand ??= new ActionCommand(Print, CanPrint);
 
-    private void PrintCommandExecute()
+    private void Print()
     {
       try
       {
@@ -533,15 +526,18 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool PrintCommandCanExecute => CurrentSchedule != null && !IsBusy;
+    private bool CanPrint()
+    {
+      return CurrentSchedule != null && !IsBusy;
+    }
 
     #endregion
 
     #region Close
 
-    public ICommand CloseCommand { get; }
+    public ICommand CloseCommand => _closeCommand ??= new ActionCommand(Close, CanClose);
 
-    private void CloseCommandExecute()
+    private void Close()
     {
       UserNotificationService.Instance.Question(NASResources.MessageClose, () =>
       {
@@ -550,15 +546,18 @@ namespace NAS.ViewModels
       });
     }
 
-    private bool CloseCommandCanExecute => !IsBusy;
+    private bool CanClose()
+    {
+      return !IsBusy;
+    }
 
     #endregion
 
     #region Program Settings
 
-    public ICommand ProgramSettingsCommand { get; }
+    public ICommand OpenProgramSettingsCommand => _openProgramSettingsCommand ??= new ActionCommand(OpenProgramSettings, CanOpenProgramSettings);
 
-    private void ProgramSettingsCommandExecute()
+    private void OpenProgramSettings()
     {
       var oldTheme = SettingsController.Settings.Theme;
 
@@ -574,20 +573,10 @@ namespace NAS.ViewModels
       ViewFactory.Instance.ShowDialog(vm);
     }
 
-    private bool ProgramSettingsCommandCanExecute => !IsBusy;
-
-    #endregion
-
-    #region Database Settings
-
-    public ICommand DatabaseSettingsCommand { get; }
-
-    private void DatabaseSettingsCommandExecute()
+    private bool CanOpenProgramSettings()
     {
-      Configure();
+      return !IsBusy;
     }
-
-    private bool DatabaseSettingsCommandCanExecute => !IsBusy;
 
     #endregion
 
@@ -595,13 +584,13 @@ namespace NAS.ViewModels
 
     #region Show Report
 
-    public ICommand ShowReportCommand { get; }
+    public ICommand ShowReportCommand => _showReportCommand ??= new ActionCommand(ShowReport, CanShowReport);
 
-    private void ShowReportCommandExecute()
+    private void ShowReport()
     {
       try
       {
-        ShowFastReport?.Invoke(this, new ItemEventArgs<(Schedule, string, CultureInfo)>((_currentSchedule.Schedule, SelectedReport.Report.FileName, Thread.CurrentThread.CurrentUICulture)));
+        ReportManager.ShowReport(SelectedReport.Report, CurrentSchedule.Schedule);
       }
       catch (Exception ex)
       {
@@ -609,35 +598,54 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool ShowReportCommandCanExecute => CurrentSchedule != null && SelectedReport != null;
+    private bool CanShowReport()
+    { 
+      return !IsBusy && CurrentSchedule != null && SelectedReport != null;
+    }
 
     #endregion
 
     #region Edit Report
 
-    public ICommand EditReportCommand { get; }
+    public ICommand EditReportCommand => _editReportCommand ??= new ActionCommand(EditReport, CanEditReport);
 
-    private void EditReportCommandExecute()
+    private void EditReport()
     {
-      EditFastReport?.Invoke(this, new ItemEventArgs<(Schedule, string, CultureInfo)>((_currentSchedule.Schedule, SelectedReport.Report.FileName, Thread.CurrentThread.CurrentUICulture)));
+      ReportManager.EditReport(SelectedReport.Report, CurrentSchedule.Schedule);
     }
 
-    private bool EditReportCommandCanExecute => CurrentSchedule != null && SelectedReport != null;
+    private bool CanEditReport()
+    {
+      return !IsBusy && CurrentSchedule != null && SelectedReport != null && SelectedReport.Report.ReportLevel == ReportLevel.User;
+    }
 
     #endregion
 
     #region Copy Report
 
-    public ICommand CopyReportCommand { get; }
+    public ICommand CopyReportCommand => _copyReportCommand ??= new ActionCommand(CopyReport, CanCopyReport);
 
-    private void CopyReportCommandExecute()
+    private void CopyReport()
     {
       try
       {
         var vm = new GetTextViewModel(NASResources.CopyReport, NASResources.ReportName, SelectedReport.Report.Name);
         if (ViewFactory.Instance.ShowDialog(vm) == true)
         {
-          _reportsController.CopyReport(SelectedReport.Report, vm.Text);
+          // Duplicate names are not allowed on the same level
+          if (Reports.Any(x => x.Report.Name.Equals(vm.Text, StringComparison.OrdinalIgnoreCase)))
+          {
+            UserNotificationService.Instance.Error(NASResources.MessageReportExists);
+            return;
+          }
+
+          var newReport = ReportsController.CopyReport(SelectedReport.Report, vm.Text);
+
+          if (newReport == null)
+            return;
+
+          var newVM = new ReportViewModel(newReport);
+          Reports.Add(newVM);
         }
       }
       catch (Exception ex)
@@ -646,42 +654,49 @@ namespace NAS.ViewModels
       }
     }
 
-    private bool CopyReportCommandCanExecute => SelectedReport != null;
+    private bool CanCopyReport()
+    {
+      return !IsBusy && SelectedReport != null;
+    }
 
     #endregion
 
     #region Delete Report
 
-    public ICommand DeleteReportCommand { get; }
+    public ICommand DeleteReportCommand => _deleteReportCommand ??= new ActionCommand(DeleteReport, CanDeleteReport);
 
-    private void DeleteReportCommandExecute()
+    private void DeleteReport()
     {
       UserNotificationService.Instance.Question(string.Format(NASResources.MessageDeleteReport, SelectedReport.Report.Name), () =>
       {
-        _reportsController.DeleteReport(SelectedReport.Report);
+        ReportsController.DeleteReport(SelectedReport.Report);
       });
     }
 
-    private bool DeleteReportCommandCanExecute => SelectedReport != null && !SelectedReport.Report.IsReadOnly;
+    private bool CanDeleteReport()
+    {
+      return !IsBusy && SelectedReport != null && SelectedReport.Report.ReportLevel != ReportLevel.Integrated;
+    }
 
     #endregion
 
     #region Rename Report
 
-    public ICommand RenameReportCommand { get; }
+    public ICommand RenameReportCommand => _renameReportCommand ??= new ActionCommand(RenameReport, CanRenameReport);
 
-    private void RenameReportCommandExecute()
+    private void RenameReport()
     {
       var vm = new GetTextViewModel(NASResources.RenameReport, NASResources.ReportName, SelectedReport.Report.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
         SelectedReport.Report.Name = vm.Text;
       }
-
-      RefreshReports();
     }
 
-    private bool RenameReportCommandCanExecute => SelectedReport != null && !SelectedReport.Report.IsReadOnly;
+    private bool CanRenameReport()
+    {
+      return !IsBusy && SelectedReport != null && SelectedReport.Report.ReportLevel != ReportLevel.Integrated;
+    }
 
     #endregion
 
@@ -691,9 +706,9 @@ namespace NAS.ViewModels
 
     #region About
 
-    public ICommand AboutCommand { get; }
+    public ICommand AboutCommand => _aboutCommand ??= new ActionCommand(About);
 
-    private static void AboutCommandExecute()
+    private static void About()
     {
       ViewFactory.Instance.ShowDialog(new AboutViewModel());
     }
@@ -702,9 +717,9 @@ namespace NAS.ViewModels
 
     #region Website
 
-    public ICommand WebsiteCommand { get; }
+    public ICommand WebsiteCommand => _websiteCommand ??= new ActionCommand(Website);
 
-    public static void WebsiteCommandExecute()
+    public static void Website()
     {
       string url = Globals.Website;
 
@@ -727,9 +742,9 @@ namespace NAS.ViewModels
 
     #region Instant Help
 
-    public ICommand InstantHelpCommand { get; }
+    public ICommand InstantHelpCommand => _instantHelpCommand ??= new ActionCommand(InstantHelp);
 
-    public void InstantHelpCommandExecute()
+    public void InstantHelp()
     {
       if (InstantHelpVisible)
       {
@@ -742,16 +757,6 @@ namespace NAS.ViewModels
     }
 
     #endregion
-
-    #endregion
-
-    #region Public Methods
-
-    public void RefreshReports()
-    {
-      Reports.Clear();
-      _reportsController.Reports.ToList().ForEach(x => Reports.Add(new ReportViewModel(x)));
-    }
 
     #endregion
 
@@ -775,7 +780,7 @@ namespace NAS.ViewModels
     private static OpenFileDialog GetOpenFileDialog()
     {
       var openFileDialog = new OpenFileDialog();
-      IFilter filter = new NASFilter();
+      var filter = new NASFilter();
       string f = $"{filter.FilterName}|*{filter.FileExtension}";
 
       openFileDialog.Filter = f;
@@ -808,7 +813,7 @@ namespace NAS.ViewModels
     {
       var saveFileDialog = new SaveFileDialog();
 
-      IFilter filter = new NASFilter();
+      var filter = new NASFilter();
       string f = $"{filter.FilterName}|*{filter.FileExtension}";
 
       saveFileDialog.Filter = f;
@@ -837,44 +842,54 @@ namespace NAS.ViewModels
 
     private void RefreshCommands()
     {
-      (OpenScheduleCommand as ActionCommand).RaiseCanExecuteChanged();
-      (CloseScheduleCommand as ActionCommand).RaiseCanExecuteChanged();
-      (PrintCommand as ActionCommand).RaiseCanExecuteChanged();
-      (CloseCommand as ActionCommand).RaiseCanExecuteChanged();
-      (ProgramSettingsCommand as ActionCommand).RaiseCanExecuteChanged();
-      (DatabaseSettingsCommand as ActionCommand).RaiseCanExecuteChanged();
-      (AboutCommand as ActionCommand).RaiseCanExecuteChanged();
-      (WebsiteCommand as ActionCommand).RaiseCanExecuteChanged();
-      (InstantHelpCommand as ActionCommand).RaiseCanExecuteChanged();
-      (ShowReportCommand as ActionCommand).RaiseCanExecuteChanged();
-      (EditReportCommand as ActionCommand).RaiseCanExecuteChanged();
-      (CopyReportCommand as ActionCommand).RaiseCanExecuteChanged();
-      (DeleteReportCommand as ActionCommand).RaiseCanExecuteChanged();
-      (RenameReportCommand as ActionCommand).RaiseCanExecuteChanged();
+      _createNewScheduleCommand.RaiseCanExecuteChanged();
+      _openScheduleCommand.RaiseCanExecuteChanged();
+      _closeScheduleCommand.RaiseCanExecuteChanged();
+      _saveScheduleCommand.RaiseCanExecuteChanged();
+      _saveScheduleAsCommand.RaiseCanExecuteChanged();
+      _importScheduleCommand.RaiseCanExecuteChanged();
+      _exportScheduleAsCommand.RaiseCanExecuteChanged();
+      _printCommand.RaiseCanExecuteChanged();
+      _closeCommand.RaiseCanExecuteChanged();
+      _openProgramSettingsCommand.RaiseCanExecuteChanged();
+      _aboutCommand.RaiseCanExecuteChanged();
+      _websiteCommand.RaiseCanExecuteChanged();
+      _instantHelpCommand.RaiseCanExecuteChanged();
+      _showReportCommand.RaiseCanExecuteChanged();
+      _editReportCommand.RaiseCanExecuteChanged();
+      _copyReportCommand.RaiseCanExecuteChanged();
+      _deleteReportCommand.RaiseCanExecuteChanged();
+      _renameReportCommand.RaiseCanExecuteChanged();
     }
 
     private void SetIsBusy(bool busy)
     {
-      if (busy)
+      bool stateChanged = false;
+      lock (_busyLock)
       {
-        _busyCount++;
-      }
-      else
-      {
-        _busyCount--;
-        _busyCount = Math.Min(_busyCount, 0);
+        if (busy)
+        {
+          _busyCount++;
+        }
+        else
+        {
+          _busyCount--;
+          _busyCount = Math.Max(_busyCount, 0);
+        }
+
+        bool newIsBusy = _busyCount > 0;
+        stateChanged = newIsBusy != IsBusy;
+        IsBusy = newIsBusy;
       }
 
-      UITools.Instance.BeginInvokeIfRequired(() =>
+      if (stateChanged)
       {
-        bool newIsBusy = _busyCount > 0;
-        if (newIsBusy != IsBusy)
+        UITools.Instance.BeginInvokeIfRequired(() =>
         {
-          IsBusy = newIsBusy;
           OnPropertyChanged(nameof(IsBusy));
           RefreshCommands();
-        }
-      });
+        });
+      }
     }
 
     private void SetProgressMessage(string message)

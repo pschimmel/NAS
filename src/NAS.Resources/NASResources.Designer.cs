@@ -3247,6 +3247,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A Report with the same name already exists..
+        /// </summary>
+        public static string MessageReportExists {
+            get {
+                return ResourceManager.GetString("MessageReportExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Messages.
         /// </summary>
         public static string Messages {
