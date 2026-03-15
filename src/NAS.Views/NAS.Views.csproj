@@ -35,7 +35,7 @@
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.129" />
     <PackageReference Include="ES.Tools" Version="0.6.40.125" />
     <PackageReference Include="ES.Tools.Core" Version="0.6.40.125" />
-    <PackageReference Include="Fluent.Ribbon" Version="11.0.1" />
+    <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
   </ItemGroup>
 

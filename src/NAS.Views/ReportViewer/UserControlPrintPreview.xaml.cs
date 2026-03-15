@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NAS.ReportViewer
+namespace NAS.Views.ReportViewer
 {
   /// <summary>
   /// Interaction logic for UserControlPrintPreview.xaml

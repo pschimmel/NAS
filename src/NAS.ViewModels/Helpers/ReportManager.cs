@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using FlowReports;
-using FlowReports.Model;
 using NAS.Models.Controllers;
 using NAS.Models.Entities;
 using NAS.Models.Enums;
@@ -65,8 +64,9 @@ namespace NAS.ViewModels.Helpers
     /// </summary>
     private static void EditActivitiesReport(Models.Controllers.Report report, IEnumerable<Activity> activities)
     {
+      System.Diagnostics.Debug.Assert(report.ReportLevel == ReportLevel.User, "Only user-defined reports can be edited.");
       FlowReports.Model.Report flowReport = LoadReport(report);
-      FlowReport.Edit(flowReport, activities);
+      FlowReport.Edit(flowReport, activities, report.ReportType.ToString());
     }
 
     private static FlowReports.Model.Report LoadReport(Models.Controllers.Report report)

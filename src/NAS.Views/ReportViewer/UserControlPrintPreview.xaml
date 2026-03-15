@@ -1,4 +1,4 @@
-﻿<DocumentViewer x:Class="NAS.ReportViewer.UserControlPrintPreview"
+﻿<DocumentViewer x:Class="NAS.Views.ReportViewer.UserControlPrintPreview"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -67,9 +67,7 @@
       <Setter Property="Template">
         <Setter.Value>
           <ControlTemplate TargetType="{x:Type DocumentViewer}">
-            <Border BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    Focusable="False">
+            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Focusable="False">
               <Grid KeyboardNavigation.TabNavigation="Local">
                 <Grid.Background>
                   <SolidColorBrush Color="{DynamicResource ControlLightColor}" />
@@ -80,41 +78,27 @@
                   <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <ToolBar KeyboardNavigation.TabNavigation="Continue" ToolBarTray.IsLocked="True">
-                  <Button Command="ApplicationCommands.Print"
-                          CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ToolTip="{x:Static resx:NASResources.Print}">
+                  <Button Command="ApplicationCommands.Print" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{x:Static resx:NASResources.Print}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/Print.png" />
                   </Button>
-                  <Button Name="buttonPageSettings"
-                          Command="{Binding PageSettingsCommand}"
-                          ToolTip="{x:Static resx:NASResources.PageSettings}">
+                  <Button Name="buttonPageSettings" Command="{Binding PageSettingsCommand}" ToolTip="{x:Static resx:NASResources.PageSettings}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/PageSettings.png" />
                   </Button>
-                  <Button Name="buttonLayoutSettings"
-                          Command="{Binding LayoutSettingsCommand}"
-                          ToolTip="{x:Static resx:NASResources.LayoutSettings}">
+                  <Button Name="buttonLayoutSettings" Command="{Binding LayoutSettingsCommand}" ToolTip="{x:Static resx:NASResources.LayoutSettings}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/Layout.png" />
                   </Button>
                   <Separator />
-                  <Button Command="NavigationCommands.IncreaseZoom"
-                          CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ToolTip="{x:Static resx:NASResources.ZoomIn}">
+                  <Button Command="NavigationCommands.IncreaseZoom" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{x:Static resx:NASResources.ZoomIn}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/ZoomIn.png" />
                   </Button>
-                  <Button Command="NavigationCommands.DecreaseZoom"
-                          CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ToolTip="{x:Static resx:NASResources.ZoomOut}">
+                  <Button Command="NavigationCommands.DecreaseZoom" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{x:Static resx:NASResources.ZoomOut}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/ZoomOut.png" />
                   </Button>
                   <Separator />
-                  <Button Command="my:ActualSizeCommand.ActualSize"
-                          CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ToolTip="{x:Static resx:NASResources.ZoomToActualSize}">
+                  <Button Command="my:ActualSizeCommand.ActualSize" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{x:Static resx:NASResources.ZoomToActualSize}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/ZoomToActualSize.png" />
                   </Button>
-                  <Button Command="DocumentViewer.FitToWidthCommand"
-                          CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                          ToolTip="{x:Static resx:NASResources.ZoomToPageWidth}">
+                  <Button Command="DocumentViewer.FitToWidthCommand" CommandTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" ToolTip="{x:Static resx:NASResources.ZoomToPageWidth}">
                     <tools:AutoGrayableImage Width="24" Source="pack://application:,,,/NAS.Views;component/Images/ZoomToPageWidth.png" />
                   </Button>
                   <Button Command="DocumentViewer.FitToMaxPagesAcrossCommand"

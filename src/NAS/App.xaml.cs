@@ -1,11 +1,14 @@
 ﻿using ES.Tools.Core.MVVM;
 using NAS.Models.Controllers;
+using NAS.ReportViewer;
 using NAS.ViewModels;
 using NAS.ViewModels.Base;
 using NAS.ViewModels.Helpers;
+using NAS.ViewModels.Printing;
 using NAS.Views;
 using NAS.Views.Controls;
 using NAS.Views.Helpers;
+using NAS.Views.ReportViewer;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -65,6 +68,8 @@ namespace NAS
       ViewFactory.Instance.RegisterDialog<EditLayoutViewModel, EditLayoutView>();
       ViewFactory.Instance.RegisterDialog<SelectBaselineViewModel, SelectBaselineView>();
       ViewFactory.Instance.RegisterDialog<EditPrintLayoutViewModel, EditPrintLayoutView>();
+      ViewFactory.Instance.RegisterDialog<PrintPreviewViewModel, PrintPreviewView>();
+      ViewFactory.Instance.RegisterDialog<PageSettingsViewModel, PageSettingsView>();
       ViewFactory.Instance.RegisterDialog<EditSortingAndGroupingViewModel, EditSortingAndGroupingView>();
       ViewFactory.Instance.RegisterDialog<SelectSortingDefinitionViewModel, SelectSortingDefinitionView>();
       ViewFactory.Instance.RegisterDialog<SelectGroupingDefinitionViewModel, SelectGroupingDefinitionView>();

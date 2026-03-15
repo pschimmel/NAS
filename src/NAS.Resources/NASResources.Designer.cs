@@ -3967,6 +3967,15 @@ namespace NAS.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print Preview.
+        /// </summary>
+        public static string PrintPreview {
+            get {
+                return ResourceManager.GetString("PrintPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Print Report.
         /// </summary>
         public static string PrintReport {

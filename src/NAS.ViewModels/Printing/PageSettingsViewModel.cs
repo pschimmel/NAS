@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Printing;
+using NAS.Resources;
 using NAS.ViewModels.Base;
+using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels.Printing
 {
-  public class PageSettingsViewModel : ViewModelBase
+  public class PageSettingsViewModel : DialogContentViewModel
   {
     #region Fields
 
@@ -49,6 +51,18 @@ namespace NAS.ViewModels.Printing
 
       Zoom = Convert.ToInt32(zoom * 100);
     }
+
+    #endregion
+
+    #region Overwritten Members
+
+    public override string Title => NASResources.PageSettings;
+
+    public override string Icon => "Print";
+
+    public override DialogSize DialogSize => DialogSize.Initial(490, 300);
+
+    public override HelpTopic HelpTopicKey => HelpTopic.Printing;
 
     #endregion
 

@@ -42,7 +42,7 @@ namespace NAS.Views.Controls
         {
           if (view.Groups == null)
           {
-            foreach (ActivityViewModel activity in view)
+            foreach (ActivityViewModel activity in view.Cast<ActivityViewModel>().ToList())
             {
               AddActivity(activity);
               AddTableRow(activity);

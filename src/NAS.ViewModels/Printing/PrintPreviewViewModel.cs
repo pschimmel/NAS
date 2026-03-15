@@ -14,7 +14,7 @@ using NAS.ViewModels.Helpers;
 
 namespace NAS.ViewModels.Printing
 {
-  public class PrintPreviewViewModel : ViewModelBase
+  public class PrintPreviewViewModel : DialogContentViewModel
   {
     #region Private Members
 
@@ -55,17 +55,57 @@ namespace NAS.ViewModels.Printing
 
     #endregion
 
-    #region Public Members
+    #region Overwritten Members
 
-    public Schedule Project => viewModel.Schedule;
-    public IPrintableCanvas Canvas { get; private set; }
-    public PrintQueue Printer { get; private set; }
-    public PageMediaSize PageSize { get; private set; }
-    public PageImageableArea PrintableArea { get; private set; }
-    public PageOrientation Orientation { get; private set; }
-    public double Zoom { get; private set; }
+    public override string Title => NASResources.PrintPreview;
+
+    public override string Icon => "Print";
+
+    public override DialogSize DialogSize => DialogSize.Initial(490, 300);
 
     public override HelpTopic HelpTopicKey => HelpTopic.Printing;
+
+    protected override void Dispose(bool disposing)
+    {
+      base.Dispose(disposing);
+      if (disposing)
+      {
+        foreach (string fileName in tempFileNames)
+        {
+          try
+          {
+            File.Delete(fileName);
+          }
+          catch (Exception ex)
+          {
+            UserNotificationService.Instance.Error(ex.Message);
+          }
+        }
+      }
+    }
+
+    public override IEnumerable<IButtonViewModel> Buttons => new List<ButtonViewModel>
+    {
+      ButtonViewModel.CreateCloseButton()
+    };
+
+    #endregion
+
+    #region Properties
+
+    public Schedule Project => viewModel.Schedule;
+
+    public IPrintableCanvas Canvas { get; private set; }
+
+    public PrintQueue Printer { get; private set; }
+
+    public PageMediaSize PageSize { get; private set; }
+
+    public PageImageableArea PrintableArea { get; private set; }
+
+    public PageOrientation Orientation { get; private set; }
+
+    public double Zoom { get; private set; }
 
     public bool IsBusy
     {
@@ -100,29 +140,6 @@ namespace NAS.ViewModels.Printing
       {
         document = value;
         OnPropertyChanged(nameof(Document));
-      }
-    }
-
-    #endregion
-
-    #region Protected Members
-
-    protected override void Dispose(bool disposing)
-    {
-      base.Dispose(disposing);
-      if (disposing)
-      {
-        foreach (string fileName in tempFileNames)
-        {
-          try
-          {
-            File.Delete(fileName);
-          }
-          catch (Exception ex)
-          {
-            UserNotificationService.Instance.Error(ex.Message);
-          }
-        }
       }
     }
 

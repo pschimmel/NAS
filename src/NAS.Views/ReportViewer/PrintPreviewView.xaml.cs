@@ -1,20 +1,20 @@
-﻿using ES.Tools.Core.MVVM;
+﻿using NAS.ViewModels.Base;
 
-namespace NAS.ReportViewer
+namespace NAS.Views.ReportViewer
 {
   /// <summary>
-  /// Interaction logic for WindowPrintPreview.xaml
+  /// Interaction logic for PrintPreviewView.xaml
   /// </summary>
-  public partial class WindowPrintPreview : IView
+  public partial class PrintPreviewView : IDialogContentView
   {
-    public WindowPrintPreview()
+    public PrintPreviewView()
     {
       InitializeComponent();
     }
 
-    public IViewModel ViewModel
+    public IDialogContentViewModel ViewModel
     {
-      get => DataContext as IViewModel;
+      get => DataContext as IDialogContentViewModel;
       set => DataContext = value;
     }
 

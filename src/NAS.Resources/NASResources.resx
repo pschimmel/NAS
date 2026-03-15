@@ -1419,6 +1419,9 @@
   <data name="PrintLayout" xml:space="preserve">
     <value>Print Layout</value>
   </data>
+  <data name="PrintPreview" xml:space="preserve">
+    <value>Print Preview</value>
+  </data>
   <data name="PrintReport" xml:space="preserve">
     <value>Print Report</value>
   </data>
