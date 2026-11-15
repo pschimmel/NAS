@@ -25,20 +25,12 @@ namespace NAS.Models.Controllers
     /// </summary>
     private static ReportCollection LoadReports(ReportLevel level)
     {
-      string path = "";
-
-      switch (level)
+      string path = level switch
       {
-        case ReportLevel.Integrated:
-          path = Globals.IntegratedReportsPath;
-          break;
-        case ReportLevel.User:
-          path = GetUserReportsPath();
-          break;
-        default:
-          throw new ArgumentOutOfRangeException(nameof(level), level, null);
-      }
-
+        ReportLevel.Integrated => Globals.IntegratedReportsPath,
+        ReportLevel.User => GetUserReportsPath(),
+        _ => throw new ArgumentOutOfRangeException(nameof(level), level, null),
+      };
       string filePath = Path.Combine(path, Globals.ReportDefinitionFileName);
 
       if (File.Exists(filePath))
@@ -127,7 +119,7 @@ namespace NAS.Models.Controllers
       var newReport = new Report(report) { Name = name, ReportLevel = ReportLevel.User };
       var oldPath = report.ReportLevel == ReportLevel.User ? GetUserReportsPath() : Globals.IntegratedReportsPath;
       var oldFilePath = Path.Combine(oldPath, report.FileName);
-      
+
       if (File.Exists(oldFilePath))
       {
         var reports = LoadReports(ReportLevel.User);

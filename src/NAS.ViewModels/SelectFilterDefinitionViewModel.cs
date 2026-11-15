@@ -44,9 +44,9 @@ namespace NAS.ViewModels
 
     #region Properties
 
-    public List<ActivityProperty> ActivityProperties { get; } = Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>().Where(x => x != ActivityProperty.None).ToList();
+    public List<ActivityProperty> ActivityProperties { get; } = Enum.GetValues<ActivityProperty>().Cast<ActivityProperty>().Where(x => x != ActivityProperty.None).ToList();
 
-    public List<FilterRelation> FilterRelations { get; } = Enum.GetValues(typeof(FilterRelation)).Cast<FilterRelation>().ToList();
+    public List<FilterRelation> FilterRelations { get; } = Enum.GetValues<FilterRelation>().Cast<FilterRelation>().ToList();
 
     public FilterRelation Relation { get; set; }
 

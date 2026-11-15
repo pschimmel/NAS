@@ -77,8 +77,10 @@ namespace NAS.Views.Controls
 
     private void AddFrame()
     {
-      var rect = new Rectangle();
-      rect.Stroke = Brushes.Black;
+      var rect = new Rectangle
+      {
+        Stroke = Brushes.Black
+      };
       var firstDay = GetFirstDay();
       var lastDay = GetLastDay();
       double x1 = DateToX(firstDay, false);
@@ -140,10 +142,12 @@ namespace NAS.Views.Controls
 
     private void AddTableCell(string name, TextAlignment alignment, double x, double width, double height, Color color)
     {
-      var block = new TextBlock();
-      block.Text = name;
-      block.VerticalAlignment = System.Windows.VerticalAlignment.Center;
-      block.TextAlignment = alignment;
+      var block = new TextBlock
+      {
+        Text = name,
+        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+        TextAlignment = alignment
+      };
       AddTableCellBorder(block, x, row, width, height, color);
     }
 
@@ -176,15 +180,17 @@ namespace NAS.Views.Controls
 
     private void AddTableCellBorder(TextBlock block, double x, double y, double width, double height, Color backgroundColor)
     {
-      var border = new Border();
-      border.Child = block;
-      border.Padding = new Thickness(2, 0, 2, 0);
-      border.BorderBrush = Brushes.Black;
-      border.Background = new SolidColorBrush(backgroundColor);
-      border.BorderThickness = new Thickness(1);
-      border.UseLayoutRounding = true;
-      border.Width = width;
-      border.Height = height;
+      var border = new Border
+      {
+        Child = block,
+        Padding = new Thickness(2, 0, 2, 0),
+        BorderBrush = Brushes.Black,
+        Background = new SolidColorBrush(backgroundColor),
+        BorderThickness = new Thickness(1),
+        UseLayoutRounding = true,
+        Width = width,
+        Height = height
+      };
       SetLeft(border, x);
       SetTop(border, y);
       SetZIndex(border, 6);
@@ -223,9 +229,11 @@ namespace NAS.Views.Controls
 
     protected void AddDataDate()
     {
-      var line = new Line();
-      line.Stroke = Brushes.Blue;
-      line.StrokeThickness = 3;
+      var line = new Line
+      {
+        Stroke = Brushes.Blue,
+        StrokeThickness = 3
+      };
       Children.Add(line);
       double x = DateToX(VM.Schedule.DataDate, false);
       line.X1 = x;

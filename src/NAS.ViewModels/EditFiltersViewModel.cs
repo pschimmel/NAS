@@ -66,7 +66,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public static List<FilterCombinationType> FilterCombinationTypes { get; } = Enum.GetValues(typeof(FilterCombinationType)).Cast<FilterCombinationType>().ToList();
+    public static List<FilterCombinationType> FilterCombinationTypes { get; } = Enum.GetValues<FilterCombinationType>().Cast<FilterCombinationType>().ToList();
 
     public FilterCombinationType FilterCombination { get; set; }
 

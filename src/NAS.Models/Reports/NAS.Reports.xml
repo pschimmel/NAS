@@ -10,7 +10,7 @@
     <ReportType>Activities</ReportType>
     <ReportLevel>Integrated</ReportLevel>
     <Name>Critical Path</Name>
-    <FileName>Activities\\Critical Path.flow</FileName>
+    <FileName>Activities\\CriticalPath.flow</FileName>
   </Report>
   <Report>
     <ReportType>Activities</ReportType>

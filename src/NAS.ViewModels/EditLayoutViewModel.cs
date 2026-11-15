@@ -113,7 +113,7 @@ namespace NAS.ViewModels
 
     public ActivityProperty RightText { get; set; }
 
-    public List<ActivityProperty> ActivityProperties => _activityProperties ??= new List<ActivityProperty>(Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>());
+    public List<ActivityProperty> ActivityProperties => _activityProperties ??= new List<ActivityProperty>(Enum.GetValues<ActivityProperty>().Cast<ActivityProperty>());
 
     public ObservableCollection<VisibleBaseline> VisibleBaselines { get; }
 

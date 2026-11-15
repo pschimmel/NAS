@@ -45,15 +45,19 @@ namespace NAS.Views.Controls
       template.Children.Clear();
       foreach (var col in (DataContext as PERTDefinitionViewModel).Definition.ColumnDefinitions)
       {
-        var definition = new ColumnDefinition();
-        definition.Width = col.Width.HasValue ? new GridLength(col.Width.Value) : new GridLength(1, GridUnitType.Star);
+        var definition = new ColumnDefinition
+        {
+          Width = col.Width.HasValue ? new GridLength(col.Width.Value) : new GridLength(1, GridUnitType.Star)
+        };
 
         template.ColumnDefinitions.Add(definition);
       }
       foreach (var row in (DataContext as PERTDefinitionViewModel).Definition.RowDefinitions)
       {
-        var definition = new RowDefinition();
-        definition.Height = row.Height.HasValue ? new GridLength(row.Height.Value) : new GridLength(1, GridUnitType.Star);
+        var definition = new RowDefinition
+        {
+          Height = row.Height.HasValue ? new GridLength(row.Height.Value) : new GridLength(1, GridUnitType.Star)
+        };
 
         template.RowDefinitions.Add(definition);
       }

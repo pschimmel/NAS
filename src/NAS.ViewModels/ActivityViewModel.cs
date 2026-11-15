@@ -42,7 +42,7 @@ namespace NAS.ViewModels
     public List<Fragnet> Fragnets { get; }
 
 #pragma warning disable CA1822 // Mark members as static
-    public List<ConstraintType> ConstraintTypes => Enum.GetValues(typeof(ConstraintType)).Cast<ConstraintType>().ToList();
+    public List<ConstraintType> ConstraintTypes => Enum.GetValues<ConstraintType>().Cast<ConstraintType>().ToList();
 #pragma warning restore CA1822 // Mark members as static
 
     public ResourceAssignment CurrentResourceAssignment

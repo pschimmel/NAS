@@ -331,19 +331,25 @@ namespace NAS.Views.Controls
 
     private PERTDiagram GetActivityDiagram(ActivityViewModel activity)
     {
-      var dia = new PERTDiagram(activity);
-      dia.Width = template.Width;
-      dia.Height = template.Height;
+      var dia = new PERTDiagram(activity)
+      {
+        Width = template.Width,
+        Height = template.Height
+      };
       foreach (var row in template.RowDefinitions)
       {
-        var definition = new System.Windows.Controls.RowDefinition();
-        definition.Height = row.Height.HasValue ? new GridLength(row.Height.Value) : new GridLength(1, GridUnitType.Star);
+        var definition = new System.Windows.Controls.RowDefinition
+        {
+          Height = row.Height.HasValue ? new GridLength(row.Height.Value) : new GridLength(1, GridUnitType.Star)
+        };
         dia.RowDefinitions.Add(definition);
       }
       foreach (var column in template.ColumnDefinitions)
       {
-        var definition = new System.Windows.Controls.ColumnDefinition();
-        definition.Width = column.Width.HasValue ? new GridLength(column.Width.Value) : new GridLength(1, GridUnitType.Star);
+        var definition = new System.Windows.Controls.ColumnDefinition
+        {
+          Width = column.Width.HasValue ? new GridLength(column.Width.Value) : new GridLength(1, GridUnitType.Star)
+        };
         dia.ColumnDefinitions.Add(definition);
       }
       return dia;
@@ -417,9 +423,11 @@ namespace NAS.Views.Controls
         {
           var tb = new TextBlock();
           BindingOperations.SetBinding(tb, TextBlock.TextProperty, a.Activity.GetBindingFromActivity(item.Property));
-          var b = new Border();
-          b.Child = tb;
-          b.BorderBrush = Brushes.Gray;
+          var b = new Border
+          {
+            Child = tb,
+            BorderBrush = Brushes.Gray
+          };
           double left = 0.5;
           double top = 0.5;
           double right = 0.5;
@@ -487,9 +495,11 @@ namespace NAS.Views.Controls
 
         if (a.Activity.IsStarted)
         {
-          var line = new Line();
-          line.Stroke = Brushes.Black;
-          line.StrokeThickness = 1;
+          var line = new Line
+          {
+            Stroke = Brushes.Black,
+            StrokeThickness = 1
+          };
           Children.Add(line);              //     /
           line.X1 = x;                     //    /
           line.Y1 = y + template.Height;   //   /
@@ -500,9 +510,11 @@ namespace NAS.Views.Controls
         }
         if (a.Activity.IsFinished)
         {
-          var line = new Line();
-          line.Stroke = Brushes.Black;
-          line.StrokeThickness = 1;
+          var line = new Line
+          {
+            Stroke = Brushes.Black,
+            StrokeThickness = 1
+          };
           Children.Add(line);              //  \
           line.X1 = x;                     //   \
           line.Y1 = y;                     //    \
@@ -518,8 +530,13 @@ namespace NAS.Views.Controls
           var image = Children.OfType<Image>().FirstOrDefault(i => i.Tag == a);
           if (image == null)
           {
-            image = new Image() { Source = new BitmapImage(new Uri("pack://application:NAS,,,/images/Distortion.png")), Height = 16, Width = 16 };
-            image.Tag = a;
+            image = new Image
+            {
+              Source = new BitmapImage(new Uri("pack://application:NAS,,,/images/Distortion.png")),
+              Height = 16,
+              Width = 16,
+              Tag = a
+            };
             Children.Add(image);
             image.IsHitTestVisible = false;
             string s = "";
@@ -560,8 +577,10 @@ namespace NAS.Views.Controls
         return;
       }
 
-      var path = new RelationshipPath(r);
-      path.Stroke = r.Relationship.IsCritical ? new SolidColorBrush(activityCriticalColor) : r.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray;
+      var path = new RelationshipPath(r)
+      {
+        Stroke = r.Relationship.IsCritical ? new SolidColorBrush(activityCriticalColor) : r.Relationship.IsDriving ? Brushes.Black : Brushes.DarkGray
+      };
 
       if (!IsStandalone)
       {

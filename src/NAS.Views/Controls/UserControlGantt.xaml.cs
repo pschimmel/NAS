@@ -190,9 +190,12 @@ namespace NAS.Views.Controls
           return;
         }
 
-        VM.CurrentRelationship = null;
-        dataGrid.Focus();
-        dataGrid.BeginEdit();
+        if (VM.CurrentActivity != null)
+        {
+          VM.CurrentRelationship = null;
+          dataGrid.Focus();
+          dataGrid.BeginEdit();
+        }
       }
     }
 
@@ -244,10 +247,11 @@ namespace NAS.Views.Controls
         {
           dataGrid.GroupStyle.RemoveAt(0);
         }
+
         // Filtering
         if (view.CanFilter)
         {
-          view.Filter = (object obj) =>
+          view.Filter = obj =>
           {
             if (obj is not ActivityViewModel vm)
             {
@@ -346,11 +350,18 @@ namespace NAS.Views.Controls
             }
             factory.SetValue(TextBlock.BackgroundProperty, new SolidColorBrush(DiagramHelperExtensions.TryParseColor(groupDefinition.Color, Colors.LightGray)));
             factory.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
-            var dt = new DataTemplate();
-            dt.VisualTree = factory;
-            var groupStyle = new GroupStyle();
-            groupStyle.HeaderTemplate = dt;
-            groupStyle.Panel = new ItemsPanelTemplate(new FrameworkElementFactory(typeof(DataGridRowsPresenter)));
+
+            var dt = new DataTemplate
+            {
+              VisualTree = factory
+            };
+
+            var groupStyle = new GroupStyle
+            {
+              HeaderTemplate = dt,
+              Panel = new ItemsPanelTemplate(new FrameworkElementFactory(typeof(DataGridRowsPresenter)))
+            };
+
             dataGrid.GroupStyle.Add(groupStyle);
             view.GroupDescriptions.Add(new PropertyGroupDescription(groupDefinition.Property.ToString()));
           }
@@ -619,23 +630,29 @@ namespace NAS.Views.Controls
     {
       if (ActivityPropertyHelper.GetPropertyType(property) == typeof(Fragnet))
       {
-        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
-        comboBoxColumn.ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets);
-        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn
+        {
+          ItemsSource = new List<Fragnet>(VM.Schedule.Fragnets),
+          SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true }
+        };
         return comboBoxColumn;
       }
       else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(WBSItem))
       {
-        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
-        comboBoxColumn.ItemsSource = VM.WBSItems;
-        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn
+        {
+          ItemsSource = VM.WBSItems,
+          SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true }
+        };
         return comboBoxColumn;
       }
       else if (ActivityPropertyHelper.GetPropertyType(property) == typeof(CustomAttribute))
       {
-        var comboBoxColumn = new TaggableDataGridComboBoxColumn();
-        comboBoxColumn.ItemsSource = VM.Schedule.CustomAttributes1;
-        comboBoxColumn.SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true };
+        var comboBoxColumn = new TaggableDataGridComboBoxColumn
+        {
+          ItemsSource = VM.Schedule.CustomAttributes1,
+          SelectedItemBinding = new Binding($"{nameof(ActivityViewModel.Activity)}.{property}") { NotifyOnSourceUpdated = true }
+        };
         return comboBoxColumn;
       }
       else

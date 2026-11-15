@@ -54,7 +54,7 @@ namespace NAS.ViewModels
       get
       {
         var list = new List<ActivityProperty>();
-        foreach (ActivityProperty item in Enum.GetValues(typeof(ActivityProperty)))
+        foreach (ActivityProperty item in Enum.GetValues<ActivityProperty>())
         {
           if (item != ActivityProperty.None)
           {

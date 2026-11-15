@@ -19,18 +19,13 @@ namespace NAS.Views.Helpers
 
     private static DispatcherPriority ConvertPriority(UIPriority priority)
     {
-      switch (priority)
+      return priority switch
       {
-        case UIPriority.High:
-          return DispatcherPriority.Render;
-        case UIPriority.Medium:
-          return DispatcherPriority.Normal;
-        case UIPriority.Low:
-          return DispatcherPriority.Background;
-        default:
-          throw new NotImplementedException();
-
-      }
+        UIPriority.High => DispatcherPriority.Render,
+        UIPriority.Medium => DispatcherPriority.Normal,
+        UIPriority.Low => DispatcherPriority.Background,
+        _ => throw new NotImplementedException(),
+      };
     }
   }
 }

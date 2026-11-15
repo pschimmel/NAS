@@ -341,10 +341,12 @@ namespace NAS.Views.Controls
 
     private void AddFloat(ActivityViewModel activity)
     {
-      var rect = new Rectangle();
-      rect.RadiusX = 2;
-      rect.RadiusY = 2;
-      rect.Tag = floatTag + activity.Activity.ID;
+      var rect = new Rectangle
+      {
+        RadiusX = 2,
+        RadiusY = 2,
+        Tag = floatTag + activity.Activity.ID
+      };
       Children.Add(rect);
       rect.Stroke = new SolidColorBrush(Color.FromArgb(150, 0, 0, 0));
       SetZIndex(rect, 2);
@@ -379,8 +381,13 @@ namespace NAS.Views.Controls
         var image = Children.OfType<Image>().FirstOrDefault(i => Equals(i.Tag, imageTag + activity.Activity.ID));
         if (image == null)
         {
-          image = new Image() { Source = new BitmapImage(new Uri("pack://application:,,,/NAS.Views;component/Images/Distortion.png")), Height = 16, Width = 16 };
-          image.Tag = imageTag + activity.Activity.ID;
+          image = new Image
+          {
+            Source = new BitmapImage(new Uri("pack://application:,,,/NAS.Views;component/Images/Distortion.png")),
+            Height = 16,
+            Width = 16,
+            Tag = imageTag + activity.Activity.ID
+          };
           Children.Add(image);
           image.IsHitTestVisible = false;
           string s = string.Empty;
@@ -473,8 +480,10 @@ namespace NAS.Views.Controls
     private Point RefeshMilestoneShape(ActivityViewModel milestone, Shape shape)
     {
       Debug.Assert(milestone.IsMilestone);
-      var location = new Point();
-      location.Y = GetYOfActivity(milestone);
+      var location = new Point
+      {
+        Y = GetYOfActivity(milestone)
+      };
       SetTop(shape, location.Y);
       location.X = DateToX(milestone.Activity.StartDate, false) - RowHeight / 2;
       SetLeft(shape, location.X);
@@ -554,10 +563,12 @@ namespace NAS.Views.Controls
       }
       while (blocks.Count < requiredBlocks)
       {
-        var tb = new TextBlock();
-        tb.IsHitTestVisible = false;
-        tb.Height = RowHeight;
-        tb.Tag = blockTag + activity.Activity.ID;
+        var tb = new TextBlock
+        {
+          IsHitTestVisible = false,
+          Height = RowHeight,
+          Tag = blockTag + activity.Activity.ID
+        };
         Children.Add(tb);
         blocks.Add(tb);
         SetZIndex(tb, 4);
@@ -624,7 +635,7 @@ namespace NAS.Views.Controls
 
     protected void AddRelationship(RelationshipViewModel relationship)
     {
-      if (!layout.ShowRelationships)
+      if (!layout.ShowRelationships || relationship == null)
       {
         return;
       }
@@ -786,10 +797,12 @@ namespace NAS.Views.Controls
         var line = lines.FirstOrDefault(i => i.Tag != null && i.Tag.ToString() == dataDateTag);
         if (line == null)
         {
-          line = new Line();
-          line.Tag = dataDateTag;
-          line.Stroke = Brushes.Blue;
-          line.StrokeThickness = 3;
+          line = new Line
+          {
+            Tag = dataDateTag,
+            Stroke = Brushes.Blue,
+            StrokeThickness = 3
+          };
           Children.Add(line);
           line.IsHitTestVisible = false;
         }
@@ -819,12 +832,17 @@ namespace NAS.Views.Controls
       {
         double x1 = DateToX(startDate, false);
         double x2 = DateToX(endDate, true);
-        var textBlock = new TextBlock() { Tag = "Calendar1", FontSize = 9, FontWeight = FontWeights.Bold };
-        textBlock.Height = columnHeaderHeight / 2;
-        textBlock.Width = x2 - x1;
-        textBlock.Text = startDate.Year.ToString();
-        textBlock.TextAlignment = TextAlignment.Center;
-        textBlock.Background = x % 2 == 0 ? Brushes.LightGreen : Brushes.LightGray;
+        var textBlock = new TextBlock
+        {
+          Tag = "Calendar1",
+          FontSize = 9,
+          FontWeight = FontWeights.Bold,
+          Height = columnHeaderHeight / 2,
+          Width = x2 - x1,
+          Text = startDate.Year.ToString(),
+          TextAlignment = TextAlignment.Center,
+          Background = x % 2 == 0 ? Brushes.LightGreen : Brushes.LightGray
+        };
 
         x++;
         Children.Add(textBlock);
@@ -854,9 +872,14 @@ namespace NAS.Views.Controls
       {
         double x1 = DateToX(startDate, false);
         double x2 = DateToX(endDate, true);
-        var textBlock = new TextBlock() { Tag = "Calendar2", FontSize = 8, FontWeight = FontWeights.Bold };
-        textBlock.Height = columnHeaderHeight / 2;
-        textBlock.Width = x2 - x1;
+        var textBlock = new TextBlock
+        {
+          Tag = "Calendar2",
+          FontSize = 8,
+          FontWeight = FontWeights.Bold,
+          Height = columnHeaderHeight / 2,
+          Width = x2 - x1
+        };
         var f = new FormattedText(startDate.ToString("MMMM"), CultureInfo.CurrentCulture, textBlock.FlowDirection, new Typeface(textBlock.FontFamily, textBlock.FontStyle, textBlock.FontWeight, textBlock.FontStretch), textBlock.FontSize, textBlock.Foreground, pixelsPerDip);
         if (f.Width <= textBlock.Width)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using NAS.Models.Controllers;
@@ -6,7 +7,7 @@ using NUnit.Framework;
 
 namespace NAS.UnitTests
 {
-  public class Tests
+  public class ReportSerializationTests
   {
     [SetUp]
     public void Setup()
@@ -14,7 +15,7 @@ namespace NAS.UnitTests
     }
 
     [Test]
-    public void Test1()
+    public void TestReportCollectionSerialization()
     {
       var reports = new ReportCollection(
       new List<Report>
@@ -30,13 +31,23 @@ namespace NAS.UnitTests
 
       var emptyNamespaces = new XmlSerializerNamespaces([XmlQualifiedName.Empty]);
       var serializer = new XmlSerializer(typeof(ReportCollection));
-      var writerSettings = new XmlWriterSettings();
-      writerSettings.Indent = true;
+      var writerSettings = new XmlWriterSettings
+      {
+        Indent = true
+      };
       //      writerSettings.OmitXmlDeclaration = true;
 
-      using var writer = XmlWriter.Create("C:\\Temp\\NAS.Reports.xml", writerSettings);
-      serializer.Serialize(writer, reports, emptyNamespaces);
+      string xmlPath = Path.Combine(Path.GetTempPath(), "NAS.Reports.xml");
+      using (var writer = XmlWriter.Create(xmlPath, writerSettings))
+      {
+        serializer.Serialize(writer, reports, emptyNamespaces);
+      }
 
+      Assert.That(File.Exists(xmlPath), Is.True, "XML file should be created");
+      var xmlContent = File.ReadAllText(xmlPath);
+      Assert.That(xmlContent, Does.Contain("Name"), "XML should contain report name");
+
+      File.Delete(xmlPath);
     }
   }
 }

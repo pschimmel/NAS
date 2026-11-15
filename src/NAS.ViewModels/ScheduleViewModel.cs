@@ -155,17 +155,17 @@ namespace NAS.ViewModels
     /// <summary>
     /// Gets the constraint types.
     /// </summary>
-    public List<ConstraintType> ConstraintTypes => Enum.GetValues(typeof(ConstraintType)).Cast<ConstraintType>().ToList();
+    public List<ConstraintType> ConstraintTypes => Enum.GetValues<ConstraintType>().Cast<ConstraintType>().ToList();
 
     /// <summary>
     /// Gets the activity properties.
     /// </summary>
-    public List<ActivityProperty> ActivityProperties => Enum.GetValues(typeof(ActivityProperty)).Cast<ActivityProperty>().ToList();
+    public List<ActivityProperty> ActivityProperties => Enum.GetValues<ActivityProperty>().Cast<ActivityProperty>().ToList();
 
     /// <summary>
     /// Gets the filter relations.
     /// </summary>
-    public List<FilterRelation> FilterRelations => Enum.GetValues(typeof(FilterRelation)).Cast<FilterRelation>().ToList();
+    public List<FilterRelation> FilterRelations => Enum.GetValues<FilterRelation>().Cast<FilterRelation>().ToList();
 
     /// <summary>
     /// Gets the WBS items.
@@ -1305,12 +1305,11 @@ namespace NAS.ViewModels
         // First remove all columns that are not checked anymore
         foreach (var column in visibleColumns)
         {
-          foreach (var c in vm.EditColumns)
+          var vmColumn = vm.EditColumns.FirstOrDefault(x => x.Property == column.Property);
+
+          if (vmColumn != null && !vmColumn.IsVisible && ActiveLayout?.Layout is Layout layout)
           {
-            if (!c.IsVisible && c.Property == column.Property && ActiveLayout is Layout layout)
-            {
-              layout.ActivityColumns.Remove(column);
-            }
+            layout.ActivityColumns.Remove(column);
           }
         }
 
@@ -1319,7 +1318,13 @@ namespace NAS.ViewModels
           if (column.IsVisible)
           {
             var activityColumn = visibleColumns.FirstOrDefault(x => x.Property == column.Property);
-            activityColumn ??= new ActivityColumn(column.Property);
+            if (activityColumn == null)
+            {
+              activityColumn = new ActivityColumn(column.Property);
+              if (ActiveLayout?.Layout is Layout layout)
+                layout.ActivityColumns.Add(activityColumn);
+            }
+
             activityColumn.Order = vm.EditColumns.IndexOf(column);
           }
         }

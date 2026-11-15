@@ -15,9 +15,11 @@ namespace NAS.Views.Shapes
       Background = Brushes.LightYellow;
       CornerRadius = new CornerRadius(5);
       BorderThickness = new Thickness(1);
-      grid = new Grid();
-      grid.IsHitTestVisible = false;
-      grid.Focusable = false;
+      grid = new Grid
+      {
+        IsHitTestVisible = false,
+        Focusable = false
+      };
       base.Child = grid;
       Item = activity;
     }

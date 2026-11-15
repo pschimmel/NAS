@@ -77,7 +77,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public List<RelationshipType> RelationshipTypes => Enum.GetValues(typeof(RelationshipType)).Cast<RelationshipType>().ToList();
+    public List<RelationshipType> RelationshipTypes => Enum.GetValues<RelationshipType>().Cast<RelationshipType>().ToList();
 
     public RelationshipType SelectedRelationshipType
     {

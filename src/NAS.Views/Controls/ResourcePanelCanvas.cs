@@ -76,7 +76,7 @@ namespace NAS.Views.Controls
 
     private void AddResourceRectangles()
     {
-      var values = Enum.GetValues(typeof(DisplayType)).Cast<DisplayType>().ToList();
+      var values = Enum.GetValues<DisplayType>().Cast<DisplayType>().ToList();
       foreach (var day in VM.ResourceAllocation.Keys)
       {
         values.ForEach(x => AddRect(day, x));
@@ -85,10 +85,12 @@ namespace NAS.Views.Controls
 
     private void AddLimitLine()
     {
-      var line = new Line();
-      line.Stroke = Brushes.Black;
-      line.Visibility = Visibility.Hidden;
-      line.Tag = "Limit";
+      var line = new Line
+      {
+        Stroke = Brushes.Black,
+        Visibility = Visibility.Hidden,
+        Tag = "Limit"
+      };
       Children.Add(line);
     }
 
@@ -216,10 +218,12 @@ namespace NAS.Views.Controls
 
     private void AddRect(DateTime day, DisplayType display)
     {
-      var rect = new Rectangle();
-      rect.Tag = new Tuple<DateTime, DisplayType>(day, display);
-      rect.Fill = GetBrush(display);
-      rect.Visibility = Visibility.Hidden;
+      var rect = new Rectangle
+      {
+        Tag = new Tuple<DateTime, DisplayType>(day, display),
+        Fill = GetBrush(display),
+        Visibility = Visibility.Hidden
+      };
       Children.Add(rect);
     }
 

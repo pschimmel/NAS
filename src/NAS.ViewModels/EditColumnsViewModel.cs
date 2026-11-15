@@ -15,6 +15,8 @@ namespace NAS.ViewModels
     #region Fields
 
     private ColumnViewModel _selectedEditColumn;
+    private ActionCommand _moveColumnUpCommand;
+    private ActionCommand _moveColumnDownCommand;
 
     #endregion
 
@@ -32,7 +34,7 @@ namespace NAS.ViewModels
           EditColumns.Add(new ColumnViewModel(item.Property) { IsVisible = true });
         }
 
-        foreach (ActivityProperty item in Enum.GetValues(typeof(ActivityProperty)))
+        foreach (ActivityProperty item in Enum.GetValues<ActivityProperty>())
         {
           if (item != ActivityProperty.None && !layout.ActivityColumns.Any(x => x.Property == item))
           {
@@ -40,9 +42,6 @@ namespace NAS.ViewModels
           }
         }
       }
-
-      MoveColumnUpCommand = new ActionCommand(MoveColumnUpCommandExecute, () => MoveColumnUpCommandCanExecute);
-      MoveColumnDownCommand = new ActionCommand(MoveColumnDownCommandExecute, () => MoveColumnDownCommandCanExecute);
     }
 
     #endregion
@@ -78,9 +77,9 @@ namespace NAS.ViewModels
 
     #region Move Column Up
 
-    public ICommand MoveColumnUpCommand { get; }
+    public ICommand MoveColumnUpCommand => _moveColumnUpCommand ??= new ActionCommand(MoveColumnUp, () => CanMoveColumnUp);
 
-    private void MoveColumnUpCommandExecute()
+    private void MoveColumnUp()
     {
       var column = SelectedEditColumn;
       int idx = EditColumns.IndexOf(column);
@@ -89,15 +88,15 @@ namespace NAS.ViewModels
       SelectedEditColumn = column;
     }
 
-    private bool MoveColumnUpCommandCanExecute => SelectedEditColumn != null && EditColumns.IndexOf(SelectedEditColumn) > 0;
+    private bool CanMoveColumnUp => SelectedEditColumn != null && EditColumns.IndexOf(SelectedEditColumn) > 0;
 
     #endregion
 
     #region Move Column Down
 
-    public ICommand MoveColumnDownCommand { get; }
+    public ICommand MoveColumnDownCommand => _moveColumnDownCommand ??= new ActionCommand(MoveColumnDown, () => CanMoveColumnDown);
 
-    private void MoveColumnDownCommandExecute()
+    private void MoveColumnDown()
     {
       var column = SelectedEditColumn;
       int idx = EditColumns.IndexOf(column);
@@ -106,7 +105,7 @@ namespace NAS.ViewModels
       SelectedEditColumn = column;
     }
 
-    private bool MoveColumnDownCommandCanExecute => SelectedEditColumn != null && EditColumns.IndexOf(SelectedEditColumn) < EditColumns.Count - 1;
+    private bool CanMoveColumnDown => SelectedEditColumn != null && EditColumns.IndexOf(SelectedEditColumn) < EditColumns.Count - 1;
 
     #endregion
 

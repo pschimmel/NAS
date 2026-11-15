@@ -58,7 +58,7 @@ namespace NAS.ViewModels
       get
       {
         var list = new List<ActivityProperty>();
-        foreach (ActivityProperty item in Enum.GetValues(typeof(ActivityProperty)))
+        foreach (ActivityProperty item in Enum.GetValues<ActivityProperty>())
         {
           if (item != ActivityProperty.None)
           {
@@ -83,7 +83,7 @@ namespace NAS.ViewModels
       }
     }
 
-    public List<SortDirection> SortDirections => Enum.GetValues(typeof(SortDirection)).Cast<SortDirection>().ToList();
+    public List<SortDirection> SortDirections => Enum.GetValues<SortDirection>().Cast<SortDirection>().ToList();
 
     public SortDirection SelectedSortDirection
     {
