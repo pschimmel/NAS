@@ -23,6 +23,7 @@ namespace NAS.Views.Behaviors
       if (e.Key == Key.Delete)
       {
         AssociatedObject.SelectedItem = null;
+        e.Handled = true;
       }
     }
   }

@@ -842,24 +842,24 @@ namespace NAS.ViewModels
 
     private void RefreshCommands()
     {
-      _createNewScheduleCommand.RaiseCanExecuteChanged();
-      _openScheduleCommand.RaiseCanExecuteChanged();
-      _closeScheduleCommand.RaiseCanExecuteChanged();
-      _saveScheduleCommand.RaiseCanExecuteChanged();
-      _saveScheduleAsCommand.RaiseCanExecuteChanged();
-      _importScheduleCommand.RaiseCanExecuteChanged();
-      _exportScheduleAsCommand.RaiseCanExecuteChanged();
-      _printCommand.RaiseCanExecuteChanged();
-      _closeCommand.RaiseCanExecuteChanged();
-      _openProgramSettingsCommand.RaiseCanExecuteChanged();
-      _aboutCommand.RaiseCanExecuteChanged();
-      _websiteCommand.RaiseCanExecuteChanged();
-      _instantHelpCommand.RaiseCanExecuteChanged();
-      _showReportCommand.RaiseCanExecuteChanged();
-      _editReportCommand.RaiseCanExecuteChanged();
-      _copyReportCommand.RaiseCanExecuteChanged();
-      _deleteReportCommand.RaiseCanExecuteChanged();
-      _renameReportCommand.RaiseCanExecuteChanged();
+      _createNewScheduleCommand?.RaiseCanExecuteChanged();
+      _openScheduleCommand?.RaiseCanExecuteChanged();
+      _closeScheduleCommand?.RaiseCanExecuteChanged();
+      _saveScheduleCommand?.RaiseCanExecuteChanged();
+      _saveScheduleAsCommand?.RaiseCanExecuteChanged();
+      _importScheduleCommand?.RaiseCanExecuteChanged();
+      _exportScheduleAsCommand?.RaiseCanExecuteChanged();
+      _printCommand?.RaiseCanExecuteChanged();
+      _closeCommand?.RaiseCanExecuteChanged();
+      _openProgramSettingsCommand?.RaiseCanExecuteChanged();
+      _aboutCommand?.RaiseCanExecuteChanged();
+      _websiteCommand?.RaiseCanExecuteChanged();
+      _instantHelpCommand?.RaiseCanExecuteChanged();
+      _showReportCommand?.RaiseCanExecuteChanged();
+      _editReportCommand?.RaiseCanExecuteChanged();
+      _copyReportCommand?.RaiseCanExecuteChanged();
+      _deleteReportCommand?.RaiseCanExecuteChanged();
+      _renameReportCommand?.RaiseCanExecuteChanged();
     }
 
     private void SetIsBusy(bool busy)
@@ -884,7 +884,7 @@ namespace NAS.ViewModels
 
       if (stateChanged)
       {
-        UITools.Instance.BeginInvokeIfRequired(() =>
+        DispatcherWrapper.Default.BeginInvokeIfRequired(() =>
         {
           OnPropertyChanged(nameof(IsBusy));
           RefreshCommands();

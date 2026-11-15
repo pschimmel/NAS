@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0-windows7.0</TargetFramework>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
 
@@ -17,10 +17,10 @@
     <PackageReference Include="ControlzEx" Version="7.0.4" />
     <PackageReference Include="ES.Tools" Version="0.6.40.125" />
     <PackageReference Include="ES.Tools.Core" Version="0.6.40.125" />
-    <PackageReference Include="FlowReports" Version="0.8.15" />
+    <PackageReference Include="FlowReports" Version="0.9.0" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
     <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.158" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 

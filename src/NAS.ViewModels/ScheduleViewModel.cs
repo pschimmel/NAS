@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
 using ES.Tools.Core.MVVM;
@@ -43,6 +44,7 @@ namespace NAS.ViewModels
     private ActionCommand _editSchedulingSettingsCommand;
     private ActionCommand<string> _addActivityCommand;
     private ActionCommand<string> _addMilestoneCommand;
+    private ActionCommand _removeCommand;
     private ActionCommand _removeActivityCommand;
     private ActionCommand _editActivityCommand;
     private ActionCommand<AddRelationshipInfo> _addRelationshipCommand;
@@ -115,6 +117,8 @@ namespace NAS.ViewModels
 
       Schedule.ActivityAdded += Schedule_ActivityAdded;
       Schedule.ActivityRemoved += Schedule_ActivityRemoved;
+      Schedule.RelationshipAdded += Schedule_RelationshipAdded;
+      Schedule.RelationshipRemoved += Schedule_RelationshipRemoved;
       RefreshResources();
     }
 
@@ -129,6 +133,33 @@ namespace NAS.ViewModels
       if (deletedActivity != null)
       {
         Activities.Remove(deletedActivity);
+      }
+    }
+
+    private void Schedule_RelationshipAdded(object sender, ItemEventArgs<Relationship> e)
+    {
+      var relationshipVM = Relationships.FirstOrDefault(x => x.Relationship == e.Item);
+      if (relationshipVM == null)
+      {
+        var activity1 = Activities.FirstOrDefault(x => x.Activity == e.Item.Activity1);
+        var activity2 = Activities.FirstOrDefault(x => x.Activity == e.Item.Activity2);
+        relationshipVM = new RelationshipViewModel(e.Item, activity1, activity2);
+        Relationships.Add(relationshipVM);
+      }
+    }
+
+    private void Schedule_RelationshipRemoved(object sender, ItemEventArgs<Relationship> e)
+    {
+      var relationshipVM = Relationships.FirstOrDefault(x => x.Relationship == e.Item);
+      if (relationshipVM == null)
+      {
+        return;
+      }
+
+      Relationships.Remove(relationshipVM);
+      if (CurrentRelationship == relationshipVM)
+      {
+        CurrentRelationship = null;
       }
     }
 
@@ -451,6 +482,29 @@ namespace NAS.ViewModels
 
     #endregion
 
+    #region Remove 
+
+    public ICommand RemoveCommand => _removeCommand ??= new ActionCommand(Remove, CanRemove);
+
+    private void Remove()
+    {
+      if (CurrentActivity != null)
+      {
+        RemoveActivity();
+      }
+      else if (CurrentRelationship != null)
+      {
+        RemoveRelationship();
+      }
+    }
+
+    private bool CanRemove()
+    {
+      return CanRemoveActivity() || CanRemoveRelationship();
+    }
+
+    #endregion
+
     #region Remove Activity
 
     public ICommand RemoveActivityCommand => _removeActivityCommand ??= new ActionCommand(RemoveActivity, CanRemoveActivity);
@@ -738,7 +792,7 @@ namespace NAS.ViewModels
     private void ChangeZoom(string zoom)
     {
       InstantHelpManager.Instance.SetHelpTopic(HelpTopic.Relationship);
-      Zoom = double.Parse(zoom);
+      Zoom = double.Parse(zoom, CultureInfo.InvariantCulture);
     }
 
     private bool CanChangeZoom(string zoom)

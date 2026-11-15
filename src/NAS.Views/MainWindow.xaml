@@ -16,6 +16,7 @@
       </ResourceDictionary.MergedDictionaries>
       <converters:RelationshipTypeConverter x:Key="RelationshipTypeConverter" />
       <converters:ZoomToBoolConverter x:Key="ZoomToBoolConverter" />
+      <converters:CollectionCountToBoolConverter x:Key="CollectionCountToBoolConverter" />
     </ResourceDictionary>
   </Window.Resources>
   <Window.InputBindings>
@@ -27,10 +28,7 @@
     <KeyBinding Key="Insert"
                 Command="{Binding CurrentSchedule.AddRelationshipCommand}"
                 Modifiers="Control" />
-    <KeyBinding Key="Delete" Command="{Binding CurrentSchedule.RemoveActivityCommand}" />
-    <KeyBinding Key="Delete"
-                Command="{Binding CurrentSchedule.RemoveRelationshipCommand}"
-                Modifiers="Control" />
+    <KeyBinding Key="Delete" Command="{Binding CurrentSchedule.RemoveCommand}" />
     <KeyBinding Key="F1" Command="{Binding InstantHelpCommand}" />
   </Window.InputBindings>
   <toolkit:BusyIndicator x:Name="bi" IsBusy="{Binding IsBusy}">
@@ -490,20 +488,21 @@
             <fluent:DropDownButton Header="{x:Static resx:NASResources.ActivateFragnet}"
                                    Icon="pack://application:,,,/NAS.Views;component/Images/Fragnet.png"
                                    ItemsSource="{Binding CurrentSchedule.Schedule.Fragnets}"
+                                   IsEnabled="{Binding CurrentSchedule.Schedule.Fragnets, Converter={StaticResource CollectionCountToBoolConverter}}"
                                    LargeIcon="pack://application:,,,/NAS.Views;component/Images/Fragnet.png" SizeDefinition="Large, Middle, Small">
               <fluent:DropDownButton.ToolTip>
                 <fluent:ScreenTip Title="{x:Static resx:NASResources.ActivateFragnetToolTipTitle}"
                                   Image="pack://application:,,,/NAS.Views;component/Images/Information.png"
                                   Text="{x:Static resx:NASResources.ActivateFragnetToolTipDescription}" />
               </fluent:DropDownButton.ToolTip>
-              <fluent:DropDownButton.ItemContainerStyle>
-                <Style TargetType="{x:Type fluent:MenuItem}">
-                  <Setter Property="Header" Value="{Binding Name}" />
-                  <Setter Property="IsChecked" Value="{Binding IsVisible}" />
-                  <Setter Property="IsCheckable" Value="true" />
-                  <Setter Property="Command" Value="{Binding DataContext.CurrentSchedule.SetFragnetVisibleCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-                </Style>
-              </fluent:DropDownButton.ItemContainerStyle>
+              <fluent:DropDownButton.ItemTemplate>
+                <DataTemplate>
+                  <fluent:MenuItem Header="{Binding Name}"
+                                   IsChecked="{Binding IsVisible}"
+                                   IsCheckable="true"
+                                   Command="{Binding DataContext.CurrentSchedule.SetFragnetVisibleCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
+                </DataTemplate>
+              </fluent:DropDownButton.ItemTemplate>
             </fluent:DropDownButton>
           </fluent:RibbonGroupBox>
           <fluent:RibbonGroupBox Name="Distortions"
