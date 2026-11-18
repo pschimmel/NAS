@@ -1,6 +1,6 @@
 ﻿namespace NAS.Models.Entities
 {
-  public class Holiday : NASObject
+  public class Holiday : NASObject, ICloneable<Holiday>
   {
     public Holiday()
     { }

@@ -240,7 +240,7 @@ namespace NAS.ViewModels
       using var vm = new GetTextViewModel(NASResources.AddAttribute, NASResources.Name);
       if (ViewFactory.Instance.ShowDialog(vm) == true)
       {
-        CustomAttributes1.Add(new CustomAttribute { Name = vm.Text });
+        CustomAttributes3.Add(new CustomAttribute { Name = vm.Text });
       }
     }
 

@@ -24,14 +24,10 @@
   <ToolBarPanel>
     <ToolBar ToolBarTray.IsLocked="True">
       <Button Command="{Binding AddDistortionCommand}" ToolTip="{x:Static resx:NASResources.AddDistortion}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
       </Button>
       <Button Command="{Binding RemoveDistortionCommand}" ToolTip="{x:Static resx:NASResources.RemoveDistortion}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
       </Button>
     </ToolBar>
   </ToolBarPanel>

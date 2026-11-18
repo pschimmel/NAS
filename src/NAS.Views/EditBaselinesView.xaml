@@ -25,24 +25,16 @@
   <ToolBarPanel>
     <ToolBar ToolBarTray.IsLocked="True">
       <Button Command="{Binding AddBaselineCommand}" ToolTip="{x:Static resx:NASResources.AddBaseline}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
       </Button>
       <Button Command="{Binding RemoveBaselineCommand}" ToolTip="{x:Static resx:NASResources.RemoveBaseline}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
       </Button>
       <Button Command="{Binding ImportBaselineCommand}" ToolTip="{x:Static resx:NASResources.ImportBaseline}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/ImportBaseline.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/ImportBaseline.png" />
       </Button>
       <Button Command="{Binding ExportBaselineCommand}" ToolTip="{x:Static resx:NASResources.ExportBaseline}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/ExportBaseline.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/ExportBaseline.png" />
       </Button>
     </ToolBar>
   </ToolBarPanel>
@@ -62,15 +54,9 @@
       <MouseBinding Command="{Binding EditBaselineCommand}" Gesture="LeftDoubleClick" />
     </DataGrid.InputBindings>
     <DataGrid.Columns>
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Name}"
-                          Header="{x:Static resx:NASResources.Name}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Date, Converter={StaticResource DateConverter}}"
-                          Header="{x:Static resx:NASResources.Date}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding DataDate, Converter={StaticResource DateConverter}}"
-                          Header="{x:Static resx:NASResources.DataDate}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Name}" Header="{x:Static resx:NASResources.Name}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Date, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Date}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding DataDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.DataDate}" />
     </DataGrid.Columns>
   </DataGrid>
 </Grid>

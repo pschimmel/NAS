@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class SortingDefinition : NASObject
+  public class SortingDefinition : NASObject, ICloneable<SortingDefinition>
   {
     private ActivityProperty _property;
     private SortDirection _direction;

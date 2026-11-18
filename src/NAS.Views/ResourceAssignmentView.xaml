@@ -30,35 +30,25 @@
     <ColumnDefinition Width="*" />
   </Grid.ColumnDefinitions>
   <TextBlock Margin="5" Text="{x:Static resx:NASResources.Resource}" />
-  <TextBlock Grid.Column="1"
-             Margin="5"
-             Text="{Binding ResourceAssignment.Resource.Name}" />
-  <TextBlock Grid.Row="1"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Unit}" />
+  <TextBlock Grid.Column="1" Margin="5" Text="{Binding ResourceAssignment.Resource.Name}" />
+  <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Unit}" />
   <TextBlock Grid.Row="1"
              Grid.Column="1"
              Margin="2"
              Text="{Binding Unit}" />
-  <TextBlock Grid.Row="2"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Budget}" />
+  <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.Budget}" />
   <TextBox Grid.Row="2"
            Grid.Column="1"
            Margin="2"
            Text="{Binding Budget, Converter={StaticResource CurrencyConverter}}"
            TextAlignment="Right" />
-  <TextBlock Grid.Row="3"
-             Margin="5"
-             Text="{x:Static resx:NASResources.FixedCosts}" />
+  <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.FixedCosts}" />
   <TextBox Grid.Row="3"
            Grid.Column="1"
            Margin="2"
            Text="{Binding FixedCosts, Converter={StaticResource CurrencyConverter}}"
            TextAlignment="Right" />
-  <StackPanel Grid.Row="4"
-              Margin="5"
-              Orientation="Horizontal">
+  <StackPanel Grid.Row="4" Margin="5" Orientation="Horizontal">
     <TextBlock Text="{x:Static resx:NASResources.Costs}" />
     <TextBlock Text="/" />
     <TextBlock Text="{Binding Unit}" />

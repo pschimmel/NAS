@@ -33,12 +33,8 @@
     <RowDefinition Height="Auto" />
     <RowDefinition />
   </Grid.RowDefinitions>
-  <TextBlock Margin="5"
-             VerticalAlignment="Center"
-             Text="{x:Static resx:NASResources.Name}" />
-  <TextBox Grid.Column="1"
-           Margin="2"
-           Text="{Binding Name}" />
+  <TextBlock Margin="5" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Name}" />
+  <TextBox Grid.Column="1" Margin="2" Text="{Binding Name}" />
   <TextBlock Grid.Row="1"
              Margin="5"
              VerticalAlignment="Center"
@@ -55,18 +51,10 @@
           <ColumnDefinition Width="28*" />
           <ColumnDefinition Width="11*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2"
-                    Margin="2,2,2,2"
-                    Orientation="Vertical">
-          <CheckBox Margin="5"
-                    Content="{x:Static resx:NASResources.ShowRelationships}"
-                    IsChecked="{Binding ShowRelationships}" />
-          <CheckBox Margin="5"
-                    Content="{x:Static resx:NASResources.ShowFloat}"
-                    IsChecked="{Binding ShowFloat}" />
-          <Button Margin="5"
-                  Command="{Binding EditPrintLayoutCommand}"
-                  Content="{x:Static resx:NASResources.EditPrintLayout}" />
+        <StackPanel Grid.ColumnSpan="2" Margin="2,2,2,2" Orientation="Vertical">
+          <CheckBox Margin="5" Content="{x:Static resx:NASResources.ShowRelationships}" IsChecked="{Binding ShowRelationships}" />
+          <CheckBox Margin="5" Content="{x:Static resx:NASResources.ShowFloat}" IsChecked="{Binding ShowFloat}" />
+          <Button Margin="5" Command="{Binding EditPrintLayoutCommand}" Content="{x:Static resx:NASResources.EditPrintLayout}" />
         </StackPanel>
       </Grid>
     </TabItem>
@@ -93,9 +81,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding ActivityStandardColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="1"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.CriticalActivities}" />
+        <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.CriticalActivities}" />
         <toolkit:ColorPicker Grid.Row="1"
                              Grid.Column="1"
                              Width="120"
@@ -104,9 +90,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding ActivityCriticalColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="2"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.FinishedActivities}" />
+        <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.FinishedActivities}" />
         <toolkit:ColorPicker Grid.Row="2"
                              Grid.Column="1"
                              Width="120"
@@ -115,9 +99,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding ActivityDoneColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="3"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.Milestones}" />
+        <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.Milestones}" />
         <toolkit:ColorPicker Grid.Row="3"
                              Grid.Column="1"
                              Width="120"
@@ -126,9 +108,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding MilestoneStandardColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="4"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.CriticalMilestones}" />
+        <TextBlock Grid.Row="4" Margin="5" Text="{x:Static resx:NASResources.CriticalMilestones}" />
         <toolkit:ColorPicker Grid.Row="4"
                              Grid.Column="1"
                              Width="120"
@@ -137,9 +117,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding MilestoneCriticalColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="5"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.FinishedMilestones}" />
+        <TextBlock Grid.Row="5" Margin="5" Text="{x:Static resx:NASResources.FinishedMilestones}" />
         <toolkit:ColorPicker Grid.Row="5"
                              Grid.Column="1"
                              Width="120"
@@ -148,9 +126,7 @@
                              RecentColorsHeader="{x:Static resx:NASResources.RecentColors}"
                              SelectedColor="{Binding MilestoneDoneColor, Converter={StaticResource ColorConverter}}"
                              StandardColorsHeader="{x:Static resx:NASResources.StandardColors}" />
-        <TextBlock Grid.Row="6"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.DataDate}" />
+        <TextBlock Grid.Row="6" Margin="5" Text="{x:Static resx:NASResources.DataDate}" />
         <toolkit:ColorPicker Grid.Row="6"
                              Grid.Column="1"
                              Width="120"
@@ -182,15 +158,11 @@
                   SelectedItem="{Binding LeftText}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
-              <TextBlock Height="Auto"
-                         Margin="0"
-                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+              <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
             </DataTemplate>
           </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Grid.Row="1"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.CenterText}" />
+        <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.CenterText}" />
         <ComboBox Grid.Row="1"
                   Grid.Column="1"
                   Height="25"
@@ -200,15 +172,11 @@
                   SelectedItem="{Binding CenterText}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
-              <TextBlock Height="Auto"
-                         Margin="0"
-                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+              <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
             </DataTemplate>
           </ComboBox.ItemTemplate>
         </ComboBox>
-        <TextBlock Grid.Row="2"
-                   Margin="5"
-                   Text="{x:Static resx:NASResources.RightText}" />
+        <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.RightText}" />
         <ComboBox Grid.Row="2"
                   Grid.Column="1"
                   Height="25"
@@ -218,9 +186,7 @@
                   SelectedItem="{Binding RightText}">
           <ComboBox.ItemTemplate>
             <DataTemplate>
-              <TextBlock Height="Auto"
-                         Margin="0"
-                         Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
+              <TextBlock Height="Auto" Margin="0" Text="{Binding Path=., Mode=OneWay, Converter={StaticResource ActivityPropertyConverter}}" />
             </DataTemplate>
           </ComboBox.ItemTemplate>
         </ComboBox>
@@ -231,14 +197,10 @@
         <StackPanel Margin="2" Orientation="Vertical">
           <GroupBox Margin="2" Header="{x:Static resx:NASResources.PertTemplate}">
             <StackPanel Orientation="Vertical">
-              <Border Margin="2"
-                      BorderBrush="Black"
-                      BorderThickness="1">
+              <Border Margin="2" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Margin="2" Text="{Binding PERTTemplate.Name}" />
               </Border>
-              <Button Margin="2"
-                      Command="{Binding SelectPertTemplateCommand}"
-                      Content="{x:Static resx:NASResources.SelectTemplate}" />
+              <Button Margin="2" Command="{Binding SelectPertTemplateCommand}" Content="{x:Static resx:NASResources.SelectTemplate}" />
             </StackPanel>
           </GroupBox>
         </StackPanel>
@@ -257,14 +219,10 @@
         <ToolBarPanel Grid.ColumnSpan="2">
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddVisibleBaselineCommand}" ToolTip="{x:Static resx:NASResources.AddBaseline}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveVisibleBaselineCommand}" ToolTip="{x:Static resx:NASResources.RemoveBaseline}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
@@ -278,12 +236,8 @@
                   SelectedItem="{Binding SelectedVisibleBaseline}"
                   SelectionMode="Single">
           <DataGrid.Columns>
-            <DataGridTextColumn Binding="{Binding Schedule.Name}"
-                                Header="{x:Static resx:NASResources.Name}"
-                                IsReadOnly="True" />
-            <DataGridTextColumn Binding="{Binding Schedule.DataDate, Converter={StaticResource DateConverter}}"
-                                Header="{x:Static resx:NASResources.Date}"
-                                IsReadOnly="True" />
+            <DataGridTextColumn Binding="{Binding Schedule.Name}" Header="{x:Static resx:NASResources.Name}" IsReadOnly="True" />
+            <DataGridTextColumn Binding="{Binding Schedule.DataDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Date}" IsReadOnly="True" />
             <DataGridTemplateColumn Width="120" Header="{x:Static resx:NASResources.Color}">
               <DataGridTemplateColumn.CellTemplate>
                 <DataTemplate>

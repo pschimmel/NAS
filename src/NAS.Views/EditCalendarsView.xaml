@@ -32,14 +32,10 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddGlobalCalendarCommand}" ToolTip="{x:Static resx:NASResources.AddCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveGlobalCalendarCommand}" ToolTip="{x:Static resx:NASResources.RemoveCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
@@ -65,24 +61,16 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCalendarCommand}" ToolTip="{x:Static resx:NASResources.AddCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveCalendarCommand}" ToolTip="{x:Static resx:NASResources.RemoveCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
             <Button Command="{Binding CopyCalendarCommand}" ToolTip="{x:Static resx:NASResources.CopyCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Copy.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Copy.png" />
             </Button>
             <Button Command="{Binding SetStandardCalendarCommand}" ToolTip="{x:Static resx:NASResources.SetAsStandardCalendar}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Calendar.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Calendar.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>

@@ -34,20 +34,14 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCustomAttribute1Command}" ToolTip="{x:Static resx:NASResources.AddAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveCustomAttribute1Command}" ToolTip="{x:Static resx:NASResources.RemoveAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
-        <TextBox Grid.Row="1"
-                 Margin="2"
-                 Text="{Binding CustomAttribute1Header}" />
+        <TextBox Grid.Row="1" Margin="2" Text="{Binding CustomAttribute1Header}" />
         <ListBox Grid.Row="2"
                  Margin="2"
                  IsSynchronizedWithCurrentItem="True"
@@ -75,20 +69,14 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCustomAttribute2Command}" ToolTip="{x:Static resx:NASResources.AddAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveCustomAttribute2Command}" ToolTip="{x:Static resx:NASResources.RemoveAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
-        <TextBox Grid.Row="1"
-                 Margin="2"
-                 Text="{Binding CustomAttribute2Header}" />
+        <TextBox Grid.Row="1" Margin="2" Text="{Binding CustomAttribute2Header}" />
         <ListBox Grid.Row="2"
                  Margin="2"
                  IsSynchronizedWithCurrentItem="True"
@@ -116,20 +104,14 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddCustomAttribute3Command}" ToolTip="{x:Static resx:NASResources.AddAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveCustomAttribute3Command}" ToolTip="{x:Static resx:NASResources.RemoveAttribute}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
-        <TextBox Grid.Row="1"
-                 Margin="2"
-                 Text="{Binding CustomAttribute3Header}" />
+        <TextBox Grid.Row="1" Margin="2" Text="{Binding CustomAttribute3Header}" />
         <ListBox Grid.Row="2"
                  Margin="2"
                  IsSynchronizedWithCurrentItem="True"

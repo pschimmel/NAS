@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class WBSItem : NASObject, IComparable, IComparable<WBSItem>
+  public class WBSItem : NASObject, IComparable, IComparable<WBSItem>, ICloneable<WBSItem>
   {
     #region Fields
 

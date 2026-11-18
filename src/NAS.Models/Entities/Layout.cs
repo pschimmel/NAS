@@ -5,7 +5,7 @@ using NAS.Resources;
 
 namespace NAS.Models.Entities
 {
-  public abstract class Layout : NASObject, IPrintLayout
+  public abstract class Layout : NASObject, IPrintLayout, ICloneable<Layout>
   {
     private string _name;
     private string _milestoneCriticalColor;

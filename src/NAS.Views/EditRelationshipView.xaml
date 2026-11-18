@@ -29,9 +29,7 @@
     <RowDefinition Height="Auto" />
     <RowDefinition Height="Auto" />
   </Grid.RowDefinitions>
-  <TextBlock Margin="5"
-             VerticalAlignment="Center"
-             Text="{x:Static resx:NASResources.Activity1}" />
+  <TextBlock Margin="5" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Activity1}" />
   <ComboBox Grid.Column="1"
             Margin="2"
             ItemsSource="{Binding Activities}"

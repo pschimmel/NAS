@@ -25,9 +25,7 @@
       <RowDefinition />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
-    <Border x:Name="InnerControlBorder"
-            Padding="5"
-            Background="{StaticResource DialogBackgroundBrush}" />
+    <Border x:Name="InnerControlBorder" Padding="5" Background="{StaticResource DialogBackgroundBrush}" />
     <Border Grid.Row="1" Background="{StaticResource DialogCommandBackgroundBrush}">
       <StackPanel>
         <TextBlock Margin="2"
@@ -35,9 +33,7 @@
                    Text="{Binding ErrorMessages}"
                    TextWrapping="Wrap"
                    Visibility="{Binding HasErrors, Converter={StaticResource VisibilityConverter}}" />
-        <ItemsControl Margin="5"
-                      Focusable="False"
-                      ItemsSource="{Binding Buttons}">
+        <ItemsControl Margin="5" Focusable="False" ItemsSource="{Binding Buttons}">
           <ItemsControl.Style>
             <Style TargetType="{x:Type ItemsControl}">
               <Setter Property="Visibility" Value="Visible" />

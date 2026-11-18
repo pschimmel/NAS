@@ -23,19 +23,13 @@
   <ToolBarPanel>
     <ToolBar ToolBarTray.IsLocked="True">
       <Button Command="{Binding AddFragnetCommand}" ToolTip="{x:Static resx:NASResources.AddFragnet}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
       </Button>
       <Button Command="{Binding RemoveFragnetCommand}" ToolTip="{x:Static resx:NASResources.RemoveFragnet}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
       </Button>
       <Button Command="{Binding ShowFragnetCommand}" ToolTip="{x:Static resx:NASResources.ShowFragnet}">
-        <tools:AutoGrayableImage Width="16"
-                                 Height="16"
-                                 Source="pack://application:,,,/NAS.Views;component/Images/Zoom.png" />
+        <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Zoom.png" />
       </Button>
     </ToolBar>
   </ToolBarPanel>
@@ -51,24 +45,12 @@
       <MouseBinding Command="{Binding EditFragnetCommand}" Gesture="LeftDoubleClick" />
     </DataGrid.InputBindings>
     <DataGrid.Columns>
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Number}"
-                          Header="{x:Static resx:NASResources.Number}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Name}"
-                          Header="{x:Static resx:NASResources.Name}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Identified, Converter={StaticResource DateConverter}}"
-                          Header="{x:Static resx:NASResources.Discovered}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Submitted, Converter={StaticResource DateConverter}}"
-                          Header="{x:Static resx:NASResources.Announced}" />
-      <DataGridTextColumn Width="Auto"
-                          Binding="{Binding Approved, Converter={StaticResource DateConverter}}"
-                          Header="{x:Static resx:NASResources.Commissioned}" />
-      <DataGridCheckBoxColumn Width="Auto"
-                              Binding="{Binding IsVisible}"
-                              Header="{x:Static resx:NASResources.Visible}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Number}" Header="{x:Static resx:NASResources.Number}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Name}" Header="{x:Static resx:NASResources.Name}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Identified, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Discovered}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Submitted, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Announced}" />
+      <DataGridTextColumn Width="Auto" Binding="{Binding Approved, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.Commissioned}" />
+      <DataGridCheckBoxColumn Width="Auto" Binding="{Binding IsVisible}" Header="{x:Static resx:NASResources.Visible}" />
     </DataGrid.Columns>
   </DataGrid>
 </Grid>

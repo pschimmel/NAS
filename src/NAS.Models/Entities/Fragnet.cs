@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class Fragnet : NASObject
+  public class Fragnet : NASObject, ICloneable<Fragnet>
   {
     #region Fields
 
@@ -155,6 +155,14 @@ namespace NAS.Models.Entities
 
     #endregion
 
+    #region Overrides
+
+    public override string ToString()
+    {
+      return Name;
+    }
+
+    #endregion
 
     #region ICloneable
 

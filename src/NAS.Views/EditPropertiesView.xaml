@@ -34,9 +34,7 @@
            Grid.ColumnSpan="3"
            Margin="2"
            Text="{Binding Name}" />
-  <TextBlock Grid.Row="1"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Description}" />
+  <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Description}" />
   <TextBox Grid.Row="1"
            Grid.Column="1"
            Grid.ColumnSpan="3"
@@ -44,9 +42,7 @@
            Text="{Binding Description}"
            TextWrapping="Wrap"
            VerticalScrollBarVisibility="Auto" />
-  <TextBlock Grid.Row="2"
-             Margin="5"
-             Text="{x:Static resx:NASResources.StartDate}" />
+  <TextBlock Grid.Row="2" Margin="5" Text="{x:Static resx:NASResources.StartDate}" />
   <DatePicker Grid.Row="2"
               Grid.Column="1"
               Width="150"
@@ -63,9 +59,7 @@
               Margin="2"
               HorizontalAlignment="Left"
               SelectedDate="{Binding EndDate}" />
-  <TextBlock Grid.Row="3"
-             Margin="5"
-             Text="{x:Static resx:NASResources.DataDate}" />
+  <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.DataDate}" />
   <DatePicker Grid.Row="3"
               Grid.Column="1"
               Width="150"

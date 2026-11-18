@@ -35,9 +35,7 @@
     </Style>
     <converters:TimeAggregateTypeConverter x:Key="TimeAggregateTypeConverter" />
     <converters:AggregationTypeToBoolConverter x:Key="AggregationTypeToBoolConverter" />
-    <ObjectDataProvider x:Key="TimeAggregateTypes"
-                        MethodName="GetValues"
-                        ObjectType="{x:Type System:Enum}">
+    <ObjectDataProvider x:Key="TimeAggregateTypes" MethodName="GetValues" ObjectType="{x:Type System:Enum}">
       <ObjectDataProvider.MethodParameters>
         <x:Type TypeName="enums:TimeAggregateType" />
       </ObjectDataProvider.MethodParameters>
@@ -53,9 +51,7 @@
       <RowDefinition />
     </Grid.RowDefinitions>
 
-    <Rectangle Grid.ColumnSpan="2"
-               Height="1"
-               Fill="Black" />
+    <Rectangle Grid.ColumnSpan="2" Height="1" Fill="Black" />
 
     <Grid Grid.Row="1" Background="WhiteSmoke">
       <Grid.RowDefinitions>

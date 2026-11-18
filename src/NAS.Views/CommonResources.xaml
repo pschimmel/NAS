@@ -1,4 +1,6 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:converters="clr-namespace:NAS.Views.Converters"
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:NAS.Views.Converters"
                     xmlns:toolsConverters="clr-namespace:ES.Tools.Converters;assembly=ES.Tools">
   <toolsConverters:NegationConverter x:Key="NegationConverter" />
   <converters:DateConverter x:Key="DateConverter" />
@@ -24,8 +26,11 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ButtonBase}">
-          <ContentPresenter x:Name="myPresenter" Margin="2" HorizontalAlignment="Center"
-                            VerticalAlignment="Center" RecognizesAccessKey="True">
+          <ContentPresenter x:Name="myPresenter"
+                            Margin="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            RecognizesAccessKey="True">
             <ContentPresenter.Style>
               <Style TargetType="ContentPresenter">
                 <Setter Property="Effect">
@@ -57,18 +62,10 @@
     </Setter>
   </Style>
 
-  <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
-         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
-         TargetType="{x:Type Button}" />
-  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
-         TargetType="{x:Type ToggleButton}" />
-  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
-         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
-         TargetType="{x:Type CheckBox}" />
-  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
-         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
-         TargetType="{x:Type RadioButton}" />
+  <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type Button}" />
+  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type ToggleButton}" />
+  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type CheckBox}" />
+  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type RadioButton}" />
 
   <Style BasedOn="{x:Null}" TargetType="{x:Type ToolBarPanel}">
     <Setter Property="Background" Value="{x:Null}" />
@@ -79,8 +76,11 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToolBar}">
-          <Border x:Name="Border" Background="WhiteSmoke" BorderBrush="LightGray"
-                  BorderThickness="1" CornerRadius="2">
+          <Border x:Name="Border"
+                  Background="WhiteSmoke"
+                  BorderBrush="LightGray"
+                  BorderThickness="1"
+                  CornerRadius="2">
             <DockPanel>
               <ToolBarPanel x:Name="PART_ToolBarPanel" Margin="0,1,2,2" IsItemsHost="true" />
             </DockPanel>
@@ -161,7 +161,8 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}">
             <TextBlock Padding="{TemplateBinding Padding}"
-                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
                        Background="{TemplateBinding Background}"
                        Foreground="{TemplateBinding Foreground}"
                        Text="{TemplateBinding Content}"
@@ -172,9 +173,7 @@
     </Setter>
   </Style>
 
-  <Style x:Key="CommentLabelStyle"
-         BasedOn="{StaticResource GeneralLabelStyle}"
-         TargetType="{x:Type Label}">
+  <Style x:Key="CommentLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
     <Setter Property="BorderBrush" Value="Gray" />
     <Setter Property="BorderThickness" Value="1" />
     <Setter Property="Background">
@@ -187,17 +186,13 @@
     </Setter>
   </Style>
 
-  <Style x:Key="ErrorLabelStyle"
-         BasedOn="{StaticResource GeneralLabelStyle}"
-         TargetType="{x:Type Label}">
+  <Style x:Key="ErrorLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
     <Setter Property="Background" Value="LightSalmon" />
     <Setter Property="BorderBrush" Value="Red" />
     <Setter Property="BorderThickness" Value="1" />
   </Style>
 
-  <Style x:Key="WarningLabelStyle"
-         BasedOn="{StaticResource GeneralLabelStyle}"
-         TargetType="{x:Type Label}">
+  <Style x:Key="WarningLabelStyle" BasedOn="{StaticResource GeneralLabelStyle}" TargetType="{x:Type Label}">
     <Setter Property="Background" Value="LightYellow" />
     <Setter Property="BorderBrush" Value="Orange" />
     <Setter Property="BorderThickness" Value="1" />

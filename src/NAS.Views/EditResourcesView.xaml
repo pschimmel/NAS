@@ -31,14 +31,10 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddGlobalResourceCommand}" ToolTip="{x:Static resx:NASResources.AddResource}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveGlobalResourceCommand}" ToolTip="{x:Static resx:NASResources.RemoveResource}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
@@ -54,12 +50,8 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Width="16"
-                       Height="16"
-                       Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
-                <TextBlock Grid.Column="1"
-                           Margin="2,0"
-                           Text="{Binding Name}">
+                <Image Width="16" Height="16" Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+                <TextBlock Grid.Column="1" Margin="2,0" Text="{Binding Name}">
                   <TextBlock.InputBindings>
                     <MouseBinding Command="{Binding DataContext.EditGlobalResourceCommand, ElementName=EditResourcesViewGrid}" Gesture="LeftDoubleClick" />
                   </TextBlock.InputBindings>
@@ -79,14 +71,10 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddResourceCommand}" ToolTip="{x:Static resx:NASResources.AddResource}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveResourceCommand}" ToolTip="{x:Static resx:NASResources.RemoveResource}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>
@@ -102,12 +90,8 @@
                   <ColumnDefinition Width="Auto" />
                   <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Image Width="16"
-                       Height="16"
-                       Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
-                <TextBlock Grid.Column="1"
-                           Margin="2,0"
-                           Text="{Binding Name}">
+                <Image Width="16" Height="16" Source="{Binding Path=., Converter={StaticResource ResourceToImageConverter}}" />
+                <TextBlock Grid.Column="1" Margin="2,0" Text="{Binding Name}">
                   <TextBlock.InputBindings>
                     <MouseBinding Command="{Binding DataContext.EditResourceCommand, ElementName=EditResourcesViewGrid}" Gesture="LeftDoubleClick" />
                   </TextBlock.InputBindings>

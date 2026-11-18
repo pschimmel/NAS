@@ -1,6 +1,6 @@
 ﻿namespace NAS.Models.Entities
 {
-  public abstract class Distortion : NASObject
+  public abstract class Distortion : NASObject, ICloneable<Distortion>
   {
     public string _description;
     private Fragnet _fragnet;

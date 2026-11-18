@@ -23,7 +23,7 @@ namespace NAS.Views
 
     private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
     {
-      Process.Start(e.Uri.ToString());
+      Process.Start(new ProcessStartInfo(e.Uri.ToString()) { UseShellExecute = true });
     }
   }
 }

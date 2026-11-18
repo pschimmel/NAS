@@ -3,7 +3,7 @@ using NAS.Resources;
 
 namespace NAS.Models.Entities
 {
-  public class Calendar : NASObject
+  public class Calendar : NASObject, ICloneable<Calendar>
   {
     #region Fields 
 
@@ -440,6 +440,15 @@ namespace NAS.Models.Entities
 
     #endregion
 
+    #region Overrides
+
+    public override string ToString()
+    {
+      return Name;
+    }
+
+    #endregion
+
     #region ICloneable
 
     public Calendar Clone()
@@ -447,7 +456,7 @@ namespace NAS.Models.Entities
       return new Calendar(this);
     }
 
-    public Calendar Clone(Calendar newBaseCalendar)
+    public Calendar CloneAndSetBase(Calendar newBaseCalendar)
     {
       var newCalendar = Clone();
       if (newBaseCalendar != null)

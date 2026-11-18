@@ -1,6 +1,6 @@
 ﻿namespace NAS.Models.Entities
 {
-  public class VisibleBaseline : NASObject
+  public class VisibleBaseline : NASObject, ICloneable<VisibleBaseline>
   {
     #region Fields
 

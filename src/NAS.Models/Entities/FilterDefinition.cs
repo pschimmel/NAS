@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class FilterDefinition : NASObject
+  public class FilterDefinition : NASObject, ICloneable<FilterDefinition>
   {
     private ActivityProperty _property;
     private FilterRelation _relation;

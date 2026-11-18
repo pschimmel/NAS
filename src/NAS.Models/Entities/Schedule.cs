@@ -9,7 +9,7 @@ using NAS.Resources;
 
 namespace NAS.Models.Entities
 {
-  public class Schedule : NASObject
+  public class Schedule : NASObject, ICloneable<Schedule>
   {
     #region Events
 
@@ -79,7 +79,7 @@ namespace NAS.Models.Entities
             clonedBase = cloneCalendar(calendar.BaseCalendar);
             clonedCalendars.Add(calendar.BaseCalendar, clonedBase);
           }
-          var clone = calendar.Clone(clonedBase);
+          var clone = calendar.CloneAndSetBase(clonedBase);
           clonedCalendars.Add(calendar, clone);
           return clone;
         }

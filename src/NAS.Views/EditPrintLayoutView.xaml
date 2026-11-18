@@ -65,9 +65,7 @@
                             Maximum="100"
                             Minimum="0"
                             Value="{Binding LeftMargin}" />
-      <TextBlock Grid.Column="2"
-                 Margin="5"
-                 Text="{x:Static resx:NASResources.Right}" />
+      <TextBlock Grid.Column="2" Margin="5" Text="{x:Static resx:NASResources.Right}" />
       <toolkit:DoubleUpDown Grid.Column="3"
                             Margin="2"
                             FormatString="N1"
@@ -75,9 +73,7 @@
                             Maximum="100"
                             Minimum="0"
                             Value="{Binding RightMargin}" />
-      <TextBlock Grid.Column="4"
-                 Margin="5"
-                 Text="{x:Static resx:NASResources.Top}" />
+      <TextBlock Grid.Column="4" Margin="5" Text="{x:Static resx:NASResources.Top}" />
       <toolkit:DoubleUpDown Grid.Column="5"
                             Margin="2"
                             FormatString="N1"
@@ -85,9 +81,7 @@
                             Maximum="100"
                             Minimum="0"
                             Value="{Binding TopMargin}" />
-      <TextBlock Grid.Column="6"
-                 Margin="5"
-                 Text="{x:Static resx:NASResources.Bottom}" />
+      <TextBlock Grid.Column="6" Margin="5" Text="{x:Static resx:NASResources.Bottom}" />
       <toolkit:DoubleUpDown Grid.Column="7"
                             Margin="2"
                             FormatString="N1"
@@ -108,9 +102,7 @@
       </Grid.RowDefinitions>
       <ToolBarPanel>
         <ToolBar ToolBarTray.IsLocked="True">
-          <TextBlock Margin="5"
-                     VerticalAlignment="Center"
-                     Text="{x:Static resx:NASResources.Columns}" />
+          <TextBlock Margin="5" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Columns}" />
           <toolkit:IntegerUpDown Width="80"
                                  Margin="2"
                                  Maximum="10"
@@ -140,9 +132,7 @@
         </ItemsControl.ItemContainerStyle>
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <Grid helpers:GridHelper.ColumnCount="{Binding HeaderColumnCount}"
-                  helpers:GridHelper.StarColumns="{Binding HeaderStarColumns}"
-                  ShowGridLines="True" />
+            <Grid helpers:GridHelper.ColumnCount="{Binding HeaderColumnCount}" helpers:GridHelper.StarColumns="{Binding HeaderStarColumns}" ShowGridLines="True" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
@@ -173,9 +163,7 @@
       </Grid.RowDefinitions>
       <ToolBarPanel>
         <ToolBar ToolBarTray.IsLocked="True">
-          <TextBlock Margin="5"
-                     VerticalAlignment="Center"
-                     Text="{x:Static resx:NASResources.Columns}" />
+          <TextBlock Margin="5" VerticalAlignment="Center" Text="{x:Static resx:NASResources.Columns}" />
           <toolkit:IntegerUpDown Width="80"
                                  Margin="2"
                                  Maximum="10"
@@ -205,9 +193,7 @@
         </ItemsControl.ItemContainerStyle>
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <Grid helpers:GridHelper.ColumnCount="{Binding FooterColumnCount}"
-                  helpers:GridHelper.StarColumns="{Binding FooterStarColumns}"
-                  ShowGridLines="True" />
+            <Grid helpers:GridHelper.ColumnCount="{Binding FooterColumnCount}" helpers:GridHelper.StarColumns="{Binding FooterStarColumns}" ShowGridLines="True" />
           </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>

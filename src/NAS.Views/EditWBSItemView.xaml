@@ -25,9 +25,7 @@
     <RowDefinition />
   </Grid.RowDefinitions>
   <TextBlock Margin="5" Text="{x:Static resx:NASResources.Number}" />
-  <TextBlock Grid.Row="1"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Name}" />
+  <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Name}" />
   <TextBox Grid.Column="1"
            Height="23"
            Margin="2"

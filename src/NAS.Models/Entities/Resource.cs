@@ -1,6 +1,6 @@
 ﻿namespace NAS.Models.Entities
 {
-  public abstract class Resource : NASObject
+  public abstract class Resource : NASObject, ICloneable<Resource>
   {
     #region Fields
 

@@ -1,6 +1,6 @@
 ﻿namespace NAS.Models.Entities
 {
-  public class FooterItem : NASObject, IPrintLayoutItem
+  public class FooterItem : NASObject, IPrintLayoutItem, ICloneable<FooterItem>
   {
     public FooterItem()
     {

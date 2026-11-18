@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class GroupingDefinition : NASObject
+  public class GroupingDefinition : NASObject, ICloneable<GroupingDefinition>
   {
     private ActivityProperty _property;
     private int _order;

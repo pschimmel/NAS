@@ -4,7 +4,7 @@ using NAS.Models.Enums;
 namespace NAS.Models.Entities
 {
   [DebuggerDisplay("{Property}")]
-  public class ActivityColumn : NASObject
+  public class ActivityColumn : NASObject, ICloneable<ActivityColumn>
   {
     private ActivityProperty _property;
     private double? _columnWidth;

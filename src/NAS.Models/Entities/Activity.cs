@@ -6,7 +6,7 @@ using NAS.Resources;
 namespace NAS.Models.Entities
 {
   [DebuggerDisplay("{Number} {Name}")]
-  public class Activity : NASObject
+  public class Activity : NASObject, ICloneable<Activity>
   {
     #region Fields
 

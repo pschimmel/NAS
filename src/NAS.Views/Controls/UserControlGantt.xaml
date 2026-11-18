@@ -86,14 +86,10 @@
                  Text="Date"
                  Visibility="Hidden" />
     </Border>
-    <ItemsControl Grid.Row="1"
-                  Grid.ColumnSpan="2"
-                  ItemsSource="{Binding Resources}">
+    <ItemsControl Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Resources}">
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <Border Height="120"
-                  Margin="0,-1,0,0"
-                  HorizontalAlignment="Stretch">
+          <Border Height="120" Margin="0,-1,0,0" HorizontalAlignment="Stretch">
             <local:UserControlResourcePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
           </Border>
         </DataTemplate>

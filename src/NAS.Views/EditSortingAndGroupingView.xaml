@@ -38,24 +38,16 @@
       <ToolBarPanel>
         <ToolBar ToolBarTray.IsLocked="True">
           <Button Command="{Binding AddSortingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddSortingDefinition}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
           </Button>
           <Button Command="{Binding RemoveSortingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveSortingDefinition}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
           </Button>
           <Button Command="{Binding MoveSortingDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveSortingDefinitionUp}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Up.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Up.png" />
           </Button>
           <Button Command="{Binding MoveSortingDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveSortingDefinitionDown}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Down.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Down.png" />
           </Button>
         </ToolBar>
       </ToolBarPanel>
@@ -88,24 +80,16 @@
       <ToolBarPanel>
         <ToolBar ToolBarTray.IsLocked="True">
           <Button Command="{Binding AddGroupingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.AddGroupingDefinition}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
           </Button>
           <Button Command="{Binding RemoveGroupingDefinitionCommand}" ToolTip="{x:Static resx:NASResources.RemoveGroupingDefinition}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
           </Button>
           <Button Command="{Binding MoveGroupingDefinitionUpCommand}" ToolTip="{x:Static resx:NASResources.MoveGroupingDefinitionUp}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Up.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Up.png" />
           </Button>
           <Button Command="{Binding MoveGroupingDefinitionDownCommand}" ToolTip="{x:Static resx:NASResources.MoveGroupingDefinitionDown}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/Down.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Down.png" />
           </Button>
         </ToolBar>
       </ToolBarPanel>

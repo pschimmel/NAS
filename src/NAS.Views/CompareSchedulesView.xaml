@@ -31,9 +31,7 @@
                 Margin="2"
                 SelectedDate="{Binding DataDate}" />
   </StackPanel>
-  <GroupBox Grid.Row="1"
-            Margin="2"
-            Header="{x:Static resx:NASResources.Schedule1}">
+  <GroupBox Grid.Row="1" Margin="2" Header="{x:Static resx:NASResources.Schedule1}">
     <extToolkit:CheckListBox Margin="2"
                              DisplayMemberPath="Name"
                              ItemsSource="{Binding Fragnets1}"

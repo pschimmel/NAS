@@ -38,38 +38,18 @@
            VerticalAlignment="Center"
            Text="{Binding Name}" />
   <DockPanel Grid.Row="2" Grid.ColumnSpan="2">
-    <GroupBox Margin="2"
-              Padding="2"
-              Header="{x:Static resx:NASResources.WorkDays}">
-      <StackPanel Name="stackPanelWorkDays"
-                  CanHorizontallyScroll="False"
-                  CanVerticallyScroll="True">
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Monday}"
-                  IsChecked="{Binding Monday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Tuesday}"
-                  IsChecked="{Binding Tuesday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Wednesday}"
-                  IsChecked="{Binding Wednesday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Thursday}"
-                  IsChecked="{Binding Thursday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Friday}"
-                  IsChecked="{Binding Friday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Saturday}"
-                  IsChecked="{Binding Saturday}" />
-        <CheckBox Margin="2"
-                  Content="{x:Static resx:NASResources.Sunday}"
-                  IsChecked="{Binding Sunday}" />
+    <GroupBox Margin="2" Padding="2" Header="{x:Static resx:NASResources.WorkDays}">
+      <StackPanel Name="stackPanelWorkDays" CanHorizontallyScroll="False" CanVerticallyScroll="True">
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Monday}" IsChecked="{Binding Monday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Tuesday}" IsChecked="{Binding Tuesday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Wednesday}" IsChecked="{Binding Wednesday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Thursday}" IsChecked="{Binding Thursday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Friday}" IsChecked="{Binding Friday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Saturday}" IsChecked="{Binding Saturday}" />
+        <CheckBox Margin="2" Content="{x:Static resx:NASResources.Sunday}" IsChecked="{Binding Sunday}" />
       </StackPanel>
     </GroupBox>
-    <GroupBox Margin="2"
-              Padding="2"
-              Header="{x:Static resx:NASResources.Holidays}">
+    <GroupBox Margin="2" Padding="2" Header="{x:Static resx:NASResources.Holidays}">
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
@@ -78,14 +58,10 @@
         <ToolBarPanel>
           <ToolBar ToolBarTray.IsLocked="True">
             <Button Command="{Binding AddHolidayCommand}" ToolTip="{x:Static resx:NASResources.AddHoliday}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Add.png" />
             </Button>
             <Button Command="{Binding RemoveHolidayCommand}" ToolTip="{x:Static resx:NASResources.RemoveHoliday}">
-              <tools:AutoGrayableImage Width="16"
-                                       Height="16"
-                                       Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
+              <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/Remove.png" />
             </Button>
           </ToolBar>
         </ToolBarPanel>

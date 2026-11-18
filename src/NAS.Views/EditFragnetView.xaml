@@ -41,9 +41,7 @@
             VerticalAlignment="Center"
             Content="{x:Static resx:NASResources.FragnetIsVisible}"
             IsChecked="{Binding IsVisible}" />
-  <TextBlock Grid.Row="1"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Name}" />
+  <TextBlock Grid.Row="1" Margin="5" Text="{x:Static resx:NASResources.Name}" />
   <TextBox Grid.Row="1"
            Grid.Column="1"
            Grid.ColumnSpan="3"
@@ -60,9 +58,7 @@
            AcceptsReturn="True"
            Text="{Binding Description}"
            TextWrapping="Wrap" />
-  <TextBlock Grid.Row="3"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Discovered}" />
+  <TextBlock Grid.Row="3" Margin="5" Text="{x:Static resx:NASResources.Discovered}" />
   <DatePicker Grid.Row="3"
               Grid.Column="1"
               Width="150"
@@ -79,9 +75,7 @@
               Margin="2"
               HorizontalAlignment="Left"
               SelectedDate="{Binding Submitted}" />
-  <TextBlock Grid.Row="4"
-             Margin="5"
-             Text="{x:Static resx:NASResources.Commissioned}" />
+  <TextBlock Grid.Row="4" Margin="5" Text="{x:Static resx:NASResources.Commissioned}" />
   <DatePicker Grid.Row="4"
               Grid.Column="1"
               Width="150"
@@ -96,9 +90,7 @@
             VerticalAlignment="Center"
             Content="{x:Static resx:NASResources.ModificationIsDisputable}"
             IsChecked="{Binding IsDisputable}" />
-  <GroupBox Grid.Row="5"
-            Grid.ColumnSpan="4"
-            Header="{x:Static resx:NASResources.Activities}">
+  <GroupBox Grid.Row="5" Grid.ColumnSpan="4" Header="{x:Static resx:NASResources.Activities}">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
@@ -107,14 +99,10 @@
       <ToolBarPanel>
         <ToolBar ToolBarTray.IsLocked="True">
           <Button Command="{Binding AddActivityToFragnetCommand}" ToolTip="{x:Static resx:NASResources.AddActivity}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/AddActivity.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/AddActivity.png" />
           </Button>
           <Button Command="{Binding RemoveActivityFromFragnetCommand}" ToolTip="{x:Static resx:NASResources.RemoveActivity}">
-            <tools:AutoGrayableImage Width="16"
-                                     Height="16"
-                                     Source="pack://application:,,,/NAS.Views;component/Images/RemoveActivity.png" />
+            <tools:AutoGrayableImage Width="16" Height="16" Source="pack://application:,,,/NAS.Views;component/Images/RemoveActivity.png" />
           </Button>
         </ToolBar>
       </ToolBarPanel>
@@ -128,22 +116,14 @@
                 SelectedItem="{Binding SelectedFragnetActivity}"
                 SelectionMode="Single">
         <DataGrid.Columns>
-          <DataGridTextColumn Width="Auto"
-                              Binding="{Binding Number}"
-                              Header="{x:Static resx:NASResources.Number}" />
-          <DataGridTextColumn Width="Auto"
-                              Binding="{Binding Name}"
-                              Header="{x:Static resx:NASResources.Name}" />
+          <DataGridTextColumn Width="Auto" Binding="{Binding Number}" Header="{x:Static resx:NASResources.Number}" />
+          <DataGridTextColumn Width="Auto" Binding="{Binding Name}" Header="{x:Static resx:NASResources.Name}" />
           <DataGridTextColumn Width="Auto"
                               Binding="{Binding OriginalDuration}"
                               ElementStyle="{StaticResource RightAlignment}"
                               Header="{x:Static resx:NASResources.PlannedDuration}" />
-          <DataGridTextColumn Width="Auto"
-                              Binding="{Binding StartDate, Converter={StaticResource DateConverter}}"
-                              Header="{x:Static resx:NASResources.StartDate}" />
-          <DataGridTextColumn Width="Auto"
-                              Binding="{Binding FinishDate, Converter={StaticResource DateConverter}}"
-                              Header="{x:Static resx:NASResources.FinishDate}" />
+          <DataGridTextColumn Width="Auto" Binding="{Binding StartDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.StartDate}" />
+          <DataGridTextColumn Width="Auto" Binding="{Binding FinishDate, Converter={StaticResource DateConverter}}" Header="{x:Static resx:NASResources.FinishDate}" />
         </DataGrid.Columns>
       </DataGrid>
     </Grid>

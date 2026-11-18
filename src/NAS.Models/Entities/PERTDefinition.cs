@@ -2,7 +2,7 @@
 
 namespace NAS.Models.Entities
 {
-  public class PERTDefinition : NASObject
+  public class PERTDefinition : NASObject, ICloneable<PERTDefinition>
   {
     private string _name;
     private double _width = 150;
